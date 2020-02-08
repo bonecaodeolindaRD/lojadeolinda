@@ -1,4 +1,4 @@
-# lojadeolinda
+# Projeto Loja Boneco de Olinda
 Projeto git
 
 Projeto feito por Paulo Gabriel, Marcos Takao, Erick Moreira, Beatriz Ferreira, Lucas Prieto
