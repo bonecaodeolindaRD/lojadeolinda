@@ -2,12 +2,20 @@ drop database if exists eboneco_de_olinda;
 create database if not exists eboneco_de_olinda;
 use eboneco_de_olinda;
 
+create table enderecos(
+	id_endereco int primary key auto_increment,
+    endereco varchar(255),
+    cep varchar(10)
+);
+
 create table clientes(
 	id_cliente int primary key auto_increment,
     nome varchar(100) not null,
     cpf varchar(15) not null,
     email varchar(60) not null,
-    senha varchar(255) not null
+    senha varchar(255) not null,
+    id_endereco int,
+    foreign key(id_cliente) references enderecos(id_endereco)
 );
 
 create table categorias(
@@ -33,7 +41,9 @@ create table tipo_notas(
 create table fornecedores(
 	id_fornecedor int primary key auto_increment,
     nome varchar(100),
-    cnpj varchar(16)
+    cnpj varchar(16),
+    id_endereco int,
+    foreign key(id_endereco) references enderecos(id_endereco)
 );
 
 create table produtos(
@@ -62,7 +72,6 @@ create table pedidos(
 	id_pedido int primary key auto_increment,
     id_cliente int,
     id_status int,
-    id_nf int,
     foreign key(id_cliente) references clientes(id_cliente),
     foreign key(id_status) references status_pedidos(id_status)
 );
@@ -97,4 +106,14 @@ create table funcionarios(
     usuario varchar(70) not null,
     id_hierarquia int,
     foreign key (id_hierarquia) references hieraquias(id_hierarquia)
+);
+
+alter table nfs add(
+	id_pedido int,
+    foreign key(id_pedido) references pedidos(id_pedido)
+);
+
+alter table pedidos add(
+	id_nf int,
+    foreign key(id_nf) references nfs(id_nf)
 );
