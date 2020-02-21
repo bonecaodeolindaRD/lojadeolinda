@@ -109,11 +109,11 @@ create table funcionarios(
 );
 
 alter table nfs add(
-	id_pedido int,
+	id_pedido int unique,
     foreign key(id_pedido) references pedidos(id_pedido)
 );
 
 alter table pedidos add(
-	id_nf int,
+	id_nf int unique,
     foreign key(id_nf) references nfs(id_nf)
 );
