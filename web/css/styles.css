@@ -1,0 +1,9 @@
+@media(max-width: 600px){
+    footer{
+        position: relative!important;       
+    } 
+}
+
+.principal-sobre{
+    background-color: blue;
+}
