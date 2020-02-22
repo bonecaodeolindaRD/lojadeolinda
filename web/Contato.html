@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Contato</title>
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -60,12 +60,56 @@
         </nav>
     </header>
 
-    <section class="container">
+    <main class="container">
 
 
+        <form class="mt-5">
 
-    </section>
+            <div class="col-md-8 m-auto">
 
+                <header class="card-header bg-warning mb-3">
+                    <t class="p-4 font-weight-bolder text-justify">Se preferir envie um e-mail para contato@lojadeolindard.com.br</t>
+                </header>
+
+                <div class="form-group">
+                    <label for="contatoNome">Nome Completo</label>
+                    <input type="text" class="form-control" id="contatoNome" name="contatoNome"
+                        placeholder="Digite o seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="contatoEmail">E-mail</label>
+                    <input type="email" class="form-control" id="contatoEmail" name="contatoEmail"
+                    placeholder="Digite o seu e-mail" required>
+                
+                </div>
+
+                <div class="form-group">
+                <label for="contatoTel">Telefone</label>
+                <input type="tel" class="form-control" id="contatoTel" name="contatoTel"
+                    placeholder="Ex. 1199999999" required>
+                 
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagemContato">Mensagem</label>
+                    <div class="input-group">
+                        <textarea class="form-control" id="mensagemContato" rows="6" required></textarea>
+                    </div>
+
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                    <button type="reset" class="btn btn-danger">Cancelar</button>
+                </div>
+
+
+            </div>
+
+        </form>
+    </main>
 
     <footer class="container-fluid py-5 navbar-dark bg-dark">
         <div class="row">
