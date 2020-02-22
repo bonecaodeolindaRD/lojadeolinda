@@ -1,5 +1,6 @@
 let carrouselItems = document.querySelector("#corrossel-bonecos .carousel-inner");
 let producs = document.querySelector("#producs");
+let itemsCart = localStorage.getItem("items") ?  JSON.parse(localStorage.getItem("items")) : [];
 
 let first = true;
 
@@ -22,7 +23,17 @@ const addItemsCarousel = (img, link, altImg) => {
     carrouselItems.appendChild(divEl);
 }
 
-const addProducts = (img, altImg, title, desc, price) => {
+const saveLocalStorage = array => localStorage.setItem("cartItems", JSON.stringify(array));
+
+const addToCart = id => 
+    itemsCart.push(id);
+    
+
+const removeToCart = id => itemsCart.splice(itemsCart.indexOf(id), 1);
+
+const addProducts = (id, img, altImg, title, desc, price) => {
+    let pIdEl = document.createElement("p");
+    
     let divEl = document.createElement("div");
     let divCardEl = document.createElement("div");
     let imgItemEl = document.createElement("img");
@@ -34,6 +45,7 @@ const addProducts = (img, altImg, title, desc, price) => {
     let h6PriceEl = document.createElement("h6");
     let divAddCartEl = document.createElement("div");
     let imgAddCartEl = document.createElement("img");
+    pIdEl.innerHTML = id;
     divEl.setAttribute("class", "col-md-3 p-1");
     divCardEl.setAttribute("class", "card col-12");
     imgItemEl.setAttribute("src", img);
@@ -50,7 +62,9 @@ const addProducts = (img, altImg, title, desc, price) => {
     divAddCartEl.setAttribute("class", "col-3");
     imgAddCartEl.setAttribute("src", "img/home/icons/126083.png");
 
+    pIdEl.style.display = "none";
     divEl.appendChild(divCardEl);
+    divCardEl.appendChild(pIdEl);
     divCardEl.appendChild(imgItemEl);
     divCardEl.appendChild(divBodyEl);
     divBodyEl.appendChild(h5TitleEl);
@@ -61,13 +75,18 @@ const addProducts = (img, altImg, title, desc, price) => {
     divPriceEl.appendChild(h6PriceEl);
     divAddCartEl.appendChild(imgAddCartEl);
     producs.appendChild(divEl);
+
+    imgAddCartEl.addEventListener("click", () => { 
+        addToCart(parseInt(pIdEl.innerHTML));
+        saveLocalStorage(itemsCart);
+    });
 }
 
 addItemsCarousel("img/home/bonec-selecao-1.png", "#", "selecao");
 addItemsCarousel("img/home/bonec-selecao-2.png", "#", "selecao");
 addItemsCarousel("img/home/boneco-palhaco.png", "#", "selecao");
 
-addProducts("img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts("img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts("img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts("img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(1,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(2,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(3,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(4,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
