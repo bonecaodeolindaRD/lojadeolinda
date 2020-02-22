@@ -1,6 +1,6 @@
 let carrouselItems = document.querySelector("#corrossel-bonecos .carousel-inner");
 let producs = document.querySelector("#producs");
-let itemsCart = localStorage.getItem("items") ?  JSON.parse(localStorage.getItem("items")) : [];
+let itemsCart = localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [];
 
 let first = true;
 
@@ -9,7 +9,7 @@ const addItemsCarousel = (img, link, altImg) => {
     let linkEl = document.createElement("a");
     let imgEl = document.createElement("img");
     linkEl.setAttribute("href", link);
-    if(first){
+    if (first) {
         divEl.setAttribute("class", "carousel-item active");
         first = false;
     }
@@ -25,15 +25,35 @@ const addItemsCarousel = (img, link, altImg) => {
 
 const saveLocalStorage = array => localStorage.setItem("cartItems", JSON.stringify(array));
 
-const addToCart = id => 
-    itemsCart.push(id);
-    
+const addToCart = (id) => {
+    let item = itemsCart.find(x => x.id == id);
+    if (item) {
+        list = itemsCart.map(x => {
+            if (x.id == id)
+                x.quantity++;
+        });
+        saveLocalStorage(list);
+    }
+    else
+        itemsCart.push({
+            id, quantity: 1
+        }
+        );
 
-const removeToCart = id => itemsCart.splice(itemsCart.indexOf(id), 1);
+}
+
+
+const removeToCart = id => {
+    console.log(itemsCart);
+    let obj = itemsCart.filter(x => x.id = id);
+    console.log(obj);
+    if (obj)
+        itemsCart.splice(itemsCart.indexOf(obj[0]), 1);
+}
 
 const addProducts = (id, img, altImg, title, desc, price) => {
     let pIdEl = document.createElement("p");
-    
+
     let divEl = document.createElement("div");
     let divCardEl = document.createElement("div");
     let imgItemEl = document.createElement("img");
@@ -76,7 +96,7 @@ const addProducts = (id, img, altImg, title, desc, price) => {
     divAddCartEl.appendChild(imgAddCartEl);
     producs.appendChild(divEl);
 
-    imgAddCartEl.addEventListener("click", () => { 
+    imgAddCartEl.addEventListener("click", () => {
         addToCart(parseInt(pIdEl.innerHTML));
         saveLocalStorage(itemsCart);
     });
@@ -86,7 +106,7 @@ addItemsCarousel("img/home/bonec-selecao-1.png", "#", "selecao");
 addItemsCarousel("img/home/bonec-selecao-2.png", "#", "selecao");
 addItemsCarousel("img/home/boneco-palhaco.png", "#", "selecao");
 
-addProducts(1,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts(2,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts(3,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
-addProducts(4,"img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(1, "img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(2, "img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(3, "img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");
+addProducts(4, "img/home/produtos/item 1.webp", "Boneco", "Nome produto", "Descricao Produto", "999,99");

@@ -1,0 +1,12 @@
+.compra{
+    height: 500px;
+    overflow: auto;
+}
+
+.compra img{
+    width: 40px;
+}
+
+.finalizar{
+    height: 650px;
+}
