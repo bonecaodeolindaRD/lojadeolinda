@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/detalharProduto.css">
     <script src="https://kit.fontawesome.com/e05ffdb110.js"></script>
 </head>
 
@@ -62,7 +62,7 @@
 
         <div class="row">
 
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mb-3">
                 <a title="Galvão Bueno">
                     <img src="img/galvao.jpg" class="rounded" width="100%"
                         title="Imagem Produto" alt="Imagem do produto" />
@@ -75,22 +75,25 @@
                 <form class="form-horizontal qtyFrm">
                     <div class="control-group">
                         <label class="control-label pb-2 pr-5"><h5>R$2.000,00</h5></label>
-                        <div class="controls">
-                            <input type="text" class="span1" placeholder="Digite a Quantidade" />
-                            <a href="#" class="btn btn-warning"><i class="fas fa-shopping-cart"></i>
+                        <div class="controls mt-3">
+                            <input type="number" class="span1"  min="1" placeholder="Digite a Quantidade" />
+                            <a href="CarrinhoCompras.html" class="btn btn-warning"><i class="fas fa-shopping-cart"></i>
                                 Comprar</a>
                         </div>
                     </div>
                 </form>
 
                 <form class="form-horizontal qtyFrm">
+                    <hr class="soft" />
                     <div class="control-group">
                         <label class="control-label pt-3"><h6>Calcular Frete e Prazo</h6></label>
-                        <div class="controls">
-                            <input type="text" class="span1" placeholder="Digite o CEP" />
-                            <a href="#" class="btn btn-warning"><i class="far fa-check-circle"></i>
+                        <div class="controls" id="controle">
+                            <input id="cepFrete" type="text" class="span1" placeholder="Digite o CEP" />
+                            <a type="text" id="calcularFrete" class="btn btn-warning"><i class="far fa-check-circle"></i>
                                 OK</a>
                         </div>
+                        
+                        <hr class="soft" />
                     </div>
                 </form>
 
@@ -116,7 +119,7 @@
     </section>
 
 
-    <footer class="container-fluid py-5 navbar-dark bg-dark fixed-bottom">
+    <footer class="container-fluid py-5 navbar-dark bg-dark">
         <div class="row">
             <div class="col-12 col-md">
                 <a class="navbar-brand" href="#">
@@ -166,7 +169,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
-    <script src="js/scripts.js"></script>
+    <script src="js/detalharProduto.js"></script>
 </body>
 
 </html>
