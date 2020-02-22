@@ -22,4 +22,4 @@ const addItemsCarousel = (img, link, altImg) => {
 
 addItemsCarousel("img/home/bonec-selecao-1.png", "#", "selecao");
 addItemsCarousel("img/home/bonec-selecao-2.png", "#", "selecao");
-addItemsCarousel("img/home/bonec-palhaco.png", "#", "selecao");
+addItemsCarousel("img/home/boneco-palhaco.png", "#", "selecao");
