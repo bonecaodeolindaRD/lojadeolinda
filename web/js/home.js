@@ -36,7 +36,8 @@ const addToCart = (id) => {
     }
     else
         itemsCart.push({
-            id, quantity: 1
+            id, 
+            quantity: 1
         }
         );
 
@@ -44,11 +45,9 @@ const addToCart = (id) => {
 
 
 const removeToCart = id => {
-    console.log(itemsCart);
-    let obj = itemsCart.filter(x => x.id = id);
-    console.log(obj);
-    if (obj)
-        itemsCart.splice(itemsCart.indexOf(obj[0]), 1);
+    let item = itemsCart.find(x => x.id == id);
+    itemsCart.splice(itemsCart.indexOf(item), 1);
+    saveLocalStorage(itemsCart);
 }
 
 const addProducts = (id, img, altImg, title, desc, price) => {

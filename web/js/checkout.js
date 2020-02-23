@@ -11,11 +11,11 @@ let inputCidadeEntrega = document.querySelector("#cidade-entrega");
 
 //Pagamento
 
-// let inputTitularCartao = document.querySelector();
-// let inputCPFCartao = document.querySelector();
-// let inputnumeroCartao = document.querySelector();
-// let inputCVVCartao = document.querySelector();
-// let inputValidadeCartao = document.querySelector();
+let inputTitularCartao = document.querySelector("#nome-titular-cartao");
+let inputCPFCartao = document.querySelector("#cpf-titular-cartao");
+let inputNumeroCartao = document.querySelector("#numero-cartao");
+let inputCVVCartao = document.querySelector("#cvv-cartao");
+let inputValidadeCartao = document.querySelector("#data-cartao");
 let total = 0.00;
 
 //Conta
@@ -53,6 +53,18 @@ const addItemsResume = (title, img, price, quantity) => {
     divPriceEl.appendChild(pQuantityEl);
     divTitleEl.appendChild(h5TitleEl);
     divTitleEl.appendChild(imgItemEl);
+}
+
+const isEmpty = txt => txt.value == null && txt.length <= 0;
+
+const validCamp = obj => {
+    let result = isEmpty(obj.value)
+    if(result)
+        obj.setAttribute("class", "form-control is-invalid");
+    else
+        ogj.setAttribute("class", "form-control is-valid");
+    
+    return result;
 }
 
 const addTotal = (value) => {
@@ -98,9 +110,6 @@ const listarMunicios = (uf) => {
         );
 }
 
-inputEstadoEntrega.addEventListener("change", () => {
-    listarMunicios(inputEstadoEntrega.value);
-});
 
 const validarNumerosEQuantiade = (obj, tam) => {
     if (isNaN(obj.value))
@@ -127,9 +136,19 @@ inputCEPEntrega.addEventListener("keyup", () => {
         buscarCEP(inputCEPEntrega.value);
 });
 
+inputEstadoEntrega.addEventListener("change", () => listarMunicios(inputEstadoEntrega.value));
+
+inputNumeroCartao.addEventListener("keyup", () => validarNumerosEQuantiade(inputNumeroCartao, 16)
+);
+
+inputCPFCartao.addEventListener("keyup", () => validarNumerosEQuantiade(inputCPFCartao, 11));
+
+inputCVVCartao.addEventListener("keyup", () => validarNumerosEQuantiade(inputCVVCartao, 3));
+
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addTotal(total);
+
 
 listarEstados();
