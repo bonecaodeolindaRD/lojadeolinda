@@ -8,6 +8,7 @@ let inputNumeroEntrega = document.querySelector("#numero-entrega");
 let inputComplementoEntrega = document.querySelector("#complemento-entrega");
 let inputEstadoEntrega = document.querySelector("#estado-entrega");
 let inputCidadeEntrega = document.querySelector("#cidade-entrega");
+let divEndereco = document.querySelector("#enderecos div");
 
 //Pagamento
 
@@ -26,6 +27,20 @@ let inputSenhaConta = document.querySelector("#senha-conta");
 
 let btnFinalizar = document.querySelector("#btn-finalizar");
 
+
+const addEnderecoCad = (id, rua) => {
+    let labelEnderoEl = document.createElement("label");
+    let radioEnderecoEl = document.createElement("input");
+    radioEnderecoEl.setAttribute("id", id);
+    radioEnderecoEl.setAttribute("type", "radio");
+    radioEnderecoEl.setAttribute("name", "radio-endereco");
+    labelEnderoEl.setAttribute("for", "radio-endereco");
+    labelEnderoEl.innerText = rua + " ";
+    labelEnderoEl.appendChild(radioEnderecoEl);
+    radioEnderecoEl.innerText = rua;
+    divEndereco.appendChild(labelEnderoEl);
+    
+}
 
 const addItemsResume = (title, img, price, quantity) => {
     let divCardEl = document.createElement("div");
@@ -171,6 +186,7 @@ addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addTotal(total);
-
+addEnderecoCad(1, "Endereco 1");
+addEnderecoCad(1, "Endereco 2");
 
 listarEstados();
