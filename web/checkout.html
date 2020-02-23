@@ -151,13 +151,30 @@
                     <label for="senha-conta">Senha:</label>
                     <input id="senha-conta" class="form-control" type="password" placeholder="Senha da conta" />
                 </div>
-                <button type="submit" class="btn btn-warning col-12">Finalizar compra</button>
+                <button id="btn-finalizar" type="button" class="btn btn-warning col-12">Finalizar compra</button>
             </div>
         </form>
     </section>
 
+    <div id="modal-compra-finalizada "class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compra finalizada</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Parabéns por concluir a sua compra.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

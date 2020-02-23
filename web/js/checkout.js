@@ -20,8 +20,11 @@ let total = 0.00;
 
 //Conta
 
-//let inputSenhaConta = document.querySelector();
+let inputSenhaConta = document.querySelector("#senha-conta");
 
+//finalizar compra
+
+let btnFinalizar = document.querySelector("#btn-finalizar");
 
 
 const addItemsResume = (title, img, price, quantity) => {
@@ -59,11 +62,11 @@ const isEmpty = txt => txt.value == null && txt.length <= 0;
 
 const validCamp = obj => {
     let result = isEmpty(obj.value)
-    if(result)
+    if (result)
         obj.setAttribute("class", "form-control is-invalid");
     else
-        ogj.setAttribute("class", "form-control is-valid");
-    
+        obj.setAttribute("class", "form-control is-valid");
+
     return result;
 }
 
@@ -144,6 +147,25 @@ inputNumeroCartao.addEventListener("keyup", () => validarNumerosEQuantiade(input
 inputCPFCartao.addEventListener("keyup", () => validarNumerosEQuantiade(inputCPFCartao, 11));
 
 inputCVVCartao.addEventListener("keyup", () => validarNumerosEQuantiade(inputCVVCartao, 3));
+
+btnFinalizar.addEventListener("click", () => {
+    if (validCamp(inputCEPEntrega) ||
+        validCamp(inputRuaEntrega) ||
+        validCamp(inputNumeroEntrega) ||
+        validCamp(inputEstadoEntrega) ||
+        validCamp(inputCidadeEntrega) ||
+        validCamp(inputTitularCartao) ||
+        validCamp(inputCPFCartao) ||
+        validCamp(inputNumeroCartao) ||
+        validCamp(inputCVVCartao) ||
+        validCamp(inputValidadeCartao) ||
+        validCamp(inputSenhaConta)
+    )
+        return 0;
+
+    $("#modal-compra-finalizada").modal("show");
+}
+);
 
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
 addItemsResume("Titulo", "img/home/produtos/item 1.webp", "999.99", 1);
