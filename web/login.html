@@ -8,53 +8,58 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/stylelogin.css">
+  <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
 </head>
 
 <body>
   <main>
-    <div class="container text-center">
-      <div class="">
-        <div class="row login">
-          <div class="col-xs-12 col-md-2"></div>
+    <div class="conteiner">
+      <div class="row"></div>
+    </div>
+    <form>
+      <div class="conteiner col align-self-center">
+        <div class="col-xs-12 col-md-2"></div>
+        <div class="row justify-content-center ">
           <div class="col-xs-12 col-md-4">
             <div class="card border">
               <div class="card-header">
                 Login
               </div>
-              <form>
-                <div class="form-group c1 card1">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="form-group card1">
-                  <label for="exampleInputPassword1">Senha</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="card1 mb-3">
-                  <button type="submit" class="btn btn-success">Logar-se</button>
-                  <button type="submit" class="btn btn-danger" href="index.html">Cancelar</button>
-                </div>
-              </form>
+              <div class="form-group pr-3 pl-3 pt-2">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" placeholder="user@mail.com" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp">
+              </div>
+              <div class="form-group pr-3 pl-3 ">
+                <label for="passUsuario">Senha</label>
+                <input type="password" class="form-control" placeholder="Sua senha" id="passUsuario">
+              </div>
+              <div class="mb-2 p-3 text-center">
+                <button type="submit" class="btn btn-success">Logar-se</button>
+                <button type="submit" class="btn btn-danger" href="index.html">Cancelar</button>
+              </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-4 c3 ">
-            <div class="card">
+          <div class="col-xs-12 col-md-4">
+            <div class="card border">
               <div class="card-header">
                 Cadastro
               </div>
-              <h5 class="card-title c2">Loja De Olinda</h5>
-              <p class="card-text card1">Se você não possui cadastro conosco, cadastre-se agora mesmo clicando no botão
-                abaixo.
-              </p>
-              <div class="mb-3">
-              <a href="cadastro.html" class="btn btn-primary">Cadastre-se</a>
-            </div>
+              <div class="form-group pr-3 pl-3 pt-2">
+                <h5 class="card-title c2">Loja De Olinda</h5>
+                <p class="card-text card1">Se você não possui cadastro conosco, cadastre-se agora mesmo clicando no
+                  botão
+                  abaixo.
+                </p>
+                <div class="p-2 text-center">
+                  <a href="cadastro.html" class="btn btn-primary">Cadastre-se</a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-2"></div>
         </div>
       </div>
-    </div>
+    </form>
   </main>
   <footer>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -66,6 +71,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
+    <script src="./js/scriptlogin.js"></script>
   </footer>
 </body>
 
