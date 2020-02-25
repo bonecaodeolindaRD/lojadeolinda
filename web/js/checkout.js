@@ -39,7 +39,7 @@ const addEnderecoCad = (id, rua) => {
     labelEnderoEl.appendChild(radioEnderecoEl);
     radioEnderecoEl.innerText = rua;
     divEndereco.appendChild(labelEnderoEl);
-    
+
 }
 
 const addItemsResume = (title, img, price, quantity) => {
@@ -71,6 +71,33 @@ const addItemsResume = (title, img, price, quantity) => {
     divPriceEl.appendChild(pQuantityEl);
     divTitleEl.appendChild(h5TitleEl);
     divTitleEl.appendChild(imgItemEl);
+}
+
+const testaCPF = strCPF => {
+    var soma;
+    var resto;
+    soma = 0;
+    if (strCPF == "00000000000") return false;
+
+    for (i = 1; i <= 9; i++) 
+        soma = soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+    resto = (soma * 10) % 11;
+
+    if ((resto == 10) || (resto == 11)) 
+        resto = 0;
+    if (resto != parseInt(strCPF.substring(9, 10))) 
+        return false;
+
+    soma = 0;
+    for (i = 1; i <= 10; i++) 
+        soma = soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+    resto = (soma * 10) % 11;
+
+    if ((resto == 10) || (resto == 11)) 
+        resto = 0;
+    if (resto != parseInt(strCPF.substring(10, 11))) 
+        return false;
+    return true;
 }
 
 const isEmpty = txt => txt.value == null && txt.length <= 0;
@@ -177,6 +204,10 @@ btnFinalizar.addEventListener("click", () => {
         validCamp(inputSenhaConta)
     )
         return 0;
+    if(!testaCPF(inputCPFCartao.value)){
+        alert("CPF do titular do cartao invalido");
+        return 0;
+    }
 
     $("#modal-compra-finalizada").modal("show");
 }
