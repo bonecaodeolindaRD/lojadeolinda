@@ -4,23 +4,11 @@ let inputcepfrete = document.getElementById("cepFrete");
 
 btnCalcularFrete.addEventListener('click', () => {
 
-        let frete = document.getElementById("frete");
-       
-        if (ehTamanho(inputcepfrete.value, 8)) {
-
-                //frete.setAttribute('class', 'mt-2 freteSuceso');
-                frete.textContent = `Receba em até  10 dias úteis
-        R$200,00 `;
-        
-        } else {
-                //frete.setAttribute('class', 'mt-2 freteErro');
-                frete.textContent = `O CEP informado não foi localizado `;
-        }
-
-
+        buscarCep();
+   
 });
 
-const ehTamanho = (valor, tamanho) =>{
+const ehTamanho = (valor, tamanho) => {
 
         return valor.length == tamanho;
 }
@@ -41,3 +29,42 @@ inputcepfrete.addEventListener('keyup', (e) => {
         }
 
 });
+
+
+const  buscarCep = () =>{
+
+        let frete = document.getElementById("frete");
+
+        if (ehTamanho(inputcepfrete.value, 8)) {
+
+        let resposta = fetch('https://viacep.com.br/ws/' + inputcepfrete.value +'/json/')
+            .then((resposta) => {
+                return resposta.json()
+            })
+            .then((dados) => {
+    
+               console.log(dados);
+    
+               if(!dados.erro){
+    
+                frete.setAttribute('class', 'form-control mt-2 is-valid');
+                frete.textContent = `Receba em até 10 dias úteis - R$200,00 `;
+
+               }else{
+    
+                frete.setAttribute('class', 'form-control mt-2 is-invalid');
+                frete.textContent = `O CEP informado não foi localizado `;
+
+               }
+    
+              
+            });
+
+        }else{
+
+             frete.setAttribute('class', 'form-control mt-2 is-invalid');
+             frete.textContent = `Um CEP é composto por oito dígitos`;
+
+        }
+
+     }
