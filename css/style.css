@@ -1,0 +1,55 @@
+@media(max-width: 600px){
+    footer{
+        position: relative!important;       
+    } 
+} 
+
+#item{
+height:20px;
+width:50px;
+}
+
+li{
+	 list-style-type: none;
+	 overflow: hidden;
+     overflow-y: auto;
+}
+#preco{
+    position: absolute;
+    bottom: 10px;
+	right: 140px;
+	font-size: 30px;
+}
+#carrinho{
+	   position: absolute;
+    bottom: 10px;
+	right: 60px;
+  
+  
+}
+
+/*
+ <section class="col-12 mt-4">
+    <div class="row">
+	 <div>
+	  <img src="boneco.jpg" class="rounded float-left" alt="imagem do produtos">
+	 </div> 
+	 
+	
+	   <div class="card col-8">
+        
+         <h3>  Nome do produto </h3>	
+		 <section>
+         
+          <div class="card-body ">
+           <blockquote class="blockquote mb-0">
+            <h2> Descrição do produto </h2>
+			<p>Este produto é feito de tais materiais, sua resistencia é de tantos, mede tantos bla bla bla bla bla</p>
+           </blockquote>
+          </div>
+		  
+		 </section> 
+       </div>
+	  
+	  
+	</div>*/
