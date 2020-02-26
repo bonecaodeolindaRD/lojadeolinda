@@ -221,3 +221,4 @@ addEnderecoCad(1, "Endereco 1");
 addEnderecoCad(1, "Endereco 2");
 
 listarEstados();
+listarMunicios("AC");
