@@ -60,7 +60,7 @@ const addItemsResume = (title, img, price, quantity) => {
     imgItemEl.setAttribute("src", img);
     divPriceEl.setAttribute("class", "col-5");
     h6PriceEl.innerHTML = "R$ " + price * quantity;
-    total += parseFloat(price);
+    total += parseFloat(price) * quantity;
     pQuantityEl.innerHTML = "Quantidade: " + quantity;
 
     divCompra.appendChild(divCardEl);
