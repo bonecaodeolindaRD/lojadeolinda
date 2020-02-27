@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_a07120
 html{
     height: 100vh;
 }
@@ -15,4 +16,10 @@ footer{
     position: absolute;
     bottom: 0;
     width: 100vw;
+=======
+@media(max-width: 600px){
+    footer{
+        position: relative!important;       
+    } 
+>>>>>>> .merge_file_a04924
 }
