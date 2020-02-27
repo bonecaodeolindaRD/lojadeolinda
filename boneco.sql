@@ -5,7 +5,12 @@ use eboneco_de_olinda;
 create table enderecos(
 	id_endereco int primary key auto_increment,
     endereco varchar(255),
-    cep varchar(10)
+	bairro varchar(50),
+    cep varchar(10),
+	int id_cliente,
+	int id_fornecedor,
+	foreign key(id_cliente) references clientes(id_cliente),
+	foreign key(id_fornecedor) references fornecedores(id_fornecedor)
 );
 
 create table clientes(
@@ -14,8 +19,6 @@ create table clientes(
     cpf varchar(15) not null,
     email varchar(60) not null,
     senha varchar(255) not null,
-    id_endereco int,
-    foreign key(id_cliente) references enderecos(id_endereco)
 );
 
 create table categorias(
@@ -42,8 +45,6 @@ create table fornecedores(
 	id_fornecedor int primary key auto_increment,
     nome varchar(100),
     cnpj varchar(16),
-    id_endereco int,
-    foreign key(id_endereco) references enderecos(id_endereco)
 );
 
 create table produtos(
@@ -109,11 +110,11 @@ create table funcionarios(
 );
 
 alter table nfs add(
-	id_pedido int,
+	id_pedido int unique,
     foreign key(id_pedido) references pedidos(id_pedido)
 );
 
 alter table pedidos add(
-	id_nf int,
+	id_nf int unique,
     foreign key(id_nf) references nfs(id_nf)
 );
