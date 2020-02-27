@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< .merge_file_a07120
 html{
     height: 100vh;
@@ -17,9 +18,15 @@ footer{
     bottom: 0;
     width: 100vw;
 =======
+=======
+>>>>>>> 35ee84cfa6ff8122abdc1e6f583f533b134c408d
 @media(max-width: 600px){
     footer{
         position: relative!important;       
     } 
+<<<<<<< HEAD
 >>>>>>> .merge_file_a04924
 }
+=======
+}
+>>>>>>> 35ee84cfa6ff8122abdc1e6f583f533b134c408d
