@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Detalhe do Produto</title>
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/detalharProduto.css">
     <script src="https://kit.fontawesome.com/e05ffdb110.js"></script>
 </head>
 
@@ -20,7 +18,7 @@
         <nav class="navbar navbar-expand-md navbar-warning bg-warning">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" width="50" height="50" alt="">
+                    <img src="img/logo.png" width="50" height="50" alt="logo" title="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar5">
                     <i class="fas fa-bars"></i>
@@ -62,17 +60,72 @@
         </nav>
     </header>
 
+    <section class="container pt-5 pb-2">
 
-    <section class="container">
-        <div id="corrossel-bonecos" class="carousel slide mt-5" data-ride="carousel">
-            <div class="carousel-inner">
+        <div class="row">
 
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mb-3">
+                <a title="Galvão Bueno">
+                    <img src="img/galvao.jpg" class="rounded" width="100%"
+                        title="Imagem Produto" alt="Imagem do produto" />
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+                <h3>Bonecão Galvão Bueno</h3>
+                <hr class="soft" />
+                <form class="form-horizontal qtyFrm">
+                    <div class="control-group">
+                        <label class="control-label pb-2 pr-5"><h5>R$2.000,00</h5></label>
+                        <div class="controls mt-3">
+                            <input type="number" class="span1"  min="1" placeholder="Digite a Quantidade" />
+                            <a href="CarrinhoCompras.html" class="btn btn-warning"><i class="fas fa-shopping-cart"></i>
+                                Comprar</a>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-horizontal qtyFrm">
+                    <hr class="soft" />
+                    <div class="control-group">
+                        <label class="control-label pt-3"><h6>Calcular Frete e Prazo</h6></label>
+                        <div class="controls" id="controle">
+                            <input id="cepFrete" type="text" class="span1" placeholder="Digite o CEP" />
+                            <a type="text" id="calcularFrete" class="btn btn-warning"><i class="far fa-check-circle"></i>
+                                OK</a>
+                        </div>
+
+                        <p class="mt-2">
+
+                            <em id="frete">
+
+                            </em>
+                           
+                        </p> 
+
+                        <hr class="soft" />
+                    </div>
+                </form>
+
+               
+                <ul id="productDetail" class="nav nav-tabs pt-3">
+                    <li ><h6 data-toggle="tab">Descrição do Produto</h6></li>
+                </ul>
+
+                <table class="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div id="producs" class="row mt-5 p-2 mb-5">
 
-            
-        </div>
     </section>
 
 
@@ -80,7 +133,7 @@
         <div class="row">
             <div class="col-12 col-md">
                 <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" width="40" height="40" alt="">
+                    <img src="img/logo.png" width="40" height="40" alt="logo" title="logo">
                 </a>
                 <small class="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
             </div>
@@ -104,13 +157,13 @@
             <div class="col-6 col-md">
                 <h5 class="text-white">Fale Conosco</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Entrar em Contato</a></li>
+                    <li><a class="text-muted" href="Contato.html">Entrar em Contato</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">
                 <h5 class="text-white">Sobre</h5>
                 <ul class="list-unstyled text-small">
-                    <li> <a class="text-muted" href="sobre.html">Nossa História</a></li>
+                    <li><a class="text-muted" href="#">Nossa História</a></li>
                 </ul>
             </div>
         </div>
@@ -119,14 +172,14 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-        </script>
-    <script src="js/home.js"></script>
+    </script>
+    <script src="js/detalharProduto.js"></script>
 </body>
 
 </html>
