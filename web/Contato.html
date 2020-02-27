@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Contato</title>
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
-
+    <link rel="stylesheet" href="css/contato.css">
     <script src="https://kit.fontawesome.com/e05ffdb110.js"></script>
 </head>
 
@@ -20,7 +18,7 @@
         <nav class="navbar navbar-expand-md navbar-warning bg-warning">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" width="50" height="50" alt="">
+                    <img src="img/logo.png" width="50" height="50" alt="logo" title="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar5">
                     <i class="fas fa-bars"></i>
@@ -62,24 +60,64 @@
         </nav>
     </header>
 
-    <section class="container">
-        <div id="corrossel-bonecos" class="carousel slide mt-5" data-ride="carousel">
-            <div class="carousel-inner">
+    <main class="container">
+
+
+        <form class="mt-5" id="form-contato" method="get">
+
+            <div class="col-md-5 m-auto">
+
+                <header class="card-header bg-warning mb-3">
+                    <a class="fas fa-envelope-square" href="mailto:contato@lojadeolinda.com.br">
+                        contato@lojadeolinda.com.br</a>
+                </header>
+
+                <div class="form-group required">
+                    <label for="contatoNome" class="control-label">Nome Completo</label>
+                    <input type="text" class="form-control" id="contatoNome" name="contatoNome" required
+                        placeholder="Digite o seu nome completo">
+                </div>
+
+                <div class="form-group required">
+
+                    <label for="contatoEmail" class="control-label">E-mail</label>
+                    <input type="email" class="form-control" id="contatoEmail" name="contatoEmail" required
+                        placeholder="Digite o seu e-mail">
+
+                </div>
+
+                <div class="form-group row required">
+                    <div class="col-6">
+                        <label for="contatoTel" class="control-label">Telefone</label>
+                        <input type="tel" class="form-control" id="contatoTel" name="contatoTel" required
+                            placeholder="DDD + Número">
+                    </div>
+
+                </div>
+
+                <div class="form-group required">
+                    <label for="contatoMensagem" class="control-label">Mensagem</label>
+                    <textarea class="form-control" id="contatoMensagem" rows="6" required></textarea>
+                </div>
+
+                <p class="control-label-p">Campos obrigatórios</p>
+
+                <div class="text-center">
+                    <button id="enviarContato" type="submit" class="btn btn-success">Enviar</button>
+                    <button type="reset" class="btn btn-danger">Limpar</button>
+                </div>
+
 
             </div>
-        </div>
-        <div id="producs" class="row mt-5 p-2 mb-5">
 
-            
-        </div>
-    </section>
-
+        </form>
+    </main>
 
     <footer class="container-fluid py-5 navbar-dark bg-dark">
         <div class="row">
             <div class="col-12 col-md">
                 <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" width="40" height="40" alt="">
+                    <img src="img/logo.png" width="40" height="40" alt="logo" title="logo">
                 </a>
                 <small class="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
             </div>
@@ -103,30 +141,49 @@
             <div class="col-6 col-md">
                 <h5 class="text-white">Fale Conosco</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Entrar em Contato</a></li>
+                    <li><a class="text-muted" href="Contato.html">Entrar em Contato</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">
                 <h5 class="text-white">Sobre</h5>
                 <ul class="list-unstyled text-small">
-                  
-                    <li> <a class="text-muted" href="sobre.html">Nossa História</a></li>
+                    <li><a class="text-muted" href="#">Nossa História</a></li>
                 </ul>
             </div>
         </div>
     </footer>
 
+    <div id="enviarFormulario" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Deseja realmente enviar o formulário?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Entraremos em contato com você o mais breve possível.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button id="closeModal" type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-        </script>
-    <script src="js/home.js"></script>
+    </script>
+    <script src="js/contato.js"></script>
 </body>
 
 </html>

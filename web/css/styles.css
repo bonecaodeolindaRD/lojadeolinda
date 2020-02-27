@@ -1,4 +1,18 @@
- #item {
+html{
+    height: 100vh;
+}
+body{
+    min-height: 100vh;
+    position: relative;
+}
+body::after{
+    content: "";
+    display: block;
+    height: 60vh;
+}
+ 
+
+#item {
         height: 20px;
         width: 50px;
     }
@@ -27,8 +41,9 @@
 
     }
 
+
+
 @media(max-width: 600px){
     footer{
         position: relative!important;       
     } 
-}
