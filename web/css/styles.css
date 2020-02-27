@@ -5,12 +5,6 @@ body{
     min-height: 100vh;
     position: relative;
 }
-body::after{
-    content: "";
-    display: block;
-    height: 60vh;
-}
- 
 
 #item {
         height: 20px;
