@@ -17,12 +17,6 @@ body::after{
         width: 50px;
     }
 
-    li {
-        list-style-type: none;
-
-        overflow: hidden;
-        overflow-y: auto;
-    }
 
     #preco {
         position: absolute;
