@@ -5,12 +5,7 @@ use eboneco_de_olinda;
 create table enderecos(
 	id_endereco int primary key auto_increment,
     endereco varchar(255),
-	bairro varchar(50),
-    cep varchar(10),
-	int id_cliente,
-	int id_fornecedor,
-	foreign key(id_cliente) references clientes(id_cliente),
-	foreign key(id_fornecedor) references fornecedores(id_fornecedor)
+    cep varchar(10)
 );
 
 create table clientes(
@@ -19,6 +14,8 @@ create table clientes(
     cpf varchar(15) not null,
     email varchar(60) not null,
     senha varchar(255) not null,
+    id_endereco int,
+    foreign key(id_cliente) references enderecos(id_endereco)
 );
 
 create table categorias(
@@ -45,6 +42,8 @@ create table fornecedores(
 	id_fornecedor int primary key auto_increment,
     nome varchar(100),
     cnpj varchar(16),
+    id_endereco int,
+    foreign key(id_endereco) references enderecos(id_endereco)
 );
 
 create table produtos(
@@ -53,9 +52,7 @@ create table produtos(
     descricao varchar(255),
     imagem_produto varchar(255),
     valor decimal(6,2),
-    id_estoque int,
-    id_categoria int,
-    foreign key(id_estoque) references estoques(id_estoque),
+    id_categoria int, 
     foreign key(id_categoria) references categorias(id_categoria)
 );
 
@@ -109,12 +106,20 @@ create table funcionarios(
     foreign key (id_hierarquia) references hieraquias(id_hierarquia)
 );
 
+create table produtos_estoques(
+	id_produto int,
+	id_estoque int,
+	saldo int,
+	foreign key(id_produto) references produtos(id_produto),
+	foreign key(id_estoque) references estoques(id_estoque)
+);
+
 alter table nfs add(
-	id_pedido int unique,
+	id_pedido int,
     foreign key(id_pedido) references pedidos(id_pedido)
 );
 
 alter table pedidos add(
-	id_nf int unique,
+	id_nf int,
     foreign key(id_nf) references nfs(id_nf)
 );
