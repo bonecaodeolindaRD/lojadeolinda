@@ -19,25 +19,25 @@ export default class Products extends Component {
         this.state = {
             products: [
                 {
-                    img: "https://picsum.photos/200/300",
+                    img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
                     preco: 999.99
                 },
                 {
-                    img: "https://picsum.photos/200/300",
+                    img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
                     preco: 999.99
                 },
                 {
-                    img: "https://picsum.photos/200/300",
+                    img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
                     preco: 999.99
                 },
                 {
-                    img: "https://picsum.photos/200/300",
+                    img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
                     preco: 999.99
@@ -50,7 +50,7 @@ export default class Products extends Component {
             <Row>
                 {this.state.products.map(item => (
                     <Col md="3">
-                        <Card>
+                        <Card className="p-1">
                             <CardImg top width="100%" src={item.img} alt="Imagem do produto"/>
                             <CardBody>
                                 <CardTitle className="h5">{item.nome}</CardTitle>

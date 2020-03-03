@@ -5,6 +5,7 @@ import {
 } from 'reactstrap';
 
 import Produtos from '../Products';
+import Carrossel from '../Carrossel';
 
 export default class Home extends Component {
 
@@ -13,6 +14,7 @@ export default class Home extends Component {
         
         return (
 			<Container>
+                <Carrossel/>
 				<Produtos/>
 			</Container>
 		);
