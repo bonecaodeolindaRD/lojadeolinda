@@ -24,8 +24,7 @@ create table categorias(
 );
 
 create table estoques(
-	id_estoque int primary key auto_increment,
-    nome varchar(45) not null
+	id_estoque int primary key auto_increment
 );
 
 create table status_pedidos(
