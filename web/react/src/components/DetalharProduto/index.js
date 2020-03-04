@@ -11,7 +11,7 @@ export default class DetalharProduto extends Component {
         
             id: 1,
             img: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
-            nome: "Bonecão Galvão Bueno",
+            nome: "Bonecão Galvão Bueno ",
             descricao: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
             quantidade: 1,                
             precoUnitario: 999.99                    
