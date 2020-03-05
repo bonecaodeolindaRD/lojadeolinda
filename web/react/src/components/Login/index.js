@@ -40,7 +40,7 @@ class Login extends Component{
                   <Card body>
                     <CardTitle>Cadastro</CardTitle>
                     <CardText>Você não possui cadastro conosco ? Cadastre-se agora mesmo em nossa loja!</CardText>
-                    <Button href="/Cadastro">Cadastro</Button>
+                    <Button href="/cadastro">Cadastro</Button>
                   </Card>
                 </Col>
               </Row>
