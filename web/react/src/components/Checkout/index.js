@@ -17,6 +17,7 @@ export default class Checkout extends Component {
 
     constructor() {
         super();
+        this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.state = {
@@ -29,7 +30,7 @@ export default class Checkout extends Component {
                 complemento: "",
                 bairro: "",
                 cidade: "",
-                estado: "SP",
+                estado: "AC",
             },
             cliente: {
                 enderecos: [
@@ -76,6 +77,23 @@ export default class Checkout extends Component {
         this.listarCidades(evt.target.value);
     }
 
+    findAddress = async (evt) => {
+        let cep = evt.target.value;
+        if(cep.length === 9){
+            const {data: address} = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+            this.setState({...this.state,
+                    endereco: {
+                        ...this.state.endereco,
+                        rua: address.logradouro,
+                        cidade: address.localidade.replace(" ", ""),
+                        estado: address.uf,
+                        bairro: address.bairro
+                    }});
+            this.listarCidades(address.uf);
+        }
+        
+    }
+
     autoPreencher = (evt) => {
         if (evt.cep == null) {
             let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
@@ -105,7 +123,7 @@ export default class Checkout extends Component {
                 cep: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarRua = (e) => {
@@ -116,7 +134,7 @@ export default class Checkout extends Component {
                 rua: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarNumero = (e) => {
@@ -127,7 +145,7 @@ export default class Checkout extends Component {
                 numero: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarComplemento = (e) => {
@@ -138,7 +156,7 @@ export default class Checkout extends Component {
                 complemento: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarBairro = (e) => {
@@ -149,7 +167,7 @@ export default class Checkout extends Component {
                 bairro: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarCidade = (e) => {
@@ -160,7 +178,7 @@ export default class Checkout extends Component {
                 cidade: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     editarComplemento = (e) => {
@@ -171,7 +189,7 @@ export default class Checkout extends Component {
                 complemento: e.target.value
             }
         }
-        this.setState({ ...obj })
+        this.setState({ ...obj });
     }
 
     render() {
@@ -195,7 +213,7 @@ export default class Checkout extends Component {
                             )}
                             <FormGroup>
                                 <Label for="cep">Cep:</Label>
-                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="0" id="cep" tag={InputMask} onChange={this.editarCEP} />
+                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="" id="cep" tag={InputMask} onChange={this.editarCEP}  onKeyUp={this.findAddress}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="input-rua">Rua:</Label>
