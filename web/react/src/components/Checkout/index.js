@@ -8,7 +8,8 @@ import {
     FormGroup,
     Label,
     Input,
-    Form
+    Form,
+    Button
 } from 'reactstrap';
 
 import InputMask from 'react-input-mask';
@@ -75,6 +76,7 @@ export default class Checkout extends Component {
 
     mostrarCidades = (evt) => {
         this.listarCidades(evt.target.value);
+        this.editarEstado(evt);
     }
 
     findAddress = async (evt) => {
@@ -85,7 +87,7 @@ export default class Checkout extends Component {
                     endereco: {
                         ...this.state.endereco,
                         rua: address.logradouro,
-                        cidade: address.localidade.replace(" ", ""),
+                        cidade: typeof(address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
                         estado: address.uf,
                         bairro: address.bairro
                     }});
@@ -181,6 +183,18 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
+
+    editarEstado = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                estado: e.target.value
+            }
+        }
+        this.setState({ ...obj });
+    }
+
     editarComplemento = (e) => {
         let obj = {
             ...this.state,
@@ -192,10 +206,14 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
+    finish = (evt) => {
+        evt.preventDefault();
+    }
+
     render() {
         return (
             <Container ref={this.test}>
-                <Form>
+                <Form onSubmit={this.finish}>
                     <Row>
                         <Col md="4">
                             <h5 className="bg-warning p-2 text-center">Resumo</h5>
@@ -239,7 +257,8 @@ export default class Checkout extends Component {
                                 <Row>
                                     <Col xs="6">
                                         <Label for="estado">Estado:</Label>
-                                        <Input value={this.state.endereco.estado} type="select" id="estado" name="estado" onChange={this.mostrarCidades && this.editarEstado}>
+                                        
+                                        <Input value={this.state.endereco.estado} type="select" id="estado" name="estado" onChange={this.mostrarCidades}>
                                             {this.state.estados.map(estado => (<option value={estado.id}>{estado.estado}</option>))}
                                         </Input>
                                     </Col>
@@ -254,6 +273,33 @@ export default class Checkout extends Component {
                         </Col>
                         <Col md="4">
                             <h5 className="bg-warning p-2 text-center">Pagamento</h5>
+                            <FormGroup>
+                                <Label for="cpf-cartao">CPF Titular do cartão:</Label>
+                                <Input type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0"/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="nome-cartao">Titular do cartao:</Label>
+                                <Input type="text" id="nome-cartao" name="nome-cartao"/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="numero-cartao">Numero do cartão:</Label>
+                                <Input type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0"/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Row>
+                                    <Col xs="6">
+                                        <Label for="data-cartao">Data de validade:</Label>
+                                        <Input type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0"/>
+                                    </Col>
+                                    <Col xs="6">
+                                        <Label for="cvv-cartao">CVV:</Label>
+                                        <Input type="text" name="cvv-cartao" id="cvv-cartao" placeholder="000"/>
+                                    </Col>
+                                </Row>
+                            </FormGroup>
+                            <FormGroup>
+                                <Button type="submit">Finalizar compra</Button>
+                            </FormGroup>
                         </Col>
                     </Row>
                 </Form>
