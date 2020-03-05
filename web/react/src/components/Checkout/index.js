@@ -17,10 +17,38 @@ export default class Checkout extends Component {
 
     constructor() {
         super();
+        this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.state = {
             estados: [],
-            cidades: []
+            cidades: [],
+            endereco: {
+                cep: "00000-000"
+            },
+            cliente: {
+                enderecos: [
+                    {
+                        id: 1,
+                        cep: "00000000",
+                        rua: "Av. Paulista",
+                        numero: 550,
+                        bairro: "Higienopolis",
+                        cidade: "São Paulo",
+                        estado: "SP",
+                        complemento: ""
+                    },
+                    {
+                        id: 2,
+                        cep: "11111111",
+                        rua: "Av. Paulista",
+                        numero: 550,
+                        bairro: "Higienopolis",
+                        cidade: "São Paulo",
+                        estado: "SP",
+                        complemento: "Andar 8"
+                    }
+                ]
+            }
         }
         this.listarEstados();
         this.listarCidades("AC");
@@ -37,8 +65,19 @@ export default class Checkout extends Component {
     }
 
     mostrarCidades = (evt) => {
+        console.log(evt.target);
         this.listarCidades(evt.target.value);
     }
+
+    autoPreencher = (evt) => {
+        if(evt.cep == null)
+        {
+            let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
+            this.setState({endereco: end});
+            //inputCep.value = end.cep;
+        }
+    }
+
 
     render() {
         return (
@@ -51,41 +90,49 @@ export default class Checkout extends Component {
                         </Col>
                         <Col md="4">
                             <h5 className="bg-warning p-2 text-center">Entrega</h5>
+                            {(this.state.cliente.enderecos.length > 0) && (
+                                <FormGroup>
+                                    <Input type="select" id="input-enderecos" name="input-enderecos" onChange={this.autoPreencher}>
+                                        <option value="0" disabled selected>Enderecos cadastrados</option>
+                                        {this.state.cliente.enderecos.map(end => (<option value={end.id}>{`${end.rua}, ${end.numero}`}</option>))}
+                                    </Input>
+                                </FormGroup>
+                            )}
                             <FormGroup>
-                                <Label for="input-cep">Cep:</Label>
-                                <Input type="text" name="input-cep" mask="99999-999" maskChar=" " id="input-cep" tag={InputMask} />
+                                <Label for="cep">Cep:</Label>
+                                <Input type="text" name="cep" mask="99999-999" maskChar="0" id="cep" tag={InputMask}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="input-rua">Rua:</Label>
-                                <Input type="text" name="input-rua" id="input-rua" />
+                                <Input type="text" name="rua" id="rua" />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="4">
-                                        <Label for="input-numero-casa">Numero:</Label>
-                                        <Input type="text" name="input-numero-casa" id="input-numero-casa" />
+                                        <Label for="numero">Numero:</Label>
+                                        <Input type="text" name="numero-casa" id="numero" />
                                     </Col>
                                     <Col xs="8">
                                         <Label for="input-numero-casa">Complemento:</Label>
-                                        <Input type="text" name="input-complemento-casa" id="input-complemento-casa" />
+                                        <Input type="text" name="complemento" id="complemento" />
                                     </Col>
                                 </Row>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="input-bairro">Bairro:</Label>
-                                <Input type="text" id="input-bairro" name="input-bairro" />
+                                <Input type="text" id="bairro" name="bairro" />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
-                                        <Label for="input-estado">Estado:</Label>
-                                        <Input type="select" id="input-estado" name="input-estado" onChange={this.mostrarCidades}>
+                                        <Label for="estado">Estado:</Label>
+                                        <Input type="select" id="estado" name="estado" onChange={this.mostrarCidades}>
                                             {this.state.estados.map(estado => (<option value={estado.id}>{estado.estado}</option>))}
                                         </Input>
                                     </Col>
                                     <Col xs="6">
-                                        <Label for="input-cidade">Cidade:</Label>
-                                        <Input type="select" id="input-cidade" name="input-cidade">
+                                        <Label for="cidade">Cidade:</Label>
+                                        <Input type="select" id="cidade" name="cidade">
                                             {this.state.cidades.map(cidade => (<option value={cidade.cidade.replace(" ", "")}>{cidade.cidade}</option>))}
                                         </Input>
                                     </Col>
