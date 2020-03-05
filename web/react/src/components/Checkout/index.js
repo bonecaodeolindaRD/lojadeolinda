@@ -23,7 +23,13 @@ export default class Checkout extends Component {
             estados: [],
             cidades: [],
             endereco: {
-                cep: "00000-000"
+                cep: "",
+                rua: "",
+                numero: 0,
+                complemento: "",
+                bairro: "",
+                cidade: "",
+                estado: "SP",
             },
             cliente: {
                 enderecos: [
@@ -32,20 +38,20 @@ export default class Checkout extends Component {
                         cep: "00000000",
                         rua: "Av. Paulista",
                         numero: 550,
+                        complemento: "",
                         bairro: "Higienopolis",
-                        cidade: "São Paulo",
+                        cidade: "São Paulo".replace(" ", ""),
                         estado: "SP",
-                        complemento: ""
                     },
                     {
                         id: 2,
                         cep: "11111111",
-                        rua: "Av. Paulista",
+                        rua: "Av. Pres. Costa e Silva",
                         numero: 550,
-                        bairro: "Higienopolis",
-                        cidade: "São Paulo",
+                        complemento: "Loja 1",
+                        bairro: "Helena Maria",
+                        cidade: "Osasco".replace(" ", ""),
                         estado: "SP",
-                        complemento: "Andar 8"
                     }
                 ]
             }
@@ -60,28 +66,117 @@ export default class Checkout extends Component {
     }
 
     listarCidades = async (estado) => {
-        const { data : cidades } = await axios(`${this.LINK_ESTADO_CIDADE}/${estado}/cidades`);
-        this.setState({ cidades });
+        const { data: cidades } = await axios(`${this.LINK_ESTADO_CIDADE}/${estado}/cidades`);
+        this.setState({
+            cidades
+        });
     }
 
     mostrarCidades = (evt) => {
-        console.log(evt.target);
         this.listarCidades(evt.target.value);
     }
 
     autoPreencher = (evt) => {
-        if(evt.cep == null)
-        {
+        if (evt.cep == null) {
             let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
-            this.setState({endereco: end});
-            //inputCep.value = end.cep;
-        }
+            let obj = {
+                ...this.state,
+                endereco: {
+                    cep: end.cep,
+                    rua: end.rua,
+                    numero: end.numero,
+                    complemento: end.complemento,
+                    bairro: end.bairro,
+                    cidade: end.cidade.replace(" ", ""),
+                    estado: end.estado
+                }
+            }
+
+            this.setState({ ...obj });
+            this.listarCidades(this.state.endereco.estado);
+        } 
     }
 
+    editarCEP = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                cep: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarRua = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                rua: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarNumero = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                numero: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarComplemento = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                complemento: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarBairro = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                bairro: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarCidade = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                cidade: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
+
+    editarComplemento = (e) => {
+        let obj = {
+            ...this.state,
+            endereco: {
+                ...this.state.endereco,
+                complemento: e.target.value
+            }
+        }
+        this.setState({ ...obj })
+    }
 
     render() {
         return (
-            <Container>
+            <Container ref={this.test}>
                 <Form>
                     <Row>
                         <Col md="4">
@@ -100,39 +195,39 @@ export default class Checkout extends Component {
                             )}
                             <FormGroup>
                                 <Label for="cep">Cep:</Label>
-                                <Input type="text" name="cep" mask="99999-999" maskChar="0" id="cep" tag={InputMask}/>
+                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="0" id="cep" tag={InputMask} onChange={this.editarCEP} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="input-rua">Rua:</Label>
-                                <Input type="text" name="rua" id="rua" />
+                                <Input value={this.state.endereco.rua} type="text" name="rua" id="rua" onChange={this.editarRua} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="4">
                                         <Label for="numero">Numero:</Label>
-                                        <Input type="text" name="numero-casa" id="numero" />
+                                        <Input value={this.state.endereco.numero} type="text" name="numero-casa" id="numero" onChange={this.editarNumero} />
                                     </Col>
                                     <Col xs="8">
                                         <Label for="input-numero-casa">Complemento:</Label>
-                                        <Input type="text" name="complemento" id="complemento" />
+                                        <Input value={this.state.endereco.complemento} type="text" name="complemento" id="complemento" onChange={this.editarComplemento} />
                                     </Col>
                                 </Row>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="input-bairro">Bairro:</Label>
-                                <Input type="text" id="bairro" name="bairro" />
+                                <Input value={this.state.endereco.bairro} type="text" id="bairro" name="bairro" onChange={this.editarBairro} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
                                         <Label for="estado">Estado:</Label>
-                                        <Input type="select" id="estado" name="estado" onChange={this.mostrarCidades}>
+                                        <Input value={this.state.endereco.estado} type="select" id="estado" name="estado" onChange={this.mostrarCidades && this.editarEstado}>
                                             {this.state.estados.map(estado => (<option value={estado.id}>{estado.estado}</option>))}
                                         </Input>
                                     </Col>
                                     <Col xs="6">
                                         <Label for="cidade">Cidade:</Label>
-                                        <Input type="select" id="cidade" name="cidade">
+                                        <Input value={this.state.endereco.cidade} type="select" id="cidade" name="cidade" onChange={this.editarCidade}>
                                             {this.state.cidades.map(cidade => (<option value={cidade.cidade.replace(" ", "")}>{cidade.cidade}</option>))}
                                         </Input>
                                     </Col>
