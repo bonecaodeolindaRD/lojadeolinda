@@ -3,7 +3,7 @@ import { Col, Row, Container, Input} from 'reactstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 import './index.css';
 
-export default class Carrinho extends Component {
+export default class Cart extends Component {
  
     constructor(){
       super();
@@ -11,8 +11,8 @@ export default class Carrinho extends Component {
           produtos: [
               {
                   id: 1,
-                  img: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
-                  nome: "Bonecão Galvão Bueno",
+                  image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
+                  name: "Bonecão Galvão Bueno",
                   quantidade: 1,                
                   precoUnitario: 999.99,
                   

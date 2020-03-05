@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, FormText, Col} from 'reactstrap'
 import { FaEnvelopeSquare } from 'react-icons/fa';
 import './index.css';
 
-export default class Contato extends Component {
+export default class Contact extends Component {
 
    
   render() {

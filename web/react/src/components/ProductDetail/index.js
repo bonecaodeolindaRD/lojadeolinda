@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, Input, FormGroup } from 'reactstrap';
-import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
-import CalcularFrete from '../CalcularFrete';
+import { FaShoppingCart } from 'react-icons/fa';
+import ShippingCalculator from '../ShippingCalculator';
 
 
-export default class DetalharProduto extends Component {
+export default class ProductDetail extends Component {
 
     constructor(){
         super();
@@ -49,7 +49,7 @@ export default class DetalharProduto extends Component {
                     </FormGroup>
                 </Form>
 
-                <CalcularFrete/>
+                <ShippingCalculator/>
             
                 <ListGroup id="productDetail" className="nav nav-tabs pt-3">
                     <ListGroupItem><h6 data-toggle="tab">Descrição do Produto</h6></ListGroupItem>

@@ -4,7 +4,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 // import { Container } from './styles';
 
-export default class CalcularFrete extends Component {
+export default class ShippingCalculator extends Component {
     
     constructor(props) {
         super(props);
