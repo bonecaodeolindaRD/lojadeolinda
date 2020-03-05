@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, Input, FormGroup } from 'reactstrap';
 import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
+import CalcularFrete from '../CalcularFrete';
 
 
 export default class DetalharProduto extends Component {
@@ -17,7 +18,13 @@ export default class DetalharProduto extends Component {
             precoUnitario: 999.99                    
         }
      }
-      
+
+ 
+     change(event) {
+        this.setState({ quantidade: event.target.value });       
+      };
+
+     
   render() {
     return (
 
@@ -37,20 +44,12 @@ export default class DetalharProduto extends Component {
                 <Form className="form-horizontal qtyFrm">
                     <FormGroup className="control-group">
                         <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${this.state.precoUnitario}</h5></Label >
-                         <Input type="number" min="1" placeholder="Digite a quantidade" id="qtd" value={this.state.quantidade} className="col-6 mb-2"  />
+                         <Input type="number" placeholder="Digite a quantidade" id="qtd"  value={this.state.quantidade} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
                                 <Button outline color="warning"> <FaShoppingCart/> Comprar</Button>
                     </FormGroup>
                 </Form>
 
-                <Form className="form-horizontal qtyFrm">
-                    <hr className="soft" />
-                    <FormGroup className="control-group">
-                        <Label for="cepFrete"  className="control-label pt-3"><h6>Calcular Frete e Prazo</h6></Label>
-                            <Input id="cepFrete" type="text" className="col-6 mb-2" placeholder="Digite o CEP" />
-                            <Button outline color="warning"> <FaCheckCircle/> OK</Button>
-                        <hr className="soft" />
-                    </FormGroup>
-                </Form>
+                <CalcularFrete/>
             
                 <ListGroup id="productDetail" className="nav nav-tabs pt-3">
                     <ListGroupItem><h6 data-toggle="tab">Descrição do Produto</h6></ListGroupItem>
