@@ -1,0 +1,39 @@
+.itensProduto{
+    display:flex;    
+  align-items:flex-end;
+  margin-right: 30px;
+  
+ 
+}
+.tirarBorda{
+    border-style:none;
+}
+.descricaoProduto{
+    padding: 0;
+    
+}
+.precoProduto{
+    text-align: right; 
+    margin-right: 0;
+    display:flex;    
+    align-items:flex-end;
+    font-size: 20px;
+}
+.carrinho{
+        background: #ffffff;
+        color : black;
+        border: none;
+}
+.carrinho :hover{
+    height: 45px;
+    width: 45px;
+    
+}
+
+.bordasLista{
+    border: 3px;
+    border-style: outset;
+    border-radius: 8px;
+    margin-right: 25px;
+    margin-left: 25px;
+}
