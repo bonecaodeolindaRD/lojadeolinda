@@ -1,19 +1,19 @@
 import React from 'react';
-import Header from './components/Header';
-//import Footer from './components/Footer';
+
 import { PaginaDeProdutos } from './components/ListaDeProdutos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.css';
 import { Produto } from './components/Produto';
+import Header from './components/Header';
 
 
 function App() {
   return (
     <>
-      <Header />
+      <Header/>
       < PaginaDeProdutos /> 
       <Produto/>
-        {/* <Footer/> */}
+       
      </>
     
   );
