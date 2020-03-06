@@ -14,6 +14,8 @@ import {
 
 import InputMask from 'react-input-mask';
 
+import Header from '../Header';
+
 export default class Checkout extends Component {
 
     constructor() {
@@ -22,7 +24,7 @@ export default class Checkout extends Component {
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.state = {
-            erro: "",
+            erro: " ",
             states: [],
             cities: [],
             address: {
@@ -81,7 +83,6 @@ export default class Checkout extends Component {
         this.setState({
             cities
         });
-        console.log(cities)
     }
 
     showCities = (evt) => {
@@ -93,14 +94,15 @@ export default class Checkout extends Component {
         let cep = evt.target.value;
         if (cep.length === 9) {
             const { data: address } = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+
             this.setState({
                 ...this.state,
                 address: {
                     ...this.state.address,
-                    street: address.logradouro,
-                    citie: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
-                    state: address.uf,
-                    district: address.bairro
+                    aStreet: address.logradouro,
+                    aCitie: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
+                    aState: address.uf,
+                    aDistrict: address.bairro
                 }
             });
             this.listCities(address.uf);
@@ -124,7 +126,7 @@ export default class Checkout extends Component {
         }
 
         this.setState({ ...obj });
-        this.listCities(obj.address.state);
+        this.listCities(obj.address.aState);
 
     }
 
@@ -153,13 +155,58 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
+    isEmpty = str => str.toString().trim().length <= 0;
+
+    validateFields = () => {
+        if(this.isEmpty(this.state.address.aCep)){
+            this.setState({ erro: "Digite o CEP!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.address.aStreet)){
+            this.setState({ erro: "Digite o nome da rua!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.address.aNumber)){
+            this.setState({ erro: "Digite o numero do local!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.address.aDistrict)){
+            this.setState({ erro: "Digite o bairro!"});
+            return false;
+        }
+        if (!this.testCPF(this.state.client.card.cCPF)) {
+            this.setState({ erro: "CPF Invalido!" });
+            return false;
+        }
+        if(this.isEmpty(this.state.client.card.cCPF)){
+            this.setState({ erro: "Digite o CPF do titular do cartão!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.client.card.cHolder)){
+            this.setState({ erro: "Digite o nome do titular do cartão!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.client.card.cNumber)){
+            this.setState({ erro: "Digite o numero do cartão!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.client.card.cDate)){
+            this.setState({ erro: "Digite a data de validade do cartão!"});
+            return false;
+        }
+        if(this.isEmpty(this.state.client.card.cCVV)){
+            this.setState({ erro: "Digite o codigo de segurança do cartão!"});
+            return false;
+        }
+        return true;
+    }
+
     finish = (evt) => {
         evt.preventDefault();
-        if (!this.testCPF(this.state.client.card.cpf)) {
-            this.setState({ erro: "CPF Invalido!" });
+        if (!this.validateFields()) 
             return;
-        }
-        this.setState({ erro: "" });
+
+        alert("Sucesso");
     }
 
     testCPF = (strCPF) => {
@@ -167,7 +214,7 @@ export default class Checkout extends Component {
         let resto;
         let cpf = ""
 
-        for (let i = 0; i < strCPF.length; i++) {
+        for (let i = 0; i < strCPF.toString().length; i++) {
             let char = strCPF.substring(i, i + 1);
             if (char !== "." && char !== "-")
                 cpf += char;
@@ -205,101 +252,104 @@ export default class Checkout extends Component {
 
     render() {
         return (
-            <Container ref={this.test}>
-                <Form onSubmit={this.finish}>
-                    <Row>
-                        <Col md="4">
-                            <h5 className="bg-warning p-2 text-center">Resumo</h5>
+            <>
+                <Header />
+                <Container ref={this.test}>
+                    <Form onSubmit={this.finish}>
+                        <Row>
+                            <Col md="4">
+                                <h5 className="bg-warning p-2 text-center">Resumo</h5>
 
-                        </Col>
-                        <Col md="4">
-                            <h5 className="bg-warning p-2 text-center">Entrega</h5>
-                            {(this.state.client.addresses.length > 0) && (
+                            </Col>
+                            <Col md="4">
+                                <h5 className="bg-warning p-2 text-center">Entrega</h5>
+                                {(this.state.client.addresses.length > 0) && (
+                                    <FormGroup>
+                                        <Input type="select" id="input-addresses" name="input-addresses" onChange={this.autoFill}>
+                                            <option value="0" disabled selected>Enderecos cadastrados</option>
+                                            {this.state.client.addresses.map(end => (<option value={end.id}>{`${end.aStreet}, ${end.aNumber}`}</option>))}
+                                        </Input>
+                                    </FormGroup>
+                                )}
                                 <FormGroup>
-                                    <Input type="select" id="input-addresses" name="input-addresses" onChange={this.autoFill}>
-                                        <option value="0" disabled selected>Enderecos cadastrados</option>
-                                        {this.state.client.addresses.map(end => (<option value={end.id}>{`${end.aStreet}, ${end.aNumber}`}</option>))}
-                                    </Input>
+                                    <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
+                                    <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
                                 </FormGroup>
-                            )}
-                            <FormGroup>
-                                <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
-                                <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="input-street"><span className="text-danger">*</span>Rua:</Label>
-                                <Input value={this.state.address.aStreet} type="text" name="aStreet" id="aStreet" onChange={this.editAddress} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs="4">
-                                        <Label for="aNumber"><span className="text-danger">*</span>Numero:</Label>
-                                        <Input value={this.state.address.aNumber} type="text" name="aNumber" id="aNumber" onChange={this.editAddress} />
-                                    </Col>
-                                    <Col xs="8">
-                                        <Label for="aComplement">Complemento:</Label>
-                                        <Input value={this.state.address.aComplement} type="text" name="aComplement" id="aComplement" onChange={this.editAddress} />
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="input-district"><span className="text-danger">*</span>Bairro:</Label>
-                                <Input value={this.state.address.aDistrict} type="text" id="aDistrict" name="aDistrict" onChange={this.editAddress} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs="6">
-                                        <Label for="aState"><span className="text-danger">*</span>Estado:</Label>
+                                <FormGroup>
+                                    <Label for="input-street"><span className="text-danger">*</span>Rua:</Label>
+                                    <Input value={this.state.address.aStreet} type="text" name="aStreet" id="aStreet" onChange={this.editAddress} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs="4">
+                                            <Label for="aNumber"><span className="text-danger">*</span>Numero:</Label>
+                                            <Input value={this.state.address.aNumber} type="text" name="aNumber" id="aNumber" onChange={this.editAddress} />
+                                        </Col>
+                                        <Col xs="8">
+                                            <Label for="aComplement">Complemento:</Label>
+                                            <Input value={this.state.address.aComplement} type="text" name="aComplement" id="aComplement" onChange={this.editAddress} />
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="input-district"><span className="text-danger">*</span>Bairro:</Label>
+                                    <Input value={this.state.address.aDistrict} type="text" id="aDistrict" name="aDistrict" onChange={this.editAddress} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs="6">
+                                            <Label for="aState"><span className="text-danger">*</span>Estado:</Label>
 
-                                        <Input value={this.state.address.state} type="select" id="aState" name="aState" onChange={this.showCities}>
-                                            {this.state.states.map(state => (<option value={state.id}>{state.estado}</option>))}
-                                        </Input>
-                                    </Col>
-                                    <Col xs="6">
-                                        <Label for="aCitie"><span className="text-danger">*</span>Cidade:</Label>
-                                        <Input value={this.state.address.citie} type="select" id="aCitie" name="aCitie" onChange={this.editAddress}>
-                                            {this.state.cities.map(citie => (<option value={citie.cidade}>{citie.cidade}</option>))}
-                                        </Input>
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                        </Col>
-                        <Col md="4">
-                            <h5 className="bg-warning p-2 text-center">Pagamento</h5>
-                            <FormGroup>
-                                <Label for="cCPF"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
-                                <Input value={this.state.client.card.cCPF} type="text" name="cCPF" id="cCPF" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCard} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="cHolder"><span className="text-danger">*</span>Titular do card:</Label>
-                                <Input value={this.state.client.card.cHolder} type="text" id="cHolder" name="cHolder" onChange={this.editCard} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="cNumber"><span className="text-danger">*</span>Numero do cartão:</Label>
-                                <Input value={this.state.client.card.cNumber} type="text" name="cNumber" id="cNumber" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editCard} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs="6">
-                                        <Label for="cDate"><span className="text-danger">*</span>Data de validade:</Label>
-                                        <Input value={this.state.client.card.cDate} type="text" name="cDate" id="cDate" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editCard} />
-                                    </Col>
-                                    <Col xs="6">
-                                        <Label for="cCVV"><span className="text-danger">*</span>CVV:</Label>
-                                        <Input value={this.state.client.card.cCVV} type="text" name="cCVV" id="cCVV" mask="999" tag={InputMask} onChange={this.editCard} />
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                            <FormGroup>
-                                <span className="text-danger">{this.state.erro}</span>
-                            </FormGroup>
-                            <FormGroup>
-                                <Button type="submit">Finalizar compra</Button>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                </Form>
-            </Container >
+                                            <Input value={this.state.address.aState} type="select" id="aState" name="aState" onChange={this.showCities}>
+                                                {this.state.states.map(state => (<option value={state.id}>{state.estado}</option>))}
+                                            </Input>
+                                        </Col>
+                                        <Col xs="6">
+                                            <Label for="aCitie"><span className="text-danger">*</span>Cidade:</Label>
+                                            <Input value={this.state.address.aCitie} type="select" id="aCitie" name="aCitie" onChange={this.editAddress}>
+                                                {this.state.cities.map(citie => (<option value={citie.cidade}>{citie.cidade}</option>))}
+                                            </Input>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </Col>
+                            <Col md="4">
+                                <h5 className="bg-warning p-2 text-center">Pagamento</h5>
+                                <FormGroup>
+                                    <Label for="cCPF"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
+                                    <Input value={this.state.client.card.cCPF} type="text" name="cCPF" id="cCPF" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCard} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="cHolder"><span className="text-danger">*</span>Titular do card:</Label>
+                                    <Input value={this.state.client.card.cHolder} type="text" id="cHolder" name="cHolder" onChange={this.editCard} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="cNumber"><span className="text-danger">*</span>Numero do cartão:</Label>
+                                    <Input value={this.state.client.card.cNumber} type="text" name="cNumber" id="cNumber" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editCard} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Row>
+                                        <Col xs="6">
+                                            <Label for="cDate"><span className="text-danger">*</span>Data de validade:</Label>
+                                            <Input value={this.state.client.card.cDate} type="text" name="cDate" id="cDate" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editCard} />
+                                        </Col>
+                                        <Col xs="6">
+                                            <Label for="cCVV"><span className="text-danger">*</span>CVV:</Label>
+                                            <Input value={this.state.client.card.cCVV} type="text" name="cCVV" id="cCVV" mask="999" tag={InputMask} onChange={this.editCard} />
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <FormGroup>
+                                    <span className="text-danger">{this.state.erro}</span>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button type="submit">Finalizar compra</Button>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Container >
+            </>
         );
     }
 }

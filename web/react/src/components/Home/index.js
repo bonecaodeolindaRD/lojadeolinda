@@ -6,17 +6,23 @@ import {
 
 import Produtos from '../Products';
 import Carrossel from '../Carrossel';
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default class Home extends Component {
 
-    
+
     render() {
-        
+
         return (
-			<Container>
-                <Carrossel/>
-				<Produtos/>
-			</Container>
-		);
+            <>
+                <Header />
+                <Container>
+                    <Carrossel />
+                    <Produtos />
+                </Container>
+                <Footer />
+            </>
+        );
     }
 }
