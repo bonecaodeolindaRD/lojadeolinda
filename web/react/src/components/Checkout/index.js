@@ -22,6 +22,7 @@ export default class Checkout extends Component {
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.state = {
+            erro: "",
             estados: [],
             cidades: [],
             endereco: {
@@ -34,6 +35,13 @@ export default class Checkout extends Component {
                 estado: "AC",
             },
             cliente: {
+                cartao: {
+                    titular: "",
+                    numero: "",
+                    cpf: "",
+                    cvv: "",
+                    data: ""
+                },
                 enderecos: [
                     {
                         id: 1,
@@ -206,9 +214,115 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
+    editarCartaoTitular = (e) => {
+        let obj = {
+            ...this.state,
+            cliente: {
+                ...this.state.cliente,
+                cartao: {...this.state.cliente.cartao,
+                        titular: e.target.value
+                    }},
+        }
+        this.setState({...obj });
+    }
+
+    editarCartaoNumero = (e) => {
+        let obj = {
+            ...this.state,
+            cliente: {
+                ...this.state.cliente,
+                cartao: {...this.state.cliente.cartao,
+                        numero: e.target.value
+                    }},
+        }
+        this.setState({...obj });
+    }
+
+    editarCartaoCvv = (e) => {
+        let obj = {
+            ...this.state,
+            cliente: {
+                ...this.state.cliente,
+                cartao: {...this.state.cliente.cartao,
+                        cvv: e.target.value
+                    }},
+        }
+        this.setState({...obj });
+    }
+
+    editarCartaoData = (e) => {
+        let obj = {
+            ...this.state,
+            cliente: {
+                ...this.state.cliente,
+                cartao: {...this.state.cliente.cartao,
+                        data: e.target.value
+                    }},
+        }
+        this.setState({...obj });
+    }
+
+    editarCartaoCpf = (e) => {
+        let obj = {
+            ...this.state,
+            cliente: {
+                ...this.state.cliente,
+                cartao: {...this.state.cliente.cartao,
+                        cpf: e.target.value
+                    }},
+        }
+        this.setState({...obj });
+    }
+
     finish = (evt) => {
         evt.preventDefault();
+        if(!this.testCPF(this.state.cliente.cartao.cpf)){
+            this.setState({erro: "CPF Invalido!"});
+            return;
+        }
+        this.setState({erro: ""});
     }
+
+    testCPF = (strCPF) => {
+        let soma;
+        let resto;
+        let cpf = ""
+        
+        for(let i = 0; i < strCPF.length; i++){
+            let char = strCPF.substring(i, i+1);
+            if(char != "." && char != "-")
+                cpf+=char;
+        }
+        soma = 0;
+        if (cpf == "00000000000") 
+            return false;
+        console.log("passei")
+        for (let i=1; i<=9; i++) 
+            soma = soma + parseInt(cpf.substring(i-1, i)) * (11 - i);
+        resto = (soma * 10) % 11;
+
+      
+       
+        if ((resto == 10) || (resto == 11))  
+            resto = 0;
+        if (resto != parseInt(cpf.substring(9, 10)) ) 
+            return false;
+
+  
+       
+        soma = 0;
+        for (let i = 1; i <= 10; i++) 
+            soma = soma + parseInt(cpf.substring(i-1, i)) * (12 - i);
+        resto = (soma * 10) % 11;
+       
+        if ((resto == 10) || (resto == 11))  
+            resto = 0;
+        if (resto != parseInt(cpf.substring(10, 11) ) ) 
+            return false;
+
+        return true;
+    }
+
 
     render() {
         return (
@@ -275,28 +389,29 @@ export default class Checkout extends Component {
                             <h5 className="bg-warning p-2 text-center">Pagamento</h5>
                             <FormGroup>
                                 <Label for="cpf-cartao">CPF Titular do cartão:</Label>
-                                <Input type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0"/>
+                                <Input value={this.state.cliente.cartao.cpf} type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editarCartaoCpf}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="nome-cartao">Titular do cartao:</Label>
-                                <Input type="text" id="nome-cartao" name="nome-cartao"/>
+                                <Input value={this.state.cliente.cartao.titular} type="text" id="nome-cartao" name="nome-cartao" onChange={this.editarCartaoTitular}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="numero-cartao">Numero do cartão:</Label>
-                                <Input type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0"/>
+                                <Input value={this.state.cliente.cartao.numero} type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoNumero}/>
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
                                         <Label for="data-cartao">Data de validade:</Label>
-                                        <Input type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0"/>
+                                        <Input value={this.state.cliente.cartao.data} type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoData}/>
                                     </Col>
                                     <Col xs="6">
                                         <Label for="cvv-cartao">CVV:</Label>
-                                        <Input type="text" name="cvv-cartao" id="cvv-cartao" placeholder="000"/>
+                                        <Input value={this.state.cliente.cartao.cvv} type="text" name="cvv-cartao" id="cvv-cartao"  mask="999" tag={InputMask} onChange={this.editarCartaoCvv}/>
                                     </Col>
                                 </Row>
                             </FormGroup>
+                            <span color="red">{this.state.erro}</span>
                             <FormGroup>
                                 <Button type="submit">Finalizar compra</Button>
                             </FormGroup>
