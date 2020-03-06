@@ -89,40 +89,41 @@ export default class Checkout extends Component {
 
     findAddress = async (evt) => {
         let cep = evt.target.value;
-        if(cep.length === 9){
-            const {data: address} = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
-            this.setState({...this.state,
-                    endereco: {
-                        ...this.state.endereco,
-                        rua: address.logradouro,
-                        cidade: typeof(address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
-                        estado: address.uf,
-                        bairro: address.bairro
-                    }});
+        if (cep.length === 9) {
+            const { data: address } = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+            this.setState({
+                ...this.state,
+                endereco: {
+                    ...this.state.endereco,
+                    rua: address.logradouro,
+                    cidade: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
+                    estado: address.uf,
+                    bairro: address.bairro
+                }
+            });
             this.listarCidades(address.uf);
         }
-        
+
     }
 
     autoPreencher = (evt) => {
-        if (evt.cep == null) {
-            let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
-            let obj = {
-                ...this.state,
-                endereco: {
-                    cep: end.cep,
-                    rua: end.rua,
-                    numero: end.numero,
-                    complemento: end.complemento,
-                    bairro: end.bairro,
-                    cidade: end.cidade.replace(" ", ""),
-                    estado: end.estado
-                }
+        let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
+        let obj = {
+            ...this.state,
+            endereco: {
+                cep: end.cep,
+                rua: end.rua,
+                numero: end.numero,
+                complemento: end.complemento,
+                bairro: end.bairro,
+                cidade: end.cidade.replace(" ", ""),
+                estado: end.estado
             }
+        }
 
-            this.setState({ ...obj });
-            this.listarCidades(this.state.endereco.estado);
-        } 
+        this.setState({ ...obj });
+        this.listarCidades(this.state.endereco.estado);
+
     }
 
     editarCEP = (e) => {
@@ -219,11 +220,13 @@ export default class Checkout extends Component {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
-                cartao: {...this.state.cliente.cartao,
-                        titular: e.target.value
-                    }},
+                cartao: {
+                    ...this.state.cliente.cartao,
+                    titular: e.target.value
+                }
+            },
         }
-        this.setState({...obj });
+        this.setState({ ...obj });
     }
 
     editarCartaoNumero = (e) => {
@@ -231,11 +234,13 @@ export default class Checkout extends Component {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
-                cartao: {...this.state.cliente.cartao,
-                        numero: e.target.value
-                    }},
+                cartao: {
+                    ...this.state.cliente.cartao,
+                    numero: e.target.value
+                }
+            },
         }
-        this.setState({...obj });
+        this.setState({ ...obj });
     }
 
     editarCartaoCvv = (e) => {
@@ -243,11 +248,13 @@ export default class Checkout extends Component {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
-                cartao: {...this.state.cliente.cartao,
-                        cvv: e.target.value
-                    }},
+                cartao: {
+                    ...this.state.cliente.cartao,
+                    cvv: e.target.value
+                }
+            },
         }
-        this.setState({...obj });
+        this.setState({ ...obj });
     }
 
     editarCartaoData = (e) => {
@@ -255,11 +262,13 @@ export default class Checkout extends Component {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
-                cartao: {...this.state.cliente.cartao,
-                        data: e.target.value
-                    }},
+                cartao: {
+                    ...this.state.cliente.cartao,
+                    data: e.target.value
+                }
+            },
         }
-        this.setState({...obj });
+        this.setState({ ...obj });
     }
 
     editarCartaoCpf = (e) => {
@@ -267,57 +276,59 @@ export default class Checkout extends Component {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
-                cartao: {...this.state.cliente.cartao,
-                        cpf: e.target.value
-                    }},
+                cartao: {
+                    ...this.state.cliente.cartao,
+                    cpf: e.target.value
+                }
+            },
         }
-        this.setState({...obj });
+        this.setState({ ...obj });
     }
 
     finish = (evt) => {
         evt.preventDefault();
-        if(!this.testCPF(this.state.cliente.cartao.cpf)){
-            this.setState({erro: "CPF Invalido!"});
+        if (!this.testCPF(this.state.cliente.cartao.cpf)) {
+            this.setState({ erro: "CPF Invalido!" });
             return;
         }
-        this.setState({erro: ""});
+        this.setState({ erro: "" });
     }
 
     testCPF = (strCPF) => {
         let soma;
         let resto;
         let cpf = ""
-        
-        for(let i = 0; i < strCPF.length; i++){
-            let char = strCPF.substring(i, i+1);
-            if(char != "." && char != "-")
-                cpf+=char;
+
+        for (let i = 0; i < strCPF.length; i++) {
+            let char = strCPF.substring(i, i + 1);
+            if (char !== "." && char !== "-")
+                cpf += char;
         }
         soma = 0;
-        if (cpf == "00000000000") 
+        if (cpf === "00000000000")
             return false;
         console.log("passei")
-        for (let i=1; i<=9; i++) 
-            soma = soma + parseInt(cpf.substring(i-1, i)) * (11 - i);
+        for (let i = 1; i <= 9; i++)
+            soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
         resto = (soma * 10) % 11;
 
-      
-       
-        if ((resto == 10) || (resto == 11))  
+
+
+        if ((resto === 10) || (resto === 11))
             resto = 0;
-        if (resto != parseInt(cpf.substring(9, 10)) ) 
+        if (resto !== parseInt(cpf.substring(9, 10)))
             return false;
 
-  
-       
+
+
         soma = 0;
-        for (let i = 1; i <= 10; i++) 
-            soma = soma + parseInt(cpf.substring(i-1, i)) * (12 - i);
+        for (let i = 1; i <= 10; i++)
+            soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
         resto = (soma * 10) % 11;
-       
-        if ((resto == 10) || (resto == 11))  
+
+        if ((resto === 10) || (resto === 11))
             resto = 0;
-        if (resto != parseInt(cpf.substring(10, 11) ) ) 
+        if (resto !== parseInt(cpf.substring(10, 11)))
             return false;
 
         return true;
@@ -344,17 +355,17 @@ export default class Checkout extends Component {
                                 </FormGroup>
                             )}
                             <FormGroup>
-                                <Label for="cep">Cep:</Label>
-                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="" id="cep" tag={InputMask} onChange={this.editarCEP}  onKeyUp={this.findAddress}/>
+                                <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
+                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="" id="cep" tag={InputMask} onChange={this.editarCEP} onKeyUp={this.findAddress} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="input-rua">Rua:</Label>
+                                <Label for="input-rua"><span className="text-danger">*</span>Rua:</Label>
                                 <Input value={this.state.endereco.rua} type="text" name="rua" id="rua" onChange={this.editarRua} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="4">
-                                        <Label for="numero">Numero:</Label>
+                                        <Label for="numero"><span className="text-danger">*</span>Numero:</Label>
                                         <Input value={this.state.endereco.numero} type="text" name="numero-casa" id="numero" onChange={this.editarNumero} />
                                     </Col>
                                     <Col xs="8">
@@ -364,20 +375,20 @@ export default class Checkout extends Component {
                                 </Row>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="input-bairro">Bairro:</Label>
+                                <Label for="input-bairro"><span className="text-danger">*</span>Bairro:</Label>
                                 <Input value={this.state.endereco.bairro} type="text" id="bairro" name="bairro" onChange={this.editarBairro} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
-                                        <Label for="estado">Estado:</Label>
-                                        
+                                        <Label for="estado"><span className="text-danger">*</span>Estado:</Label>
+
                                         <Input value={this.state.endereco.estado} type="select" id="estado" name="estado" onChange={this.mostrarCidades}>
                                             {this.state.estados.map(estado => (<option value={estado.id}>{estado.estado}</option>))}
                                         </Input>
                                     </Col>
                                     <Col xs="6">
-                                        <Label for="cidade">Cidade:</Label>
+                                        <Label for="cidade"><span className="text-danger">*</span>Cidade:</Label>
                                         <Input value={this.state.endereco.cidade} type="select" id="cidade" name="cidade" onChange={this.editarCidade}>
                                             {this.state.cidades.map(cidade => (<option value={cidade.cidade.replace(" ", "")}>{cidade.cidade}</option>))}
                                         </Input>
@@ -388,30 +399,32 @@ export default class Checkout extends Component {
                         <Col md="4">
                             <h5 className="bg-warning p-2 text-center">Pagamento</h5>
                             <FormGroup>
-                                <Label for="cpf-cartao">CPF Titular do cartão:</Label>
-                                <Input value={this.state.cliente.cartao.cpf} type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editarCartaoCpf}/>
+                                <Label for="cpf-cartao"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
+                                <Input value={this.state.cliente.cartao.cpf} type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editarCartaoCpf} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="nome-cartao">Titular do cartao:</Label>
-                                <Input value={this.state.cliente.cartao.titular} type="text" id="nome-cartao" name="nome-cartao" onChange={this.editarCartaoTitular}/>
+                                <Label for="nome-cartao"><span className="text-danger">*</span>Titular do cartao:</Label>
+                                <Input value={this.state.cliente.cartao.titular} type="text" id="nome-cartao" name="nome-cartao" onChange={this.editarCartaoTitular} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="numero-cartao">Numero do cartão:</Label>
-                                <Input value={this.state.cliente.cartao.numero} type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoNumero}/>
+                                <Label for="numero-cartao"><span className="text-danger">*</span>Numero do cartão:</Label>
+                                <Input value={this.state.cliente.cartao.numero} type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoNumero} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
-                                        <Label for="data-cartao">Data de validade:</Label>
-                                        <Input value={this.state.cliente.cartao.data} type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoData}/>
+                                        <Label for="data-cartao"><span className="text-danger">*</span>Data de validade:</Label>
+                                        <Input value={this.state.cliente.cartao.data} type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoData} />
                                     </Col>
                                     <Col xs="6">
-                                        <Label for="cvv-cartao">CVV:</Label>
-                                        <Input value={this.state.cliente.cartao.cvv} type="text" name="cvv-cartao" id="cvv-cartao"  mask="999" tag={InputMask} onChange={this.editarCartaoCvv}/>
+                                        <Label for="cvv-cartao"><span className="text-danger">*</span>CVV:</Label>
+                                        <Input value={this.state.cliente.cartao.cvv} type="text" name="cvv-cartao" id="cvv-cartao" mask="999" tag={InputMask} onChange={this.editarCartaoCvv} />
                                     </Col>
                                 </Row>
                             </FormGroup>
-                            <span color="red">{this.state.erro}</span>
+                            <FormGroup>
+                                <span className="text-danger">{this.state.erro}</span>
+                            </FormGroup>
                             <FormGroup>
                                 <Button type="submit">Finalizar compra</Button>
                             </FormGroup>
