@@ -23,68 +23,69 @@ export default class Checkout extends Component {
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.state = {
             erro: "",
-            estados: [],
-            cidades: [],
-            endereco: {
+            states: [],
+            cities: [],
+            address: {
                 cep: "",
-                rua: "",
-                numero: 0,
-                complemento: "",
-                bairro: "",
-                cidade: "",
-                estado: "AC",
+                street: "",
+                number: 0,
+                complement: "",
+                district: "",
+                citie: "",
+                state: "",
             },
             cliente: {
                 cartao: {
-                    titular: "",
-                    numero: "",
+                    holder: "",
+                    number: "",
                     cpf: "",
                     cvv: "",
                     data: ""
                 },
-                enderecos: [
+                addresses: [
                     {
                         id: 1,
                         cep: "00000000",
-                        rua: "Av. Paulista",
-                        numero: 550,
-                        complemento: "",
-                        bairro: "Higienopolis",
-                        cidade: "São Paulo".replace(" ", ""),
-                        estado: "SP",
+                        street: "Av. Paulista",
+                        number: 550,
+                        complement: "",
+                        district: "Higienópolis",
+                        citie: "São Paulo",
+                        state: "SP",
                     },
                     {
                         id: 2,
                         cep: "11111111",
-                        rua: "Av. Pres. Costa e Silva",
-                        numero: 550,
-                        complemento: "Loja 1",
-                        bairro: "Helena Maria",
-                        cidade: "Osasco".replace(" ", ""),
-                        estado: "SP",
+                        street: "Av. Pres. Costa e Silva",
+                        number: 550,
+                        complement: "Loja 1",
+                        district: "Helena Maria",
+                        citie: "Osasco",
+                        state: "SP",
                     }
                 ]
             }
         }
-        this.listarEstados();
-        this.listarCidades("AC");
+        this.listStates();
+        this.listCities("AC");
     }
 
-    listarEstados = async () => {
-        const { data: estados } = await axios(this.LINK_ESTADO_CIDADE);
-        this.setState({ estados });
+    listStates = async () => {
+        const { data: states } = await axios(this.LINK_ESTADO_CIDADE);
+        this.setState({ states });
     }
 
-    listarCidades = async (estado) => {
-        const { data: cidades } = await axios(`${this.LINK_ESTADO_CIDADE}/${estado}/cidades`);
+    listCities = async (state) => {
+        const { data: cities } = await axios(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
         this.setState({
-            cidades
+            cities
         });
+        console.log(cities)
     }
 
-    mostrarCidades = (evt) => {
-        this.listarCidades(evt.target.value);
-        this.editarEstado(evt);
+    showCities = (evt) => {
+        this.listCities(evt.target.value);
+        this.editState(evt);
     }
 
     findAddress = async (evt) => {
@@ -93,157 +94,157 @@ export default class Checkout extends Component {
             const { data: address } = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
             this.setState({
                 ...this.state,
-                endereco: {
-                    ...this.state.endereco,
-                    rua: address.logradouro,
-                    cidade: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
-                    estado: address.uf,
-                    bairro: address.bairro
+                address: {
+                    ...this.state.address,
+                    street: address.logradouro,
+                    citie: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
+                    state: address.uf,
+                    district: address.bairro
                 }
             });
-            this.listarCidades(address.uf);
+            this.listCities(address.uf);
         }
 
     }
 
-    autoPreencher = (evt) => {
-        let end = this.state.cliente.enderecos.find(x => x.id.toString() === evt.target.value);
+    autoFill = (evt) => {
+        let end = this.state.cliente.addresses.find(x => x.id.toString() === evt.target.value);
         let obj = {
             ...this.state,
-            endereco: {
+            address: {
                 cep: end.cep,
-                rua: end.rua,
-                numero: end.numero,
-                complemento: end.complemento,
-                bairro: end.bairro,
-                cidade: end.cidade.replace(" ", ""),
-                estado: end.estado
+                street: end.street,
+                number: end.number,
+                complement: end.complement,
+                district: end.district,
+                citie: end.citie.replace(" ", ""),
+                state: end.state
             }
         }
 
         this.setState({ ...obj });
-        this.listarCidades(this.state.endereco.estado);
+        this.listCities(obj.address.state);
 
     }
 
-    editarCEP = (e) => {
+    editCEP = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
+            address: {
+                ...this.state.address,
                 cep: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarRua = (e) => {
+    editStreet = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                rua: e.target.value
+            address: {
+                ...this.state.address,
+                street: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarNumero = (e) => {
+    editNumber = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                numero: e.target.value
+            address: {
+                ...this.state.address,
+                number: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarComplemento = (e) => {
+    editComplement = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                complemento: e.target.value
+            address: {
+                ...this.state.address,
+                complement: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarBairro = (e) => {
+    editDistrict = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                bairro: e.target.value
+            address: {
+                ...this.state.address,
+                district: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarCidade = (e) => {
+    editCities = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                cidade: e.target.value
+            address: {
+                ...this.state.address,
+                citie: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
 
-    editarEstado = (e) => {
+    editState = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                estado: e.target.value
+            address: {
+                ...this.state.address,
+                state: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarComplemento = (e) => {
+    editComplement = (e) => {
         let obj = {
             ...this.state,
-            endereco: {
-                ...this.state.endereco,
-                complemento: e.target.value
+            address: {
+                ...this.state.address,
+                complement: e.target.value
             }
         }
         this.setState({ ...obj });
     }
 
-    editarCartaoTitular = (e) => {
+    editCardHolder = (e) => {
         let obj = {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
                 cartao: {
                     ...this.state.cliente.cartao,
-                    titular: e.target.value
+                    holder: e.target.value
                 }
             },
         }
         this.setState({ ...obj });
     }
 
-    editarCartaoNumero = (e) => {
+    editCardNumber = (e) => {
         let obj = {
             ...this.state,
             cliente: {
                 ...this.state.cliente,
                 cartao: {
                     ...this.state.cliente.cartao,
-                    numero: e.target.value
+                    number: e.target.value
                 }
             },
         }
         this.setState({ ...obj });
     }
 
-    editarCartaoCvv = (e) => {
+    editCardCVV = (e) => {
         let obj = {
             ...this.state,
             cliente: {
@@ -257,7 +258,7 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
-    editarCartaoData = (e) => {
+    editCardDate = (e) => {
         let obj = {
             ...this.state,
             cliente: {
@@ -271,7 +272,7 @@ export default class Checkout extends Component {
         this.setState({ ...obj });
     }
 
-    editarCartaoCpf = (e) => {
+    editCardCPF = (e) => {
         let obj = {
             ...this.state,
             cliente: {
@@ -307,7 +308,7 @@ export default class Checkout extends Component {
         soma = 0;
         if (cpf === "00000000000")
             return false;
-        console.log("passei")
+
         for (let i = 1; i <= 9; i++)
             soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
         resto = (soma * 10) % 11;
@@ -346,51 +347,51 @@ export default class Checkout extends Component {
                         </Col>
                         <Col md="4">
                             <h5 className="bg-warning p-2 text-center">Entrega</h5>
-                            {(this.state.cliente.enderecos.length > 0) && (
+                            {(this.state.cliente.addresses.length > 0) && (
                                 <FormGroup>
-                                    <Input type="select" id="input-enderecos" name="input-enderecos" onChange={this.autoPreencher}>
+                                    <Input type="select" id="input-addresses" name="input-addresses" onChange={this.autoFill}>
                                         <option value="0" disabled selected>Enderecos cadastrados</option>
-                                        {this.state.cliente.enderecos.map(end => (<option value={end.id}>{`${end.rua}, ${end.numero}`}</option>))}
+                                        {this.state.cliente.addresses.map(end => (<option value={end.id}>{`${end.street}, ${end.number}`}</option>))}
                                     </Input>
                                 </FormGroup>
                             )}
                             <FormGroup>
                                 <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
-                                <Input value={this.state.endereco.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="" id="cep" tag={InputMask} onChange={this.editarCEP} onKeyUp={this.findAddress} />
+                                <Input value={this.state.address.cep} ref={this.cep} type="text" name="cep" mask="99999-999" maskChar="" id="cep" tag={InputMask} onChange={this.editCEP} onKeyUp={this.findAddress} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="input-rua"><span className="text-danger">*</span>Rua:</Label>
-                                <Input value={this.state.endereco.rua} type="text" name="rua" id="rua" onChange={this.editarRua} />
+                                <Label for="input-street"><span className="text-danger">*</span>Rua:</Label>
+                                <Input value={this.state.address.street} type="text" name="street" id="street" onChange={this.editarstreet} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="4">
-                                        <Label for="numero"><span className="text-danger">*</span>Numero:</Label>
-                                        <Input value={this.state.endereco.numero} type="text" name="numero-casa" id="numero" onChange={this.editarNumero} />
+                                        <Label for="number"><span className="text-danger">*</span>Numero:</Label>
+                                        <Input value={this.state.address.number} type="text" name="number-casa" id="number" onChange={this.editNumber} />
                                     </Col>
                                     <Col xs="8">
-                                        <Label for="input-numero-casa">Complemento:</Label>
-                                        <Input value={this.state.endereco.complemento} type="text" name="complemento" id="complemento" onChange={this.editarComplemento} />
+                                        <Label for="input-number-casa">Complemento:</Label>
+                                        <Input value={this.state.address.complement} type="text" name="complement" id="complement" onChange={this.editComplement} />
                                     </Col>
                                 </Row>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="input-bairro"><span className="text-danger">*</span>Bairro:</Label>
-                                <Input value={this.state.endereco.bairro} type="text" id="bairro" name="bairro" onChange={this.editarBairro} />
+                                <Label for="input-district"><span className="text-danger">*</span>Bairro:</Label>
+                                <Input value={this.state.address.district} type="text" id="district" name="district" onChange={this.editDistrict} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
-                                        <Label for="estado"><span className="text-danger">*</span>Estado:</Label>
+                                        <Label for="state"><span className="text-danger">*</span>Estado:</Label>
 
-                                        <Input value={this.state.endereco.estado} type="select" id="estado" name="estado" onChange={this.mostrarCidades}>
-                                            {this.state.estados.map(estado => (<option value={estado.id}>{estado.estado}</option>))}
+                                        <Input value={this.state.address.state} type="select" id="state" name="state" onChange={this.showCities}>
+                                            {this.state.states.map(state => (<option value={state.id}>{state.estado}</option>))}
                                         </Input>
                                     </Col>
                                     <Col xs="6">
-                                        <Label for="cidade"><span className="text-danger">*</span>Cidade:</Label>
-                                        <Input value={this.state.endereco.cidade} type="select" id="cidade" name="cidade" onChange={this.editarCidade}>
-                                            {this.state.cidades.map(cidade => (<option value={cidade.cidade.replace(" ", "")}>{cidade.cidade}</option>))}
+                                        <Label for="citie"><span className="text-danger">*</span>Cidade:</Label>
+                                        <Input value={this.state.address.citie} type="select" id="citie" name="citie" onChange={this.editCities}>
+                                            {this.state.cities.map(citie => (<option value={citie.cidade}>{citie.cidade}</option>))}
                                         </Input>
                                     </Col>
                                 </Row>
@@ -400,25 +401,25 @@ export default class Checkout extends Component {
                             <h5 className="bg-warning p-2 text-center">Pagamento</h5>
                             <FormGroup>
                                 <Label for="cpf-cartao"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
-                                <Input value={this.state.cliente.cartao.cpf} type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editarCartaoCpf} />
+                                <Input value={this.state.cliente.cartao.cpf} type="text" name="cpf-cartao" id="cpf-cartao" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCardCPF} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="nome-cartao"><span className="text-danger">*</span>Titular do cartao:</Label>
-                                <Input value={this.state.cliente.cartao.titular} type="text" id="nome-cartao" name="nome-cartao" onChange={this.editarCartaoTitular} />
+                                <Input value={this.state.cliente.cartao.holder} type="text" id="nome-cartao" name="nome-cartao" onChange={this.editCardHolder} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="numero-cartao"><span className="text-danger">*</span>Numero do cartão:</Label>
-                                <Input value={this.state.cliente.cartao.numero} type="text" name="numero-cartao" id="numero-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoNumero} />
+                                <Label for="number-cartao"><span className="text-danger">*</span>Numero do cartão:</Label>
+                                <Input value={this.state.cliente.cartao.number} type="text" name="number-cartao" id="number-cartao" mask="9999 9999 9999 9999" tag={InputMask} maskChar="0" onChange={this.editCardNumber} />
                             </FormGroup>
                             <FormGroup>
                                 <Row>
                                     <Col xs="6">
                                         <Label for="data-cartao"><span className="text-danger">*</span>Data de validade:</Label>
-                                        <Input value={this.state.cliente.cartao.data} type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editarCartaoData} />
+                                        <Input value={this.state.cliente.cartao.data} type="text" name="data-cartao" id="data-cartao" mask="99/9999" tag={InputMask} maskChar="0" onChange={this.editCardDate} />
                                     </Col>
                                     <Col xs="6">
                                         <Label for="cvv-cartao"><span className="text-danger">*</span>CVV:</Label>
-                                        <Input value={this.state.cliente.cartao.cvv} type="text" name="cvv-cartao" id="cvv-cartao" mask="999" tag={InputMask} onChange={this.editarCartaoCvv} />
+                                        <Input value={this.state.cliente.cartao.cvv} type="text" name="cvv-cartao" id="cvv-cartao" mask="999" tag={InputMask} onChange={this.editCardCVV} />
                                     </Col>
                                 </Row>
                             </FormGroup>
