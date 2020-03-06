@@ -13,10 +13,12 @@ import { Nav,
         ModalHeader, 
         ModalBody, 
         ModalFooter,
-        FormFeedback 
+        FormFeedback, 
+        NavLink
     } from 'reactstrap';
 
 // import { Container } from './styles';
+
 
 
 
@@ -24,9 +26,9 @@ export default class CadastroProduto extends Component {
     render() {
         return (
             <>
-                <Nav className="navbar navbar-dark bg-dark">
-                    <a class="navbar-brand" href="#">Adicione um novo produto</a>
-                </Nav>
+                <NavLink className="navbar navbar-dark bg-dark">
+                    <NavLink className="navbar-brand" href="#">Adicione um novo produto</NavLink>
+                </NavLink>
                 <Container className="border border-primary rounded mt-5 p-4">
                     <Form>
                         <FormGroup className="bg-warning rounded  p-2">
@@ -43,6 +45,7 @@ export default class CadastroProduto extends Component {
                                     <Label for="descricaoProduto">Descrição do produto</Label>
                                     <Input type="textarea" name="descricaoProdut" id="descricaoProduto" />
                                 </FormGroup>
+                                <p>*Campos obrigatórios</p>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
@@ -68,12 +71,9 @@ export default class CadastroProduto extends Component {
                                 </FormGroup>
                                 <Button color="primary" >Adicionar</Button>
                             </Col>
-
                         </Row>
-
                     </Form>
                 </Container>
-                
                 
             </>
         );
