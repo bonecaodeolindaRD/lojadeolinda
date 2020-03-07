@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './styles.css';
 
 import {
     Container,
@@ -9,7 +10,9 @@ import {
     Label,
     Input,
     Form,
-    Button
+    Button,
+    Card,
+    CardTitle
 } from 'reactstrap';
 
 import InputMask from 'react-input-mask';
@@ -66,7 +69,31 @@ export default class Checkout extends Component {
                         aCitie: "Osasco",
                         aState: "SP",
                     }
-                ]
+                ],
+                products: [
+                    {
+                        id: 1,
+                        name: "Produto",
+                        img: "https://picsum.photos/50/50",
+                        price: 999.99,
+                        quantity: 1,
+                    },
+                    {
+                        id: 2,
+                        name: "Produto",
+                        img: "https://picsum.photos/50/50",
+                        price: 999.99,
+                        quantity: 2
+                    },
+                    {
+                        id: 3,
+                        name: "Produto",
+                        img: "https://picsum.photos/50/50",
+                        price: 999.99,
+                        quantity: 3
+                    }
+                ],
+                total: 0
             }
         }
         this.listStates();
@@ -158,44 +185,44 @@ export default class Checkout extends Component {
     isEmpty = str => str.toString().trim().length <= 0;
 
     validateFields = () => {
-        if(this.isEmpty(this.state.address.aCep)){
-            this.setState({ erro: "Digite o CEP!"});
+        if (this.isEmpty(this.state.address.aCep)) {
+            this.setState({ erro: "Digite o CEP!" });
             return false;
         }
-        if(this.isEmpty(this.state.address.aStreet)){
-            this.setState({ erro: "Digite o nome da rua!"});
+        if (this.isEmpty(this.state.address.aStreet)) {
+            this.setState({ erro: "Digite o nome da rua!" });
             return false;
         }
-        if(this.isEmpty(this.state.address.aNumber)){
-            this.setState({ erro: "Digite o numero do local!"});
+        if (this.isEmpty(this.state.address.aNumber)) {
+            this.setState({ erro: "Digite o numero do local!" });
             return false;
         }
-        if(this.isEmpty(this.state.address.aDistrict)){
-            this.setState({ erro: "Digite o bairro!"});
+        if (this.isEmpty(this.state.address.aDistrict)) {
+            this.setState({ erro: "Digite o bairro!" });
             return false;
         }
         if (!this.testCPF(this.state.client.card.cCPF)) {
             this.setState({ erro: "CPF Invalido!" });
             return false;
         }
-        if(this.isEmpty(this.state.client.card.cCPF)){
-            this.setState({ erro: "Digite o CPF do titular do cartão!"});
+        if (this.isEmpty(this.state.client.card.cCPF)) {
+            this.setState({ erro: "Digite o CPF do titular do cartão!" });
             return false;
         }
-        if(this.isEmpty(this.state.client.card.cHolder)){
-            this.setState({ erro: "Digite o nome do titular do cartão!"});
+        if (this.isEmpty(this.state.client.card.cHolder)) {
+            this.setState({ erro: "Digite o nome do titular do cartão!" });
             return false;
         }
-        if(this.isEmpty(this.state.client.card.cNumber)){
-            this.setState({ erro: "Digite o numero do cartão!"});
+        if (this.isEmpty(this.state.client.card.cNumber)) {
+            this.setState({ erro: "Digite o numero do cartão!" });
             return false;
         }
-        if(this.isEmpty(this.state.client.card.cDate)){
-            this.setState({ erro: "Digite a data de validade do cartão!"});
+        if (this.isEmpty(this.state.client.card.cDate)) {
+            this.setState({ erro: "Digite a data de validade do cartão!" });
             return false;
         }
-        if(this.isEmpty(this.state.client.card.cCVV)){
-            this.setState({ erro: "Digite o codigo de segurança do cartão!"});
+        if (this.isEmpty(this.state.client.card.cCVV)) {
+            this.setState({ erro: "Digite o codigo de segurança do cartão!" });
             return false;
         }
         return true;
@@ -203,7 +230,7 @@ export default class Checkout extends Component {
 
     finish = (evt) => {
         evt.preventDefault();
-        if (!this.validateFields()) 
+        if (!this.validateFields())
             return;
 
         alert("Sucesso");
@@ -258,9 +285,35 @@ export default class Checkout extends Component {
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
-                                <h5 className="bg-warning p-2 text-center">Resumo</h5>
-
+                                    <h5 className="bg-warning p-2 text-center">Resumo</h5>
+                                    <div className="resumo">
+                                        {this.state.client.products.map(p => (
+                                            <Card body className="mb-1">
+                                                <Row>
+                                                    <Col xs="7">
+                                                        <CardTitle>
+                                                            {p.name}
+                                                        </CardTitle>
+                                                        <img src={p.img} alt={p.name} title={p.name} />
+                                                    </Col>
+                                                    <Col xs="5">
+                                                        <p className="h6">{p.price}</p>
+                                                        <p className="h6">Unidades: {p.quantity}</p>
+                                                        <p className="h6">Total: {(p.quantity * p.price).toFixed(2)}</p>
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                        ))
+                                        }
+                                        {this.state.client.products.map(p => {
+                                            this.state.client.total += p.price * p.quantity;
+                                        })}
+                                        <Card body className="border-0">
+                                            <CardTitle className="h6">Total: {this.state.client.total.toFixed(2)}</CardTitle>
+                                        </Card>
+                                    </div>
                             </Col>
+
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Entrega</h5>
                                 {(this.state.client.addresses.length > 0) && (
