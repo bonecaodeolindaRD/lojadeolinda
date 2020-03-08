@@ -5,6 +5,8 @@ use eboneco_de_olinda;
 create table enderecos(
 	id_endereco int primary key auto_increment,
     endereco varchar(255),
+	bairro varchar(40),
+	cidade varchar(40),
     cep varchar(10)
 );
 
@@ -69,8 +71,10 @@ create table pedidos(
 	id_pedido int primary key auto_increment,
     id_cliente int,
     id_status int,
+	id_endereco int,
     foreign key(id_cliente) references clientes(id_cliente),
-    foreign key(id_status) references status_pedidos(id_status)
+    foreign key(id_status) references status_pedidos(id_status),
+	foreign key(id_endereco) references enderecos(id_endereco)
 );
 
 create table pedidos_produtos(
