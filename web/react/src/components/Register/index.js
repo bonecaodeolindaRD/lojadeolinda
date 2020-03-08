@@ -7,15 +7,23 @@ import InputMask from 'react-input-mask';
 import { Col, Row, Button, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
-    state = {
-        name: "",
-        secName: "",
-        email: "",
-        gen: "",
-        contact: "",
-        password: "",
-        error: ""
+    constructor(props){
+        super(props);
+        this.name = this.name.bind(this);
+        this.state = {
+            name: "",
+            secName: "",
+            email: "",
+            gen: "",
+            contact: "",
+            password: "",
+            error: ""
+        }
     }
+    onChange(e){
+        this.setState({ name: e.target.value});
+    }
+    
 
 
     render(){
@@ -36,7 +44,7 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
+                            <Input value={this.state.name} onChange={this.name} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
