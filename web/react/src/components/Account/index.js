@@ -8,6 +8,18 @@ import { Col, Row, Button, Form, FormGroup, Label, Input,Container } from 'react
 
 
 class Account extends Component{
+    state = {
+        name: "",
+        secName: "",
+        email: "",
+        gen: "",
+        contact: "",
+        error: ""
+    }
+
+    loadAcccount (){
+        e.preventDefault();
+    }
 
     render(){
         return(

@@ -4,9 +4,18 @@ import Footer from '../Footer';
 
 import InputMask from 'react-input-mask';
 
-import { Col, Row, Button, Form, FormGroup, Label, Input,Container, Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
+    state = {
+        name: "",
+        secName: "",
+        email: "",
+        gen: "",
+        contact: "",
+        password: "",
+        error: ""
+    }
 
 
     render(){

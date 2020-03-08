@@ -29,7 +29,7 @@ class Login extends Component{
       } catch (err) {
         this.setState({
           error:
-            "Houve um problema com o login, verifique suas credenciais. T.T"
+            "Houve um problema com o login, verifique suas credenciais."
         });
       }
     }
