@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Card, Form , Button, CardTitle, CardText, Row, Col, Container, InputGroup, InputGroupText, InputGroupAddon, Input} from 'reactstrap';
 
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import api from "../../services/api";
 import { login } from "../../services/auth";

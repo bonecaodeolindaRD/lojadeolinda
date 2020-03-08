@@ -4,7 +4,7 @@ import Footer from '../Footer';
 
 import InputMask from 'react-input-mask';
 
-import { Col, Row, Button, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
     constructor(props){
