@@ -12,6 +12,8 @@ import {
     FaInstagram
 } from "react-icons/fa";
 
+import './footer.css';
+
 export default class Footer extends Component {
     render() {
         return (
@@ -52,7 +54,7 @@ export default class Footer extends Component {
                     </NavItem>
                     <NavItem className="space-footer">
                         <NavItem className="text-white h-5">
-                            <NavLink href="#" className="text-white" disabled>Redes sociais</NavLink>
+                            <NavLink href="#" className="text-white" disabled>Contato</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink className="text-muted" href="sobre">
