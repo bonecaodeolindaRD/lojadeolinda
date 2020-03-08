@@ -1,0 +1,8 @@
+.resumo{
+    height: 500px;
+    overflow: auto;
+}
+
+.resumo img{
+    width: 50px;
+}

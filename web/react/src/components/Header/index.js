@@ -24,6 +24,8 @@ import {
 import { MdPerson, MdSearch} from "react-icons/md";
 import { IoMdCart } from 'react-icons/io';
 
+import './header.css';
+
 export default class Header extends Component {
 
     constructor(props) {
@@ -52,7 +54,7 @@ export default class Header extends Component {
                         <NavbarBrand href="/"><img src="img/logo.png" alt="logo do site" className="img-logo" /></NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="align-items-center justify-content-around w-100">
+                            <Nav className="align-items-center justify-content-around w-100 display-menu">
                                 <NavItem>
                                     <NavLink href="/components/"></NavLink>
                                 </NavItem>
@@ -72,7 +74,7 @@ export default class Header extends Component {
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         {this.state.logado ? (
-                                        <DropdownItem>
+                                        <DropdownItem href="/account">
                                             Minha conta
                                         </DropdownItem>) : (
                                         <DropdownItem>
@@ -89,6 +91,8 @@ export default class Header extends Component {
                     </Container>
                 </Navbar>
             </header>
+
+            
         );
     }
 }
