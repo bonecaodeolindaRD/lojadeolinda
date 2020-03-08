@@ -57,7 +57,7 @@ export default class Footer extends Component {
                             <NavLink href="#" className="text-white" disabled>Contato</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className="text-muted" href="sobre">
+                            <NavLink className="text-muted" href="/contact">
                                 Entrar em contato
                             </NavLink>
                         </NavItem>
@@ -67,7 +67,7 @@ export default class Footer extends Component {
                             <NavLink href="#" className="text-white" disabled>Sobre</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className="text-muted" href="sobre">
+                            <NavLink className="text-muted" href="/about">
                                 Nossa historia
                             </NavLink>
                         </NavItem>

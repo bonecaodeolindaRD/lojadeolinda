@@ -4,7 +4,7 @@ import Footer from '../Footer';
 import './styles.css';
 import InputMask from 'react-input-mask';
 
-import { Col, Row, Button, Form, FormGroup, Label, Input,Container } from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input,Container } from 'reactstrap';
 
 
 class Account extends Component{
@@ -17,7 +17,7 @@ class Account extends Component{
         error: ""
     }
 
-    loadAcccount (){
+    loadAcccount (e){
         e.preventDefault();
     }
 
@@ -72,7 +72,7 @@ class Account extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="secNameUser">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" maskChar="" id="cep" tag={InputMask} type="text" name="contact" id="contact" placeholder="Ex (11) 99999-9999"/>
+                            <Input mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <br/>

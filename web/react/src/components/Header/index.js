@@ -84,7 +84,7 @@ export default class Header extends Component {
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
                                 <NavItem>
-                                    <IoMdCart size="30" color="blue"/>
+                                    <IoMdCart href="/cart" size="30" color="blue"/>
                                 </NavItem>
                             </Nav>
                         </Collapse>
