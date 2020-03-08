@@ -72,7 +72,7 @@ export default class Header extends Component {
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         {this.state.logado ? (
-                                        <DropdownItem>
+                                        <DropdownItem href="/account">
                                             Minha conta
                                         </DropdownItem>) : (
                                         <DropdownItem>
