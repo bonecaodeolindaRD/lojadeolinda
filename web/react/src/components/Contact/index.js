@@ -4,6 +4,8 @@ Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { FaEnvelopeSquare } from 'react-icons/fa';
 import InputMask from 'react-input-mask';
 import './index.css';
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default class Contact extends Component {
 
@@ -57,6 +59,9 @@ export default class Contact extends Component {
     return (
               
     <>
+    
+    <Header/>
+
         <Form className="mt-5" id="form-contato" md="5" >
 
             <Col className="m-auto" md="5">
@@ -114,6 +119,8 @@ export default class Contact extends Component {
           <Button outline color="secondary" onClick={this.toggleModal}>OK</Button>
         </ModalFooter>
       </Modal>
+
+      <Footer/>
 
     </>
    

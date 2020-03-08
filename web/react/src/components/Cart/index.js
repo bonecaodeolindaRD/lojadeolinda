@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Col, Row, Container, Input} from 'reactstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 import './index.css';
+import Header from '../Header';
+import Footer from '../Footer';
 
 export default class Cart extends Component {
  
@@ -9,21 +11,22 @@ export default class Cart extends Component {
       super();
       this.state = {
           produtos: [
-              {
-                  id: 1,
-                  image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
-                  name: "Bonecão Galvão Bueno",
-                  quantidade: 1,                
-                  precoUnitario: 999.99,
-                  
-              },
+          
               {
                   id: 2,
                   img: "https://f.i.uol.com.br/fotografia/2019/03/05/15517673725c7e174c842b1_1551767372_3x2_lg.jpg",
                   nome: "Bonecão do Bolsonaro",
                   quantidade: 2,
                   precoUnitario: 2000.99
-              }
+              },
+
+              {
+                id: 2,
+                img: "https://f.i.uol.com.br/fotografia/2019/03/05/15517673725c7e174c842b1_1551767372_3x2_lg.jpg",
+                nome: "Bonecão do Bolsonaro",
+                quantidade: 2,
+                precoUnitario: 2000.99
+            }
           ]
       }
   }
@@ -31,6 +34,11 @@ export default class Cart extends Component {
   render() {
     return (
 
+     <>
+
+     <Header/>
+
+        
       <Container className="contanier">
 
        {this.state.produtos.map(produto => (
@@ -68,7 +76,7 @@ export default class Cart extends Component {
 
             <Col className="mb-3" xs="12" sm="2">
                 <h5 className="h3-price">
-                    R$4.600,00
+                    R${produto.quantidade * produto.precoUnitario}
                 </h5>
                 <small>Total Item</small>
             </Col>
@@ -78,6 +86,10 @@ export default class Cart extends Component {
        ))}
       
       </Container>
+
+    <Footer/>
+
+    </>
 
     );
   }
