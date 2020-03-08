@@ -12,6 +12,8 @@ import {
     FaInstagram
 } from "react-icons/fa";
 
+import './footer.css';
+
 export default class Footer extends Component {
     render() {
         return (

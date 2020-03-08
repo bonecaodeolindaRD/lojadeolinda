@@ -297,7 +297,7 @@ export default class Checkout extends Component {
                                                         <img src={p.img} alt={p.name} title={p.name} />
                                                     </Col>
                                                     <Col xs="5">
-                                                        <p className="h6">{p.price}</p>
+                                                        <p className="h6">R$: {p.price}</p>
                                                         <p className="h6">Unidades: {p.quantity}</p>
                                                         <p className="h6">Total: {(p.quantity * p.price).toFixed(2)}</p>
                                                     </Col>
