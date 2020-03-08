@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, Input, FormGroup } from 'reactstrap';
+import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, FormGroup } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
@@ -17,7 +17,7 @@ export default class ProductDetail extends Component {
                 name: "Bonecão Galvão Bueno ",
                 description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
                 quantity: 1,                
-                price: 999.
+                price: 10000.
             }
                             
         } 
@@ -51,7 +51,7 @@ export default class ProductDetail extends Component {
                 <Form className="form-horizontal qtyFrm">
                     <FormGroup className="control-group">
                         <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${this.state.price}</h5></Label >
-                         <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd"  value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
+                         {/* <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd"  value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  /> */}
                                 <Button outline color="warning"> <FaShoppingCart/> Comprar</Button>
                     </FormGroup>
                 </Form>

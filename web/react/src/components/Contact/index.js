@@ -41,8 +41,7 @@ export default class Contact extends Component {
         }else{
           this.setState({nameError: false});     
         }
-               
-        alert(name +" " + email + " " + phone + " " + message);
+                      
                                
         this.toggleModal();
       
