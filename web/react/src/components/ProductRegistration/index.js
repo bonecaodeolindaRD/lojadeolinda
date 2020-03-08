@@ -1,0 +1,99 @@
+import React, { Component } from 'react';
+import {
+    Nav,
+    Container,
+    Col,
+    Row,
+    Button,
+    Form,
+    FormGroup,
+    FormText,
+    Label,
+    Input,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    FormFeedback,
+    NavLink
+} from 'reactstrap';
+
+// import { Container } from './styles';
+
+
+
+
+export default class ProductRegistration extends Component {
+  
+
+        render() {
+            return (
+                <>
+                    <NavLink className="navbar navbar-dark bg-dark">
+                        <NavLink className="navbar-brand" href="#">Adicione um novo produto</NavLink>
+                    </NavLink>
+                    <Container className="border border-primary rounded mt-5 p-4">
+                        <Form>
+                            <FormGroup className="bg-warning rounded  p-2">
+                                <Label>Cadastro de Produdos</Label>
+                            </FormGroup>
+                            <Row form>
+                                <Col md={8}>
+                                    <FormGroup onSubmit={this.enviaForm} method="post">
+                                        <Label for="nomeProduto">Nome do Produto*</Label>
+                                        <Input type="text" name="nomeProduto" id="nomeProduto" placeholder="Digite o nome do produto"  />
+                                       
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="descricaoProduto">Descrição do produto*</Label>
+                                        <Input type="textarea" name="descricaoProdut" id="descricaoProduto" />
+                                    </FormGroup>
+                                    <p>*Campos obrigatórios</p>
+                                </Col>
+                                <Col md={4}>
+                                    <FormGroup>
+                                        <Label for="categoriaProduto">Categoria*</Label>
+                                        <Input type="select" name="categoria" id="categoriaProduto">
+                                            <option>-</option>
+                                            <option>Atletas</option>
+                                            <option>Jornalistas</option>
+                                            <option>Politicos</option>
+                                            <option>5</option>
+                                        </Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="imagemProduto">Imagem*</Label>
+                                        <Input type="file" name="imagemProduto" id="imagemProduto" />
+                                        <FormText color="muted">
+                                            Insira a imagem do produto
+                                </FormText>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="precoProduto">Preço:*</Label>
+                                        <Input type="text" name="preco" id="precoProduto" placeholder="Digite o valor do produto" />
+                                    </FormGroup>
+                                    <Button color="primary" outline type="submit" value="Enviar" >Adicionar</Button>
+
+                                </Col>
+                            </Row>
+                        </Form>
+
+                        
+
+
+    
+
+
+
+                    </Container>
+
+
+
+
+
+                </>
+            );
+        }
+
+
+    }
