@@ -7,24 +7,6 @@ import InputMask from 'react-input-mask';
 import { Col, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
-    constructor(props){
-        super(props);
-        this.name = this.name.bind(this);
-        this.state = {
-            name: "",
-            secName: "",
-            email: "",
-            gen: "",
-            contact: "",
-            password: "",
-            error: ""
-        }
-    }
-    onChange(e){
-        this.setState({ name: e.target.value});
-    }
-    
-
 
     render(){
         return(
@@ -44,7 +26,7 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input value={this.state.name} onChange={this.name} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
+                            <Input type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -97,8 +79,8 @@ class Register extends Component{
                     <br/>
                     <FormGroup>
                         <div className="text-align-center" align="center">
-                            <button type="submit" className="btn btn-success mr-3" data-toggle="modal" data-target="#salvarDados"> Salvar </button>
-                            <button type="button" class="btn btn-danger" href="index.html">Cancelar</button>
+                            <button type="submit" className="btn btn-success mr-3" > Salvar </button>
+                            <button type="button" class="btn btn-danger" to="index.html">Cancelar</button>
                         </div>
                     </FormGroup>
                 </Form>
