@@ -12,6 +12,8 @@ import {
     FaInstagram
 } from "react-icons/fa";
 
+import { Link } from 'react-router-dom';
+
 import './footer.css';
 
 export default class Footer extends Component {
@@ -26,29 +28,29 @@ export default class Footer extends Component {
                     <NavItem className="space-footer">
                         <Nav vertical>
                             <NavItem className="text-white h5">
-                                <NavLink href="#" className="text-white" disabled>Pagamento</NavLink>
+                                <Link to="/" className="text-white" disabled>Pagamento</Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="text-muted" href="#">Cartão de credito</NavLink>
+                                <Link className="text-muted" to="/">Cartão de credito</Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="text-muted" href="#">Cartão de débito</NavLink>
+                                <Link className="text-muted" to="/">Cartão de débito</Link>
                             </NavItem>
                         </Nav>
                     </NavItem>
                     <NavItem className="space-footer">
                         <Nav vertical>
                             <NavItem className="text-white h-5">
-                                <NavLink href="#" className="text-white" disabled>Redes sociais</NavLink>
+                                <Link href="#" className="text-white" disabled>Redes sociais</Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="text-muted" href="#"><FaFacebook /></NavLink>
+                                <Link className="text-muted" to="/"><FaFacebook /></Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="text-muted" href="#"><FaInstagram /></NavLink>
+                                <Link className="text-muted" to="/"><FaInstagram /></Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="text-muted" href="#"><FaTwitter /></NavLink>
+                                <Link className="text-muted" to="/"><FaTwitter /></Link>
                             </NavItem>
                         </Nav>
                     </NavItem>
@@ -57,19 +59,19 @@ export default class Footer extends Component {
                             <NavLink href="#" className="text-white" disabled>Contato</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink className="text-muted" href="/contact">
+                            <Link className="text-muted" to="/contact">
                                 Entrar em contato
-                            </NavLink>
+                            </Link>
                         </NavItem>
                     </NavItem>
                     <NavItem className="space-footer">
                         <NavItem className="text-white h-5">
-                            <NavLink href="#" className="text-white" disabled>Sobre</NavLink>
+                            <Link to="/" className="text-white" disabled>Sobre</Link>
                         </NavItem>
                         <NavItem>
-                        <NavLink className="text-muted" href="/about">
+                            <Link className="text-muted" to="/about">
                                 Nossa historia
-                            </NavLink>
+                            </Link>
                         </NavItem>
                     </NavItem>
                 </Nav>
