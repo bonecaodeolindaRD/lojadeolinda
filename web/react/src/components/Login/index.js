@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Card, Form , Button, CardTitle, CardText, Row, Col, Container, InputGroup, InputGroupText, InputGroupAddon, Input} from 'reactstrap';
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import api from "../../services/api";
 import { login } from "../../services/auth";
@@ -63,7 +63,7 @@ class Login extends Component{
                       <br/>
                   <div className="text-center">
                       <Button size="md" type="submit" color="success">Logar-se</Button>
-                      <Button size="md" className="ml-3" href="/" color="danger">Cancelar</Button>
+                      <Link to="/"><Button size="md" className="ml-3" color="danger">Cancelar</Button></Link>
                   </div>
                   </Form>
                 </Card>
@@ -72,7 +72,7 @@ class Login extends Component{
                   <Card body>
                     <CardTitle>Cadastro</CardTitle>
                     <CardText>Você não possui cadastro conosco ? Cadastre-se agora mesmo em nossa loja!</CardText>
-                    <Button href="/register">Cadastro</Button>
+                    <Link to="/register"><Button to="/register">Cadastro</Button></Link>
                   </Card>
                 </Col>
               </Row>

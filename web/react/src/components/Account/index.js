@@ -6,6 +6,7 @@ import InputMask from 'react-input-mask';
 
 import { Col, Form, FormGroup, Label, Input,Container } from 'reactstrap';
 
+import { Link } from 'react-router-dom';
 
 class Account extends Component{
     state = {
@@ -79,7 +80,7 @@ class Account extends Component{
                     <FormGroup>
                         <div className="text-align-center" align="center">
                             <button type="submit" className="btn btn-success mr-3" data-toggle="modal" data-target="#salvarDados"> Salvar </button>
-                            <button type="button" class="btn btn-danger" href="index.html">Cancelar</button>
+                            <Link to="/"><button type="button" class="btn btn-danger">Cancelar</button></Link>
                         </div>
                     </FormGroup>
                 </Form>
