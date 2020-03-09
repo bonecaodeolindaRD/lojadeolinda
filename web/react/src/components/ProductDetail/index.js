@@ -28,7 +28,7 @@ export default class ProductDetail extends Component {
      this.setState({ quantity: event.target.value });      
 
     };
-     
+
   render() {
     return (
 

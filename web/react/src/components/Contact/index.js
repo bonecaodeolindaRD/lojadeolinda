@@ -28,6 +28,19 @@ export default class Contact extends Component {
         this.setState({ isOpen: !this.state.isOpen });
       };
 
+      submit = () =>{
+      
+        this.reset();
+     
+        this.toggleModal();
+
+      }
+
+      reset = () =>{
+
+        this.setState({ name: '', email: '', phone: '', message:''});
+      }
+
                
       mySubmitHandler = (event) => {
 
@@ -41,8 +54,28 @@ export default class Contact extends Component {
         }else{
           this.setState({nameError: false});     
         }
-                      
-                               
+
+        if(email.length === 0 ){
+          this.setState({emailError: true});     
+          return false;
+        }else{
+          this.setState({emailError: false});     
+        }
+
+        if(phone.length === 0 ){
+          this.setState({phoneError: true});     
+          return false;
+        }else{
+          this.setState({phoneError: false});     
+        }
+
+        if(message.length === 0 ){
+          this.setState({messageError: true});     
+          return false;
+        }else{
+          this.setState({messageError: false});     
+        }
+      
         this.toggleModal();
       
         }
@@ -61,7 +94,7 @@ export default class Contact extends Component {
     
     <Header/>
 
-        <Form className="mt-5" id="form-contato" md="5" >
+        <Form className="mt-5" id="form-contato" md="5" onSubmit={this.mySubmitHandler}>
 
             <Col className="m-auto" md="5">
 
@@ -72,14 +105,14 @@ export default class Contact extends Component {
 
                 <FormGroup className="form-group required">
                     <Label  for="contatoNome" className="control-label">Nome Completo</Label>
-                    <Input type="text" className={`form-control ${ this.state.nameError ? 'is-invalid':null }`} name="name" onChange={this.myChangeHandler} required
+                    <Input type="text" className={`form-control ${ this.state.nameError ? 'is-invalid':null }`} name="name" onChange={this.myChangeHandler} value={this.state.name} required
                         placeholder="Digite o seu nome completo"/>
                 </FormGroup>
 
                 <FormGroup className="form-group required">
 
                     <Label for="contatoEmail" className="control-label">E-mail</Label>
-                    <Input  type="email" className={`form-control ${ this.state.emailError ?  'is-invalid':'null' }`} onChange={this.myChangeHandler} name="email" required
+                    <Input  type="email" className={`form-control ${ this.state.emailError ?  'is-invalid':'null' }`} onChange={this.myChangeHandler} name="email" value={this.state.email} required
                         placeholder="Digite o seu e-mail"/>
 
                 </FormGroup>
@@ -87,7 +120,7 @@ export default class Contact extends Component {
                 <FormGroup className="form-group row required">
                     <Col className="col-6">
                         <Label for="contatoTel" className="control-label">Celular</Label>
-                        <Input type="tel" mask="(99) 99999-9999"  tag={InputMask} className={`form-control ${ this.state.phoneError ?  'is-invalid':null }`} onChange={this.myChangeHandler} name="phone" required
+                        <Input type="tel" mask="(99) 99999-9999"  tag={InputMask} className={`form-control ${ this.state.phoneError ?  'is-invalid':null }`} value={this.state.phone}  onChange={this.myChangeHandler} name="phone" required
                             placeholder="Ex (11) 99999-9999"/>
                     </Col>
 
@@ -95,14 +128,14 @@ export default class Contact extends Component {
 
                 <FormGroup className="form-group required">
                     <Label for="contatoMensagem" className="control-label">Mensagem</Label>
-                    <Input  type="textarea" className={`form-control ${ this.state.messageError ?  'is-invalid': null }`} onChange={this.myChangeHandler} name="message" rows="6" required />
+                    <Input  type="textarea" className={`form-control ${ this.state.messageError ?  'is-invalid': null }`} onChange={this.myChangeHandler} value={this.state.message} name="message" rows="6" required />
                 </FormGroup>
 
                 <FormText className="control-label-p mb-3">Campos obrigatórios</FormText>
                
                 <FormGroup className="text-center">
-                    <Button id="enviarContato" outline color="success" className="mr-2" onClick={this.mySubmitHandler}>Enviar</Button>
-                    <Button type="reset" outline color="danger" >Limpar</Button>
+                    <Button id="enviarContato" outline color="success" className="mr-2" >Enviar</Button>
+                    <Button onClick={this.reset} outline color="danger" >Limpar</Button>
                 </FormGroup>
 
             </Col>
@@ -115,7 +148,7 @@ export default class Contact extends Component {
             Entraremos em contato em até 24H
         </ModalBody>
         <ModalFooter>
-          <Button outline color="secondary" onClick={this.toggleModal}>OK</Button>
+          <Button outline color="secondary" onClick={this.submit}>OK</Button>
         </ModalFooter>
       </Modal>
 
