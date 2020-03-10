@@ -8,6 +8,8 @@ import api from "../../services/api";
 import { login } from "../../services/auth";
 
 import './styles.css';
+import Header from '../Header';
+import Footer from '../Footer';
 
 class Login extends Component{
   state = {
@@ -38,6 +40,7 @@ class Login extends Component{
     render(){
         return (
             <>
+            <Header/>
             <Container className="tam" align="center" justify-content="center">
             <Row className="tam align-items-center">
               <Col xs="12" sm="6" md="6" >
@@ -58,7 +61,7 @@ class Login extends Component{
                         <Input id="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
                     </InputGroup>
                       <div className="text-left">
-                        <a href="/Senha" className="alert-link">Lembrar senha</a>
+                        <a href="/password" className="alert-link">Lembrar Senha</a>
                       </div>
                       <br/>
                   <div className="text-center">
@@ -77,6 +80,7 @@ class Login extends Component{
                 </Col>
               </Row>
             </Container>
+            <Footer></Footer>
           </>
         )
     }

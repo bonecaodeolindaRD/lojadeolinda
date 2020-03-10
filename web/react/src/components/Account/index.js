@@ -13,7 +13,6 @@ class Account extends Component{
         name: "",
         secName: "",
         email: "",
-        gen: "",
         contact: "",
         error: ""
     }
@@ -56,18 +55,6 @@ class Account extends Component{
                         <Col sm={5}>
                             <Input type="email" name="email" id="Email" placeholder="user@mail.com" />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label for="exampleSelect" sm={1}>Gênero: </Label>
-                            <Col sm={5}>
-                                <Input type="select" name="select" id="exampleSelect">
-                                    <option disable onSelect></option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="outros">Outros</option>
-                                </Input>
-                            </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
