@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 
 import { Card, Form , Button, CardTitle, CardText, Row, Col, Container, InputGroup, InputGroupText, InputGroupAddon, Input} from 'reactstrap';
 
-import { Link, withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
 import './styles.css';
+import Header from '../Header';
+import Footer from '../Footer';
 
 class Login extends Component{
   state = {
@@ -38,6 +40,7 @@ class Login extends Component{
     render(){
         return (
             <>
+            <Header/>
             <Container className="tam" align="center" justify-content="center">
             <Row className="tam align-items-center">
               <Col xs="12" sm="6" md="6" >
@@ -58,12 +61,12 @@ class Login extends Component{
                         <Input id="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
                     </InputGroup>
                       <div className="text-left">
-                        <a href="/Senha" className="alert-link">Lembrar senha</a>
+                        <a href="/password" className="alert-link">Lembrar Senha</a>
                       </div>
                       <br/>
                   <div className="text-center">
                       <Button size="md" type="submit" color="success">Logar-se</Button>
-                      <Button size="md" className="ml-3" href="/" color="danger">Cancelar</Button>
+                      <Link to="/"><Button size="md" className="ml-3" color="danger">Cancelar</Button></Link>
                   </div>
                   </Form>
                 </Card>
@@ -72,11 +75,12 @@ class Login extends Component{
                   <Card body>
                     <CardTitle>Cadastro</CardTitle>
                     <CardText>Você não possui cadastro conosco ? Cadastre-se agora mesmo em nossa loja!</CardText>
-                    <Button href="/register">Cadastro</Button>
+                    <Link to="/register"><Button to="/register">Cadastro</Button></Link>
                   </Card>
                 </Col>
               </Row>
             </Container>
+            <Footer></Footer>
           </>
         )
     }

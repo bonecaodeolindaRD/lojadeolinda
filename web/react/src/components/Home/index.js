@@ -19,7 +19,7 @@ export default class Home extends Component {
                 <Header />
                 <Container>
                     <Carrossel />
-                    <Produtos />
+                    <Produtos history={this.props.history}/>
                 </Container>
                 <Footer />
             </>

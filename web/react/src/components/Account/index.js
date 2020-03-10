@@ -4,21 +4,21 @@ import Footer from '../Footer';
 import './styles.css';
 import InputMask from 'react-input-mask';
 
-import { Col, Row, Button, Form, FormGroup, Label, Input,Container } from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input,Container } from 'reactstrap';
 
+import { Link } from 'react-router-dom';
 
 class Account extends Component{
     state = {
         name: "",
         secName: "",
         email: "",
-        gen: "",
         contact: "",
         error: ""
     }
 
     loadAcccount (e){
-       e.preventDefault();
+        e.preventDefault();
     }
 
     render(){
@@ -58,28 +58,16 @@ class Account extends Component{
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label for="exampleSelect" sm={1}>Gênero: </Label>
-                            <Col sm={5}>
-                                <Input type="select" name="select" id="exampleSelect">
-                                    <option disable onSelect></option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="outros">Outros</option>
-                                </Input>
-                            </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
                         <Label sm={1} for="secNameUser">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" maskChar="" id="cep" tag={InputMask} type="text" name="contact" id="contact" placeholder="Ex (11) 99999-9999"/>
+                            <Input mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <br/>
                     <FormGroup>
                         <div className="text-align-center" align="center">
                             <button type="submit" className="btn btn-success mr-3" data-toggle="modal" data-target="#salvarDados"> Salvar </button>
-                            <button type="button" class="btn btn-danger" href="index.html">Cancelar</button>
+                            <Link to="/"><button type="button" class="btn btn-danger">Cancelar</button></Link>
                         </div>
                     </FormGroup>
                 </Form>

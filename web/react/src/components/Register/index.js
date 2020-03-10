@@ -1,30 +1,68 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
+import api from "../../services/api";
 
 import InputMask from 'react-input-mask';
 
-import { Col, Row, Button, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.name = this.name.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeLastName = this.onChangeLastName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeContact = this.onChangeContact.bind(this);
+
         this.state = {
-            name: "",
-            secName: "",
-            email: "",
-            gen: "",
-            contact: "",
-            password: "",
-            error: ""
+            NM_FIRSTNAME: "",
+            NM_LASTNAME: "",
+            EMAIL: "",
+            CONTACT: "",
+
         }
     }
-    onChange(e){
-        this.setState({ name: e.target.value});
-    }
-    
 
+    onChangeName(e){
+        this.setState({
+            NM_FIRSTNAME: e.target.value
+        })
+    }
+
+    onChangeLastName(e){
+        this.setState({
+            NM_LASTNAME: e.target.value
+        })
+    }
+
+    onChangeEmail(e){
+        this.setState({
+            EMAIL: e.target.value
+        })
+    }
+
+    onChangeContact(e){
+        this.setState({
+            CONTACT: e.target.value
+        })
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const obj = {
+          NM_FIRSTNAME: this.state.NM_FIRSTNAME,
+          NM_LASTNAME: this.state.NM_LASTNAME,
+          EMAIL: this.state.EMAIL,
+          GEN: this.state.GEN,
+          CONTACT: this.state.CONTACT,
+        };
+        api.post("/users", obj).then(res => console.log(res.data));
+
+        this.setState({
+
+        });
+    }
 
     render(){
         return(
@@ -39,66 +77,54 @@ class Register extends Component{
                 <h1>Registro de Conta</h1>
             </div>
             <br></br>
-                <Form text-align-center >
+                <Form onSubmit={this.onSubmit} text-align-center >
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input value={this.state.name} onChange={this.name} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
+                            <Input type="text" required name="nameUser" onChange={this.onChangeName} value={this.state.NM_FIRSTNAME} id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="secNameUser">Sobrenome: </Label>
                         <Col sm={5}>
-                            <Input type="text" name="secNameUser" id="SecNameUser" placeholder="Seu sobrenome"/>
+                            <Input type="text" required name="secNameUser" onChange={this.onChangeLastName} value={this.state.NM_LASTNAME} id="SecNameUser" placeholder="Seu sobrenome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="Email">Email: </Label>
                         <Col sm={5}>
-                            <Input type="email" name="email" id="Email" placeholder="user@mail.com" />
+                            <Input type="email" required name="email" onChange={this.onChangeEmail} value={this.state.EMAIL} id="Email" placeholder="user@mail.com" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label for="exampleSelect" sm={1}>Gênero: </Label>
-                            <Col sm={5}>
-                                <Input type="select" name="select" id="exampleSelect">
-                                    <option disable onSelect></option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="outros">Outros</option>
-                                </Input>
-                            </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="secNameUser">Contato: </Label>
+                        <Label sm={1} for="contact">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" maskChar="" tag={InputMask} type="text" name="contact" id="contact" placeholder="Ex (11) 99999-9999"/>
+                            <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} value={this.state.CONTACT} tag={InputMask} type="text" name="contact" id="contact" placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="password">Senha: </Label>
                         <Col sm={5}>
-                            <Input  id="password" type="password" name="password"/>
+                            <Input  id="password" required type="password" name="password"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="confpassword">Confirmação: </Label>
                         <Col sm={5}>
-                            <Input  id="confpassword" type="password" name="confpassword"/>
+                            <Input  id="confpassword" required type="password" name="confpassword"/>
                         </Col>
                     </FormGroup>
                     <br/>
                     <FormGroup>
                         <div className="text-align-center" align="center">
-                            <button type="submit" className="btn btn-success mr-3" data-toggle="modal" data-target="#salvarDados"> Salvar </button>
-                            <button type="button" class="btn btn-danger" href="index.html">Cancelar</button>
+                            <button type="submit" className="btn btn-success mr-3" > Salvar </button>
+                            <button type="button" class="btn btn-danger" to="index.html">Cancelar</button>
                         </div>
                     </FormGroup>
                 </Form>

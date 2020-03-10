@@ -56,6 +56,7 @@ export default class Products extends Component {
         while(obj.id != "card")
             obj = obj.parentNode;
         console.log(obj.children[2].innerHTML);
+        this.props.history.push(`/detalhe/${obj.children[2].innerHTML.toString()}`);
     }
 
     render() {
