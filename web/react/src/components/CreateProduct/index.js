@@ -22,7 +22,7 @@ import {
 
 
 
-export default class ProductRegistration extends Component {
+export default class CreateProduct extends Component {
 
 
     // constructor() {
