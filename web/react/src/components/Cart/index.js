@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Input, Button} from 'reactstrap';
+import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 import './index.css';
 import Header from '../Header';
 import Footer from '../Footer';
+import { Link } from 'react-router-dom';
+
 
 export default class Cart extends Component {
  
@@ -28,7 +30,7 @@ export default class Cart extends Component {
                 price: 2000.99
             }
           ],
-          total: 0
+          total: 4000
       }
   }
 
@@ -87,17 +89,25 @@ export default class Cart extends Component {
 
        ))}
 
-        <div className="d-flex justify-content-end mt-5 mb-5">
 
-        <p>Total R${this.state.total}</p>
+        <Alert color="warning" className="d-flex justify-content-end mt-5 mb-1 mr-1">
+        
+        <h6>Frete: R$200</h6>
 
-        </div>
+        </Alert > 
 
-        <div className="d-flex justify-content-end mt-5 mb-5">
+        <Alert className="d-flex justify-content-end mt-3 mb-5  mr-1">
+     
+        <h6>Total: R${this.state.total + 200}</h6>
 
-        <Button>Finalizar Compra</Button>
+        </Alert>
 
-        </div>
+        <Row className="d-flex justify-content-end mt-5 mb-5  mr-1">
+            
+        
+        <Link to="/checkout"><Button outline color="success">Finalizar Compra</Button></Link>
+
+        </Row>
 
       
       </Container>

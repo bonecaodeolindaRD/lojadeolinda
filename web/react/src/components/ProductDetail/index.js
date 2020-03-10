@@ -17,15 +17,15 @@ export default class ProductDetail extends Component {
                 name: "Bonecão Galvão Bueno ",
                 description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
                 quantity: 1,                
-                price: 10000.
-            }                    
-    } 
+                price: 10000
+            }
+                                    
+        } 
+          
 
-  
-      
     change(event) {
 
-		this.setState({ quantity: event.target.value });      
+		    this.setState({ quantity: event.target.value });      
 
     };
 

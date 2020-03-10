@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, Label, Input, FormGroup } from 'reactstrap';
 import { FaCheckCircle } from 'react-icons/fa';
+import InputMask from 'react-input-mask';
 import axios from 'axios';
-
-
-// import { Container } from './styles';
 
 export default class ShippingCalculator extends Component {
     
@@ -20,6 +18,8 @@ export default class ShippingCalculator extends Component {
 
         event.preventDefault();
         let code = this.state.code;
+
+        code = code.replace('_','').replace('-','');
 
         if(code.length < 8){
           this.setState({ message: 'Um CEP deve conter 8 digítos' });
@@ -57,7 +57,7 @@ export default class ShippingCalculator extends Component {
                     <hr className="soft" />
                     <FormGroup className="control-group">
                         <Label for="cepFrete"  className="control-label pt-3"><h6>Calcular Frete e Prazo</h6></Label>
-                            <Input name="code" type="text" className="col-6 mb-2" placeholder="Digite o CEP" onChange={this.myChangeHandler} />
+                            <Input name="code" type="text" className="col-6 mb-2" placeholder="Digite o CEP" onChange={this.myChangeHandler} mask="99999-999"  tag={InputMask}/>
                             <p id="freteCalculado">{this.state.message}</p>
                             <Button outline color="warning" onClick={this.mySubmitHandler} >  <FaCheckCircle/> OK</Button>
                         <hr className="soft" />
