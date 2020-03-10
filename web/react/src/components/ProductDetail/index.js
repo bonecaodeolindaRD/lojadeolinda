@@ -18,14 +18,14 @@ export default class ProductDetail extends Component {
                 description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
                 quantity: 1,                
                 price: 10000.
-            }
-                            
-        } 
+            }                    
+    } 
+
   
       
     change(event) {
 
-     this.setState({ quantity: event.target.value });      
+		this.setState({ quantity: event.target.value });      
 
     };
 
@@ -34,9 +34,8 @@ export default class ProductDetail extends Component {
 
         <>
         <Header/>
-
+        <spam>{this.props.match.params.id}</spam>
         <Container className="pt-5 pb-2 " >
-
         <Row className="row">
 
             <Col className="mb-3" xs="12" sm="4" md="4" lg="4">
