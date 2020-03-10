@@ -13,14 +13,12 @@ class Register extends Component{
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeGen = this.onChangeGen.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
 
         this.state = {
             NM_FIRSTNAME: "",
             NM_LASTNAME: "",
             EMAIL: "",
-            GEN: "",
             CONTACT: "",
 
         }
@@ -41,12 +39,6 @@ class Register extends Component{
     onChangeEmail(e){
         this.setState({
             EMAIL: e.target.value
-        })
-    }
-
-    onChangeGen(e){
-        this.setState({
-            GEN: e.target.value
         })
     }
 
@@ -106,18 +98,6 @@ class Register extends Component{
                         <Col sm={5}>
                             <Input type="email" required name="email" onChange={this.onChangeEmail} value={this.state.EMAIL} id="Email" placeholder="user@mail.com" />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label for="gen" sm={1}>Gênero: </Label>
-                            <Col sm={5}>
-                                <Input type="select" required onChange={this.onChangeGen} value={this.state.GEN} name="gen" id="gen">
-                                    <option disable onSelect></option>
-                                    <option value="masculino">Masculino</option>
-                                    <option value="feminino">Feminino</option>
-                                    <option value="outros">Outros</option>
-                                </Input>
-                            </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
