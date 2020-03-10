@@ -17,8 +17,8 @@ class Account extends Component{
         error: ""
     }
 
-    loadAcccount (){
-        e.preventDefault();
+    loadAcccount (e){
+       e.preventDefault();
     }
 
     render(){

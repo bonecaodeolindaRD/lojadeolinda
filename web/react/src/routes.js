@@ -6,6 +6,7 @@ import Home from './components/Login';
 import Register from './components/Register';
 import { isAuthenticated } from "./services/auth";
 
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}

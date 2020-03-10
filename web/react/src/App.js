@@ -1,11 +1,9 @@
 import React from 'react';
-import { PaginaDeProdutos } from './components/ListaDeProdutos';
 import Routes from './routes';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.css';
-import { Produto } from './components/Produto';
 import Header from './components/Header';
+import { Product } from './components/ListaDeProdutos/ListaProdutos';
 
 
 function App() {
@@ -13,8 +11,7 @@ function App() {
     <>
 
       <Header/>
-      < PaginaDeProdutos /> 
-      <Produto/>
+      <Product/> 
       <Routes />
 
     </>
