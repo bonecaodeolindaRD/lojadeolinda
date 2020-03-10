@@ -14,13 +14,14 @@ class Register extends Component{
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
 
         this.state = {
             NM_FIRSTNAME: "",
             NM_LASTNAME: "",
             EMAIL: "",
             CONTACT: "",
-
+            PASSWORD: ""
         }
     }
 
@@ -48,18 +49,29 @@ class Register extends Component{
         })
     }
 
+    onChangePassword(e){
+        this.setState({
+            PASSWORD: e.target.value
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault();
         const obj = {
           NM_FIRSTNAME: this.state.NM_FIRSTNAME,
           NM_LASTNAME: this.state.NM_LASTNAME,
           EMAIL: this.state.EMAIL,
-          GEN: this.state.GEN,
           CONTACT: this.state.CONTACT,
+          PASSWORD: this.state.PASSWORD
         };
         api.post("/users", obj).then(res => console.log(res.data));
 
         this.setState({
+            NM_FIRSTNAME: "",
+            NM_LASTNAME: "",
+            EMAIL: "",
+            CONTACT: "",
+            PASSWORD: ""
 
         });
     }
@@ -117,7 +129,7 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="confpassword">Confirmação: </Label>
                         <Col sm={5}>
-                            <Input  id="confpassword" required type="password" name="confpassword"/>
+                            <Input  id="confpassword" onChange={this.onChangePassword} value={this.state.PASSWORD} required type="password" name="confpassword"/>
                         </Col>
                     </FormGroup>
                     <br/>
