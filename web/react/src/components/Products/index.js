@@ -53,7 +53,7 @@ export default class Products extends Component {
 
     redirect = (evt) => {
         let obj = evt.target;
-        while(obj.id != "card")
+        while(obj.id !== "card")
             obj = obj.parentNode;
         console.log(obj.children[2].innerHTML);
         this.props.history.push(`/detalhe/${obj.children[2].innerHTML.toString()}`);

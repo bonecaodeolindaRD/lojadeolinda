@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
     Navbar,
     Nav,
-    NavItem,
-    NavLink
+    NavItem
 } from 'reactstrap';
 
 import {
