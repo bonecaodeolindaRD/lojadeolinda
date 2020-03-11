@@ -11,14 +11,12 @@ class Register extends Component{
     constructor(props) {
         super(props);
         this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
 
         this.state = {
-            NM_FIRSTNAME: "",
-            NM_LASTNAME: "",
+            NAME: "",
             EMAIL: "",
             CONTACT: "",
             PASSWORD: ""
@@ -27,15 +25,10 @@ class Register extends Component{
 
     onChangeName(e){
         this.setState({
-            NM_FIRSTNAME: e.target.value
+            NAME: e.target.value
         })
     }
 
-    onChangeLastName(e){
-        this.setState({
-            NM_LASTNAME: e.target.value
-        })
-    }
 
     onChangeEmail(e){
         this.setState({
@@ -58,17 +51,15 @@ class Register extends Component{
     onSubmit(e) {
         e.preventDefault();
         const obj = {
-          NM_FIRSTNAME: this.state.NM_FIRSTNAME,
-          NM_LASTNAME: this.state.NM_LASTNAME,
+          NAME: this.state.NAME,
           EMAIL: this.state.EMAIL,
           CONTACT: this.state.CONTACT,
           PASSWORD: this.state.PASSWORD
         };
-        api.post("/users", obj).then(res => console.log(res.data));
+        api.post("/client", obj).then(res => console.log(res.data));
 
         this.setState({
-            NM_FIRSTNAME: "",
-            NM_LASTNAME: "",
+            NAME: "",
             EMAIL: "",
             CONTACT: "",
             PASSWORD: ""
@@ -94,14 +85,7 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input type="text" required name="nameUser" onChange={this.onChangeName} value={this.state.NM_FIRSTNAME} id="nameUser" placeholder="Seu primeiro nome"/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="secNameUser">Sobrenome: </Label>
-                        <Col sm={5}>
-                            <Input type="text" required name="secNameUser" onChange={this.onChangeLastName} value={this.state.NM_LASTNAME} id="SecNameUser" placeholder="Seu sobrenome"/>
+                            <Input type="text" required name="nameUser" onChange={this.onChangeName} value={this.state.NAME} id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
