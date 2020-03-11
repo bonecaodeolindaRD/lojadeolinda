@@ -25,12 +25,12 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/productId/{id}")
     public ResponseEntity<Product> findById(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(productRepository.findById(id).stream().findFirst().orElse(null));
+        return ResponseEntity.ok().body(productRepository.findById(id).get());
     }
 
-    @GetMapping("/product/{descricao}")
+    @GetMapping("/productDescription/{descricao}")
     public List<Product> findByName(@PathVariable("descricao") String name){
         return productRepository.findByName(name);
     }
