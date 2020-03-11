@@ -209,7 +209,7 @@ export default class CreateProduct extends Component {
                 <div className="App">
                     
                     <form ref="myForm" className="myForm">
-                        <input type="text" ref="name" placeholder="your name" className="formField" />
+                        <input type="text" ref="name" placeholder="" className="formField" />
                         <input type="text" ref="address" placeholder="your address" className="formField" />
                         <button onClick={(e) => this.fSubmit(e)} className="myButton">submit </button>
                     </form>

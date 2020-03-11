@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch,Route, Redirect } from 'react-router-dom';
 import Login from './components/Login';
 import Account from './components/Account';
@@ -26,7 +26,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
   );
 
-  const Routes = () => (
+  const Routes = () => (s
     <BrowserRouter>
         <Switch>
             <Route path="/" exact component={Home} />
@@ -37,8 +37,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/cart" exact component={Cart}/>
             <Route path="/list" exact component={List}/>
             <Route path="/login" exact component={Login} />
-            <Route path="/detalhe" exact component={ProductDetail} /> 
             <Route path="/createproduct" exact component={CreateProduct} /> 
+            <Route path="/detalhe/:id" exact component={ProductDetail} />            
             <PrivateRoute path="/account" exact component={Account} />
             <PrivateRoute path="/checkout" exact component={Checkout} />
         </Switch>

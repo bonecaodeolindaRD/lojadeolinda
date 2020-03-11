@@ -3,7 +3,6 @@ import {
     Navbar,
     Nav,
     NavItem,
-    NavLink
 } from 'reactstrap';
 
 import {
@@ -22,12 +21,12 @@ export default class Footer extends Component {
             <Navbar color="dark" className="mt-5">
                 <Nav>
                     <NavItem className="space-footer">
-                        <img src="img/logo.png" alt="logo do site" className="img-logo" />
+                        <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
                         <small class="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
                     </NavItem>
                     <NavItem className="space-footer">
                         <Nav vertical>
-                            <NavItem className="text-white h5">
+                            <NavItem className="text-white">
                                 <Link to="/" className="text-white" disabled>Pagamento</Link>
                             </NavItem>
                             <NavItem>
@@ -56,7 +55,7 @@ export default class Footer extends Component {
                     </NavItem>
                     <NavItem className="space-footer">
                         <NavItem className="text-white h-5">
-                            <NavLink href="#" className="text-white" disabled>Contato</NavLink>
+                            <Link to="/" className="text-white" disabled>Contato</Link>
                         </NavItem>
                         <NavItem>
                             <Link className="text-muted" to="/contact">
