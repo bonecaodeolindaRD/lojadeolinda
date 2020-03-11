@@ -13,11 +13,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "tb_status")
 public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_status")
-    private Integer id;
-    @Column(name = "ds_name", nullable = false, length = 25)
+    private Long id;
+    @Column(name = "ds_name")
     private String name;
 
 }

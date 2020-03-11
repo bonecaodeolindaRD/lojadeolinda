@@ -14,7 +14,14 @@ import javax.persistence.*;
 public class StockProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_stock_product")
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "id_stock")
+    private Stock stock;
     @Column(name = "nr_balance", nullable = false)
     private Integer balance;
 }

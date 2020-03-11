@@ -15,22 +15,20 @@ import java.util.List;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_client")
+    @Column(name = "id_name")
     private Long id;
-    @Column(nullable = false, name = "ds_name", length = 100)
+    @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
-    @Column(nullable = false, name = "ds_CPF", length = 15)
+    @Column(name = "nr_cpf", nullable = false, unique = true, length = 15)
     private String CPF;
-    @Column(nullable = false, name ="ds_email", unique = true, length = 70)
+    @Column(name = "ds_email", nullable = false, unique = true, length = 100)
     private String email;
-    @Column(nullable = false, name = "nr_phone_number")
+    @Column(name = "nr_phone_number", nullable = false)
     private Long phoneNumber;
-    @Column(nullable = false, name = "ds_password")
+    @Column(name = "ds_password", nullable = false)
     private String password;
-    @OneToMany(targetEntity = Address.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_client")
+    @OneToMany(mappedBy = "client")
     private List<Address> addresses;
-    @OneToMany(targetEntity = Order.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_client")
+    @OneToMany(mappedBy = "client")
     private List<Order> orders;
 }

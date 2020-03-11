@@ -8,30 +8,27 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
 @Data
-@AllArgsConstructor
+@Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order")
     private Long id;
-    @Column(name = "vl_order", nullable = true)
+    @Column(name = "vl_value")
     private Double value;
-    @Column(name = "dt_order", nullable = false)
-    private Date date;
-
-    @OneToMany(targetEntity = OrderItem.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_order")
-    private List<OrderItem> orderItems;
-    @ManyToOne(targetEntity = Status.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_status")
-    private Status status;
-
-    @OneToOne(targetEntity = Invoice.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Order.class)
     @JoinColumn(name = "id_invoice")
     private Invoice invoice;
-
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    private Client client;
+    @ManyToOne
+    @JoinColumn(name = "id_status")
+    private Status status;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItem;
 }
