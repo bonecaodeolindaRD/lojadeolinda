@@ -8,64 +8,36 @@ import InputMask from 'react-input-mask';
 import { Col, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 
 class Register extends Component{
-    constructor(props) {
-        super(props);
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangeContact = this.onChangeContact.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+    state = {
+        NAME: '',
+        EMAIL: '',
+        CONTACT: '',
+        PASSWORD: ''
+      }
 
-        this.state = {
-            NAME: "",
-            EMAIL: "",
-            CONTACT: "",
-            PASSWORD: ""
-        }
+    handleChange = event => {
+        this.setState({ NAME: event.target.value });
+        this.setState({ EMAIL: event.target.value });
+        this.setState({ CONTACT: event.target.value });
+        this.setState({ PASSWORD: event.target.value });
     }
 
-    onChangeName(e){
-        this.setState({
-            NAME: e.target.value
-        })
-    }
+    handleSubmit = event => {
+        event.preventDefault();
 
+    const user = {
+      NAME: this.state.NAME,
+      EMAIL: this.state.EMAIL,
+      CONTACT: this.state.CONTACT,
+      PASSWORD: this.state.PASSWORD
+    };
 
-    onChangeEmail(e){
-        this.setState({
-            EMAIL: e.target.value
-        })
-    }
-
-    onChangeContact(e){
-        this.setState({
-            CONTACT: e.target.value
-        })
-    }
-
-    onChangePassword(e){
-        this.setState({
-            PASSWORD: e.target.value
-        })
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        const obj = {
-          NAME: this.state.NAME,
-          EMAIL: this.state.EMAIL,
-          CONTACT: this.state.CONTACT,
-          PASSWORD: this.state.PASSWORD
-        };
-        api.post("/client", obj).then(res => console.log(res.data));
-
-        this.setState({
-            NAME: "",
-            EMAIL: "",
-            CONTACT: "",
-            PASSWORD: ""
-
-        });
-    }
+    api.post("/client", { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
 
     render(){
         return(
@@ -80,40 +52,40 @@ class Register extends Component{
                 <h1>Registro de Conta</h1>
             </div>
             <br></br>
-                <Form onSubmit={this.onSubmit} text-align-center >
+                <Form onSubmit={this.handleSubmit} text-align-center >
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label sm={1} for="nameUser">Nome: </Label>
+                        <Label sm={1} for="NAME">Nome: </Label>
                         <Col sm={5}>
-                            <Input type="text" required name="nameUser" onChange={this.onChangeName} value={this.state.NAME} id="nameUser" placeholder="Seu primeiro nome"/>
+                            <Input type="text" required name="NAME" onChange={this.handleChange} id="NAME" placeholder="Seu nome completo"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label sm={1} for="Email">Email: </Label>
+                        <Label sm={1} for="EMAIL">Email: </Label>
                         <Col sm={5}>
-                            <Input type="email" required name="email" onChange={this.onChangeEmail} value={this.state.EMAIL} id="Email" placeholder="user@mail.com" />
+                            <Input type="email" required name="EMAIL" onChange={this.handleChange}  id="EMAIL" placeholder="user@mail.com" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label sm={1} for="contact">Contato: </Label>
+                        <Label sm={1} for="CONTACT">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} value={this.state.CONTACT} tag={InputMask} type="text" name="contact" id="contact" placeholder="Ex (11) 99999-9999"/>
+                            <Input mask="(99) 99999-9999" required maskChar="" onChange={this.handleChange} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label sm={1} for="password">Senha: </Label>
+                        <Label sm={1} for="1password">Senha: </Label>
                         <Col sm={5}>
-                            <Input  id="password" required type="password" name="password"/>
+                            <Input  id="1password" required type="password" name="1password"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
-                        <Label sm={1} for="confpassword">Confirmação: </Label>
+                        <Label sm={1} for="PASSWORD">Confirmação: </Label>
                         <Col sm={5}>
-                            <Input  id="confpassword" onChange={this.onChangePassword} value={this.state.PASSWORD} required type="password" name="confpassword"/>
+                            <Input  id="PASSWORD" onChange={this.handleChange}  required type="password" name="PASSWORD"/>
                         </Col>
                     </FormGroup>
                     <br/>
