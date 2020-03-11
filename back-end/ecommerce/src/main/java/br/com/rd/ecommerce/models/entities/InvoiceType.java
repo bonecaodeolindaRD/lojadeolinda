@@ -9,21 +9,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "tb_invoice_type")
 public class InvoiceType {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_invoicetype")
-    private Integer id;
-    @Column(name = "ds_name", nullable = false)
+    @Column(name = "id_invoice_type")
+    private Long id;
+    @Column(name = "ds_name", nullable = false, length = 45)
     private String name;
-    @OneToMany(targetEntity = Invoice.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_invoice_type")
-    private List<Invoice> invoices;
-
-
 }

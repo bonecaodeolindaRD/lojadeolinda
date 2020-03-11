@@ -9,24 +9,24 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_invoice")
 public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_invoice")
     private Long id;
-    @Column(name = "dt_date", nullable = false)
+    @Column(name = "dt_invoice")
     private Date date;
-    @Column(name = "vl_value", nullable = false)
+    @Column(name = "vl_invoice")
     private Double value;
-    @OneToMany(targetEntity = InvoiceProduct.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_invoice")
-    private List<InvoiceProduct> invoiceProduct;
-
-    @OneToOne(targetEntity = Order.class, cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "id_invoice_type")
+    private InvoiceType invoiceType;
+    @OneToOne(targetEntity = Order.class)
     @JoinColumn(name = "id_order")
     private Order order;
 }

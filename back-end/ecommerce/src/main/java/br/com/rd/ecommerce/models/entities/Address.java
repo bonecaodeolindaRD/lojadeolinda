@@ -1,13 +1,11 @@
 package br.com.rd.ecommerce.models.entities;
 
 
-import com.fasterxml.jackson.annotation.JacksonInject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Data
@@ -19,23 +17,21 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_address")
-    private Integer id;
-    @Column(nullable = false, name = "ds_street")
+    private Long id;
+    @Column(name = "ds_street", nullable = false, length = 100)
     private String street;
-    @Column(nullable = false, name = "nr_number",length = 100)
-    private Integer number;
-    @Column(nullable = false, name = "ds_cep", length = 11)
+    @Column(name = "nr_cep", nullable = false, length = 10)
     private String CEP;
-    @Column(nullable = false, name = "ds_district", length = 45)
+    @Column(name = "ds_district", nullable = false, length = 45)
     private String district;
-    @Column(nullable = false, name = "ds_uf", length = 5)
+    @Column(name = "nr_number", nullable = false)
+    private Integer number;
+    @Column(name = "ds_uf", nullable = false, length = 5)
     private String UF;
-
-    @ManyToOne(targetEntity = Provider.class, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_provider")
     private Provider provider;
-
-    @ManyToOne(targetEntity = Client.class, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
 }
