@@ -3,6 +3,7 @@ package br.com.rd.ecommerce.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class Order {
     @Column(name = "vl_value")
     private Double value;
     @Column(name = "dt_order")
+    @Temporal(TemporalType.DATE)
     private Date date;
     @OneToOne(targetEntity = Order.class)
     @JoinColumn(name = "id_invoice")
