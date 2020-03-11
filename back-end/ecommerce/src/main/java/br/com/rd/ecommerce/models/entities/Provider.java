@@ -14,18 +14,15 @@ import java.util.List;
 @Entity
 @Table(name = "tb_provider")
 public class Provider {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_provider")
-    private Integer id;
+    private Long id;
     @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
-    @Column(name = "ds_cnpj", nullable = false, unique = true, length = 20)
+    @Column(name = "nr_cpnj", nullable = false, length = 20)
     private String CNPJ;
-    @OneToMany(targetEntity = Address.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_provider")
+    @OneToMany(mappedBy = "provider")
     private List<Address> addresses;
-    @OneToMany(targetEntity = Invoice.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_invoice")
-    private List<Invoice> invoices;
 }

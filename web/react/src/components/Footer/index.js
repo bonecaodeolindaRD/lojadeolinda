@@ -27,7 +27,7 @@ export default class Footer extends Component {
                     </NavItem>
                     <NavItem className="space-footer">
                         <Nav vertical>
-                            <NavItem className="text-white h5">
+                            <NavItem className="text-white">
                                 <Link to="/" className="text-white" disabled>Pagamento</Link>
                             </NavItem>
                             <NavItem>
@@ -56,7 +56,7 @@ export default class Footer extends Component {
                     </NavItem>
                     <NavItem className="space-footer">
                         <NavItem className="text-white h-5">
-                            <NavLink href="#" className="text-white" disabled>Contato</NavLink>
+                            <Link to="/" className="text-white" disabled>Contato</Link>
                         </NavItem>
                         <NavItem>
                             <Link className="text-muted" to="/contact">
