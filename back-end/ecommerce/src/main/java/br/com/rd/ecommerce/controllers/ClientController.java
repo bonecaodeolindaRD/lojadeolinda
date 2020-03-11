@@ -12,7 +12,8 @@ public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
 
-    @PostMapping
+    @CrossOrigin
+    @PostMapping("/client")
     public Client save(@RequestBody Client client){
         return clientRepository.save(client);
     }

@@ -10,6 +10,7 @@ import { Col, Form, FormGroup, Label, Input,Container  } from 'reactstrap';
 class Register extends Component{
     state = {
         NAME: '',
+        CPF: '',
         EMAIL: '',
         CONTACT: '',
         PASSWORD: ''
@@ -17,6 +18,7 @@ class Register extends Component{
 
     handleChange = event => {
         this.setState({ NAME: event.target.value });
+        this.setState({ CPF: event.target.value });
         this.setState({ EMAIL: event.target.value });
         this.setState({ CONTACT: event.target.value });
         this.setState({ PASSWORD: event.target.value });
@@ -27,6 +29,7 @@ class Register extends Component{
 
     const user = {
       NAME: this.state.NAME,
+      CPF: this.state.CPF,
       EMAIL: this.state.EMAIL,
       CONTACT: this.state.CONTACT,
       PASSWORD: this.state.PASSWORD
@@ -58,6 +61,13 @@ class Register extends Component{
                         <Label sm={1} for="NAME">Nome: </Label>
                         <Col sm={5}>
                             <Input type="text" required name="NAME" onChange={this.handleChange} id="NAME" placeholder="Seu nome completo"/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={3}></Col>
+                        <Label sm={1} for="CPF">CPF: </Label>
+                        <Col sm={5}>
+                            <Input type="text" required name="CPF" onChange={this.handleChange} id="CPF" placeholder=""/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
