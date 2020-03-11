@@ -16,8 +16,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category")
-    private Integer id;
-    @Column(name = "ds_name")
+    private Long id;
+    @Column(name = "ds_category", unique = true)
     private String name;
     @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_category")
