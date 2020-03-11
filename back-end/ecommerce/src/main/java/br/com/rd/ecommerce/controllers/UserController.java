@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-user")
     public User save(@RequestBody User user){
         return userRepository.save(user);
@@ -23,4 +23,8 @@ public class UserController {
         public List<User> find() {return userRepository.findAll(); }
     }
 
+    @GetMapping("/find-user/list")
+    public List<User> find(){
+        return userRepository.findAll();
+    }
 
