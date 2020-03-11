@@ -20,6 +20,8 @@ public class Order {
     private Long id;
     @Column(name = "vl_value")
     private Double value;
+    @Column(name = "dt_order")
+    private Date date;
     @OneToOne(targetEntity = Order.class)
     @JoinColumn(name = "id_invoice")
     private Invoice invoice;
@@ -31,4 +33,7 @@ public class Order {
     private Status status;
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItem;
+    @ManyToOne
+    @JoinColumn(name = "id_address")
+    private Address address;
 }
