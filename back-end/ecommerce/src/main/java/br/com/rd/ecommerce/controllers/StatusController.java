@@ -27,8 +27,8 @@ public class StatusController {
 
     @PutMapping("/status")
     public Status update(@RequestBody Status status) {
-        Status statusEntity = statusRepository.findById(status.getId()).get();
-        statusEntity.setName(status.getName());
+        Status statusEntity = statusRepository.findById(status.getIdStatus()).get();
+        statusEntity.setStatus(status.getStatus());
         return statusRepository.save(statusEntity);
     }
 

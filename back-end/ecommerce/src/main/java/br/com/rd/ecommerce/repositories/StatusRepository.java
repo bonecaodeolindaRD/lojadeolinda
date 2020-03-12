@@ -11,5 +11,5 @@ import java.util.List;
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
     List<Status> findByIdStatus(Long id);
-    List<Status> findByName(String name);
+    List<Status> findByStatus(String status);
 }

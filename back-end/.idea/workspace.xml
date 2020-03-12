@@ -1,53 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e4f7816-a96d-4275-8241-6ce96e28d7a8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/back-end.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/br/com/rd/ecommerce/EcommerceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/br/com/rd/ecommerce/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/br/com/rd/ecommerce/models/entities/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/br/com/rd/ecommerce/models/entities/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/java/br/com/rd/ecommerce/repositories/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecommerce/src/test/java/br/com/rd/ecommerce/EcommerceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/Cart/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/Cart/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/Contact/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/Contact/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/ProductDetail/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../web/react/src/components/ShippingCalculator/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DER.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../DER.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../boneco de olinda.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/../boneco de olinda.mwb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/About/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/About/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Account/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Account/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Footer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Footer/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Header/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Home/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/ListaDeProdutos/ListaProdutos.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ProductsList/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/ListaDeProdutos/ProductList.css" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ProductsList/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Login/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Products/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Products/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/Register/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/Register/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/art1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/art1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/bon1.webp" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/bon1.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/bon2.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/bon2.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/fut1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/fut1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/fut2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/fut2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/components/imgListaProdutos/politico.jfif" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/components/ListImg/politico.jfif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/react/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/react/src/routes.js" afterDir="false" />
-    </list>
+    <list default="true" id="8e4f7816-a96d-4275-8241-6ce96e28d7a8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,10 +36,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1583851237402">
+    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1584041752892">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583851237402" />
+    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584041752892" />
     <state x="184" y="7" key="SettingsEditor" timestamp="1583848131834">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

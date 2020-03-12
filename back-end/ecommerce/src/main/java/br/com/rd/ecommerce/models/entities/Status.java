@@ -19,9 +19,9 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_status")
-    private Long id;
+    private Long idStatus;
     @Column(name = "ds_name")
-    private String name;
+    private String status;
 
 
 }
