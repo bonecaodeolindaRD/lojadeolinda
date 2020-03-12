@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,18 +25,20 @@ public class Order {
     @Column(name = "dt_order")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @OneToOne(targetEntity = Order.class)
-    @JoinColumn(name = "id_invoice")
-    private Invoice invoice;
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
     @ManyToOne
     @JoinColumn(name = "id_status")
     private Status status;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItem;
     @ManyToOne
     @JoinColumn(name = "id_address")
     private Address address;
+
+    public void addItem(OrderItem item){
+        if(orderItem == null) orderItem = new ArrayList<>();
+        orderItem.add(item);
+    }
 }
