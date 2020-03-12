@@ -137,7 +137,6 @@ public class OrderServiceImpl implements OrderService {
         Order orderEntity = new Order();
         orderEntity.setValue(order.getValue());
         orderEntity.setDate(order.getDate());
-        Invoice invoice = new Invoice();
         orderEntity.setClient(order.getClient());
         orderEntity.setStatus(order.getStatus());
         orderEntity.setAddress(order.getAddress());
@@ -156,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
         Order returnOrder = respository.save(orderEntity);
         order.setId(returnOrder.getId());
 
-        return ResponseEntity.ok().body(order.getId());
+        return ResponseEntity.ok().body(returnOrder);
     }
 
     @Override
