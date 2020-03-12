@@ -1,8 +1,10 @@
 package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.entities.Client;
-import br.com.rd.ecommerce.repositories.ClientRepository;
+import br.com.rd.ecommerce.models.entities.dto.ClientDTO;
+import br.com.rd.ecommerce.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,12 +12,11 @@ import java.util.List;
 @RestController
 public class ClientController {
     @Autowired
-    private ClientRepository clientRepository;
-
-    @CrossOrigin
+    private ClientService service;
+    
     @PostMapping("/client-create")
-    public Client save(@RequestBody Client client){
-        return clientRepository.save(client);
+    public ResponseEntity save(@RequestBody ClientDTO clientDTO){
+        return ResponseEntity.ok().body(service.save(clientDTO));
     }
 
     @GetMapping("/client/list")

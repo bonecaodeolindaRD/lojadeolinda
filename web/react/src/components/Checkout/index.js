@@ -236,13 +236,13 @@ export default class Checkout extends Component {
         alert("Sucesso");
     }
 
-    testCPF = (strCPF) => {
+    testCPF = (CPF) => {
         let soma;
         let resto;
         let cpf = ""
 
-        for (let i = 0; i < strCPF.toString().length; i++) {
-            let char = strCPF.substring(i, i + 1);
+        for (let i = 0; i < CPF.toString().length; i++) {
+            let char = CPF.substring(i, i + 1);
             if (char !== "." && char !== "-")
                 cpf += char;
         }
