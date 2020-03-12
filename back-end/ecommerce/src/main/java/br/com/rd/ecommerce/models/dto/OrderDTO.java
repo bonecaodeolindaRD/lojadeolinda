@@ -18,10 +18,10 @@ public class OrderDTO {
     private Long id;
     private Double value;
     private Date date;
-    private Client client;
+    private ClientDTO client;
     private Status status;
     private List<OrderItemDTO> orderItem;
-    private Address address;
+    private AddressDTO address;
 
     public void addItem(OrderItemDTO item){
         if(orderItem == null) orderItem = new ArrayList<>();

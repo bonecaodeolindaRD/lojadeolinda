@@ -1,12 +1,10 @@
 package br.com.rd.ecommerce.services.order;
 
-import br.com.rd.ecommerce.models.dto.InvoiceDTO;
+import br.com.rd.ecommerce.models.dto.AddressDTO;
+import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.dto.OrderItemDTO;
-import br.com.rd.ecommerce.models.entities.Client;
-import br.com.rd.ecommerce.models.entities.Invoice;
-import br.com.rd.ecommerce.models.entities.Order;
-import br.com.rd.ecommerce.models.entities.OrderItem;
+import br.com.rd.ecommerce.models.entities.*;
 import br.com.rd.ecommerce.repositories.OrderRespository;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +33,28 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDTO> ordersDTO = new ArrayList<>();
         for(Order order: orders){
             OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setAddress(order.getAddress());
+            AddressDTO aDTO = new AddressDTO();
+            aDTO.setCEP(order.getAddress().getCEP());
+            aDTO.setDistrict(order.getAddress().getDistrict());
+            aDTO.setId(order.getAddress().getId());
+            aDTO.setNumber(order.getAddress().getNumber());
+            aDTO.setStreet(order.getAddress().getStreet());
+            aDTO.setUF(order.getAddress().getUF());
+            orderDTO.setAddress(aDTO);
             orderDTO.setId(order.getId());
             orderDTO.setValue(order.getValue());
             orderDTO.setDate(order.getDate());
             orderDTO.setStatus(order.getStatus());
-            orderDTO.setClient(order.getClient());
+            // TODO implementar ClientDTO
+            ClientDTO clientDTO = new ClientDTO();
+            clientDTO.setAddresses(null);
+            clientDTO.setCPF(order.getClient().getCPF());
+            clientDTO.setEmail(order.getClient().getEmail());
+            clientDTO.setId(order.getClient().getId());
+            clientDTO.setName(order.getClient().getName());
+            clientDTO.setPhoneNumber(order.getClient().getPhoneNumber());
+            clientDTO.setOrders(null);
+            orderDTO.setClient(clientDTO);
             for(OrderItem oi: order.getOrderItem()){
                 OrderItemDTO oiDTO = new OrderItemDTO();
                 oiDTO.setId(oi.getId());
@@ -70,12 +84,27 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for(Order order: orders){
                 OrderDTO orderDTO = new OrderDTO();
-                orderDTO.setAddress(order.getAddress());
+                AddressDTO aDTO = new AddressDTO();
+                aDTO.setCEP(order.getAddress().getCEP());
+                aDTO.setDistrict(order.getAddress().getDistrict());
+                aDTO.setId(order.getAddress().getId());
+                aDTO.setNumber(order.getAddress().getNumber());
+                aDTO.setStreet(order.getAddress().getStreet());
+                aDTO.setUF(order.getAddress().getUF());
+                orderDTO.setAddress(aDTO);
                 orderDTO.setId(order.getId());
                 orderDTO.setValue(order.getValue());
                 orderDTO.setDate(order.getDate());
                 orderDTO.setStatus(order.getStatus());
-                orderDTO.setClient(order.getClient());
+                ClientDTO clientDTO = new ClientDTO();
+                clientDTO.setAddresses(null);
+                clientDTO.setCPF(order.getClient().getCPF());
+                clientDTO.setEmail(order.getClient().getEmail());
+                clientDTO.setId(order.getClient().getId());
+                clientDTO.setName(order.getClient().getName());
+                clientDTO.setPhoneNumber(order.getClient().getPhoneNumber());
+                clientDTO.setOrders(null);
+                orderDTO.setClient(clientDTO);
                 for(OrderItem oi: order.getOrderItem()){
                     OrderItemDTO oiDTO = new OrderItemDTO();
                     oiDTO.setId(oi.getId());
@@ -99,10 +128,25 @@ public class OrderServiceImpl implements OrderService {
         if(item == null || id == null)
             return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
         OrderDTO oDTO = new OrderDTO();
-        oDTO.setClient(item.getClient());
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setAddresses(null);
+        clientDTO.setCPF(item.getClient().getCPF());
+        clientDTO.setEmail(item.getClient().getEmail());
+        clientDTO.setId(item.getClient().getId());
+        clientDTO.setName(item.getClient().getName());
+        clientDTO.setPhoneNumber(item.getClient().getPhoneNumber());
+        clientDTO.setOrders(null);
+        oDTO.setClient(clientDTO);
         oDTO.setStatus(item.getStatus());
         oDTO.setDate(item.getDate());
-        oDTO.setAddress(item.getAddress());
+        AddressDTO aDTO = new AddressDTO();
+        aDTO.setCEP(item.getAddress().getCEP());
+        aDTO.setDistrict(item.getAddress().getDistrict());
+        aDTO.setId(item.getAddress().getId());
+        aDTO.setNumber(item.getAddress().getNumber());
+        aDTO.setStreet(item.getAddress().getStreet());
+        aDTO.setUF(item.getAddress().getUF());
+        oDTO.setAddress(aDTO);
         oDTO.setValue(item.getValue());
         for(OrderItem oi: item.getOrderItem()){
             OrderItemDTO oiDTO = new OrderItemDTO();
@@ -137,9 +181,15 @@ public class OrderServiceImpl implements OrderService {
         Order orderEntity = new Order();
         orderEntity.setValue(order.getValue());
         orderEntity.setDate(order.getDate());
-        orderEntity.setClient(order.getClient());
+
+        Client client = new Client();
+        client.setId(order.getClient().getId());
+
+        orderEntity.setClient(client);
         orderEntity.setStatus(order.getStatus());
-        orderEntity.setAddress(order.getAddress());
+        Address address = new Address();
+        address.setId(order.getAddress().getId());
+        orderEntity.setAddress(address);
         orderEntity.setStatus(order.getStatus());
 
         List<OrderItem> items = new ArrayList<>();
