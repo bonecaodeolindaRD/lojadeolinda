@@ -6,6 +6,7 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_provider")
-public class Provider {
+public class Provider implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
