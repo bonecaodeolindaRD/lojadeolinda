@@ -13,7 +13,7 @@ public class ClientController {
     private ClientRepository clientRepository;
 
     @CrossOrigin
-    @PostMapping("/client")
+    @PostMapping("/client-create")
     public Client save(@RequestBody Client client){
         return clientRepository.save(client);
     }

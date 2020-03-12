@@ -16,11 +16,23 @@ class Register extends Component{
         PASSWORD: ''
       }
 
-    handleChange = event => {
+    onChangeNome = event => {
         this.setState({ NAME: event.target.value });
+    }
+
+    onChangeCPF = event =>{
         this.setState({ CPF: event.target.value });
+    }
+
+    onChangeEmail = event =>{
         this.setState({ EMAIL: event.target.value });
+    }
+
+    onChangeContact = event =>{
         this.setState({ CONTACT: event.target.value });
+    }
+
+    onChangePassword = event =>{
         this.setState({ PASSWORD: event.target.value });
     }
 
@@ -60,28 +72,28 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="NAME">Nome: </Label>
                         <Col sm={5}>
-                            <Input type="text" required name="NAME" onChange={this.handleChange} id="NAME" placeholder="Seu nome completo"/>
+                            <Input type="text" required name="NAME" onChange={this.onChangeNome} id="NAME" placeholder="Seu nome completo"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="CPF">CPF: </Label>
                         <Col sm={5}>
-                            <Input type="text" required name="CPF" onChange={this.handleChange} id="CPF" placeholder=""/>
+                            <Input mask="999.999.999-99" tag={InputMask} type="text" required name="CPF" onChange={this.onChangeCPF} id="CPF" placeholder="Ex 999.999.999-99"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="EMAIL">Email: </Label>
                         <Col sm={5}>
-                            <Input type="email" required name="EMAIL" onChange={this.handleChange}  id="EMAIL" placeholder="user@mail.com" />
+                            <Input type="email" required name="EMAIL" onChange={this.onChangeEmail}  id="EMAIL" placeholder="Ex user@mail.com" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="CONTACT">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" required maskChar="" onChange={this.handleChange} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999"/>
+                            <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
@@ -95,7 +107,7 @@ class Register extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="PASSWORD">Confirmação: </Label>
                         <Col sm={5}>
-                            <Input  id="PASSWORD" onChange={this.handleChange}  required type="password" name="PASSWORD"/>
+                            <Input  id="PASSWORD" onChange={this.onChangePassword}  required type="password" name="PASSWORD"/>
                         </Col>
                     </FormGroup>
                     <br/>

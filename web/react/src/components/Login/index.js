@@ -25,9 +25,9 @@ class Login extends Component{
       this.setState({ error: "Preencha e-mail e senha para continuar!" });
     } else {
       try {
-        const response = await api.post("/sessions", { email, password });
+        const response = await api.post("/client", { email, password });
         login(response.data.token);
-        this.props.history.push("/account");
+        this.props.history.push("/");
       } catch (err) {
         this.setState({
           error:
