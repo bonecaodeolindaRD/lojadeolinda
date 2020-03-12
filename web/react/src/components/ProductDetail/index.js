@@ -8,8 +8,8 @@ import Footer from '../Footer';
 
 export default class ProductDetail extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
 
                 id: 1,
@@ -19,14 +19,19 @@ export default class ProductDetail extends Component {
                 quantity: 1,                
                 price: 10000
             }
+
+            this.getProduct();
                                     
-        } 
+    } 
+
+    getProduct = async() => {
+        console.log(this.props.match.params.id);
+    }
           
 
     change(event) {
 
 		    this.setState({ quantity: event.target.value });      
-
     };
 
   render() {
@@ -34,7 +39,6 @@ export default class ProductDetail extends Component {
 
         <>
         <Header/>
-        <spam>{this.props.match.params.id}</spam>
         <Container className="pt-5 pb-2 " >
         <Row className="row">
 
