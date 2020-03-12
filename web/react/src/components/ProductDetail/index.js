@@ -34,6 +34,19 @@ export default class ProductDetail extends Component {
                 this.setState({ quantity: event.target.value });      
         };
 
+
+        comprar(event) {
+         let  products = [];
+           products.push(this.state.id,
+              this.state.image,
+              this.state.name, 
+              this.state.price, 
+              this.state.quantity)
+           
+          //localStorage.setItem(products);
+          
+        }
+
         render() {
 
                 return (  
@@ -56,7 +69,7 @@ export default class ProductDetail extends Component {
                                 <FormGroup className="control-group">
                                     <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${this.state.price}</h5></Label >
                                     <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd"  value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
-                                            <Button outline color="warning"> <FaShoppingCart/> Comprar</Button>
+                                            <Button outline color="warning" onClick="comprar()"> <FaShoppingCart/> Comprar</Button>
                                 </FormGroup>
                             </Form>
 
