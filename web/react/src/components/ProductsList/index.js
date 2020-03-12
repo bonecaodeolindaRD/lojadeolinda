@@ -31,7 +31,7 @@ export default class Product extends Component {
              </Row>
 
                 
-                <Col md={11}className="bordList mb-2" > <a href="">
+                <Col md={11}className="bordList mb-2" > <a to="">
                     <Container className="themed-container " fluid={true}  >
                         <Row >
                             <Col md={3} id="Player">
@@ -64,7 +64,7 @@ export default class Product extends Component {
                      </a>
                 </Col>
 
-                <Col md={11}className="bordList mb-2" ><a href="">
+                <Col md={11}className="bordList mb-2" ><a to="">
                     <Container className="themed-container " fluid={true}  >
                         <Row >
                             <Col md={3} >
