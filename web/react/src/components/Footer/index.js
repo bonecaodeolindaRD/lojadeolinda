@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     Navbar,
     Nav,
-    NavItem,
+    NavItem
 } from 'reactstrap';
 
 import {
