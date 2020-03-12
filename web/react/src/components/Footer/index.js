@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     Navbar,
     Nav,
-    NavItem,
+    NavItem
 } from 'reactstrap';
 
 import {
@@ -22,7 +22,7 @@ export default class Footer extends Component {
                 <Nav>
                     <NavItem className="space-footer">
                         <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
-                        <small class="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
+                        <small className="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
                     </NavItem>
                     <NavItem className="space-footer">
                         <Nav vertical>
@@ -40,7 +40,7 @@ export default class Footer extends Component {
                     <NavItem className="space-footer">
                         <Nav vertical>
                             <NavItem className="text-white h-5">
-                                <Link href="#" className="text-white" disabled>Redes sociais</Link>
+                                <Link className="text-white" disabled>Redes sociais</Link>
                             </NavItem>
                             <NavItem>
                                 <Link className="text-muted" to="/"><FaFacebook /></Link>
@@ -69,7 +69,7 @@ export default class Footer extends Component {
                         </NavItem>
                         <NavItem>
                             <Link className="text-muted" to="/about">
-                                Nossa historia
+                                Nossa História
                             </Link>
                         </NavItem>
                     </NavItem>
