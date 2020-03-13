@@ -1,4 +1,4 @@
-package br.com.rd.ecommerce.models.entities.dto;
+package br.com.rd.ecommerce.models.dto;
 
 import br.com.rd.ecommerce.models.entities.Address;
 import br.com.rd.ecommerce.models.entities.Order;

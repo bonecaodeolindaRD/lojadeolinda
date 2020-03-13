@@ -1,7 +1,9 @@
 package br.com.rd.ecommerce.services;
 
+import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.entities.Client;
-import br.com.rd.ecommerce.models.entities.dto.ClientDTO;
+
+import br.com.rd.ecommerce.models.entities.Product;
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,12 @@ public class ClientService {
         return ResponseEntity.ok().body(clientDTO);
     }
 
-    public ResponseEntity getList(ClientDTO clientDTO){
-        List<Client> clientList = new ArrayList<>();
-        return clientRepository.findAll();
+    public ResponseEntity<List<Client>> findAllClient() {
+        List<Client> clients = clientRepository.findAll();
+        if (clients != null && clients.size() > 0)
+            return ResponseEntity.ok().body(clients);
+        return ResponseEntity.badRequest().build();
     }
+
 }
+
