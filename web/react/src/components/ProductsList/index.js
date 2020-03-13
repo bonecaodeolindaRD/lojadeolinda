@@ -9,9 +9,7 @@ import Header from '../Header';
 
 
 export default class Product extends Component {
-
-   
-		
+ 		
 
     render() {
 
@@ -32,7 +30,7 @@ export default class Product extends Component {
               </Col> 
              </Row>
 
-
+                
                 <Col md={11}className="bordList mb-2" > <a href="">
                     <Container className="themed-container " fluid={true}  >
                         <Row >

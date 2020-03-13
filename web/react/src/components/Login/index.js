@@ -25,9 +25,9 @@ class Login extends Component{
       this.setState({ error: "Preencha e-mail e senha para continuar!" });
     } else {
       try {
-        const response = await api.post("/sessions", { email, password });
+        const response = await api.post("/client", { email, password });
         login(response.data.token);
-        this.props.history.push("/account");
+        this.props.history.push("/");
       } catch (err) {
         this.setState({
           error:
@@ -60,9 +60,6 @@ class Login extends Component{
                       </InputGroupAddon>
                         <Input id="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
                     </InputGroup>
-                      <div className="text-left">
-                        <a href="/password" className="alert-link">Lembrar Senha</a>
-                      </div>
                       <br/>
                   <div className="text-center">
                       <Button size="md" type="submit" color="success">Logar-se</Button>
