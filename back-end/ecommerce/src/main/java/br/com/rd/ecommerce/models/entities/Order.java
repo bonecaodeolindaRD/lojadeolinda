@@ -32,7 +32,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_status")
     private Status status;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_order")
     private List<OrderItem> orderItem;
     @ManyToOne
     @JoinColumn(name = "id_address")

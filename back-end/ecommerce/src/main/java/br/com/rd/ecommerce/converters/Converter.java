@@ -3,7 +3,7 @@ package br.com.rd.ecommerce.converters;
 import br.com.rd.ecommerce.models.dto.*;
 import br.com.rd.ecommerce.models.entities.*;
 
-public class Converter {
+public class  Converter {
 
     public Product convertTo(ProductDTO productDTO) {
         Product product = new Product();
@@ -48,7 +48,7 @@ public class Converter {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.getValue());
+        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setClient(convertTo(order.getClient()));
@@ -109,7 +109,7 @@ public class Converter {
         orderItem.setValue(orderItemDTO.getValue());
         orderItem.setQuantity(orderItemDTO.getQuantity());
         orderItem.setProduct(orderItemDTO.getProduct());
-        orderItem.setId(orderItemDTO.getId());
+       // orderItem.setId(orderItemDTO.getId());
         return orderItem;
     }
 

@@ -79,32 +79,9 @@ public class OrderServiceImpl implements OrderService {
         if(order.getOrderItem() == null || order.getOrderItem().size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("O pedido não contem items"));
 
-        Order orderEntity = new Order();
-        orderEntity.setValue(order.getValue());
-        orderEntity.setDate(order.getDate());
-
-        Client client = new Client();
-        client.setId(order.getClient().getId());
-
-        orderEntity.setClient(client);
-        orderEntity.setStatus(order.getStatus());
-        Address address = new Address();
-        address.setId(order.getAddress().getId());
-        orderEntity.setAddress(address);
-        orderEntity.setStatus(order.getStatus());
-
-        List<OrderItem> items = new ArrayList<>();
-        for(OrderItemDTO item: order.getOrderItem()){
-            OrderItem it = new OrderItem();
-            it.setProduct(item.getProduct());
-            it.setQuantity(item.getQuantity());
-            it.setValue(item.getValue());
-            items.add(it);
-        }
-        orderEntity.setOrderItem(items);
+        Order orderEntity = converter.convertTo(order);
 
         Order returnOrder = respository.save(orderEntity);
-        order.setId(returnOrder.getId());
 
         return ResponseEntity.ok().body(returnOrder);
     }
