@@ -32,11 +32,18 @@ public class ClientService {
         return ResponseEntity.ok().body(clientDTO);
     }
 
+    //TODO TERMINAR A CONSULTA E IMPLEMENTAR NO CONTROLLER
     public ResponseEntity<List<Client>> findAllClient() {
-        List<Client> clients = clientRepository.findAll();
-        if (clients != null && clients.size() > 0)
-            return ResponseEntity.ok().body(clients);
-        return ResponseEntity.badRequest().build();
+        List<Client> client = clientRepository.findAll();
+
+        if(client == null || client.size() <= 0)
+            return ResponseEntity.badRequest().body(new ClientException("Nenhum pedido encontrado"));
+        List<ClientDTO> clientDTO = new ArrayList<>();
+        for(Client client: clients)
+            clientDTO.add(converter.clientToClientDTO(client));
+
+
+        return ResponseEntity.ok().body(clientDTO);
     }
 
 }

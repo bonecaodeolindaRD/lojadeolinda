@@ -21,7 +21,7 @@ public class ClientController {
 
     @GetMapping("/client/list")
     public ResponseEntity<List<Client>> findAll(){
-        return service.findAllClient();
+        return ResponseEntity.ok().body(service.findAllClient(clientDTO));
     }
 
 }

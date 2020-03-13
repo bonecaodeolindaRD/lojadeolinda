@@ -10,20 +10,6 @@ import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import List from './components/ProductsList';
 import ProductDetail from './components/ProductDetail';
-import { isAuthenticated } from "./services/auth";
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={props =>
-        isAuthenticated() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-        )
-      }
-    />
-  );
 
   const Routes = () => (
     <BrowserRouter>
@@ -37,8 +23,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/list" exact component={List}/>
             <Route path="/login" exact component={Login} />
             <Route path="/detalhe/:id" exact component={ProductDetail} />            
-            <PrivateRoute path="/account" exact component={Account} />
-            <PrivateRoute path="/checkout" exact component={Checkout} />
+            <Route path="/account" exact component={Account} />
+            <Route path="/checkout" exact component={Checkout} />
         </Switch>
     </BrowserRouter>
 );
