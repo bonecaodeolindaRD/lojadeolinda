@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.services.order;
 
+import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.AddressDTO;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
@@ -88,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
         if(order.getOrderItem() == null || order.getOrderItem().size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("O pedido não contem items"));
 
-        Order orderEntity = converter.convertTo(order   );
+        Order orderEntity = converter.convertTo(order);
 
         Order returnOrder = respository.save(orderEntity);
         order.setId(returnOrder.getId());
