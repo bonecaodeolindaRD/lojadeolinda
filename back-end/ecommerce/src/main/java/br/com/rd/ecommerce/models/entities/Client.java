@@ -25,7 +25,7 @@ public class Client implements Serializable {
     @Column(name = "ds_email", nullable = false, unique = true, length = 100)
     private String email;
     @Column(name = "nr_phone_number", nullable = false)
-    private Long phoneNumber;
+    private String phoneNumber;
     @Column(name = "ds_password", nullable = false)
     private String password;
     @OneToMany(mappedBy = "client")

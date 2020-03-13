@@ -16,7 +16,7 @@ public class ClientDTO {
     private String name;
     private String CPF;
     private String email;
-    private Long phoneNumber;
+    private String phoneNumber;
     private String password;
     private List<Address> addresses;
     private List<Order> orders;

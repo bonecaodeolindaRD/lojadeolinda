@@ -21,17 +21,10 @@ public class ClientService implements ClientInterface {
     private Converter converter = new Converter();
 
     public ResponseEntity createClient(ClientDTO clientDTO){
-        Client clientEntity = new Client();
-        clientEntity.setName(clientDTO.getName());
-        clientEntity.setCPF(clientDTO.getCPF());
-        clientEntity.setEmail(clientDTO.getEmail());
-        clientEntity.setPassword(clientDTO.getPassword());
-        clientEntity.setPhoneNumber(clientDTO.getPhoneNumber());
-        clientEntity.setOrders(clientDTO.getOrders());
-        clientEntity.setAddresses(clientDTO.getAddresses());
+        Client clientEntity = converter.convertTo(clientDTO);
 
-        Client returnEntity = clientRepository.save(clientEntity);
-        clientDTO.setId(returnEntity.getId());
+        ClientDTO returnEntity = converter.convertTo(clientRepository.save(clientEntity));
+
         return ResponseEntity.ok().body(clientDTO);
     }
 
