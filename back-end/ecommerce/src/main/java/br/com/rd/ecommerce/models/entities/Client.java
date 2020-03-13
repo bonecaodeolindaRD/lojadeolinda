@@ -27,8 +27,8 @@ public class Client {
     private Long phoneNumber;
     @Column(name = "ds_password", nullable = false)
     private String password;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Address> addresses;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Order> orders;
 }
