@@ -28,4 +28,8 @@ public class OrderItem{
     @Column(name = "vl_value", nullable = false)
     private Double value;
 
+    public double calcSubValue(){
+        return this.value * quantity;
+    }
+
 }

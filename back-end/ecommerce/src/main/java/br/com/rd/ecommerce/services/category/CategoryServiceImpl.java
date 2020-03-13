@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService{
         if(category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao criar a categoria"));
         Category cat = repository.save(category);
-        return ResponseEntity.ok().body(converter.categoryToCategoryDTO(cat));
+        return ResponseEntity.ok().body(converter.convertTo(cat));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = repository.findById(id).get();
         if(category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        CategoryDTO catDTO = converter.categoryToCategoryDTO(category);
+        CategoryDTO catDTO = converter.convertTo(category);
         return ResponseEntity.ok().body(catDTO);
     }
 
@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService{
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
         List<CategoryDTO> catDTO = new ArrayList<>();
         for(Category cat: categories)
-            catDTO.add(converter.categoryToCategoryDTO(cat));
+            catDTO.add(converter.convertTo(cat));
 
         return ResponseEntity.ok().body(catDTO);
     }
@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService{
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
         List<CategoryDTO> catDTO = new ArrayList<>();
         for(Category cat: categories)
-            catDTO.add(converter.categoryToCategoryDTO(cat));
+            catDTO.add(converter.convertTo(cat));
 
         return ResponseEntity.ok().body(catDTO);
     }
@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService{
         Category cat = repository.findById(category.getId()).get();
         cat.setName(category.getName());
         cat = repository.save(cat);
-        CategoryDTO catDTO = converter.categoryToCategoryDTO(cat);
+        CategoryDTO catDTO = converter.convertTo(cat);
         return ResponseEntity.ok().body(catDTO);
     }
 }

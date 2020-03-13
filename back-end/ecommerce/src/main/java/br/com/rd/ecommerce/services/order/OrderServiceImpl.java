@@ -1,6 +1,5 @@
 package br.com.rd.ecommerce.services.order;
 
-import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.AddressDTO;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
@@ -33,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
             return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
         List<OrderDTO> ordersDTO = new ArrayList<>();
         for(Order order: orders)
-            ordersDTO.add(converter.orderToOrderDTO(order));
+            ordersDTO.add(converter.convertTo(order));
 
 
         return ResponseEntity.ok().body(ordersDTO);
@@ -53,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for(Order order: orders)
-                ordersDTO.add(converter.orderToOrderDTO(order));
+                ordersDTO.add(converter.convertTo(order));
 
             return ResponseEntity.ok().body(ordersDTO);
         } catch (ParseException e) {
@@ -66,9 +65,19 @@ public class OrderServiceImpl implements OrderService {
         Order item = respository.findById(id).get();
         if(item == null || id == null)
             return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
-        OrderDTO oDTO = converter.orderToOrderDTO(item);
+        OrderDTO oDTO = converter.convertTo(item);
         return ResponseEntity.ok().body(oDTO);
     }
+
+
+//    public ResponseEntity<List<Order>> findByClient(Client client) {
+//        if(client == null)
+//            return ResponseEntity.badRequest().build();
+//        List<Order> orders = respository.findByClient(client);
+//        if(orders == null || orders.size() <= 0)
+//            return ResponseEntity.badRequest().build();
+//        return ResponseEntity.ok().body(orders);
+//    }
 
     @Override
     public ResponseEntity createOrder(OrderDTO order) {
@@ -79,29 +88,7 @@ public class OrderServiceImpl implements OrderService {
         if(order.getOrderItem() == null || order.getOrderItem().size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("O pedido não contem items"));
 
-        Order orderEntity = new Order();
-        orderEntity.setValue(order.getValue());
-        orderEntity.setDate(order.getDate());
-
-        Client client = new Client();
-        client.setId(order.getClient().getId());
-
-        orderEntity.setClient(client);
-        orderEntity.setStatus(order.getStatus());
-        Address address = new Address();
-        address.setId(order.getAddress().getId());
-        orderEntity.setAddress(address);
-        orderEntity.setStatus(order.getStatus());
-
-        List<OrderItem> items = new ArrayList<>();
-        for(OrderItemDTO item: order.getOrderItem()){
-            OrderItem it = new OrderItem();
-            it.setProduct(item.getProduct());
-            it.setQuantity(item.getQuantity());
-            it.setValue(item.getValue());
-            items.add(it);
-        }
-        orderEntity.setOrderItem(items);
+        Order orderEntity = converter.convertTo(order   );
 
         Order returnOrder = respository.save(orderEntity);
         order.setId(returnOrder.getId());

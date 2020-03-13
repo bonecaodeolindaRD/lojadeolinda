@@ -3,15 +3,23 @@ package br.com.rd.ecommerce.converters;
 import br.com.rd.ecommerce.models.dto.*;
 import br.com.rd.ecommerce.models.entities.*;
 
-public class Converter implements ProductConverter, OrderConverter, ClientConverter,
-        AddressConverter, OrderItemConverter, CategoryConverter {
-    @Override
-    public Product DTOToProduct(ProductDTO productDTO) {
-        return null;
+public class  Converter {
+
+    public Product convertTo(ProductDTO productDTO) {
+        Product product = new Product();
+        product.setPrice(productDTO.getPrice());
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setImage(productDTO.getImage());
+        product.setId(productDTO.getId());
+        Category category = new Category();
+        category.setId(productDTO.getCategory());
+        product.setCategory(category);
+        return product;
     }
 
-    @Override
-    public ProductDTO productToDTO(Product product) {
+
+    public ProductDTO convertTo(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setCategory(product.getCategory().getId());
         productDTO.setDescription(product.getDescription());
@@ -22,32 +30,46 @@ public class Converter implements ProductConverter, OrderConverter, ClientConver
         return productDTO;
     }
 
-    @Override
-    public Order DTOToOrder(OrderDTO orderDTO) {
-        return null;
+
+    public Order convertTo(OrderDTO orderDTO) {
+        Order order = new Order();
+        for(OrderItemDTO oDTO: orderDTO.getOrderItem())
+            order.addItem(convertTo(oDTO));
+        order.setValue(order.total());
+        order.setStatus(orderDTO.getStatus());
+        order.setDate(orderDTO.getDate());
+        order.setClient(convertTo(orderDTO.getClient()));
+        order.setAddress(convertTo(orderDTO.getAddress()));
+        return order;
     }
 
-    @Override
-    public OrderDTO orderToOrderDTO(Order order) {
+
+    public OrderDTO convertTo(Order order) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setAddress(addressToAddressDTO(order.getAddress()));
+        orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.getValue());
+        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
-        orderDTO.setClient(clientToClientDTO(order.getClient()));
+        orderDTO.setClient(convertTo(order.getClient()));
         for(OrderItem oi: order.getOrderItem())
-            orderDTO.addItem(orderItemToOrderItemDTO(oi));
+            orderDTO.addItem(convertTo(oi));
         return orderDTO;
     }
 
-    @Override
-    public Client DTOToClient(ClientDTO clientDTO) {
-        return null;
+
+    public Client convertTo(ClientDTO clientDTO) {
+        Client client = new Client();
+        client.setId(clientDTO.getId());
+        client.setCPF(client.getCPF());
+        client.setEmail(client.getEmail());
+        client.setName(clientDTO.getName());
+        client.setPhoneNumber(clientDTO.getPhoneNumber());
+        return client;
     }
 
-    @Override
-    public ClientDTO clientToClientDTO(Client client) {
+
+    public ClientDTO convertTo(Client client) {
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setCPF(client.getCPF());
         clientDTO.setEmail(client.getEmail());
@@ -57,13 +79,20 @@ public class Converter implements ProductConverter, OrderConverter, ClientConver
         return clientDTO;
     }
 
-    @Override
-    public Address DTOToAddress(AddressDTO addressDTO) {
-        return null;
+
+    public Address convertTo(AddressDTO addressDTO) {
+        Address address = new Address();
+        address.setId(addressDTO.getId());
+        address.setUF(addressDTO.getUF());
+        address.setCEP(addressDTO.getCEP());
+        address.setDistrict(addressDTO.getDistrict());
+        address.setNumber(addressDTO.getNumber());
+        address.setStreet(addressDTO.getStreet());
+        return address;
     }
 
-    @Override
-    public AddressDTO addressToAddressDTO(Address address) {
+
+    public AddressDTO convertTo(Address address) {
         AddressDTO aDTO = new AddressDTO();
         aDTO.setCEP(address.getCEP());
         aDTO.setDistrict(address.getDistrict());
@@ -74,13 +103,18 @@ public class Converter implements ProductConverter, OrderConverter, ClientConver
         return aDTO;
     }
 
-    @Override
-    public OrderItem DTOToOrderItem(OrderItemDTO orderItemDTO) {
-        return null;
+
+    public OrderItem convertTo(OrderItemDTO orderItemDTO) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setValue(orderItemDTO.getValue());
+        orderItem.setQuantity(orderItemDTO.getQuantity());
+        orderItem.setProduct(orderItemDTO.getProduct());
+       // orderItem.setId(orderItemDTO.getId());
+        return orderItem;
     }
 
-    @Override
-    public OrderItemDTO orderItemToOrderItemDTO(OrderItem orderItem) {
+
+    public OrderItemDTO convertTo(OrderItem orderItem) {
         OrderItemDTO oiDTO = new OrderItemDTO();
         oiDTO.setId(orderItem.getId());
         oiDTO.setProduct(orderItem.getProduct());
@@ -89,13 +123,15 @@ public class Converter implements ProductConverter, OrderConverter, ClientConver
         return oiDTO;
     }
 
-    @Override
-    public Category DTOToCategory(CategoryDTO categoryDTO) {
-        return null;
+
+    public Category convertTo(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        category.setId(categoryDTO.getId());
+        category.setName(categoryDTO.getName());
+        return category;
     }
 
-    @Override
-    public CategoryDTO categoryToCategoryDTO(Category category) {
+    public CategoryDTO convertTo(Category category) {
         CategoryDTO c = new CategoryDTO();
         c.setName(category.getName());
         c.setId(category.getId());
