@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './styles.css';
+import { FaCheckCircle } from 'react-icons/fa';
+
 
 import {
     Container,
@@ -396,7 +398,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button type="submit">Finalizar compra</Button>
+                                    <Button outline color="success" type="submit"><FaCheckCircle/> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>

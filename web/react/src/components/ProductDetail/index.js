@@ -5,14 +5,13 @@ import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
 
-
 export default class ProductDetail extends Component {
 
         constructor(props){
             super(props);
             this.state = {
 
-                id: 11,
+                id: 7,
                 image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
                 name: "Bonecão Galvão Bueno ",
                 description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
@@ -36,16 +35,19 @@ export default class ProductDetail extends Component {
 
         handleFormSubmit = (event) => {
 
+            this.props.history.push("/cart");
+
             event.preventDefault();
 
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
             if(cart.length > 0) {
                 for (var i in cart) {
-                    if(cart[i].id == this.state.id){
-                        cart[i].quantity = this.state.quantity + cart[i].quantity;
+                    if(cart[i].id === this.state.id){
+                        cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
                         cart[i].totalItem =  this.state.price *  cart[i].quantity;
                         localStorage.cart = JSON.stringify(cart);
+                        this.props.history.push("/cart");
                         return;
                     }
                 }
@@ -63,8 +65,9 @@ export default class ProductDetail extends Component {
             });
 
             localStorage.setItem('cart', JSON.stringify(cart));
-             
-                     
+            
+            this.props.history.push("/cart");
+
           };
 
 
