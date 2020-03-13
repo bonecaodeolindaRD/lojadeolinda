@@ -26,7 +26,4 @@ public class Invoice {
     @ManyToOne
     @JoinColumn(name = "id_invoice_type")
     private InvoiceType invoiceType;
-    @OneToOne(targetEntity = Order.class)
-    @JoinColumn(name = "id_order")
-    private Order order;
 }
