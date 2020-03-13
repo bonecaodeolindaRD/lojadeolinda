@@ -3,7 +3,6 @@ import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
 import { FaTimesCircle, FaShoppingBasket, FaSadTear } from 'react-icons/fa';
 import './index.css';
 import Header from '../Header';
-import Footer from '../Footer';
 import { Link } from 'react-router-dom';
 
 
