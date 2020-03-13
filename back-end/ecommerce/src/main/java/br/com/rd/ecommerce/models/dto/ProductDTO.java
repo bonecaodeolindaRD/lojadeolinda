@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.models.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class AddressDTO {
+public class ProductDTO {
     private Long id;
-    private String street;
-    private String CEP;
-    private String district;
-    private Integer number;
-    private String UF;
+    private String name;
+    private String description;
+    private String image;
+    private Double price;
+    private Long category;
 }

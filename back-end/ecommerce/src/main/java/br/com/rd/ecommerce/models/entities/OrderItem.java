@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_order_item")
-public class OrderItem {
+public class OrderItem{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_order_item")
@@ -27,5 +27,9 @@ public class OrderItem {
     private Integer quantity;
     @Column(name = "vl_value", nullable = false)
     private Double value;
+
+    public double calcSubValue(){
+        return this.value * quantity;
+    }
 
 }

@@ -7,12 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class AddressDTO {
+public class CategoryDTO {
     private Long id;
-    private String street;
-    private String CEP;
-    private String district;
-    private Integer number;
-    private String UF;
+    private String name;
 }

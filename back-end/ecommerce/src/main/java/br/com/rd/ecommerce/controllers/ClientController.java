@@ -2,7 +2,8 @@ package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.entities.Client;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
-import br.com.rd.ecommerce.services.ClientService;
+import br.com.rd.ecommerce.models.entities.Order;
+import br.com.rd.ecommerce.services.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,28 @@ public class ClientController {
     private ClientService service;
     
     @PostMapping("/client-create")
-    public ResponseEntity save(@RequestBody ClientDTO clientDTO){
-        return ResponseEntity.ok().body(service.save(clientDTO));
+    public ResponseEntity createClient(@RequestBody ClientDTO clientDTO){
+        return ResponseEntity.ok().body(service.createClient(clientDTO));
     }
 
     @GetMapping("/client/list")
     public ResponseEntity<List<Client>> findAll(){
-        return ResponseEntity.ok().body(service.findAllClient(clientDTO));
+            return service.findAllClient();
+    }
+
+    @GetMapping("/client/id/{id}")
+    public ResponseEntity<Client> findById(@PathVariable("id") Long id){
+        return service.findClientById(id);
+    }
+
+    @GetMapping("/client/email/{email}")
+    public ResponseEntity<Client> findByEmail(@PathVariable("email") String email){
+        return service.findClientByEmail(email);
+    }
+
+    @DeleteMapping("/client/delete/{id}")
+    public void deleteClient(@PathVariable("id") Long id){
+        service.deleteClient(id);
     }
 
 }
