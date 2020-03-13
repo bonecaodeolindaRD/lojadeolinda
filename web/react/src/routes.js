@@ -38,7 +38,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/login" exact component={Login} />
             <Route path="/detalhe/:id" exact component={ProductDetail} />            
             <PrivateRoute path="/account" exact component={Account} />
-            <PrivateRoute path="/checkout" exact component={Checkout} />
+            <Route path="/checkout" exact component={Checkout} />
         </Switch>
     </BrowserRouter>
 );

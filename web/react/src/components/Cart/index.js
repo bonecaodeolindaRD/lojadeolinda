@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
-import { FaTimesCircle, FaShoppingBasket, FaSadTear } from 'react-icons/fa';
+import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
 import './index.css';
 import Header from '../Header';
-import Footer from '../Footer';
 import { Link } from 'react-router-dom';
 
 
@@ -13,18 +12,28 @@ export default class Cart extends Component {
             super();
             this.state = {
                 products: [],
-                total: 4000
+                total: 0
             }
         }
 
-         componentDidMount() {
-            this.setState({ products: JSON.parse(localStorage.getItem('cart') || '[]') });
-          }
+        componentDidMount() {
+
+            let totalCart = 0;
+
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+                for (var i in cart) {                    
+                    totalCart += cart[i].totalItem;
+                }
+
+                this.setState({ total: totalCart, products: cart });
+        }
 
 
-          remove = (id) => {
+        remove = (id) => {
 
-         
+            let totalCart = 0;
+
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
             let item = cart.find(x => x.id == id);
@@ -34,13 +43,17 @@ export default class Cart extends Component {
             localStorage.setItem('cart', JSON.stringify(cart));  
 
             let products = this.state.products.filter((item) => item.id !== id);
-
-            this.setState({products});
+            
+            for (var i in products) {                    
+                totalCart += cart[i].totalItem;
+            }
+            
+            this.setState({ total: totalCart, products: products });
                      
           };
 
 
-        render() {
+         render() {
         
             const { products, total } =  this.state;
 
@@ -70,17 +83,12 @@ export default class Cart extends Component {
             </div>
                 
             
-
             </>
             
             : ''}
-
            
             {this.state.products.map(item => (
-
-                 
-
-                
+                                 
                 <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={item.id}>
 
                     <Col xs="12" sm="2">
@@ -124,7 +132,7 @@ export default class Cart extends Component {
              ))}
 
             
-                { products.length > 0 ? 
+             { products.length > 0 ? 
 
                   <>
 
@@ -141,9 +149,8 @@ export default class Cart extends Component {
                 </Alert>
 
                 <Row className="d-flex justify-content-end mt-5 mb-5  mr-1">
-                    
-                
-                <Link to="/checkout"><Button outline color="success">Finalizar Compra</Button></Link>
+                                    
+                <Link to="/checkout"><Button outline color="success"> <FaWpforms/> Finalizar Compra</Button></Link>
 
                 </Row>
 
