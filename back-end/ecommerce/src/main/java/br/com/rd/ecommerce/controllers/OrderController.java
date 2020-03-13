@@ -35,4 +35,9 @@ public class OrderController {
     public ResponseEntity createOrder(@RequestBody OrderDTO order){
         return service.createOrder(order);
     }
+
+    @DeleteMapping("/order/delete/{id}")
+    public void deleteOrder(@PathVariable("id") Long id){
+        service.deleteOrder(id);
+    }
 }

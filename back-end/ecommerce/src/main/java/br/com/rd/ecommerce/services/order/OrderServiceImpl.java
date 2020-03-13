@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.services.order;
 
+import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.AddressDTO;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
@@ -22,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRespository respository;
-
+    private Converter converter = new Converter();
 
     @Override
     public ResponseEntity findAllOrders() {
@@ -31,40 +32,9 @@ public class OrderServiceImpl implements OrderService {
         if(orders == null || orders.size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
         List<OrderDTO> ordersDTO = new ArrayList<>();
-        for(Order order: orders){
-            OrderDTO orderDTO = new OrderDTO();
-            AddressDTO aDTO = new AddressDTO();
-            aDTO.setCEP(order.getAddress().getCEP());
-            aDTO.setDistrict(order.getAddress().getDistrict());
-            aDTO.setId(order.getAddress().getId());
-            aDTO.setNumber(order.getAddress().getNumber());
-            aDTO.setStreet(order.getAddress().getStreet());
-            aDTO.setUF(order.getAddress().getUF());
-            orderDTO.setAddress(aDTO);
-            orderDTO.setId(order.getId());
-            orderDTO.setValue(order.getValue());
-            orderDTO.setDate(order.getDate());
-            orderDTO.setStatus(order.getStatus());
-            // TODO implementar ClientDTO
-            ClientDTO clientDTO = new ClientDTO();
-            clientDTO.setAddresses(null);
-            clientDTO.setCPF(order.getClient().getCPF());
-            clientDTO.setEmail(order.getClient().getEmail());
-            clientDTO.setId(order.getClient().getId());
-            clientDTO.setName(order.getClient().getName());
-            clientDTO.setPhoneNumber(order.getClient().getPhoneNumber());
-            clientDTO.setOrders(null);
-            orderDTO.setClient(clientDTO);
-            for(OrderItem oi: order.getOrderItem()){
-                OrderItemDTO oiDTO = new OrderItemDTO();
-                oiDTO.setId(oi.getId());
-                oiDTO.setProduct(oi.getProduct());
-                oiDTO.setQuantity(oi.getQuantity());
-                oiDTO.setValue(oi.getValue());
-                orderDTO.addItem(oiDTO);
-            }
-            ordersDTO.add(orderDTO);
-        }
+        for(Order order: orders)
+            ordersDTO.add(converter.orderToOrderDTO(order));
+
 
         return ResponseEntity.ok().body(ordersDTO);
     }
@@ -82,39 +52,8 @@ public class OrderServiceImpl implements OrderService {
                 return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
 
             List<OrderDTO> ordersDTO = new ArrayList<>();
-            for(Order order: orders){
-                OrderDTO orderDTO = new OrderDTO();
-                AddressDTO aDTO = new AddressDTO();
-                aDTO.setCEP(order.getAddress().getCEP());
-                aDTO.setDistrict(order.getAddress().getDistrict());
-                aDTO.setId(order.getAddress().getId());
-                aDTO.setNumber(order.getAddress().getNumber());
-                aDTO.setStreet(order.getAddress().getStreet());
-                aDTO.setUF(order.getAddress().getUF());
-                orderDTO.setAddress(aDTO);
-                orderDTO.setId(order.getId());
-                orderDTO.setValue(order.getValue());
-                orderDTO.setDate(order.getDate());
-                orderDTO.setStatus(order.getStatus());
-                ClientDTO clientDTO = new ClientDTO();
-                clientDTO.setAddresses(null);
-                clientDTO.setCPF(order.getClient().getCPF());
-                clientDTO.setEmail(order.getClient().getEmail());
-                clientDTO.setId(order.getClient().getId());
-                clientDTO.setName(order.getClient().getName());
-                clientDTO.setPhoneNumber(order.getClient().getPhoneNumber());
-                clientDTO.setOrders(null);
-                orderDTO.setClient(clientDTO);
-                for(OrderItem oi: order.getOrderItem()){
-                    OrderItemDTO oiDTO = new OrderItemDTO();
-                    oiDTO.setId(oi.getId());
-                    oiDTO.setProduct(oi.getProduct());
-                    oiDTO.setQuantity(oi.getQuantity());
-                    oiDTO.setValue(oi.getValue());
-                    orderDTO.addItem(oiDTO);
-                }
-                ordersDTO.add(orderDTO);
-            }
+            for(Order order: orders)
+                ordersDTO.add(converter.orderToOrderDTO(order));
 
             return ResponseEntity.ok().body(ordersDTO);
         } catch (ParseException e) {
@@ -127,47 +66,9 @@ public class OrderServiceImpl implements OrderService {
         Order item = respository.findById(id).get();
         if(item == null || id == null)
             return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
-        OrderDTO oDTO = new OrderDTO();
-        ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setAddresses(null);
-        clientDTO.setCPF(item.getClient().getCPF());
-        clientDTO.setEmail(item.getClient().getEmail());
-        clientDTO.setId(item.getClient().getId());
-        clientDTO.setName(item.getClient().getName());
-        clientDTO.setPhoneNumber(item.getClient().getPhoneNumber());
-        clientDTO.setOrders(null);
-        oDTO.setClient(clientDTO);
-        oDTO.setStatus(item.getStatus());
-        oDTO.setDate(item.getDate());
-        AddressDTO aDTO = new AddressDTO();
-        aDTO.setCEP(item.getAddress().getCEP());
-        aDTO.setDistrict(item.getAddress().getDistrict());
-        aDTO.setId(item.getAddress().getId());
-        aDTO.setNumber(item.getAddress().getNumber());
-        aDTO.setStreet(item.getAddress().getStreet());
-        aDTO.setUF(item.getAddress().getUF());
-        oDTO.setAddress(aDTO);
-        oDTO.setValue(item.getValue());
-        for(OrderItem oi: item.getOrderItem()){
-            OrderItemDTO oiDTO = new OrderItemDTO();
-            oiDTO.setValue(oi.getValue());
-            oiDTO.setQuantity(oi.getQuantity());
-            oiDTO.setProduct(oi.getProduct());
-            oiDTO.setId(oi.getId());
-            oDTO.addItem(oiDTO);
-        }
+        OrderDTO oDTO = converter.orderToOrderDTO(item);
         return ResponseEntity.ok().body(oDTO);
     }
-
-
-//    public ResponseEntity<List<Order>> findByClient(Client client) {
-//        if(client == null)
-//            return ResponseEntity.badRequest().build();
-//        List<Order> orders = respository.findByClient(client);
-//        if(orders == null || orders.size() <= 0)
-//            return ResponseEntity.badRequest().build();
-//        return ResponseEntity.ok().body(orders);
-//    }
 
     @Override
     public ResponseEntity createOrder(OrderDTO order) {

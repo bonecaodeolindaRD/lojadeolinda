@@ -1,6 +1,7 @@
 package br.com.rd.ecommerce.services.category;
 
 
+import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.CategoryDTO;
 import br.com.rd.ecommerce.models.entities.Category;
 import br.com.rd.ecommerce.repositories.CategoryRepository;
@@ -16,16 +17,14 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService{
     @Autowired
     private CategoryRepository repository;
+    private Converter converter = new Converter();
 
     @Override
     public ResponseEntity createCategory(Category category) {
         if(category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao criar a categoria"));
         Category cat = repository.save(category);
-        CategoryDTO catDTO = new CategoryDTO();
-        catDTO.setId(cat.getId());
-        catDTO.setName(cat.getName());
-        return ResponseEntity.ok().body(catDTO);
+        return ResponseEntity.ok().body(converter.categoryToCategoryDTO(cat));
     }
 
     @Override
@@ -33,24 +32,19 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = repository.findById(id).get();
         if(category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        CategoryDTO catDTO = new CategoryDTO();
-        catDTO.setId(category.getId());
-        catDTO.setName(category.getName());
+        CategoryDTO catDTO = converter.categoryToCategoryDTO(category);
         return ResponseEntity.ok().body(catDTO);
     }
 
     @Override
-    public ResponseEntity findAll() {
+    public ResponseEntity findAllCategories() {
         List<Category> categories = repository.findAll();
         if(categories == null || categories.size() <= 0)
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
         List<CategoryDTO> catDTO = new ArrayList<>();
-        for(Category cat: categories){
-            CategoryDTO c = new CategoryDTO();
-            c.setName(cat.getName());
-            c.setId(cat.getId());
-            catDTO.add(c);
-        }
+        for(Category cat: categories)
+            catDTO.add(converter.categoryToCategoryDTO(cat));
+
         return ResponseEntity.ok().body(catDTO);
     }
 
@@ -62,12 +56,9 @@ public class CategoryServiceImpl implements CategoryService{
         if(categories == null || categories.size() <= 0)
             return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
         List<CategoryDTO> catDTO = new ArrayList<>();
-        for(Category cat: categories){
-            CategoryDTO c = new CategoryDTO();
-            c.setName(cat.getName());
-            c.setId(cat.getId());
-            catDTO.add(c);
-        }
+        for(Category cat: categories)
+            catDTO.add(converter.categoryToCategoryDTO(cat));
+
         return ResponseEntity.ok().body(catDTO);
     }
 
@@ -81,11 +72,9 @@ public class CategoryServiceImpl implements CategoryService{
         if(category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao atualizar a categoria"));
         Category cat = repository.findById(category.getId()).get();
-        CategoryDTO catDTO = new CategoryDTO();
         cat.setName(category.getName());
         cat = repository.save(cat);
-        catDTO.setId(cat.getId());
-        catDTO.setName(cat.getName());
+        CategoryDTO catDTO = converter.categoryToCategoryDTO(cat);
         return ResponseEntity.ok().body(catDTO);
     }
 }
