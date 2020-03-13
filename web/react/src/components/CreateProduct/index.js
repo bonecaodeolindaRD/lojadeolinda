@@ -17,92 +17,24 @@ import {
     NavLink
 } from 'reactstrap';
 
-// import { Container } from './styles';
-
 
 
 
 export default class CreateProduct extends Component {
 
 
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         name: '',
-    //         description: '',
-    //         price: '',
-    //         nameError: false,
-    //         descriptionError: false,
-    //         priceError: false,
-    //         isOpen: false
-    //     };
-    // }
-
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            title: 'React Simple CRUD Application',
-            act: 0,
-            index: '',
-            datas: []
-        }
+            name: '',
+            description: '',
+            price: '',
+            nameError: false,
+            descriptionError: false,
+            priceError: false,
+            isOpen: false
+        };
     }
-
-    componentDidMount(){
-        this.refs.name.focus();
-      }
-    
-      fSubmit = (e) =>{
-        e.preventDefault();
-        console.log('try');
-    
-        let datas = this.state.datas;
-        let name = this.refs.name.value;
-        let address = this.refs.address.value;
-    
-        if(this.state.act === 0){   //new
-          let data = {
-            name, address
-          }
-          datas.push(data);
-        }else{                      //update
-          let index = this.state.index;
-          datas[index].name = name;
-          datas[index].address = address;
-        }    
-    
-        this.setState({
-          datas: datas,
-          act: 0
-        });
-    
-        this.refs.myForm.reset();
-        this.refs.name.focus();
-      }
-    
-      fRemove = (i) => {
-        let datas = this.state.datas;
-        datas.splice(i,1);
-        this.setState({
-          datas: datas
-        });
-    
-        this.refs.myForm.reset();
-        this.refs.name.focus();
-      }
-    
-      fEdit = (i) => {
-        let data = this.state.datas[i];
-        this.refs.name.value = data.name;
-        this.refs.address.value = data.address;
-    
-        this.setState({
-          act: 1,
-          index: i
-        });
-    
-        this.refs.name.focus();
-      }  
 
 
 
@@ -153,7 +85,7 @@ export default class CreateProduct extends Component {
                             <Col md={8}>
                                 <FormGroup ref="myForm" className="myForm">
                                     <Label for="name">Nome do Produto*</Label>
-                                    <Input type="text"  ref="name" placeholder="Digite um novo produto" className="formField" />
+                                    <Input type="text" ref="name" placeholder="Digite um novo produto" className="formField" />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Descrição do produto*</Label>
@@ -173,20 +105,17 @@ export default class CreateProduct extends Component {
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="imagemProduto">Imagem*</Label>
-                                    <Input type="file" name="imagemProduto" id="imagemProduto" />
-                                    <FormText color="muted">
-                                        Insira a imagem do produto
-                                </FormText>
+                                    <Label for="price">Link da imagem*</Label>
+                                    <Input type="text" name="price" id="price" placeholder="Cole o link imagem aqui" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="price">Preço:*</Label>
                                     <Input type="text" name="price" id="price" placeholder="Digite o valor do produto" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
                                 </FormGroup>
-                                <Button color="primary" 
-                                outline type="submit" 
-                                value="Enviar" onClick={(e) => this.fSubmit(e)} className="myButton"
-                                onClick={this.mySubmitHandler}  >
+                                <Button color="primary"
+                                    outline type="submit"
+                                    value="Enviar" onClick={(e) => this.fSubmit(e)} className="myButton"
+                                    onClick={this.mySubmitHandler}  >
                                     Adicionar
                                 </Button>
 
@@ -205,24 +134,6 @@ export default class CreateProduct extends Component {
                         <Button outline color="secondary" onClick={this.toggleModal}>OK</Button>
                     </ModalFooter>
                 </Modal>
-
-                <div className="App">
-                    
-                    <form ref="myForm" className="myForm">
-                        <input type="text" ref="name" placeholder="" className="formField" />
-                        <input type="text" ref="address" placeholder="your address" className="formField" />
-                        <button onClick={(e) => this.fSubmit(e)} className="myButton">submit </button>
-                    </form>
-                    <pre>
-                        {datas.map((data, i) =>
-                            <li key={i} className="myList">
-                                {i + 1}. {data.name}, {data.address}
-                                <button onClick={() => this.fRemove(i)} className="myListButton">remove </button>
-                                <button onClick={() => this.fEdit(i)} className="myListButton">edit </button>
-                            </li>
-                        )}
-                    </pre>
-                </div>
 
 
 
