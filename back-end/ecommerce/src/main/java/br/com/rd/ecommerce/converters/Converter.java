@@ -83,8 +83,8 @@ public class  Converter {
     public Address convertTo(AddressDTO addressDTO) {
         Address address = new Address();
         address.setId(addressDTO.getId());
-        address.setUF(addressDTO.getUF());
-        address.setCEP(addressDTO.getCEP());
+        address.setUf(addressDTO.getUf());
+        address.setCep(addressDTO.getCep());
         address.setDistrict(addressDTO.getDistrict());
         address.setNumber(addressDTO.getNumber());
         address.setStreet(addressDTO.getStreet());
@@ -94,12 +94,12 @@ public class  Converter {
 
     public AddressDTO convertTo(Address address) {
         AddressDTO aDTO = new AddressDTO();
-        aDTO.setCEP(address.getCEP());
+        aDTO.setCep(address.getCep());
         aDTO.setDistrict(address.getDistrict());
         aDTO.setId(address.getId());
         aDTO.setNumber(address.getNumber());
         aDTO.setStreet(address.getStreet());
-        aDTO.setUF(address.getUF());
+        aDTO.setUf(address.getUf());
         return aDTO;
     }
 

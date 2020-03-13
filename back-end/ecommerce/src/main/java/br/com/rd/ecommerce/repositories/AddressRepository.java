@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface AddressRepository extends JpaRepository<Address,Long> {
     List<Address> findByStreet(String street);
-    List<Address> findByCEP(String cep);
+    List<Address> findByCep(String cep);
     List<Address> findByClient(Client client);
 }

@@ -65,7 +65,7 @@ public class AddressServiceImpl implements AddressService {
     public ResponseEntity findAddressByCEP(String CEP) {
         if(CEP == null || CEP.length() <= 0 || CEP.length() > 8)
             return ResponseEntity.badRequest().body(new AddressException("CEP informado e invalido"));
-        List<Address> addresses = repository.findByCEP(CEP);
+        List<Address> addresses = repository.findByCep(CEP);
         if(addresses == null || addresses.size() <= 0)
             return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
         List<AddressDTO> aDTO = new ArrayList<>();
@@ -98,8 +98,8 @@ public class AddressServiceImpl implements AddressService {
         address.setStreet(addressDTO.getStreet());
         address.setNumber(addressDTO.getNumber());
         address.setDistrict(addressDTO.getDistrict());
-        address.setCEP(addressDTO.getCEP());
-        address.setUF(addressDTO.getUF());
+        address.setCep(addressDTO.getCep());
+        address.setUf(addressDTO.getUf());
         Address addressReturn = repository.save(address);
         return ResponseEntity.ok().body(addressReturn);
     }
