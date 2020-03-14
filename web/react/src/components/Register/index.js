@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import api from "../../services/api";
-import axios from 'axios';
 import InputMask from 'react-input-mask';
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
