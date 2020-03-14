@@ -79,7 +79,6 @@ export default class Checkout extends Component {
         }
         this.listStates();
         this.listCities("AC");
-        this.gerateOrder();
     }
 
 
@@ -98,9 +97,7 @@ export default class Checkout extends Component {
 
     gerateOrder = async () => {
         const email = JSON.parse(localStorage.getItem('client'));
-        console.log(email);
         const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
-        console.log(client);
         const address = {
             street: this.state.address.aStreet,
             cep: this.state.address.aCep,
@@ -109,7 +106,6 @@ export default class Checkout extends Component {
             uf: this.state.address.aState
         }
         let returnAddress = await axios.post("http://localhost:8080/ecommerce/address/new", address);
-        console.log(returnAddress);
         let obj = {
             date: new Date(),
             client: {
@@ -130,9 +126,9 @@ export default class Checkout extends Component {
             quantity: p.quantity,
             value: p.price
         }));
-        console.log(JSON.stringify(obj));
-        let order = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
-        console.log(order);
+        let {data: order} = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
+        localStorage.setItem('order', JSON.stringify(order));
+        let numero = order.id;
     }
 
     listStates = async () => {
@@ -267,7 +263,8 @@ export default class Checkout extends Component {
         evt.preventDefault();
         if (!this.validateFields())
             return;
-            this.props.history.push("/success");
+        this.gerateOrder()
+        this.props.history.push("/success");
     }
 
     testCPF = (CPF) => {

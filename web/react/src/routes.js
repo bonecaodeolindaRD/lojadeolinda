@@ -26,7 +26,7 @@ import Success from './components/Success';
             <Route path="/detail/:id" exact component={ProductDetail} />            
             <Route path="/account" exact component={Account} />
             <Route path="/createproduct" exact component={CreateProduct} />  
-            <Route path="/success" exact component={Success}/>         
+            <Route path="/success/:id" exact component={Success}/>         
             <Route path="/checkout" exact component={Checkout} />
         </Switch>
     </BrowserRouter>
