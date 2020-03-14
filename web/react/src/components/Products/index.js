@@ -10,13 +10,16 @@ import {
     CardText
 } from 'reactstrap';
 
+import axios from 'axios';
+
 import { IoMdCart } from 'react-icons/io';
 import './product.css';
 
 export default class Products extends Component {
 
-    constructor(){
-        super();
+
+    constructor(props){
+        super(props);
         this.state = {
             products: [
                 {
@@ -49,6 +52,22 @@ export default class Products extends Component {
                 }
             ]
         }
+
+        this.findProducts();
+    }
+
+    findProducts = async () => {
+        const { data : productss } = await axios("http://localhost:8080/ecommerce/product/all");
+        let products = [];
+        productss.forEach(p => products.push({
+            id: p.id,
+            img: p.image,
+            nome: p.name,
+            desc: p.description,
+            preco: p.price
+        }));
+        console.log(products);
+        this.setState({products});
     }
 
     redirect = (evt) => {
@@ -58,6 +77,7 @@ export default class Products extends Component {
         console.log(obj.children[2].innerHTML);
         this.props.history.push(`/detail/${obj.children[2].innerHTML.toString()}`);
     }
+
 
     render() {
         return (
