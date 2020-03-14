@@ -128,8 +128,7 @@ export default class Product extends Component {
                 </Col>
 
 
-                <Col md={11}className="bordList mb-2" > <a href="
-">
+                <Col md={11}className="bordList mb-2" > <a href="">
                     <Container className="themed-container " fluid={true}  >
                         <Row >
                             <Col md={3} >
