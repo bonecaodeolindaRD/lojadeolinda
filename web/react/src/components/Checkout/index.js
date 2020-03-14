@@ -90,7 +90,6 @@ export default class Checkout extends Component {
 
             for (var i in cart) {                    
                 totalCart += cart[i].totalItem;
-                console.log(totalCart);
             }
 
             this.setState({ total: totalCart, products: cart });
@@ -292,7 +291,7 @@ export default class Checkout extends Component {
                                                         <img src={p.image} alt={p.name} title={p.name} />
                                                     </Col>
                                                     <Col xs="5">
-                                                        <p className="h6">R${p.price}</p>
+                                                        <p className="h6">R${(p.price).toFixed(2)}</p>
                                                         <p className="h6">Qtd: {p.quantity}</p>
                                                         <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
                                                     </Col>
@@ -366,8 +365,8 @@ export default class Checkout extends Component {
                                 <h5 className="bg-warning p-2 text-center">Pagamento</h5>
 
                                 <FormGroup>
-                                    <h6>Frete: R$200</h6>
-                                    <h6>Total: R${this.state.total + 200}</h6>                                
+                                    <h6>Frete: R$200.00</h6>
+                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>                                
                                 </FormGroup>
 
                                 <FormGroup>

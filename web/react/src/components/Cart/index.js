@@ -108,7 +108,7 @@ export default class Cart extends Component {
 
                     <Col className="mb-3" xs="5" sm="2">
                         <h5 className="h3-price">
-                        R${item.price}
+                        R${(item.price).toFixed(2)}
                         </h5>
                         <small>Preço Unitário</small>
                     </Col>
@@ -122,7 +122,7 @@ export default class Cart extends Component {
 
                     <Col className="mb-3" xs="12" sm="2">
                         <h5 className="h3-price">
-                            R${item.totalItem}
+                            R${(item.totalItem).toFixed(2)}
                         </h5>
                         <small>Total Item</small>
                     </Col>
@@ -139,7 +139,7 @@ export default class Cart extends Component {
               
                 <Alert className="d-flex justify-content-end mt-3 mb-5  mr-1">
             
-                <h6>Total: R${this.state.total}</h6>
+                <h6>Total: R${(this.state.total).toFixed(2)}</h6>
 
                 </Alert>
 

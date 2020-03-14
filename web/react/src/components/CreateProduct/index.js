@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
-    Nav,
     Container,
     Col,
     Row,
     Button,
     Form,
     FormGroup,
-    FormText,
     Label,
     Input,
     Modal,
@@ -70,7 +68,6 @@ export default class CreateProduct extends Component {
     }
 
     render() {
-        let datas = this.state.datas;
         return (
             <>
                 <NavLink className="navbar navbar-dark bg-dark">
@@ -114,8 +111,7 @@ export default class CreateProduct extends Component {
                                 </FormGroup>
                                 <Button color="primary"
                                     outline type="submit"
-                                    value="Enviar" onClick={(e) => this.fSubmit(e)} className="myButton"
-                                    onClick={this.mySubmitHandler}  >
+                                    value="Enviar"  onClick={this.mySubmitHandler} className="myButton" >
                                     Adicionar
                                 </Button>
 

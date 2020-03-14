@@ -89,7 +89,7 @@ export default class ProductDetail extends Component {
                             <hr className="soft" />
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
-                                    <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${this.state.price}</h5></Label >
+                                    <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${(this.state.price).toFixed(2)}</h5></Label >
                                     <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd"  value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
 
                                             <Button outline color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>

@@ -16,9 +16,9 @@ export default class Success extends Component {
                 <Card >
                     <CardHeader className="bg-success text-white text-center text"><h5>Compra concluída com sucesso</h5></CardHeader>
                     <CardBody>
-                        <CardTitle className="text-center font-weight-bold">Dados da compra</CardTitle>
+                        <CardTitle className="text-center font-weight-bold"><h5>Dados da compra</h5></CardTitle>
                         <CardText>
-                            Número do pedido: 1234567
+                        <h6>Número do pedido: 1234567</h6>
                         </CardText>
                     </CardBody>
                     <CardFooter className=" d-flex justify-content-center">
