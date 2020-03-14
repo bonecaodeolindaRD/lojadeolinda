@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,4 +37,16 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_address")
     private Address address;
+
+    public void addItem(OrderItem item){
+        if(orderItem == null) orderItem = new ArrayList<>();
+        orderItem.add(item);
+    }
+
+    public double total(){
+        double sum = 0.0;
+        for(OrderItem o: orderItem)
+            sum += o.calcSubValue();
+        return sum;
+    }
 }

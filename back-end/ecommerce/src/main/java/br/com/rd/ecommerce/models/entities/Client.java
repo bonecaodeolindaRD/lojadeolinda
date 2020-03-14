@@ -3,16 +3,20 @@ package br.com.rd.ecommerce.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.util.List;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+
 @Table(name = "tb_client")
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_name")
@@ -26,6 +30,7 @@ public class Client {
     @Column(name = "nr_phone_number", nullable = false)
     private Long phoneNumber;
     @Column(name = "ds_password", nullable = false)
+
     private String password;
     @OneToMany(mappedBy = "client")
     private List<Address> addresses;
