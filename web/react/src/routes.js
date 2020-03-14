@@ -8,9 +8,14 @@ import Contact from './components/Contact';
 import About from './components/About';
 import Checkout from './components/Checkout';
 import Cart from './components/Cart';
-import List from './components/ProductsList';
 import ProductDetail from './components/ProductDetail';
+
+import CreateProduct from './components/CreateProduct'
+
+import Success from './components/Success';
+
 import { isAuthenticated } from "./services/auth";
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -34,11 +39,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/register" exact component={Register} />
             <Route path="/about" exact component={About}/>
             <Route path="/cart" exact component={Cart}/>
-            <Route path="/list" exact component={List}/>
+          
             <Route path="/login" exact component={Login} />
-            <Route path="/detalhe/:id" exact component={ProductDetail} />            
+
+            <Route path="/createproduct" exact component={CreateProduct} /> 
+
+            <Route path="/detalhe/:id" exact component={ProductDetail} />   
+            <Route path="/success" exact component={Success}/>         
+
             <PrivateRoute path="/account" exact component={Account} />
-            <PrivateRoute path="/checkout" exact component={Checkout} />
+            <Route path="/checkout" exact component={Checkout} />
         </Switch>
     </BrowserRouter>
 );

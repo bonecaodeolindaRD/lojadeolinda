@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './styles.css';
+import { FaCheckCircle } from 'react-icons/fa';
 
 import {
     Container,
@@ -30,6 +31,8 @@ export default class Checkout extends Component {
             erro: " ",
             states: [],
             cities: [],
+            products: [],
+            total: 0,
             address: {
                 id: 1,
                 aCep: "",
@@ -70,34 +73,26 @@ export default class Checkout extends Component {
                         aState: "SP",
                     }
                 ],
-                products: [
-                    {
-                        id: 1,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 1,
-                    },
-                    {
-                        id: 2,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 2
-                    },
-                    {
-                        id: 3,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 3
-                    }
-                ],
-                total: 0
+                
             }
+           
         }
         this.listStates();
         this.listCities("AC");
+    }
+
+
+    componentDidMount() {
+
+        let totalCart = 0;
+
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+            for (var i in cart) {                    
+                totalCart += cart[i].totalItem;
+            }
+
+            this.setState({ total: totalCart, products: cart });
     }
 
     listStates = async () => {
@@ -232,8 +227,7 @@ export default class Checkout extends Component {
         evt.preventDefault();
         if (!this.validateFields())
             return;
-
-        alert("Sucesso");
+            this.props.history.push("/success");
     }
 
     testCPF = (strCPF) => {
@@ -287,29 +281,26 @@ export default class Checkout extends Component {
                             <Col md="4">
                                     <h5 className="bg-warning p-2 text-center">Resumo</h5>
                                     <div className="resumo">
-                                        {this.state.client.products.map(p => (
+                                        {this.state.products.map(p => (
                                             <Card body className="mb-1">
                                                 <Row>
                                                     <Col xs="7">
                                                         <CardTitle>
                                                             {p.name}
                                                         </CardTitle>
-                                                        <img src={p.img} alt={p.name} title={p.name} />
+                                                        <img src={p.image} alt={p.name} title={p.name} />
                                                     </Col>
                                                     <Col xs="5">
-                                                        <p className="h6">R$: {p.price}</p>
-                                                        <p className="h6">Unidades: {p.quantity}</p>
-                                                        <p className="h6">Total: {(p.quantity * p.price).toFixed(2)}</p>
+                                                        <p className="h6">R${(p.price).toFixed(2)}</p>
+                                                        <p className="h6">Qtd: {p.quantity}</p>
+                                                        <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
                                                     </Col>
                                                 </Row>
                                             </Card>
                                         ))
-                                        }
-                                        {this.state.client.products.map(p => {
-                                            this.state.client.total += p.price * p.quantity;
-                                        })}
-                                        <Card body className="border-0">
-                                            <CardTitle className="h6">Total: {this.state.client.total.toFixed(2)}</CardTitle>
+                                        }                                    
+                                        <Card body className="border-0">                                            
+                                            <CardTitle className="h6">Total: R${this.state.total.toFixed(2)}</CardTitle>
                                         </Card>
                                     </div>
                             </Col>
@@ -365,9 +356,19 @@ export default class Checkout extends Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
+
+                                <FormGroup>
+                                    <h6>Receba em até 10 dias úteis</h6>
+                                </FormGroup>
                             </Col>
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Pagamento</h5>
+
+                                <FormGroup>
+                                    <h6>Frete: R$200.00</h6>
+                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>                                
+                                </FormGroup>
+
                                 <FormGroup>
                                     <Label for="cCPF"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
                                     <Input value={this.state.client.card.cCPF} type="text" name="cCPF" id="cCPF" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCard} />
@@ -396,7 +397,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button type="submit">Finalizar compra</Button>
+                                    <Button outline color="success" type="submit"><FaCheckCircle/> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>
