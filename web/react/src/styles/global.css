@@ -4,14 +4,20 @@
     margin: 0;
 }
 
-.img-logo{
-    width: 40px;
-}
-
 .search-input{
-    width: 80%;
+    width: 70%;
 }
 
+@media (max-width: 767px){
+    .search-input{
+        width: 100%;
+    }
+}
 .space-footer{
     margin-right: 200px;
 }
+
+.tam{
+    height: 100vh;
+}
+
