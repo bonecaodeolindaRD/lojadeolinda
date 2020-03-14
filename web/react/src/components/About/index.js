@@ -43,7 +43,7 @@ export default class About extends Component {
                     <Row>
                         <Col xs={10} md={4} >
                             <Link to="/about">
-                                <Media right top fluid>
+                                <Media right top fluid="true">
                                     <Media className="rounded" object src="img/bonecos1.jpg" alt="..." />
                                 </Media>
                             </Link>
@@ -68,7 +68,7 @@ export default class About extends Component {
                     <Row>
                         <Col xs={10} md={4}>
                             <Link to="/about">
-                                <Media left top fluid>
+                                <Media left top fluid="true">
                                     <Media className="rounded" object src="img/boneco3.jpg" alt="..." />
                                 </Media>
                             </Link>
