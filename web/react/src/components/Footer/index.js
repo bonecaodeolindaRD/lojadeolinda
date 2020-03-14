@@ -40,7 +40,7 @@ export default class Footer extends Component {
                     <NavItem className="space-footer">
                         <Nav vertical>
                             <NavItem className="text-white h-5">
-                                <Link className="text-white" disabled>Redes sociais</Link>
+                                <Link  to="/" className="text-white" disabled>Redes sociais</Link>
                             </NavItem>
                             <NavItem>
                                 <Link className="text-muted" to="/"><FaFacebook /></Link>
@@ -54,24 +54,27 @@ export default class Footer extends Component {
                         </Nav>
                     </NavItem>
                     <NavItem className="space-footer">
-                        <NavItem className="text-white h-5">
-                            <Link to="/" className="text-white" disabled>Contato</Link>
-                        </NavItem>
-                        <NavItem>
+                        <div>
+                        <Link to="/" className="text-white" disabled>Contato</Link>
+                        </div>
+                        <div>
                             <Link className="text-muted" to="/contact">
                                 Entrar em contato
                             </Link>
-                        </NavItem>
+                            </div>
                     </NavItem>
                     <NavItem className="space-footer">
-                        <NavItem className="text-white h-5">
+                     
+                        <div>
                             <Link to="/" className="text-white" disabled>Sobre</Link>
-                        </NavItem>
-                        <NavItem>
-                            <Link className="text-muted" to="/about">
+                        </div>
+
+                        <div>
+                        <Link className="text-muted" to="/about">
                                 Nossa História
-                            </Link>
-                        </NavItem>
+                        </Link>
+                        </div>
+                  
                     </NavItem>
                 </Nav>
             </Navbar>
