@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios';
+
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -24,7 +26,16 @@ export default class ProductDetail extends Component {
         } 
 
         getProduct = async() => {
-            console.log(this.props.match.params.id);
+            let id = this.props.match.params.id;
+            const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
+            this.setState({
+                id: product.id,
+                image: product.image,
+                name: product.name,
+                description: product.description,
+                price: product.price
+            });
+            console.log(product);
         }
             
 
