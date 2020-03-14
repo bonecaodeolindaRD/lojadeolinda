@@ -14,14 +14,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Entity
 @Table(name = "tb_client")
-<<<<<<< HEAD
 public class Client implements Serializable {
-=======
-public class Client {
-
->>>>>>> 68a48091aa64a397def7bce2bf002497df6c7885
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_client")
