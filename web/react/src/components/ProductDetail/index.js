@@ -53,8 +53,8 @@ export default class ProductDetail extends Component {
 
             cart.push({
                 id: this.state.id,
-                image: this.state.image,
                 name: this.state.name,
+                image: this.state.image,
                 description: this.state.description,
                 quantity: this.state.quantity,
                 price: this.state.price,

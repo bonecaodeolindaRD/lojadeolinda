@@ -306,15 +306,7 @@ export default class Checkout extends Component {
                             </Col>
 
                             <Col md="4">
-                                <h5 className="bg-warning p-2 text-center">Entrega</h5>
-                                {(this.state.client.addresses.length > 0) && (
-                                    <FormGroup>
-                                        <Input type="select" id="input-addresses" name="input-addresses" onChange={this.autoFill}>
-                                            <option value="0" disabled selected>Enderecos cadastrados</option>
-                                            {this.state.client.addresses.map(end => (<option value={end.id}>{`${end.aStreet}, ${end.aNumber}`}</option>))}
-                                        </Input>
-                                    </FormGroup>
-                                )}
+                                <h5 className="bg-warning p-2 text-center">Entrega</h5>                               
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
