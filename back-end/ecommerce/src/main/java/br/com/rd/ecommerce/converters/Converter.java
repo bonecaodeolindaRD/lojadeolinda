@@ -3,7 +3,7 @@ package br.com.rd.ecommerce.converters;
 import br.com.rd.ecommerce.models.dto.*;
 import br.com.rd.ecommerce.models.entities.*;
 
-public class Converter {
+public class  Converter {
 
     public Product convertTo(ProductDTO productDTO) {
         Product product = new Product();
@@ -48,7 +48,7 @@ public class Converter {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.getValue());
+        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setClient(convertTo(order.getClient()));
@@ -83,8 +83,8 @@ public class Converter {
     public Address convertTo(AddressDTO addressDTO) {
         Address address = new Address();
         address.setId(addressDTO.getId());
-        address.setUF(addressDTO.getUF());
-        address.setCEP(addressDTO.getCEP());
+        address.setUf(addressDTO.getUf());
+        address.setCep(addressDTO.getCep());
         address.setDistrict(addressDTO.getDistrict());
         address.setNumber(addressDTO.getNumber());
         address.setStreet(addressDTO.getStreet());
@@ -94,12 +94,12 @@ public class Converter {
 
     public AddressDTO convertTo(Address address) {
         AddressDTO aDTO = new AddressDTO();
-        aDTO.setCEP(address.getCEP());
+        aDTO.setCep(address.getCep());
         aDTO.setDistrict(address.getDistrict());
         aDTO.setId(address.getId());
         aDTO.setNumber(address.getNumber());
         aDTO.setStreet(address.getStreet());
-        aDTO.setUF(address.getUF());
+        aDTO.setUf(address.getUf());
         return aDTO;
     }
 
@@ -109,7 +109,7 @@ public class Converter {
         orderItem.setValue(orderItemDTO.getValue());
         orderItem.setQuantity(orderItemDTO.getQuantity());
         orderItem.setProduct(orderItemDTO.getProduct());
-        orderItem.setId(orderItemDTO.getId());
+       // orderItem.setId(orderItemDTO.getId());
         return orderItem;
     }
 

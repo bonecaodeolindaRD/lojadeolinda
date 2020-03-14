@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class AddressDTO {
     private Long id;
     private String street;
-    private String CEP;
+    private String cep;
     private String district;
     private Integer number;
-    private String UF;
+    private String uf;
 }

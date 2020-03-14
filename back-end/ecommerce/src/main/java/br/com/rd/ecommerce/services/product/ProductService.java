@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.services.product;
 
+import br.com.rd.ecommerce.models.dto.ProductDTO;
 import br.com.rd.ecommerce.models.entities.Category;
 import br.com.rd.ecommerce.models.entities.Product;
 import org.springframework.http.ResponseEntity;
@@ -8,8 +9,8 @@ public interface ProductService {
     ResponseEntity findAllProducts();
     ResponseEntity findProductById(Long id);
     ResponseEntity findProductByName(String name);
-    ResponseEntity findProductByCategory(Integer category);
-    ResponseEntity createProduct(Product product);
-    ResponseEntity updateProduct(Product product);
+    ResponseEntity findProductByCategory(Long category);
+    ResponseEntity createProduct(ProductDTO productDTO);
+    ResponseEntity updateProduct(ProductDTO productDTO);
     void deleteProduct(Long id);
 }
