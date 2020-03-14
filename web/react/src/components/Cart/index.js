@@ -36,7 +36,7 @@ export default class Cart extends Component {
 
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-            let item = cart.find(x => x.id == id);
+            let item = cart.find(x => x.id === id);
             
             cart.splice(cart.indexOf(item), 1);
 
@@ -55,7 +55,7 @@ export default class Cart extends Component {
 
          render() {
         
-            const { products, total } =  this.state;
+            const { products } =  this.state;
 
             return (
 
@@ -66,7 +66,7 @@ export default class Cart extends Component {
                           
             <Container className="contanier">
 
-            { products.length == 0 ? 
+            { products.length === 0 ? 
 
             <>
             
@@ -136,15 +136,10 @@ export default class Cart extends Component {
 
                   <>
 
-                <Alert color="warning" className="d-flex justify-content-end mt-5 mb-1 mr-1">
-                
-                <h6>Frete: R$200</h6>
-
-                </Alert > 
-
+              
                 <Alert className="d-flex justify-content-end mt-3 mb-5  mr-1">
             
-                <h6>Total Compra: R${this.state.total + 200}</h6>
+                <h6>Total: R${this.state.total}</h6>
 
                 </Alert>
 
@@ -159,8 +154,6 @@ export default class Cart extends Component {
               : '' }
 
             </Container>
-
-            {/* <Footer/> */}
 
             </>
 
