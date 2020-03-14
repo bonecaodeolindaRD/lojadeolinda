@@ -22,7 +22,6 @@ import Success from './components/Success';
             <Route path="/register" exact component={Register} />
             <Route path="/about" exact component={About}/>
             <Route path="/cart" exact component={Cart}/>
-          
             <Route path="/login" exact component={Login} />
             <Route path="/detail/:id" exact component={ProductDetail} />            
             <Route path="/account" exact component={Account} />
