@@ -9,7 +9,11 @@ import About from './components/About';
 import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
+
+import CreateProduct from './components/CreateProduct'
+
 import Success from './components/Success';
+
 import { isAuthenticated } from "./services/auth";
 
 
@@ -37,8 +41,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/cart" exact component={Cart}/>
           
             <Route path="/login" exact component={Login} />
+
+            <Route path="/createproduct" exact component={CreateProduct} /> 
+
             <Route path="/detalhe/:id" exact component={ProductDetail} />   
             <Route path="/success" exact component={Success}/>         
+
             <PrivateRoute path="/account" exact component={Account} />
             <Route path="/checkout" exact component={Checkout} />
         </Switch>
