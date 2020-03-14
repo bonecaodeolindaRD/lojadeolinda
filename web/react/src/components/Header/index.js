@@ -5,7 +5,6 @@ import {
     Navbar,
     Container,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     UncontrolledDropdown,
@@ -52,8 +51,8 @@ export default class Header extends Component {
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container>
-                        <Link to ="/"><NavbarBrand to="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></NavbarBrand></Link>
-                        <NavbarToggler onClick={this.toggle} />
+                        <Link to ="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></Link>
+                        <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">
                                 <NavItem>
