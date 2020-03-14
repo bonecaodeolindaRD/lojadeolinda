@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
-    Nav,
     Container,
     Col,
     Row,
     Button,
     Form,
     FormGroup,
-    FormText,
     Label,
     Input,
     Modal,
@@ -17,12 +15,10 @@ import {
     NavLink
 } from 'reactstrap';
 
-// import { Container } from './styles';
 
 
 
-
-export default class ProductRegistration extends Component {
+export default class CreateProduct extends Component {
 
 
     constructor() {
@@ -37,6 +33,8 @@ export default class ProductRegistration extends Component {
             isOpen: false
         };
     }
+
+
 
     toggleModal = () => {
         this.setState({ isOpen: !this.state.isOpen });
@@ -56,7 +54,7 @@ export default class ProductRegistration extends Component {
             this.setState({ nameError: false });
         }
 
-        alert(name + "" +  description + "" + price);
+        alert(name + "" + description + "" + price);
 
         this.toggleModal();
 
@@ -76,19 +74,19 @@ export default class ProductRegistration extends Component {
                     <NavLink className="navbar-brand" href="#">Adicione um novo produto</NavLink>
                 </NavLink>
                 <Container className="border border-primary rounded mt-5 p-4">
-                    <Form >
+                    <Form className="App" >
                         <FormGroup className="bg-warning rounded  p-2">
                             <Label>Cadastro de Produdos</Label>
                         </FormGroup>
                         <Row form>
                             <Col md={8}>
-                                <FormGroup >
+                                <FormGroup ref="myForm" className="myForm">
                                     <Label for="name">Nome do Produto*</Label>
-                                    <Input type="text" className={`form-control ${this.state.nameError ? 'is-invalid' : null}`} name="name" onChange={this.myChangeHandler} required placeholder="Digite o nome do produto" />
+                                    <Input type="text" ref="name" placeholder="Digite um novo produto" className="formField" />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Descrição do produto*</Label>
-                                    <Input type="textarea" className={`form-control ${this.state.descriptionError ? 'is-invalid' : null}`} name="description" id="description" onChange={this.myChangeHandler} required/>
+                                    <Input type="textarea" ref="address" placeholder="Digite uma descrição..." className="formField" />
                                 </FormGroup>
                                 <p>*Campos obrigatórios</p>
                             </Col>
@@ -104,28 +102,22 @@ export default class ProductRegistration extends Component {
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="imagemProduto">Imagem*</Label>
-                                    <Input type="file" name="imagemProduto" id="imagemProduto" />
-                                    <FormText color="muted">
-                                        Insira a imagem do produto
-                                </FormText>
+                                    <Label for="price">Link da imagem*</Label>
+                                    <Input type="text" name="price" id="price" placeholder="Cole o link imagem aqui" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="price">Preço:*</Label>
-                                    <Input type="text" name="price" id="price" placeholder="Digite o valor do produto"  className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required/>
+                                    <Input type="text" name="price" id="price" placeholder="Digite o valor do produto" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
                                 </FormGroup>
-                                <Button color="primary" outline type="submit" value="Enviar"  onClick={this.mySubmitHandler}  >Adicionar</Button>
+                                <Button color="primary"
+                                    outline type="submit"
+                                    value="Enviar"  onClick={this.mySubmitHandler} className="myButton" >
+                                    Adicionar
+                                </Button>
 
                             </Col>
                         </Row>
                     </Form>
-
-
-
-
-
-
-
 
                 </Container>
 
@@ -138,7 +130,6 @@ export default class ProductRegistration extends Component {
                         <Button outline color="secondary" onClick={this.toggleModal}>OK</Button>
                     </ModalFooter>
                 </Modal>
-
 
 
 

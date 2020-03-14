@@ -61,7 +61,7 @@ public class  Converter {
     public Client convertTo(ClientDTO clientDTO) {
         Client client = new Client();
         client.setId(clientDTO.getId());
-        client.setCPF(client.getCPF());
+        client.setCpf(client.getCpf());
         client.setEmail(client.getEmail());
         client.setName(clientDTO.getName());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
@@ -71,7 +71,7 @@ public class  Converter {
 
     public ClientDTO convertTo(Client client) {
         ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setCPF(client.getCPF());
+        clientDTO.setCpf(client.getCpf());
         clientDTO.setEmail(client.getEmail());
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());

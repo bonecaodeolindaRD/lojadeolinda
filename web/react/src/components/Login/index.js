@@ -5,7 +5,6 @@ import { Card, Form , Button, CardTitle, CardText, Row, Col, Container, InputGro
 import { withRouter, Link } from "react-router-dom";
 
 import api from "../../services/api";
-import { login } from "../../services/auth";
 
 import './styles.css';
 import Header from '../Header';
@@ -26,7 +25,7 @@ class Login extends Component{
     } else {
       try {
         const response = await api.post("/client", { email, password });
-        login(response.data.token);
+        response()
         this.props.history.push("/");
       } catch (err) {
         this.setState({
