@@ -16,16 +16,21 @@ export default class Carrossel extends Component {
         this.state = { activeIndex: 0,
             items : [
                 {
-                    src: 'https://picsum.photos/1200/400',
+                    src: 'https://i.imgur.com/rdLZxBv.jpg',
                     altText: 'Slide 1',
-                    caption: 'Slide 1'
+                    caption: 'Politicos'
                 },
                 {
                     src: 'https://picsum.photos/1200/400',
                     altText: 'Slide 2',
-                    caption: 'Slide 2'
+                    caption: 'Slide 22'
                 },
                 {
+                    src: 'https://picsum.photos/1200/400',
+                    altText: 'Slide 3',
+                    caption: 'Slide 3'
+				},
+				{
                     src: 'https://picsum.photos/1200/400',
                     altText: 'Slide 3',
                     caption: 'Slide 3'

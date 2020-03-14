@@ -3,17 +3,25 @@ package br.com.rd.ecommerce.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+
 @Table(name = "tb_client")
+<<<<<<< HEAD
 public class Client implements Serializable {
+=======
+public class Client {
+
+>>>>>>> 68a48091aa64a397def7bce2bf002497df6c7885
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_client")
@@ -27,6 +35,7 @@ public class Client implements Serializable {
     @Column(name = "nr_phone_number", nullable = false)
     private String phoneNumber;
     @Column(name = "ds_password", nullable = false)
+
     private String password;
     @OneToMany(mappedBy = "client")
     private List<Address> addresses;

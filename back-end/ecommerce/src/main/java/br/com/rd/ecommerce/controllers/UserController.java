@@ -15,13 +15,15 @@ public class UserController {
 
     //@ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create-user")
-    public User save(@RequestBody User user){
+    public User save(@RequestBody User user) {
         return userRepository.save(user);
     }
 
+
     @GetMapping("/find-user/list")
-    public List<User> find(){
+    public List<User> find() {
         return userRepository.findAll();
     }
 
 }
+

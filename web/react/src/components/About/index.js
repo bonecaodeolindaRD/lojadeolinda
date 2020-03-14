@@ -30,8 +30,8 @@ export default class About extends Component {
                     </Card>
 
                     <Col md={12} >
-                        <h4 className="text-primary text-center" >História</h4>
-                        <p className="text-primary">
+                        <h4 className="text-center" >História</h4>
+                        <p>
                             Os Bonecos Gigantes surgem na Europa, provavelmente na Idade Média, sob a influência dos mitos pagãos
                            escondidos
                            pelos temores da Inquisição. Chegam em Pernambuco através da pequena cidade de Belém do São Francisco no
@@ -43,14 +43,14 @@ export default class About extends Component {
                     <Row>
                         <Col xs={10} md={4} >
                             <Link to="/about">
-                                <Media right top fluid>
+                                <Media right top fluid="true">
                                     <Media className="rounded" object src="img/bonecos1.jpg" alt="..." />
                                 </Media>
                             </Link>
                         </Col>
                         <Col xs={10} md={8}>
 
-                            <p className="text-primary p-4 mt-5" >
+                            <p className="p-4 mt-5" >
                                 Os bonecos surgiram da vontade de um jovem sonhador que ouvia atento as narrativas de um padre
                                belga
                                sobre o uso de bonecos nas festas
@@ -68,13 +68,13 @@ export default class About extends Component {
                     <Row>
                         <Col xs={10} md={4}>
                             <Link to="/about">
-                                <Media left top fluid>
+                                <Media left top fluid="true">
                                     <Media className="rounded" object src="img/boneco3.jpg" alt="..." />
                                 </Media>
                             </Link>
                         </Col>
                         <Col xs={10} md={8}>
-                            <p className="text-primary p-4 mt-5" >
+                            <p className="p-4 mt-5" >
                                 A tradição dos bonecos gigantes, iniciada em Belém do São Francisco, ganhou as ladeiras de Olinda em
                                 1932, com a criação do
                                 boneco do Homem da Meia Noite, confeccionado pelas mãos dos artistas plásticos Anacleto e Bernardino
