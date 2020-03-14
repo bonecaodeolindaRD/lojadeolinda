@@ -79,6 +79,7 @@ export default class Checkout extends Component {
         }
         this.listStates();
         this.listCities("AC");
+        this.gerateOrder();
     }
 
 
@@ -93,6 +94,45 @@ export default class Checkout extends Component {
             }
 
             this.setState({ total: totalCart, products: cart });
+    }
+
+    gerateOrder = async () => {
+        const email = JSON.parse(localStorage.getItem('client'));
+        console.log(email);
+        const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
+        console.log(client);
+        const address = {
+            street: this.state.address.aStreet,
+            cep: this.state.address.aCep,
+            district: this.state.address.aDistrict,
+            number: this.state.address.aNumber,
+            uf: this.state.address.aState
+        }
+        let returnAddress = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+        console.log(returnAddress);
+        let obj = {
+            date: new Date(),
+            client: {
+                id: client[0].id
+            },
+            orderItem: [],
+            status: {
+                idStatus: 1
+            },
+            address: {
+                id: returnAddress.data.id
+            }
+        }
+        this.state.products.forEach(p => obj.orderItem.push({
+            product: { 
+                id: p.id
+            },
+            quantity: p.quantity,
+            value: p.price
+        }));
+        console.log(JSON.stringify(obj));
+        let order = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
+        console.log(order);
     }
 
     listStates = async () => {
@@ -299,9 +339,6 @@ export default class Checkout extends Component {
                                             </Card>
                                         ))
                                         }                                    
-                                        <Card body className="border-0">                                            
-                                            <CardTitle className="h6">Total: R${this.state.total.toFixed(2)}</CardTitle>
-                                        </Card>
                                     </div>
                             </Col>
 
