@@ -21,11 +21,11 @@ public class ClientService implements ClientInterface {
     private Converter converter = new Converter();
 
     public ResponseEntity createClient(ClientDTO clientDTO){
-        Client clientEntity = converter.convertTo(clientDTO);
-
-        ClientDTO returnEntity = converter.convertTo(clientRepository.save(clientEntity));
-
-        return ResponseEntity.ok().body(clientDTO);
+        if(clientDTO == null)
+            return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
+        Client client = converter.convertTo(clientDTO);
+        Client clientReturn = clientRepository.save(client);
+        return ResponseEntity.ok().body(clientReturn);
     }
 
     @Override

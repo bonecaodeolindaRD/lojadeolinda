@@ -2,7 +2,6 @@ package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.entities.Client;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
-import br.com.rd.ecommerce.models.entities.Order;
 import br.com.rd.ecommerce.services.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,9 @@ public class ClientController {
     @Autowired
     private ClientService service;
     
-    @PostMapping("/client-create")
+    @PostMapping("/client/new")
     public ResponseEntity createClient(@RequestBody ClientDTO clientDTO){
-        return ResponseEntity.ok().body(service.createClient(clientDTO));
+        return service.createClient(clientDTO);
     }
 
     @GetMapping("/client/list")
