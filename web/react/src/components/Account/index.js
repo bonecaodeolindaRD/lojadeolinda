@@ -17,6 +17,7 @@ class Account extends Component{
             name: "",
             email: "",
             contact: "",
+            cpf: "",
             error: ""
         }
         this.loadAcccount();
@@ -29,7 +30,8 @@ class Account extends Component{
         this.setState({
             name : account.name,
             email : account.email,
-            contact : account.phoneNumber
+            contact : account.phoneNumber,
+            cpf: account.cpf
         })
     }
 
@@ -55,28 +57,34 @@ class Account extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input value={this.state.name} onChange={e => this.setState({name: e.target.value})} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
+                            <Input value={this.state.name} disabled onChange={e => this.setState({name: e.target.value})} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="Email">Email: </Label>
                         <Col sm={5}>
-                            <Input value={this.state.email} onChange={e => this.setState({name: e.target.value})} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                            <Input value={this.state.email} disabled onChange={e => this.setState({name: e.target.value})} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={3}></Col>
+                        <Label sm={1} for="secNameUser">CPF: </Label>
+                        <Col sm={5}>
+                            <Input value={this.state.cpf} disabled onChange={e => this.setState({cpf: e.target.value})} mask="999.999.999-99" maskChar="" id="cpf" tag={InputMask} type="text" name="cpf"  placeholder=""/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="secNameUser">Contato: </Label>
                         <Col sm={5}>
-                            <Input value={this.state.contact} onChange={e => this.setState({name: e.target.value})} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
+                            <Input value={this.state.contact} disabled onChange={e => this.setState({name: e.target.value})} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <br/>
                     <FormGroup>
                         <div className="text-align-center" align="center">
-                            <button type="submit" className="btn btn-success mr-3" data-toggle="modal" data-target="#salvarDados"> Salvar </button>
-                            <Link to="/"><button type="button" class="btn btn-danger">Cancelar</button></Link>
+                            <Link to="/"><button type="button" class="btn btn-danger">Voltar ao Inicio</button></Link>
                         </div>
                     </FormGroup>
                 </Form>

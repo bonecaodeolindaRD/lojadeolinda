@@ -84,10 +84,7 @@ export default class Header extends Component {
                                         {sessionStorage.getItem('client') ? (
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                                <Link to="/logoff">logoff</Link>
-                                            </DropdownItem> ) : (
+                                            </DropdownItem>) : (
                                                 <>
                                                     <DropdownItem to="/login">
                                                         <Link to="/login">Logar </Link>
