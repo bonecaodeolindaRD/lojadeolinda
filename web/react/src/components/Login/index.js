@@ -20,11 +20,12 @@ class Login extends Component{
   handleSignIn = async e => {
     e.preventDefault();
     const { email, password } = this.state;
+
     if (!email || !password) {
       this.setState({ error: "Preencha e-mail e senha para continuar!" });
     } else {
       try {
-        const response = await api.post("/client", { email, password });
+        const response = await api.get("/client/email/{email}", { email, password });
         response()
         this.props.history.push("/");
       } catch (err) {
