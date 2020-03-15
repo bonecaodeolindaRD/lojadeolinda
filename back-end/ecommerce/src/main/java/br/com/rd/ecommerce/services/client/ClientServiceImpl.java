@@ -59,14 +59,11 @@ public class ClientServiceImpl implements ClientService {
     public ResponseEntity findClientByEmail(String email) {
         if (email == null || email == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
-        List<Client> clients = clientRepository.findByEmail(email);
-        if (clients == null || clients.size() <= 0)
+        Client clients = clientRepository.findByEmail(email);
+        if (clients == null)
             return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
-        List<ClientDTO> clientDTO = new ArrayList<>();
-        for (Client client : clients)
-            clientDTO.add(converter.convertTo(client));
 
-        return ResponseEntity.ok().body(clientDTO);
+        return ResponseEntity.ok().body(clients);
     }
 
 }
