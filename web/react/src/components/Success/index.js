@@ -7,6 +7,20 @@ import { FaShoppingBasket} from 'react-icons/fa';
 
 export default class Success extends Component {
 
+    constructor(props){
+        super(props);
+        this.id = 0;
+        this.clearLocal();
+    }
+
+    clearLocal = () => {
+        let {id} = JSON.parse(localStorage.getItem('order'));
+        this.id = id;
+        localStorage.removeItem('cart');
+        localStorage.removeItem('order');
+        setTimeout(() => this.props.history.push("/"), 30000);
+    }
+
     render() {
 
         return (
@@ -18,7 +32,7 @@ export default class Success extends Component {
                     <CardBody>
                         <CardTitle className="text-center font-weight-bold"><h5>Dados da compra</h5></CardTitle>
                         <CardText className="text-center">
-                          Número do pedido: 1234567
+                          Número do pedido: { this.id }
                         </CardText>
                     </CardBody>
                     <CardFooter className=" d-flex justify-content-center">

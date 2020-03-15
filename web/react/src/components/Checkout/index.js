@@ -73,9 +73,9 @@ export default class Checkout extends Component {
                         aState: "SP",
                     }
                 ],
-                
+
             }
-           
+
         }
         this.listStates();
         this.listCities("AC");
@@ -88,11 +88,51 @@ export default class Checkout extends Component {
 
         let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-            for (var i in cart) {                    
-                totalCart += cart[i].totalItem;
-            }
+        for (var i in cart) {
+            totalCart += cart[i].totalItem;
+        }
 
-            this.setState({ total: totalCart, products: cart });
+        this.setState({ total: totalCart, products: cart });
+    }
+
+    gerateOrder = async () => {
+        try {
+            const email = JSON.parse(sessionStorage.getItem('client'));
+            const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
+            const address = {
+                street: this.state.address.aStreet,
+                cep: this.state.address.aCep,
+                district: this.state.address.aDistrict,
+                number: this.state.address.aNumber,
+                uf: this.state.address.aState
+            }
+            let returnAddress = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            let obj = {
+                date: new Date(),
+                client: {
+                    id: client.id
+                },
+                orderItem: [],
+                status: {
+                    idStatus: 1
+                },
+                address: {
+                    id: returnAddress.data.id
+                }
+            }
+            this.state.products.forEach(p => obj.orderItem.push({
+                product: {
+                    id: p.id
+                },
+                quantity: p.quantity,
+                value: p.price
+            }));
+            let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
+            localStorage.setItem('order', JSON.stringify(order));
+            return true;
+        } catch(eee){
+            return false;
+        }
     }
 
     listStates = async () => {
@@ -227,7 +267,10 @@ export default class Checkout extends Component {
         evt.preventDefault();
         if (!this.validateFields())
             return;
-            this.props.history.push("/success");
+        if(this.gerateOrder())
+            setTimeout(() => this.props.history.push("/success"), 2000);
+        else
+            this.setState({ erro: "Erro ao gerar o pedido" });
     }
 
     testCPF = (CPF) => {
@@ -279,34 +322,31 @@ export default class Checkout extends Component {
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
-                                    <h5 className="bg-warning p-2 text-center">Resumo</h5>
-                                    <div className="resumo">
-                                        {this.state.products.map(p => (
-                                            <Card body className="mb-1">
-                                                <Row>
-                                                    <Col xs="7">
-                                                        <CardTitle>
-                                                            {p.name}
-                                                        </CardTitle>
-                                                        <img src={p.image} alt={p.name} title={p.name} />
-                                                    </Col>
-                                                    <Col xs="5">
-                                                        <p className="h6">R${(p.price).toFixed(2)}</p>
-                                                        <p className="h6">Qtd: {p.quantity}</p>
-                                                        <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                        ))
-                                        }                                    
-                                        <Card body className="border-0">                                            
-                                            <CardTitle className="h6">Total: R${this.state.total.toFixed(2)}</CardTitle>
+                                <h5 className="bg-warning p-2 text-center">Resumo</h5>
+                                <div className="resumo">
+                                    {this.state.products.map(p => (
+                                        <Card body className="mb-1">
+                                            <Row>
+                                                <Col xs="7">
+                                                    <CardTitle>
+                                                        {p.name}
+                                                    </CardTitle>
+                                                    <img src={p.image} alt={p.name} title={p.name} />
+                                                </Col>
+                                                <Col xs="5">
+                                                    <p className="h6">R${(p.price).toFixed(2)}</p>
+                                                    <p className="h6">Qtd: {p.quantity}</p>
+                                                    <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
+                                                </Col>
+                                            </Row>
                                         </Card>
-                                    </div>
+                                    ))
+                                    }
+                                </div>
                             </Col>
 
                             <Col md="4">
-                                <h5 className="bg-warning p-2 text-center">Entrega</h5>                               
+                                <h5 className="bg-warning p-2 text-center">Entrega</h5>
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
@@ -358,7 +398,7 @@ export default class Checkout extends Component {
 
                                 <FormGroup>
                                     <h6>Frete: R$200.00</h6>
-                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>                                
+                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>
                                 </FormGroup>
 
                                 <FormGroup>
@@ -389,7 +429,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button outline color="success" type="submit"><FaCheckCircle/> Finalizar Compra</Button>
+                                    <Button outline color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>
