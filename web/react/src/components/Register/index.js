@@ -15,6 +15,7 @@ class Register extends Component {
         this.onChangeContact = this.onChangeContact.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = { error: null };
         this.state = {
             CPF: '',
             EMAIL: '',
@@ -71,8 +72,6 @@ class Register extends Component {
 
         } catch (error) {
             this.setState({ error })
-            alert(error)
-        
         }
     }
 
@@ -170,7 +169,7 @@ class Register extends Component {
                         <FormGroup>
                             <div className="text-align-center" align="center">
                                 <button type="submit" className="btn btn-success mr-3" > Salvar </button>
-                                <button type="button" class="btn btn-danger" to="index.html">Cancelar</button>
+                                <button type="button" className="btn btn-danger" to="index.html">Cancelar</button>
                             </div>
                         </FormGroup>
                     </Form>
