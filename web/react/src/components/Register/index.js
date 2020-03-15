@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import api from "../../services/api";
+import axios from "axios";
 import InputMask from 'react-input-mask';
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
@@ -44,6 +44,7 @@ class Register extends Component {
         this.setState({ PASSWORD: event.target.value });
     }
 
+
     handleSubmit = async event => {
         event.preventDefault();
 
@@ -56,25 +57,23 @@ class Register extends Component {
             phoneNumber: this.state.PHONENUMBER,
         };
 
-        console.log(user)
+        try {
+            await axios.post("http://localhost:8080/ecommerce/client/new", user)
+                .then(res => { console.log(res.data) });
+            this.setState({
+                cpf: "",
+                name: "",
+                email: "",
+                phoneNumber: "",
+                password: ""
+            })
+            this.props.history.push("/");
 
-        // api.post("/client/new", user).then(res => console.log(res.data));
-
-        // const obj = await axios.post("http://localhost:8080/ecommerce/client/new", user);
-        // console.log(obj);
-
-        api.post("/client/new", { user })
-          .then(res => {
-            console.log(res.data);
-          })
-
-          this.setState({
-              cpf: "",
-              name: "",
-              email: "",
-              phoneNumber: "",
-              password: ""
-          })
+        } catch (error) {
+            this.setState({ error })
+            alert(error)
+        
+        }
     }
 
     testCPF = (strCPF) => {
