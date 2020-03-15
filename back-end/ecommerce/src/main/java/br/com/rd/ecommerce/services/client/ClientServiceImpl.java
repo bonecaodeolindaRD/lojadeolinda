@@ -33,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
         List<Client> clients = clientRepository.findAll();
 
         if(clients == null || clients.size() <= 0)
-            return ResponseEntity.badRequest().body(new ClientException("Nenhum pedido encontrado"));
+            return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
         List<ClientDTO> clientDTO = new ArrayList<>();
         for(Client client: clients)
             clientDTO.add(converter.convertTo(client));
@@ -59,15 +59,12 @@ public class ClientServiceImpl implements ClientService {
     public ResponseEntity findClientByEmail(String email) {
         if (email == null || email == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
-        List<Client> clients = clientRepository.findByEmail(email);
-        if (clients == null || clients.size() <= 0)
+        Client clients = clientRepository.findByEmail(email);
+        if (clients == null)
             return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
-        List<ClientDTO> clientDTO = new ArrayList<>();
-        for (Client client : clients)
-            clientDTO.add(converter.convertTo(client));
 
+        ClientDTO clientDTO = converter.convertTo(clients);
         return ResponseEntity.ok().body(clientDTO);
     }
-
 }
 

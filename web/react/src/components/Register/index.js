@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import api from "../../services/api";
-import InputMask from 'react-input-mask';
+import axios from "axios";
+import InputMask from "react-input-mask";
+import AlertEvent from "./alerterror";
+import AlertPass from "./passerror";
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
@@ -13,13 +15,18 @@ class Register extends Component {
         this.onChangeCPF = this.onChangeCPF.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
+
         this.onChangePassword = this.onChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
+            alert_message: '',
+            alert_pass: '',
+            error: null,
             CPF: '',
             EMAIL: '',
             NAME: '',
             PASSWORD: '',
+            PASS_CONF: '',
             PHONENUMBER: '',
         }
     }
@@ -40,13 +47,17 @@ class Register extends Component {
         this.setState({ PHONENUMBER: event.target.value });
     }
 
+    onChangeConfPass= event => {
+        this.setState({ PASS_CONF: event.target.value });
+    }
+
     onChangePassword = event => {
         this.setState({ PASSWORD: event.target.value });
     }
 
+
     handleSubmit = async event => {
         event.preventDefault();
-
 
         const user = {
             cpf: this.state.CPF,
@@ -54,27 +65,28 @@ class Register extends Component {
             name: this.state.NAME,
             password: this.state.PASSWORD,
             phoneNumber: this.state.PHONENUMBER,
+            pass_conf: this.state.PASS_CONF,
         };
 
-        console.log(user)
-
-        // api.post("/client/new", user).then(res => console.log(res.data));
-
-        // const obj = await axios.post("http://localhost:8080/ecommerce/client/new", user);
-        // console.log(obj);
-
-        api.post("/client/new", { user })
-          .then(res => {
-            console.log(res.data);
-          })
-
-          this.setState({
-              cpf: "",
-              name: "",
-              email: "",
-              phoneNumber: "",
-              password: ""
-          })
+        if(this.state.PASSWORD === this.state.PASS_CONF){
+            try {
+                await axios.post("http://localhost:8080/ecommerce/client/new", user)
+                    .then(res => { console.log(res.data) });
+                this.setState({
+                    cpf: "",
+                    name: "",
+                    email: "",
+                    phoneNumber: "",
+                    password: ""
+                })
+                this.props.history.push("/login");
+            } catch (error) {
+                this.setState({alert_message: "error" })
+                console.log("Erro ao cadastrar conta!")
+            }
+        } else {
+            this.setState({alert_pass: "error" })
+        }
     }
 
     testCPF = (strCPF) => {
@@ -129,6 +141,10 @@ class Register extends Component {
                     <div className="text-align-center" align="center">
                         <h1>Registro de Conta</h1>
                     </div>
+                    <div className="text-align-center" align="center">
+                    {this.state.alert_message==="error"?<AlertEvent/>: null}
+                    {this.state.alert_pass==="error"?<AlertPass/>: null}
+                    </div>
                     <br></br>
                     <Form onSubmit={this.handleSubmit} text-align-center >
                         <FormGroup row>
@@ -159,7 +175,13 @@ class Register extends Component {
                                 <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999" />
                             </Col>
                         </FormGroup>
-
+                        <FormGroup row>
+                            <Col sm={3}></Col>
+                            <Label sm={1} for="pass_conf">Senha: </Label>
+                            <Col sm={5}>
+                                <Input id="pass_conf" onChange={this.onChangeConfPass} required type="password" name="pass_conf" />
+                            </Col>
+                        </FormGroup>
                         <FormGroup row>
                             <Col sm={3}></Col>
                             <Label sm={1} for="PASSWORD">Confirmação: </Label>
@@ -171,7 +193,7 @@ class Register extends Component {
                         <FormGroup>
                             <div className="text-align-center" align="center">
                                 <button type="submit" className="btn btn-success mr-3" > Salvar </button>
-                                <button type="button" class="btn btn-danger" to="index.html">Cancelar</button>
+                                <button type="button" className="btn btn-danger" to="index.html">Cancelar</button>
                             </div>
                         </FormGroup>
                     </Form>
