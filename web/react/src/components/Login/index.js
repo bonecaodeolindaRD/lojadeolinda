@@ -25,9 +25,22 @@ class Login extends Component{
       this.setState({ error: "Preencha e-mail e senha para continuar!" });
     } else {
       try {
-        const response = await api.get("/client/email/{email}", { email, password });
-        response()
-        this.props.history.push("/");
+        const {data: response} = await api.get("/client/login/" + email);
+        console.log(response);
+        let client = {
+          email: response.email
+        }
+        console.log(response.email)
+        if(response.password == password){
+          this.props.history.push("/");
+          sessionStorage.setItem("client", JSON.stringify(client));
+          window.location.reload();
+        }
+        else
+        this.setState({
+          error:
+            "Houve um problema com o login, verifique suas credenciais."
+        });
       } catch (err) {
         this.setState({
           error:
@@ -40,7 +53,6 @@ class Login extends Component{
     render(){
         return (
             <>
-            <Header/>
             <Container className="tam" align="center" justify-content="center">
             <Row className="tam align-items-center">
               <Col xs="12" sm="6" md="6" >

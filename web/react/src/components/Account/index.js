@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
@@ -9,12 +10,27 @@ import { Col, Form, FormGroup, Label, Input,Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class Account extends Component{
-    state = {
-        name: "",
-        secName: "",
-        email: "",
-        contact: "",
-        error: ""
+
+    constructor(props){
+        super(props);
+        this.state = {
+            name: "",
+            email: "",
+            contact: "",
+            error: ""
+        }
+        this.loadAcccount();
+    }
+   
+    loadAcccount = async () => {
+        let { email } = JSON.parse(sessionStorage.getItem('client'));
+        console.log(email);
+        let { data : account} = await axios("http://localhost:8080/ecommerce/client/email/" + email);
+        this.setState({
+            name : account.name,
+            email : account.email,
+            contact : account.phoneNumber
+        })
     }
 
     loadAcccount (e){
@@ -39,28 +55,21 @@ class Account extends Component{
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
-                            <Input type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="secNameUser">Sobrenome: </Label>
-                        <Col sm={5}>
-                            <Input type="text" name="secNameUser" id="SecNameUser" placeholder="Seu sobrenome"/>
+                            <Input value={this.state.name} onChange={e => this.setState({name: e.target.value})} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="Email">Email: </Label>
                         <Col sm={5}>
-                            <Input type="email" name="email" id="Email" placeholder="user@mail.com" />
+                            <Input value={this.state.email} onChange={e => this.setState({name: e.target.value})} type="email" name="email" id="Email" placeholder="user@mail.com" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="secNameUser">Contato: </Label>
                         <Col sm={5}>
-                            <Input mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
+                            <Input value={this.state.contact} onChange={e => this.setState({name: e.target.value})} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
                         </Col>
                     </FormGroup>
                     <br/>

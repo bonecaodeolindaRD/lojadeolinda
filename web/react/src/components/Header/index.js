@@ -32,8 +32,16 @@ export default class Header extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            logado: false
+            email: ""
         }
+        this.getLogin();
+    }
+
+    getLogin = () => {
+        let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
+        this.state.email = account;
+        this.setState({ ...this.state });
+    
     }
 
     toggle = () => {
@@ -73,7 +81,7 @@ export default class Header extends Component {
                                         <MdPerson size="30" />
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        {this.state.logado ? (
+                                        {sessionStorage.getItem('client') ? (
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
                                             </DropdownItem>) : (

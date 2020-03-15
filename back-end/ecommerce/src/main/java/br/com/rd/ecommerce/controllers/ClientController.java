@@ -34,6 +34,11 @@ public class ClientController {
         return service.findClientByEmail(email);
     }
 
+    @GetMapping("/client/login/{email}")
+    public ResponseEntity login(@PathVariable("email") String email){
+        return service.findClientLogin(email);
+    }
+
     @DeleteMapping("/client/delete/{id}")
     public void deleteClient(@PathVariable("id") Long id){
         service.deleteClient(id);
