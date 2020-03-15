@@ -16,24 +16,24 @@ export default class Carrossel extends Component {
         this.state = { activeIndex: 0,
             items : [
                 {
-                    src: 'https://i.imgur.com/rdLZxBv.jpg',
-                    altText: 'Slide 1',
+                    src: 'https://i.imgur.com/CNqS0j6.jpg',
+                    altText: 'Politicos',
                     caption: 'Politicos'
                 },
                 {
-                    src: 'https://picsum.photos/1200/400',
-                    altText: 'Slide 2',
-                    caption: 'Slide 22'
+                    src: 'https://i.imgur.com/k1mLXOD.jpg',
+                    altText: 'Artistas',
+                    caption: 'Artistas'
                 },
                 {
-                    src: 'https://picsum.photos/1200/400',
-                    altText: 'Slide 3',
-                    caption: 'Slide 3'
+                    src: 'https://i.imgur.com/7iXb4sp.jpg',
+                    altText: 'Atletas',
+                    caption: 'Atletas'
 				},
 				{
-                    src: 'https://picsum.photos/1200/400',
-                    altText: 'Slide 3',
-                    caption: 'Slide 3'
+                    src: 'https://i.imgur.com/IKIQwkp.jpg',
+                    altText: 'Jornalistas',
+                    caption: 'Jornalistas'
                 }
             ] };
     }
