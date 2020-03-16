@@ -39,9 +39,8 @@ export default class Header extends Component {
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        this.state.email = account;
-        this.setState({ ...this.state });
-    
+        //this.state.email = account;
+        this.setState({ email: account.email });
     }
 
     toggle = () => {
@@ -104,8 +103,6 @@ export default class Header extends Component {
                     </Container>
                 </Navbar>
             </header>
-
-
         );
     }
 }
