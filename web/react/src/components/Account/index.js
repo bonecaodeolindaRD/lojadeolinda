@@ -84,7 +84,7 @@ class Account extends Component{
                     <br/>
                     <FormGroup>
                         <div className="text-align-center" align="center">
-                            <Link to="/"><button type="button" class="btn btn-danger">Voltar ao Inicio</button></Link>
+                            <Link to="/"><button type="button" class="btn btn-danger">Voltar ao Início</button></Link>
                         </div>
                     </FormGroup>
                 </Form>
