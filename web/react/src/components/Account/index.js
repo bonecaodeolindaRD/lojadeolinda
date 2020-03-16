@@ -25,7 +25,6 @@ class Account extends Component{
    
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        console.log(email);
         let { data : account} = await axios("http://localhost:8080/ecommerce/client/email/" + email);
         this.setState({
             name : account.name,

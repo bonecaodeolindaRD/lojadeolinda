@@ -7,7 +7,6 @@ import { withRouter, Link } from "react-router-dom";
 import api from "../../services/api";
 
 import './styles.css';
-import Header from '../Header';
 import Footer from '../Footer';
 
 class Login extends Component{
@@ -26,12 +25,10 @@ class Login extends Component{
     } else {
       try {
         const {data: response} = await api.get("/client/login/" + email);
-        console.log(response);
         let client = {
           email: response.email
         }
-        console.log(response.email)
-        if(response.password == password){
+        if(response.password === password){
           this.props.history.push("/");
           sessionStorage.setItem("client", JSON.stringify(client));
           window.location.reload();

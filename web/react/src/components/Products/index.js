@@ -66,7 +66,6 @@ export default class Products extends Component {
             desc: p.description,
             preco: p.price
         }));
-        console.log(products);
         this.setState({products});
     }
 
@@ -74,7 +73,6 @@ export default class Products extends Component {
         let obj = evt.target;
         while(obj.id !== "card")
             obj = obj.parentNode;
-        console.log(obj.children[2].innerHTML);
         this.props.history.push(`/detail/${obj.children[2].innerHTML.toString()}`);
     }
 

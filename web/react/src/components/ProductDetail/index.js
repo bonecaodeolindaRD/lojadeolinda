@@ -35,7 +35,6 @@ export default class ProductDetail extends Component {
                 description: product.description,
                 price: product.price
             });
-            console.log(product);
         }
             
 
