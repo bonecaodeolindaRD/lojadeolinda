@@ -91,7 +91,7 @@ export default class Products extends Component {
                                 <CardText  >{item.desc.substring(0, 20) + "..."}</CardText>
                                 <Row>
                                     <Col xs="9"  >
-                                        <span className="h6">R$ {item.preco}</span>
+                                        <span className="h6">R$ {item.preco.toFixed(2)}</span>
                                     </Col>
                                     <Col xs="3" className="text-center"  >
                                         <IoMdCart size="30"/>
