@@ -1,0 +1,9 @@
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+  }
+
+.control-label-p:before {
+    content:"*";
+    color:red;
+}
