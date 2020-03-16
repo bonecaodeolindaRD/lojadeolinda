@@ -48,6 +48,6 @@ public class Order {
         double sum = 0.0;
         for(OrderItem o: orderItem)
             sum += o.calcSubValue();
-        return sum;
+        return sum + 200.00;
     }
 }
