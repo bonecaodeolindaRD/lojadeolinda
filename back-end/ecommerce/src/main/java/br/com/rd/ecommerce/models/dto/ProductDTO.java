@@ -15,4 +15,8 @@ public class ProductDTO {
     private String image;
     private Double price;
     private Long category;
+    private Double width;
+    private Double height;
+    private Double weight;
+    private Double off;
 }

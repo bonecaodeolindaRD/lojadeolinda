@@ -15,6 +15,10 @@ public class  Converter {
         Category category = new Category();
         category.setId(productDTO.getCategory());
         product.setCategory(category);
+        product.setHeight(productDTO.getHeight());
+        product.setWidth(productDTO.getWidth());
+        product.setWeight(productDTO.getWeight());
+        product.setOff(productDTO.getOff());
         return product;
     }
 
@@ -27,6 +31,10 @@ public class  Converter {
         productDTO.setImage(product.getImage());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
+        productDTO.setHeight(product.getHeight());
+        productDTO.setWidth(product.getWidth());
+        productDTO.setWeight(product.getWeight());
+        productDTO.setOff(product.getOff());
         return productDTO;
     }
 
@@ -40,6 +48,7 @@ public class  Converter {
         order.setDate(orderDTO.getDate());
         order.setClient(convertTo(orderDTO.getClient()));
         order.setAddress(convertTo(orderDTO.getAddress()));
+        order.setShipping(orderDTO.getShipping());
         return order;
     }
 
@@ -52,6 +61,7 @@ public class  Converter {
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setClient(convertTo(order.getClient()));
+        orderDTO.setShipping(order.getShipping());
         for(OrderItem oi: order.getOrderItem())
             orderDTO.addItem(convertTo(oi));
         return orderDTO;

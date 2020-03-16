@@ -27,6 +27,14 @@ public class Product {
     private String image;
     @Column(name = "vl_price", nullable = false)
     private Double price;
+    @Column(name = "vl_off")
+    private Double off;
+    @Column(name = "vl_width")
+    private Double width;
+    @Column(name = "vl_height")
+    private Double height;
+    @Column(name = "vl_weight")
+    private Double weight;
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
