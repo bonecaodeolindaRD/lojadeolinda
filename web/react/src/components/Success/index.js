@@ -37,7 +37,7 @@ export default class Success extends Component {
                     </CardBody>
                     <CardFooter className=" d-flex justify-content-center">
                         <Link to='/home'>
-                            <Button outline color="warning" > <FaShoppingBasket/> Voltar as compras</Button>
+                            <Button color="warning" > <FaShoppingBasket/> Voltar as compras</Button>
                         </Link>
 
                     </CardFooter>
