@@ -429,7 +429,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button outline color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
+                                    <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>

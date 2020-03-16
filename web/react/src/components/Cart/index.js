@@ -78,7 +78,7 @@ export default class Cart extends Component {
 
             <div className="d-flex justify-content-center ">
 
-            <Link to="/home"><Button  outline color="success"><FaShoppingBasket/> Adicionar Produtos</Button></Link>
+            <Link to="/home"><Button color="success"><FaShoppingBasket/> Adicionar Produtos</Button></Link>
 
             </div>
                 
@@ -145,7 +145,7 @@ export default class Cart extends Component {
 
                 <Row className="d-flex justify-content-end mt-5 mb-5  mr-1">
                                     
-                <Link to="/checkout"><Button outline color="success"> <FaWpforms/> Finalizar Compra</Button></Link>
+                <Link to="/checkout"><Button color="success"> <FaWpforms/> Finalizar Compra</Button></Link>
 
                 </Row>
 
