@@ -11,6 +11,9 @@ import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 class Register extends Component {
     constructor(props) {
         super(props);
+        if(sessionStorage.getItem('client'))
+            this.props.history.push('/');
+
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCPF = this.onChangeCPF.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
