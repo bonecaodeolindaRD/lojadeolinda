@@ -70,8 +70,7 @@ class Register extends Component {
 
         if(this.state.PASSWORD === this.state.PASS_CONF){
             try {
-                await axios.post("http://localhost:8080/ecommerce/client/new", user)
-                    .then(res => { console.log(res.data) });
+                await axios.post("http://localhost:8080/ecommerce/client/new", user);
                 this.setState({
                     cpf: "",
                     name: "",
@@ -82,7 +81,7 @@ class Register extends Component {
                 this.props.history.push("/login");
             } catch (error) {
                 this.setState({alert_message: "error" })
-                console.log("Erro ao cadastrar conta!")
+              
             }
         } else {
             this.setState({alert_pass: "error" })
