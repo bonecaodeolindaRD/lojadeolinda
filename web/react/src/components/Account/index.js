@@ -20,6 +20,10 @@ class Account extends Component{
             cpf: "",
             error: ""
         }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
+        }
         this.loadAcccount();
     }
    
