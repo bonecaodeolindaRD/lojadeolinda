@@ -47,6 +47,11 @@ export default class Header extends Component {
         this.setState({ isOpen: !this.state.isOpen });
     }
 
+    logout = () => {
+        sessionStorage.removeItem('client');
+        window.location.reload();
+    }
+
 
     search = (event) => {
         event.preventDefault();
@@ -81,9 +86,14 @@ export default class Header extends Component {
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         {sessionStorage.getItem('client') ? (
+                                            <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
-                                            </DropdownItem>) : (
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                <Link onClick={this.logout}>Sair</Link>
+                                            </DropdownItem>
+                                            </>) : (
                                                 <>
                                                     <DropdownItem to="/login">
                                                         <Link to="/login">Logar </Link>
