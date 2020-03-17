@@ -22,8 +22,8 @@ import Header from '../Header';
 
 export default class Checkout extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
@@ -76,6 +76,10 @@ export default class Checkout extends Component {
 
             }
 
+        }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
         }
         this.listStates();
         this.listCities("AC");
