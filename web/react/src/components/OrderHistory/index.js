@@ -8,8 +8,7 @@ class OrderHistory extends Component{
         super(props);
         this.getOrders();
         this.state = {
-            isOpen: false,
-            orders: this.getOrders()
+            orders: []
         }
     }
 
@@ -17,7 +16,6 @@ class OrderHistory extends Component{
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
         console.log(account)
         this.setState({ 
-            ...this.state,
             orders: account.orders,
         });
         return account.orders
@@ -28,7 +26,7 @@ class OrderHistory extends Component{
             <>
             <Header></Header>
             <Container>
-
+                {this.state.orders}
             </Container>
             <Footer></Footer>
             </>

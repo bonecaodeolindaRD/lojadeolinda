@@ -4,6 +4,7 @@ import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 
+import br.com.rd.ecommerce.models.entities.Order;
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
@@ -77,6 +78,17 @@ public class ClientServiceImpl implements ClientService {
 
         ClientDTO clientDTO = converter.convertTo(clients);
         return ResponseEntity.ok().body(clientDTO);
+    }
+
+    @Override
+    public ResponseEntity findClientOrders(String email) {
+        Client c = clientRepository.findByEmail(email);
+        ClientDTO cDTO = converter.convertTo(c);
+
+        for(Order o: c.getOrders())
+            cDTO.addOrder(converter.convertTo(o));
+
+        return ResponseEntity.ok().body(cDTO);
     }
 
 

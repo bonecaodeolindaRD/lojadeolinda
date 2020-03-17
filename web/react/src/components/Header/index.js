@@ -41,7 +41,6 @@ export default class Header extends Component {
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        console.log(account)
         this.setState({ 
             ...this.state,
             email: account.email,

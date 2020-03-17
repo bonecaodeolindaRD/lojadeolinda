@@ -9,5 +9,6 @@ public interface ClientService {
     void deleteClient(Long id);
     ResponseEntity findClientByEmail(String email);
     ResponseEntity findClientLogin(String email, String password);
+    ResponseEntity findClientOrders(String email);
     //ResponseEntity createClient(Client client);
 }
