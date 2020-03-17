@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/product/name/{name}")
     public ResponseEntity findByName(@PathVariable("name") String name) {
-        return service.findProductByName(name);
+        return service.findProductByName(name.toUpperCase());
     }
 
     @DeleteMapping("/product/delete/{id}")
