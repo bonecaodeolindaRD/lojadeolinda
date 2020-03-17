@@ -47,14 +47,14 @@ export default class ProductDetail extends Component {
 
             event.preventDefault();
 
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
             if(cart.length > 0) {
                 for (var i in cart) {
                     if(cart[i].id === this.state.id){
                         cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
                         cart[i].totalItem =  this.state.price *  cart[i].quantity;
-                        localStorage.cart = JSON.stringify(cart);
+                        sessionStorage.cart = JSON.stringify(cart);
                         this.props.history.push("/cart");
                         return;
                     }
@@ -72,7 +72,7 @@ export default class ProductDetail extends Component {
 
             });
 
-            localStorage.setItem('cart', JSON.stringify(cart));
+            sessionStorage.setItem('cart', JSON.stringify(cart));
             
             this.props.history.push("/cart");
 
