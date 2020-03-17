@@ -7,7 +7,9 @@ import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.dto.OrderItemDTO;
 import br.com.rd.ecommerce.models.entities.*;
 import br.com.rd.ecommerce.repositories.OrderRespository;
+import br.com.rd.ecommerce.repositories.ProductRepository;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
+import br.com.rd.ecommerce.services.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRespository respository;
+    @Autowired
+    private ProductRepository productRepository;
     private Converter converter = new Converter();
 
     @Override
@@ -91,6 +95,16 @@ public class OrderServiceImpl implements OrderService {
 
         Order orderEntity = converter.convertTo(order);
 
+        List<OrderItem> orderItems = new ArrayList<>();
+        for(OrderItemDTO p: order.getOrderItem()){
+            OrderItem orderItem = converter.convertTo(p);
+            Product product = productRepository.findById(p.getProduct().getId()).get();
+            orderItem.setProduct(product);
+            orderItems.add(orderItem);
+        }
+
+        orderEntity.setOrderItem(orderItems);
+        orderEntity.setValue(orderEntity.total());
         Order returnOrder = respository.save(orderEntity);
         order.setId(returnOrder.getId());
 

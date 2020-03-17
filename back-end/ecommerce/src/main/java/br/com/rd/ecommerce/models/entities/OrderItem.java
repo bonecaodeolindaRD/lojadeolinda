@@ -18,7 +18,7 @@ public class OrderItem{
     @ManyToOne
     @JoinColumn(name = "id_order")
     private Order order;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_product")
     private Product product;
     @Column(name = "nr_quantity", nullable = false)
@@ -27,7 +27,8 @@ public class OrderItem{
     private Double value;
 
     public double calcSubValue(){
-        return this.product.value() * quantity;
+        //this.value = this.product.value();
+        return (this.value - this.value * this.product.getOff()) * quantity;
     }
 
 }
