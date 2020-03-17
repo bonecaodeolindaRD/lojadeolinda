@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -40,7 +41,20 @@ public class Product {
     @JoinColumn(name = "id_category")
     private Category category;
 
-//    public double value(){
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    //    public double value(){
 //        try {
 //            return price - price * off;
 //        } catch (NullPointerException e){

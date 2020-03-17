@@ -14,7 +14,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -101,13 +103,36 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.badRequest().body(new ProductException("Favor informe uma categoria"));
         Category categ = new Category();
         categ.setId(category);
-        List<Product> products = repository.findByCategory(categ);
-        if (products == null || products.size() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrada"));
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        for (Product p : products)
-            productDTOS.add(converter.convertTo(p));
-        return ResponseEntity.ok().body(productDTOS);
+        try {
+            List<Product> products = repository.findByCategory(categ);
+            if (products == null || products.size() <= 0)
+                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrada"));
+            List<ProductDTO> productDTOS = new ArrayList<>();
+            for (Product p : products)
+                productDTOS.add(converter.convertTo(p));
+            return ResponseEntity.ok().body(productDTOS);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity findProductByNameOrCategory(String str) {
+        Set<Product> products = new HashSet<>();
+        Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'");
+        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'");
+
+        try{
+            List<Product> prods = name.getResultList();
+            for(Product p: prods)
+                products.add(p);
+            prods = desc.getResultList();
+            for(Product p: prods)
+                products.add(p);
+            return ResponseEntity.ok().body(products);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());
+        }
     }
 
     @Override
@@ -123,16 +148,20 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity updateProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
-        Product product = repository.findById(productDTO.getId()).get();
-        Category category = new Category();
-        category.setId(productDTO.getCategory());
-        product.setCategory(category);
-        product.setImage(productDTO.getImage());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
-        product.setName(productDTO.getName());
-        Product productReturn = repository.save(product);
-        return ResponseEntity.ok().body(productReturn);
+        try {
+            Product product = repository.findById(productDTO.getId()).get();
+            Category category = new Category();
+            category.setId(productDTO.getCategory());
+            product.setCategory(category);
+            product.setImage(productDTO.getImage());
+            product.setDescription(productDTO.getDescription());
+            product.setPrice(productDTO.getPrice());
+            product.setName(productDTO.getName());
+            Product productReturn = repository.save(product);
+            return ResponseEntity.ok().body(productReturn);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());
+        }
     }
 
 
