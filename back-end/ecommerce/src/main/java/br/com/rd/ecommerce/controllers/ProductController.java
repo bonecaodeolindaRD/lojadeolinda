@@ -31,7 +31,17 @@ public class ProductController {
 
     @GetMapping("/product/name/{name}")
     public ResponseEntity findByName(@PathVariable("name") String name) {
-        return service.findProductByName(name);
+        return service.findProductByName(name.toUpperCase());
+    }
+
+    @GetMapping("/product/description/{description}")
+    public ResponseEntity findByDescription(@PathVariable("description") String description){
+        return service.findProductByDescription(description);
+    }
+
+    @GetMapping("/product/find/{str}")
+    public ResponseEntity findProduct(@PathVariable("str") String str){
+        return service.findProductByNameOrCategory(str);
     }
 
     @DeleteMapping("/product/delete/{id}")
