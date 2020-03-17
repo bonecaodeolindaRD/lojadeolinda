@@ -406,7 +406,7 @@ export default class Checkout extends Component {
                                     <Input value={this.state.client.card.cCPF} type="text" name="cCPF" id="cCPF" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCard} />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="cHolder"><span className="text-danger">*</span>Titular do card:</Label>
+                                    <Label for="cHolder"><span className="text-danger">*</span>Titular do cartão:</Label>
                                     <Input value={this.state.client.card.cHolder} type="text" id="cHolder" name="cHolder" onChange={this.editCard} />
                                 </FormGroup>
                                 <FormGroup>
@@ -429,7 +429,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button outline color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
+                                    <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>

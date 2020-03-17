@@ -11,6 +11,9 @@ import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 class Register extends Component {
     constructor(props) {
         super(props);
+        if(sessionStorage.getItem('client'))
+            this.props.history.push('/');
+
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCPF = this.onChangeCPF.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -70,8 +73,7 @@ class Register extends Component {
 
         if(this.state.PASSWORD === this.state.PASS_CONF){
             try {
-                await axios.post("http://localhost:8080/ecommerce/client/new", user)
-                    .then(res => { console.log(res.data) });
+                await axios.post("http://localhost:8080/ecommerce/client/new", user);
                 this.setState({
                     cpf: "",
                     name: "",
@@ -82,7 +84,7 @@ class Register extends Component {
                 this.props.history.push("/login");
             } catch (error) {
                 this.setState({alert_message: "error" })
-                console.log("Erro ao cadastrar conta!")
+              
             }
         } else {
             this.setState({alert_pass: "error" })

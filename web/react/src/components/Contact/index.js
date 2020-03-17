@@ -107,7 +107,7 @@ export default class Contact extends Component {
 
                 <header className="card-header bg-warning mb-3">
                 <FaEnvelopeSquare/> <a href="mailto:contato@lojadeolinda.com.br"> 
-                        contato@lojadeolinda.com.br</a>
+                        contato@bonecaodeolinda.com.br</a>
                 </header>
 
                 <FormGroup className="form-group required">
@@ -141,8 +141,8 @@ export default class Contact extends Component {
                 <FormText className="control-label-p mb-3">Campos obrigatórios</FormText>
                
                 <FormGroup className="text-center">
-                    <Button id="enviarContato" outline color="success" className="mr-2" >Enviar</Button>
-                    <Button onClick={this.reset} outline color="danger" >Limpar</Button>
+                    <Button id="enviarContato"  color="success" className="mr-2" >Enviar</Button>
+                    <Button onClick={this.reset} color="danger" >Limpar</Button>
                 </FormGroup>
 
             </Col>
@@ -155,7 +155,7 @@ export default class Contact extends Component {
             Entraremos em contato em até 24H
         </ModalBody>
         <ModalFooter>
-          <Button outline color="secondary" onClick={this.submit}>OK</Button>
+          <Button color="secondary" onClick={this.submit}>OK</Button>
         </ModalFooter>
       </Modal>
 

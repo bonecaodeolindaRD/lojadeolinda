@@ -39,13 +39,17 @@ export default class Header extends Component {
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        this.state.email = account;
-        this.setState({ ...this.state });
-    
+        //this.state.email = account;
+        this.setState({ email: account.email });
     }
 
     toggle = () => {
         this.setState({ isOpen: !this.state.isOpen });
+    }
+
+    logout = () => {
+        sessionStorage.removeItem('client');
+        window.location.reload();
     }
 
 
@@ -82,9 +86,14 @@ export default class Header extends Component {
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         {sessionStorage.getItem('client') ? (
+                                            <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
-                                            </DropdownItem>) : (
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                <Link onClick={this.logout}>Sair</Link>
+                                            </DropdownItem>
+                                            </>) : (
                                                 <>
                                                     <DropdownItem to="/login">
                                                         <Link to="/login">Logar </Link>
@@ -104,8 +113,6 @@ export default class Header extends Component {
                     </Container>
                 </Navbar>
             </header>
-
-
         );
     }
 }
