@@ -56,11 +56,10 @@ export default class ShippingCalculator extends Component {
           <Form className="form-horizontal qtyFrm">
                     <hr className="soft" />
                     <FormGroup className="control-group">
-                        <Label for="cepFrete"  className="control-label pt-3"><h6>Simular Frete e Prazo</h6></Label>
-                            <Input name="code" type="text" className="col-6 mb-2" placeholder="Digite o CEP" onChange={this.myChangeHandler} mask="99999-999"  tag={InputMask}/>
+                        <Label for="cepFrete"  className="control-label pt-2"><h6>Simular Frete e Prazo</h6></Label>
+                            <Input name="code" type="text" className="col-6 mb-1" placeholder="Digite o CEP" onChange={this.myChangeHandler} mask="99999-999"  tag={InputMask}/>
                             <p id="freteCalculado">{this.state.message}</p>
                             <Button color="warning" onClick={this.mySubmitHandler} >  <FaCheckCircle/> OK</Button>
-                        <hr className="soft" />
                     </FormGroup>
                 </Form>
           
