@@ -8,6 +8,7 @@ import api from "../../services/api";
 
 import './styles.css';
 import Footer from '../Footer';
+import Header from '../Header';
 
 class Login extends Component {
 
@@ -18,6 +19,7 @@ class Login extends Component {
 
     this.state = {
       email: "",
+      name: "",
       password: "",
       error: ""
     };
@@ -34,7 +36,8 @@ class Login extends Component {
       try {
         const { data: response } = await api.get("/client/login/" + email);
         let client = {
-          email: response.email
+          email: response.email,
+          name: response.name
         }
         if (response.password === password) {
           this.props.history.push("/");
@@ -58,6 +61,7 @@ class Login extends Component {
   render() {
     return (
       <>
+      <Header></Header>
         <Container className="tam" align="center" justify-content="center">
           <Row className="tam align-items-center">
             <Col xs="12" sm="6" md="6" >
