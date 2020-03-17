@@ -2,50 +2,66 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import {  Card,CardHeader, CardTitle, CardText, CardBody,  Button,  CardFooter, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-export default class Success extends Component {
+import { FaShoppingBasket} from 'react-icons/fa';
 
+export default class Success extends Component {
 
     constructor(props){
         super(props);
+        this.id = 0;
+        this.clearLocal();
     }
 
-    
-       
-          dataApi = async (event) =>{ 
-            const data = await axios.get(`http://localhost:8080/ecommerce/productId/${this.props.match.params.id}`)
-          }
+    clearLocal = () => {
+        let {id} = JSON.parse(localStorage.getItem('order'));
+        this.id = id;
+        localStorage.removeItem('cart');
+        localStorage.removeItem('order');
+        setTimeout(() => this.props.history.push("/"), 30000);
+    }
 
-    
-
-    
-
-     
     render() {
 
         return (
             <>
                 <Header />
-                <Container  >
-                <Card >
-                    <CardHeader className="bg-success text-white text-center text">Compra concluida com sucesso</CardHeader>
-                    <CardBody>
-                        <CardTitle className="text-center font-weight-bold">Dados da compra</CardTitle>
-                        <CardText>
-                            {}
-                        </CardText>
-        
-                    </CardBody>
-                    <CardFooter className=" d-flex justify-content-center">
-                        <Link to='/home'>
-                            <Button > Voltar as compras</Button>
-                        </Link>
+                <Jumbotron>
+                    <h1 className="display-3">Compra Concluida</h1>
+                    <p className="lead">Numero do pedido : </p>
+                    <hr className="my-2" />
+                    <Form >
+                        <Row>
+                            <Col>
+                                <h5 className="bg-warning p-2 text-center">Resumo da compra</h5>
+                                <div>
+                                    
+                                        <Card body className="mb-2">
+                                            <Row>
+                                                <Col>
+                                                    <CardTitle>
+                                                       Nome produto
+                                                    </CardTitle>
+                                                    Imagem do produto
+                                                    
+                                                </Col>
+                                                <Col>
+                                                    <p className="h6">R$Preço do produto</p>
+                                                    <p className="h6">Qtd: quantidade do produto</p>
+                                                    <p className="h6">Subtotal: R$ subtotal do produto</p>
+                                                </Col>
+                                            </Row>
+                                        </Card>
+                                    ))
+                                    }
+                                    <p className="lead">
+                                        <Button color="primary">Voltar para Home</Button>
+                                    </p>
 
-                    </CardFooter>
-                </Card>
-               </Container>
-               
-
+                                </div>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Jumbotron>
 
             </>
 
