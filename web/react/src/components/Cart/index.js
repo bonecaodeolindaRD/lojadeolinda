@@ -20,7 +20,7 @@ export default class Cart extends Component {
 
             let totalCart = 0;
 
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
                 for (var i in cart) {                    
                     totalCart += cart[i].totalItem;
@@ -34,13 +34,13 @@ export default class Cart extends Component {
 
             let totalCart = 0;
 
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
             let item = cart.find(x => x.id === id);
             
             cart.splice(cart.indexOf(item), 1);
 
-            localStorage.setItem('cart', JSON.stringify(cart));  
+            sessionStorage.setItem('cart', JSON.stringify(cart));  
 
             let products = this.state.products.filter((item) => item.id !== id);
             
