@@ -21,6 +21,7 @@ public class Product {
     private Long id;
     @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
+    @Lob
     @Column(name = "tx_description", nullable = false)
     private String description;
     @Column(name = "lk_image", nullable = false)
@@ -39,12 +40,12 @@ public class Product {
     @JoinColumn(name = "id_category")
     private Category category;
 
-    public double value(){
-        try {
-            return price - price * off;
-        } catch (NullPointerException e){
-            return price;
-        }
-    }
+//    public double value(){
+//        try {
+//            return price - price * off;
+//        } catch (NullPointerException e){
+//            return price;
+//        }
+//    }
 
 }

@@ -224,6 +224,13 @@ export default class Checkout extends Component {
 
     isEmpty = str => str.toString().trim().length <= 0;
 
+    isName = (name) => {
+
+        let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
+        return !re.test(name);
+          
+    };
+
     validateFields = () => {
         if (this.isEmpty(this.state.address.aCep)) {
             this.setState({ erro: "Digite o CEP!" });
@@ -253,6 +260,10 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite o nome do titular do cartão!" });
             return false;
         }
+        if(this.isName(this.state.client.card.cHolder)){
+            this.setState({erro: "O nome do titular não pode conter numeros ou caracteres especiais"});
+            return false;
+        }
         if (this.isEmpty(this.state.client.card.cNumber)) {
             this.setState({ erro: "Digite o numero do cartão!" });
             return false;
@@ -267,6 +278,8 @@ export default class Checkout extends Component {
         }
         return true;
     }
+
+  
 
     finish = (evt) => {
         evt.preventDefault();

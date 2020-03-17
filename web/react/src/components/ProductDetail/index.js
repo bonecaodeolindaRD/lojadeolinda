@@ -62,7 +62,9 @@ export default class ProductDetail extends Component {
                 for (var i in cart) {
                     if(cart[i].id === this.state.id){
                         cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
+
                         cart[i].totalItem =  (this.state.price - this.state.price * this.state.discount) *  cart[i].quantity;
+                      
                         sessionStorage.cart = JSON.stringify(cart);
                         this.props.history.push("/cart");
                         return;
