@@ -86,7 +86,7 @@ export default class Checkout extends Component {
 
         let totalCart = 0;
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
         for (var i in cart) {
             totalCart += cart[i].totalItem;
@@ -128,7 +128,7 @@ export default class Checkout extends Component {
                 value: p.price
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
-            localStorage.setItem('order', JSON.stringify(order));
+            sessionStorage.setItem('order', JSON.stringify(order));
             return true;
         } catch(eee){
             return false;
