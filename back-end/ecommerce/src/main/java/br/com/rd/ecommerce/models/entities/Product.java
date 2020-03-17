@@ -40,7 +40,11 @@ public class Product {
     private Category category;
 
     public double value(){
-        return price - price * off;
+        try {
+            return price - price * off;
+        } catch (NullPointerException e){
+            return price;
+        }
     }
 
 }
