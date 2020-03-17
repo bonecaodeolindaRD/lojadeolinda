@@ -27,28 +27,32 @@ export default class Products extends Component {
                     img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
-                    preco: 999.99
+                    preco: 999.99,
+                    desconto: 0.05
                 },
                 {
                     id: 2,
                     img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
-                    preco: 999.99
+                    preco: 999.99,
+                    desconto: 0.05
                 },
                 {
                     id: 3,
                     img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
-                    preco: 999.99
+                    preco: 999.99,
+                    desconto: 0.05
                 },
                 {
                     id: 4,
                     img: "https://picsum.photos/200/200",
                     nome: "Nome do produto",
                     desc: "Descricao produto",
-                    preco: 999.99
+                    preco: 999.99,
+                    desconto: 0.05
                 }
             ]
         }
@@ -64,7 +68,8 @@ export default class Products extends Component {
             img: p.image,
             nome: p.name,
             desc: p.description,
-            preco: p.price
+            preco: p.price,
+            desconto: p.off
         }));
         this.setState({products});
     }
@@ -89,7 +94,8 @@ export default class Products extends Component {
                                 <CardText  >{item.desc.substring(0, 20) + "..."}</CardText>
                                 <Row>
                                     <Col xs="9"  >
-                                        <span className="h6">R$ {item.preco.toFixed(2)}</span>
+                                        <p><del>De: R$ {item.preco.toFixed(2)}</del></p>
+                                        <p className="h6">Por: R$ {(item.preco - item.preco * item.desconto).toFixed(2)}</p>
                                     </Col>
                                     <Col xs="3" className="text-center"  >
                                         <IoMdCart size="30"/>
