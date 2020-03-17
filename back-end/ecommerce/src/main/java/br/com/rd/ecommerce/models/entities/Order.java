@@ -50,6 +50,8 @@ public class Order {
         double sum = 0.0;
         for(OrderItem o: orderItem)
             sum += o.calcSubValue();
+        if(shipping == null)
+            return sum + 200;
         return sum + this.shipping;
     }
 }

@@ -8,6 +8,6 @@ public interface ClientService {
     ResponseEntity findClientById(Long id);
     void deleteClient(Long id);
     ResponseEntity findClientByEmail(String email);
-    ResponseEntity findClientLogin(String email);
+    ResponseEntity findClientLogin(String email, String password);
     //ResponseEntity createClient(Client client);
 }
