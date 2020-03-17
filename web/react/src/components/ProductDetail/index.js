@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Table, ListGroup, ListGroupItem,  Button, Form, Label, FormGroup, Input } from 'reactstrap';
+import { Container, Row, Col, Table, Button, Form, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -18,7 +18,11 @@ export default class ProductDetail extends Component {
                 name: "Bonecão Galvão Bueno ",
                 description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
                 quantity: 1,                
-                price: 1000
+                price: 1000,
+                height: 3.5,
+                width: 1.5,
+                weight: 20.0,
+                discount: 0.05             
             }
 
                 this.getProduct();
@@ -33,7 +37,12 @@ export default class ProductDetail extends Component {
                 image: product.image,
                 name: product.name,
                 description: product.description,
-                price: product.price
+                price: product.price,
+                height: product.height,
+                width: product.width,
+                weight: product.weight,
+                discount: product.off                
+
             });
         }
             
@@ -47,19 +56,21 @@ export default class ProductDetail extends Component {
 
             event.preventDefault();
 
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
             if(cart.length > 0) {
                 for (var i in cart) {
                     if(cart[i].id === this.state.id){
                         cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
-                        cart[i].totalItem =  this.state.price *  cart[i].quantity;
-                        localStorage.cart = JSON.stringify(cart);
+                        cart[i].totalItem =  (this.state.price - this.state.price * this.state.discount) *  cart[i].quantity;
+                        sessionStorage.cart = JSON.stringify(cart);
                         this.props.history.push("/cart");
                         return;
                     }
                 }
             }
+
+     
 
             cart.push({
                 id: this.state.id,
@@ -68,11 +79,11 @@ export default class ProductDetail extends Component {
                 description: this.state.description,
                 quantity: this.state.quantity,
                 price: this.state.price,
-                totalItem: this.state.price * this.state.quantity
+                totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity
 
             });
 
-            localStorage.setItem('cart', JSON.stringify(cart));
+            sessionStorage.setItem('cart', JSON.stringify(cart));
             
             this.props.history.push("/cart");
 
@@ -94,27 +105,24 @@ export default class ProductDetail extends Component {
                         </Col>
 
                         <Col xs="12"  sm="6" md="6" lg="6">
-
                             <h3>{this.state.name}</h3>
                             <hr className="soft" />
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
-                                    <Label for="qtd"  className="control-label pb-2 pr-5"><h5>R${(this.state.price).toFixed(2)}</h5></Label >
-                                    <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd"  value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
-
+                                    <h5 className="mb-3"><del>De: R${(this.state.price).toFixed(2)}</del></h5>
+                                    <h5 className="mb-3">Por: R${(this.state.price - this.state.price * this.state.discount).toFixed(2)}</h5>                                    
+                                    <Input className="mb-3" type="number" placeholder="Digite a quantidade" min="1" max="10"   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
                                             <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
-
                                 </FormGroup>
                             </Form>
 
                             <ShippingCalculator/>
-                        
-                            <ListGroup id="productDetail" className="nav nav-tabs pt-3">
-                                <ListGroupItem><h6 data-toggle="tab">Descrição do Produto</h6></ListGroupItem>
-                            </ListGroup>
 
-                            <Table>
+                            <Table className="mt-2">
                                 <thead>
+                                <tr>
+                                <th>Descrição do Produto</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -124,6 +132,24 @@ export default class ProductDetail extends Component {
                                     </tr>
                                 </tbody>
                             </Table >
+
+                            <Table className="table table-sm">
+                                <thead>
+                                    <tr>
+                                    <th>Altura</th>
+                                    <th>Largura</th>
+                                    <th>Peso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>{this.state.height}</td>
+                                    <td>{this.state.width}</td>
+                                    <td>{this.state.weight}</td>                           
+                                    </tr>
+                                </tbody>
+                            </Table>
+                                    
                         </Col>
                     </Row>    
 
