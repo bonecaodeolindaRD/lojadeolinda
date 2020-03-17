@@ -130,7 +130,7 @@ export default class Checkout extends Component {
                     id: p.id
                 },
                 quantity: p.quantity,
-                value: p.price
+                value: p.value
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
             sessionStorage.setItem('order', JSON.stringify(order));
