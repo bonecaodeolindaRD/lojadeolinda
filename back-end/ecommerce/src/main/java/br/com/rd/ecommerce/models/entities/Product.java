@@ -54,12 +54,12 @@ public class Product {
         return Objects.hash(id);
     }
 
-    //    public double value(){
-//        try {
-//            return price - price * off;
-//        } catch (NullPointerException e){
-//            return price;
-//        }
-//    }
+    public double value(){
+        try {
+            return price - price * off;
+        } catch (NullPointerException e){
+            return price;
+        }
+    }
 
 }

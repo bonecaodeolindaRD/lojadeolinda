@@ -28,7 +28,7 @@ public class OrderItem{
 
     public double calcSubValue(){
         //this.value = this.product.value();
-        return (this.value - this.value * this.product.getOff()) * quantity;
+        return this.product.value() * quantity;
     }
 
 }
