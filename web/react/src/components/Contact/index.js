@@ -86,6 +86,13 @@ export default class Contact extends Component {
         this.setState({[nam]: val});     
       
       }
+
+      isName = (name) => {
+
+          let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
+          return !re.test(name);
+          
+    };
      
   render() {
     return (
