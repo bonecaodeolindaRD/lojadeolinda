@@ -79,9 +79,11 @@ export default class ProductDetail extends Component {
                 name: this.state.name,
                 image: this.state.image,
                 description: this.state.description,
-                quantity: this.state.quantity,
+                quantity: parseInt(this.state.quantity),
                 price: this.state.price,
-                totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity
+                totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity,
+                value: this.state.price - this.state.price * this.state.discount
+
 
             });
 
@@ -113,7 +115,7 @@ export default class ProductDetail extends Component {
                                 <FormGroup className="control-group">
                                     <h5 className="mb-3"><del>De: R${(this.state.price).toFixed(2)}</del></h5>
                                     <h5 className="mb-3">Por: R${(this.state.price - this.state.price * this.state.discount).toFixed(2)}</h5>                                    
-                                    <Input className="mb-3" type="number" placeholder="Digite a quantidade" min="1" max="10"   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2"  />
+                                    <Input type="number" placeholder="Digite a quantidade" min="1" max="10"   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
                                             <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
                                 </FormGroup>
                             </Form>
