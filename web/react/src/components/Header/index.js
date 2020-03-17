@@ -16,6 +16,7 @@ import {
     InputGroupAddon,
     Input,
     Form,
+    Label,
 
 } from 'reactstrap';
 
@@ -30,17 +31,23 @@ export default class Header extends Component {
 
     constructor(props) {
         super(props);
+        this.getLogin();
         this.state = {
             isOpen: false,
-            email: ""
+            email: "",
+            name: this.getLogin()
         }
-        this.getLogin();
     }
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        //this.state.email = account;
-        this.setState({ email: account.email });
+        console.log(account)
+        this.setState({ 
+            ...this.state,
+            email: account.email,
+            name : account.name
+        });
+        return account.name
     }
 
     toggle = () => {
@@ -49,6 +56,7 @@ export default class Header extends Component {
 
     logout = () => {
         sessionStorage.removeItem('client');
+        sessionStorage.removeItem('cart');
         window.location.reload();
     }
 
@@ -58,6 +66,11 @@ export default class Header extends Component {
     }
 
     render() {
+        const {name} = this.state;
+        console.log('name')
+        console.log(name)
+        console.log(typeof name)
+        console.log('name')
 
         return (
             <header>
@@ -80,6 +93,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
+                                <Label>Bem-Vindo(a) {this.state.name} </Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
