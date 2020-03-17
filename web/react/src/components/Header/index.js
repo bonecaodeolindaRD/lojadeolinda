@@ -66,12 +66,6 @@ export default class Header extends Component {
     }
 
     render() {
-        const {name} = this.state;
-        console.log('name')
-        console.log(name)
-        console.log(typeof name)
-        console.log('name')
-
         return (
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
@@ -103,6 +97,9 @@ export default class Header extends Component {
                                             <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
+                                            </DropdownItem>
+                                            <DropdownItem >
+                                                <Link to="/history">Minhas Compras</Link>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <Link onClick={this.logout}>Sair</Link>

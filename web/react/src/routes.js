@@ -9,7 +9,8 @@ import About from './components/About';
 import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
-import CreateProduct from './components/CreateProduct'
+import CreateProduct from './components/CreateProduct';
+import OrderHistory from './components/OrderHistory';
 
 import Success from './components/Success';
 
@@ -28,6 +29,7 @@ import Success from './components/Success';
             <Route path="/createproduct" exact component={CreateProduct} />  
             <Route path="/success" exact component={Success}/>         
             <Route path="/checkout" exact component={Checkout} />
+            <Route path="/history" exact component={OrderHistory}/>
         </Switch>
     </BrowserRouter>
 );
