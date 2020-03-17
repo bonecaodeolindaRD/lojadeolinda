@@ -34,6 +34,11 @@ public class ProductController {
         return service.findProductByName(name.toUpperCase());
     }
 
+    @GetMapping("/product/description/{description}")
+    public ResponseEntity findByDescription(@PathVariable("description") String description){
+        return service.findProductByDescription(description);
+    }
+
     @DeleteMapping("/product/delete/{id}")
     public void deleteById(@PathVariable("id") Long id) {
        service.deleteProduct(id);
