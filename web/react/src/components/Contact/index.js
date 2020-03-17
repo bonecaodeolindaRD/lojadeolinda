@@ -48,7 +48,7 @@ export default class Contact extends Component {
 
         let {name, email, phone, message} = this.state;
 
-        if(name.length <= 3 ){
+        if(name.length <= 3 || this.isName(name)){
           this.setState({nameError: true});     
           return false;
         }else{
