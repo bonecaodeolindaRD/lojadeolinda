@@ -122,7 +122,8 @@ export default class Checkout extends Component {
                 },
                 address: {
                     id: returnAddress.data.id
-                }
+                },
+                shipping: 200
             }
             this.state.products.forEach(p => obj.orderItem.push({
                 product: {
