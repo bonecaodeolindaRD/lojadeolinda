@@ -3,7 +3,7 @@ package br.com.rd.ecommerce.converters;
 import br.com.rd.ecommerce.models.dto.*;
 import br.com.rd.ecommerce.models.entities.*;
 
-public class Converter {
+public class  Converter {
 
     public Product convertTo(ProductDTO productDTO) {
         Product product = new Product();
@@ -15,6 +15,10 @@ public class Converter {
         Category category = new Category();
         category.setId(productDTO.getCategory());
         product.setCategory(category);
+        product.setHeight(productDTO.getHeight());
+        product.setWidth(productDTO.getWidth());
+        product.setWeight(productDTO.getWeight());
+        product.setOff(productDTO.getOff());
         return product;
     }
 
@@ -27,6 +31,10 @@ public class Converter {
         productDTO.setImage(product.getImage());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
+        productDTO.setHeight(product.getHeight());
+        productDTO.setWidth(product.getWidth());
+        productDTO.setWeight(product.getWeight());
+        productDTO.setOff(product.getOff());
         return productDTO;
     }
 
@@ -40,6 +48,7 @@ public class Converter {
         order.setDate(orderDTO.getDate());
         order.setClient(convertTo(orderDTO.getClient()));
         order.setAddress(convertTo(orderDTO.getAddress()));
+        order.setShipping(orderDTO.getShipping());
         return order;
     }
 
@@ -48,10 +57,11 @@ public class Converter {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.getValue());
+        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setClient(convertTo(order.getClient()));
+        orderDTO.setShipping(order.getShipping());
         for(OrderItem oi: order.getOrderItem())
             orderDTO.addItem(convertTo(oi));
         return orderDTO;
@@ -61,17 +71,18 @@ public class Converter {
     public Client convertTo(ClientDTO clientDTO) {
         Client client = new Client();
         client.setId(clientDTO.getId());
-        client.setCPF(client.getCPF());
-        client.setEmail(client.getEmail());
+        client.setCpf(clientDTO.getCpf());
+        client.setEmail(clientDTO.getEmail());
         client.setName(clientDTO.getName());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
+        client.setPassword(clientDTO.getPassword());
         return client;
     }
 
 
     public ClientDTO convertTo(Client client) {
         ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setCPF(client.getCPF());
+        clientDTO.setCpf(client.getCpf());
         clientDTO.setEmail(client.getEmail());
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());
@@ -83,8 +94,8 @@ public class Converter {
     public Address convertTo(AddressDTO addressDTO) {
         Address address = new Address();
         address.setId(addressDTO.getId());
-        address.setUF(addressDTO.getUF());
-        address.setCEP(addressDTO.getCEP());
+        address.setUf(addressDTO.getUf());
+        address.setCep(addressDTO.getCep());
         address.setDistrict(addressDTO.getDistrict());
         address.setNumber(addressDTO.getNumber());
         address.setStreet(addressDTO.getStreet());
@@ -94,12 +105,12 @@ public class Converter {
 
     public AddressDTO convertTo(Address address) {
         AddressDTO aDTO = new AddressDTO();
-        aDTO.setCEP(address.getCEP());
+        aDTO.setCep(address.getCep());
         aDTO.setDistrict(address.getDistrict());
         aDTO.setId(address.getId());
         aDTO.setNumber(address.getNumber());
         aDTO.setStreet(address.getStreet());
-        aDTO.setUF(address.getUF());
+        aDTO.setUf(address.getUf());
         return aDTO;
     }
 
@@ -109,7 +120,7 @@ public class Converter {
         orderItem.setValue(orderItemDTO.getValue());
         orderItem.setQuantity(orderItemDTO.getQuantity());
         orderItem.setProduct(orderItemDTO.getProduct());
-        orderItem.setId(orderItemDTO.getId());
+       // orderItem.setId(orderItemDTO.getId());
         return orderItem;
     }
 

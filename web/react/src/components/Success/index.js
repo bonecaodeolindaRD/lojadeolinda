@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import {  Card,CardHeader, CardTitle, CardText, CardBody,  Button,  CardFooter, Container } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { FaShoppingBasket} from 'react-icons/fa';
+import {  Card,Jumbotron,Form, Row, Col,CardTitle,  Button,  } from 'reactstrap';
+//import { Link } from 'react-router-dom';
+//import { FaShoppingBasket} from 'react-icons/fa';
 
 export default class Success extends Component {
 
@@ -13,10 +13,10 @@ export default class Success extends Component {
     }
 
     clearLocal = () => {
-        let {id} = JSON.parse(localStorage.getItem('order'));
+        let {id} = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        localStorage.removeItem('cart');
-        localStorage.removeItem('order');
+        sessionStorage.removeItem('cart');
+        sessionStorage.removeItem('order');
         setTimeout(() => this.props.history.push("/"), 30000);
     }
 
@@ -45,7 +45,7 @@ export default class Success extends Component {
                                                     
                                                 </Col>
                                                 <Col>
-                                                    <p className="h6">R$Preço do produto</p>
+                                                    <p className="h6">R$</p>
                                                     <p className="h6">Qtd: quantidade do produto</p>
                                                     <p className="h6">Subtotal: R$ subtotal do produto</p>
                                                 </Col>

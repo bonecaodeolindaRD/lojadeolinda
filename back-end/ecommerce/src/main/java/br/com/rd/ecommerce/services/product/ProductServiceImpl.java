@@ -2,6 +2,7 @@ package br.com.rd.ecommerce.services.product;
 
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ProductDTO;
+import br.com.rd.ecommerce.models.entities.Category;
 import br.com.rd.ecommerce.models.entities.Product;
 import br.com.rd.ecommerce.repositories.ProductRepository;
 import br.com.rd.ecommerce.services.exceptions.ProductException;
@@ -28,37 +29,73 @@ public class ProductServiceImpl implements ProductService {
         for(Product p: products)
             productsDTO.add(converter.convertTo(p));
 
-        return ResponseEntity.ok().body(products);
+        return ResponseEntity.ok().body(productsDTO);
     }
 
     @Override
-    public ResponseEntity findProductById(Long id) {
+    public ResponseEntity findProductById(Long id){
+        if(id == null || id <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("Favor informe um id"));
         Product product = repository.findById(id).get();
-        return null;
+        ProductDTO productDTO = converter.convertTo(product);
+        return ResponseEntity.ok().body(productDTO);
     }
 
     @Override
     public ResponseEntity findProductByName(String name) {
-        return null;
+        if(name == null || name == "")
+            return ResponseEntity.badRequest().body(new ProductException("Favor informe o nome de um produto"));
+        List<Product> products = repository.findByName(name);
+        if(products == null || products.size() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for(Product p: products)
+            productDTOS.add(converter.convertTo(p));
+        return ResponseEntity.ok().body(productDTOS);
     }
 
     @Override
-    public ResponseEntity findProductByCategory(Integer category) {
-        return null;
+    public ResponseEntity findProductByCategory(Long category) {
+        if(category == null || category <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("Favor informe uma categoria"));
+        Category categ = new Category();
+        categ.setId(category);
+        List<Product> products = repository.findByCategory(categ);
+        if(products == null || products.size() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrada"));
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for(Product p: products)
+            productDTOS.add(converter.convertTo(p));
+        return ResponseEntity.ok().body(productDTOS);
     }
 
     @Override
-    public ResponseEntity createProduct(Product product) {
-        return null;
+    public ResponseEntity createProduct(ProductDTO productDTO) {
+        if(productDTO == null)
+            return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        Product product = converter.convertTo(productDTO);
+        Product returnEntity = repository.save(product);
+        return ResponseEntity.ok().body(returnEntity);
     }
 
     @Override
-    public ResponseEntity updateProduct(Product product) {
-        return null;
+    public ResponseEntity updateProduct(ProductDTO productDTO) {
+        if(productDTO == null)
+            return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        Product product = repository.findById(productDTO.getId()).get();
+        Category category = new Category();
+        category.setId(productDTO.getCategory());
+        product.setCategory(category);
+        product.setImage(productDTO.getImage());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setName(productDTO.getName());
+        Product productReturn = repository.save(product);
+        return ResponseEntity.ok().body(productReturn);
     }
 
     @Override
     public void deleteProduct(Long id) {
-
+        repository.deleteById(id);
     }
 }

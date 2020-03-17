@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './styles.css';
+import { FaCheckCircle } from 'react-icons/fa';
 
 import {
     Container,
@@ -21,8 +22,8 @@ import Header from '../Header';
 
 export default class Checkout extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
@@ -30,6 +31,8 @@ export default class Checkout extends Component {
             erro: " ",
             states: [],
             cities: [],
+            products: [],
+            total: 0,
             address: {
                 id: 1,
                 aCep: "",
@@ -70,34 +73,71 @@ export default class Checkout extends Component {
                         aState: "SP",
                     }
                 ],
-                products: [
-                    {
-                        id: 1,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 1,
-                    },
-                    {
-                        id: 2,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 2
-                    },
-                    {
-                        id: 3,
-                        name: "Produto",
-                        img: "https://picsum.photos/50/50",
-                        price: 999.99,
-                        quantity: 3
-                    }
-                ],
-                total: 0
+
             }
+
+        }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
         }
         this.listStates();
         this.listCities("AC");
+    }
+
+
+    componentDidMount() {
+
+        let totalCart = 0;
+
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+
+        for (var i in cart) {
+            totalCart += cart[i].totalItem;
+        }
+
+        this.setState({ total: totalCart, products: cart });
+    }
+
+    gerateOrder = async () => {
+        try {
+            const email = JSON.parse(sessionStorage.getItem('client'));
+            const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
+            const address = {
+                street: this.state.address.aStreet,
+                cep: this.state.address.aCep,
+                district: this.state.address.aDistrict,
+                number: this.state.address.aNumber,
+                uf: this.state.address.aState
+            }
+            let returnAddress = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            let obj = {
+                date: new Date(),
+                client: {
+                    id: client.id
+                },
+                orderItem: [],
+                status: {
+                    idStatus: 1
+                },
+                address: {
+                    id: returnAddress.data.id
+                },
+                shipping: 200
+            }
+            this.state.products.forEach(p => obj.orderItem.push({
+                product: {
+                    id: p.id
+                },
+                quantity: p.quantity,
+                value: p.price
+            }));
+            let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
+            sessionStorage.setItem('order', JSON.stringify(order));
+            return true;
+        } catch(eee){
+            return false;
+        }
     }
 
     listStates = async () => {
@@ -232,17 +272,19 @@ export default class Checkout extends Component {
         evt.preventDefault();
         if (!this.validateFields())
             return;
-
-        alert("Sucesso");
+        if(this.gerateOrder())
+            setTimeout(() => this.props.history.push("/success"), 2000);
+        else
+            this.setState({ erro: "Erro ao gerar o pedido" });
     }
 
-    testCPF = (strCPF) => {
+    testCPF = (CPF) => {
         let soma;
         let resto;
         let cpf = ""
 
-        for (let i = 0; i < strCPF.toString().length; i++) {
-            let char = strCPF.substring(i, i + 1);
+        for (let i = 0; i < CPF.toString().length; i++) {
+            let char = CPF.substring(i, i + 1);
             if (char !== "." && char !== "-")
                 cpf += char;
         }
@@ -285,45 +327,31 @@ export default class Checkout extends Component {
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
-                                    <h5 className="bg-warning p-2 text-center">Resumo</h5>
-                                    <div className="resumo">
-                                        {this.state.client.products.map(p => (
-                                            <Card body className="mb-1">
-                                                <Row>
-                                                    <Col xs="7">
-                                                        <CardTitle>
-                                                            {p.name}
-                                                        </CardTitle>
-                                                        <img src={p.img} alt={p.name} title={p.name} />
-                                                    </Col>
-                                                    <Col xs="5">
-                                                        <p className="h6">R$: {p.price}</p>
-                                                        <p className="h6">Unidades: {p.quantity}</p>
-                                                        <p className="h6">Total: {(p.quantity * p.price).toFixed(2)}</p>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                        ))
-                                        }
-                                        {this.state.client.products.map(p => {
-                                            this.state.client.total += p.price * p.quantity;
-                                        })}
-                                        <Card body className="border-0">
-                                            <CardTitle className="h6">Total: {this.state.client.total.toFixed(2)}</CardTitle>
+                                <h5 className="bg-warning p-2 text-center">Resumo</h5>
+                                <div className="resumo">
+                                    {this.state.products.map(p => (
+                                        <Card body className="mb-1">
+                                            <Row>
+                                                <Col xs="7">
+                                                    <CardTitle>
+                                                        {p.name}
+                                                    </CardTitle>
+                                                    <img src={p.image} alt={p.name} title={p.name} />
+                                                </Col>
+                                                <Col xs="5">
+                                                    <p className="h6">R${(p.price).toFixed(2)}</p>
+                                                    <p className="h6">Qtd: {p.quantity}</p>
+                                                    <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
+                                                </Col>
+                                            </Row>
                                         </Card>
-                                    </div>
+                                    ))
+                                    }
+                                </div>
                             </Col>
 
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Entrega</h5>
-                                {(this.state.client.addresses.length > 0) && (
-                                    <FormGroup>
-                                        <Input type="select" id="input-addresses" name="input-addresses" onChange={this.autoFill}>
-                                            <option value="0" disabled selected>Enderecos cadastrados</option>
-                                            {this.state.client.addresses.map(end => (<option value={end.id}>{`${end.aStreet}, ${end.aNumber}`}</option>))}
-                                        </Input>
-                                    </FormGroup>
-                                )}
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
@@ -365,15 +393,25 @@ export default class Checkout extends Component {
                                         </Col>
                                     </Row>
                                 </FormGroup>
+
+                                <FormGroup>
+                                    <h6>Receba em até 10 dias úteis</h6>
+                                </FormGroup>
                             </Col>
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Pagamento</h5>
+
+                                <FormGroup>
+                                    <h6>Frete: R$200.00</h6>
+                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>
+                                </FormGroup>
+
                                 <FormGroup>
                                     <Label for="cCPF"><span className="text-danger">*</span>CPF Titular do cartão:</Label>
                                     <Input value={this.state.client.card.cCPF} type="text" name="cCPF" id="cCPF" mask="999.999.999-99" tag={InputMask} maskChar="0" onChange={this.editCard} />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="cHolder"><span className="text-danger">*</span>Titular do card:</Label>
+                                    <Label for="cHolder"><span className="text-danger">*</span>Titular do cartão:</Label>
                                     <Input value={this.state.client.card.cHolder} type="text" id="cHolder" name="cHolder" onChange={this.editCard} />
                                 </FormGroup>
                                 <FormGroup>
@@ -396,7 +434,7 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button type="submit">Finalizar compra</Button>
+                                    <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
                                 </FormGroup>
                             </Col>
                         </Row>

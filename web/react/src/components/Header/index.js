@@ -5,7 +5,6 @@ import {
     Navbar,
     Container,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     UncontrolledDropdown,
@@ -17,6 +16,7 @@ import {
     InputGroupAddon,
     Input,
     Form,
+    Label,
 
 } from 'reactstrap';
 
@@ -31,14 +31,33 @@ export default class Header extends Component {
 
     constructor(props) {
         super(props);
+        this.getLogin();
         this.state = {
             isOpen: false,
-            logado: false
+            email: "",
+            name: this.getLogin()
         }
+    }
+
+    getLogin = () => {
+        let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
+        console.log(account)
+        this.setState({ 
+            ...this.state,
+            email: account.email,
+            name : account.name
+        });
+        return account.name
     }
 
     toggle = () => {
         this.setState({ isOpen: !this.state.isOpen });
+    }
+
+    logout = () => {
+        sessionStorage.removeItem('client');
+        sessionStorage.removeItem('cart');
+        window.location.reload();
     }
 
 
@@ -47,13 +66,18 @@ export default class Header extends Component {
     }
 
     render() {
+        const {name} = this.state;
+        console.log('name')
+        console.log(name)
+        console.log(typeof name)
+        console.log('name')
 
         return (
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container>
-                        <Link to ="/"><NavbarBrand to="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></NavbarBrand></Link>
-                        <NavbarToggler onClick={this.toggle} />
+                        <Link to ="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></Link>
+                        <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">
                                 <NavItem>
@@ -69,15 +93,21 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
+                                <Label>Bem-Vindo(a) {this.state.name} </Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        {this.state.logado ? (
+                                        {sessionStorage.getItem('client') ? (
+                                            <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
-                                            </DropdownItem>) : (
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                <Link onClick={this.logout}>Sair</Link>
+                                            </DropdownItem>
+                                            </>) : (
                                                 <>
                                                     <DropdownItem to="/login">
                                                         <Link to="/login">Logar </Link>
@@ -97,8 +127,6 @@ export default class Header extends Component {
                     </Container>
                 </Navbar>
             </header>
-
-
         );
     }
 }

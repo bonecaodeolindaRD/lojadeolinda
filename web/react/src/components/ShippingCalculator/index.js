@@ -32,7 +32,7 @@ export default class ShippingCalculator extends Component {
 
         if(!this.state.dataApi[0].erro){
 
-          this.setState({ message: 'Receba em até 10 dias úteis R$200,00' });
+          this.setState({ message: 'Receba em até 10 dias úteis R$200.00' });
 
         }else{
 
@@ -56,10 +56,10 @@ export default class ShippingCalculator extends Component {
           <Form className="form-horizontal qtyFrm">
                     <hr className="soft" />
                     <FormGroup className="control-group">
-                        <Label for="cepFrete"  className="control-label pt-3"><h6>Calcular Frete e Prazo</h6></Label>
+                        <Label for="cepFrete"  className="control-label pt-3"><h6>Simular Frete e Prazo</h6></Label>
                             <Input name="code" type="text" className="col-6 mb-2" placeholder="Digite o CEP" onChange={this.myChangeHandler} mask="99999-999"  tag={InputMask}/>
                             <p id="freteCalculado">{this.state.message}</p>
-                            <Button outline color="warning" onClick={this.mySubmitHandler} >  <FaCheckCircle/> OK</Button>
+                            <Button color="warning" onClick={this.mySubmitHandler} >  <FaCheckCircle/> OK</Button>
                         <hr className="soft" />
                     </FormGroup>
                 </Form>

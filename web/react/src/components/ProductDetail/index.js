@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, ListGroup, ListGroupItem, Button, Form, Label, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios';
+
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
-
 
 export default class ProductDetail extends Component {
 

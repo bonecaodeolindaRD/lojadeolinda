@@ -7,33 +7,33 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Entity
 @Table(name = "tb_client")
-public class Client {
-
+public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_name")
+    @Column(name = "id_client")
     private Long id;
     @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
-    @Column(name = "nr_cpf", nullable = false, unique = true, length = 15)
-    private String CPF;
+    @Column(name = "nr_cpf", nullable = false, length = 15)
+    private String cpf;
     @Column(name = "ds_email", nullable = false, unique = true, length = 100)
     private String email;
     @Column(name = "nr_phone_number", nullable = false)
-    private Long phoneNumber;
+    private String phoneNumber;
     @Column(name = "ds_password", nullable = false)
 
     private String password;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Address> addresses;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Order> orders;
 }

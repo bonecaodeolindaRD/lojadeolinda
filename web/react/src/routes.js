@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch,Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch,Route } from 'react-router-dom';
 import Login from './components/Login';
 import Account from './components/Account';
 import Home from './components/Home';
@@ -9,22 +9,9 @@ import About from './components/About';
 import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
+import CreateProduct from './components/CreateProduct'
+
 import Success from './components/Success';
-import { isAuthenticated } from "./services/auth";
-
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={props =>
-        isAuthenticated() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-        )
-      }
-    />
-  );
 
   const Routes = () => (
     <BrowserRouter>
@@ -35,12 +22,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             <Route path="/register" exact component={Register} />
             <Route path="/about" exact component={About}/>
             <Route path="/cart" exact component={Cart}/>
-          
             <Route path="/login" exact component={Login} />
-            <Route path="/detalhe/:id" exact component={ProductDetail} />   
+            <Route path="/detail/:id" exact component={ProductDetail} />            
+            <Route path="/account" exact component={Account} />
+            <Route path="/createproduct" exact component={CreateProduct} />  
             <Route path="/success" exact component={Success}/>         
-            <PrivateRoute path="/account" exact component={Account} />
-            <PrivateRoute path="/checkout" exact component={Checkout} />
+            <Route path="/checkout" exact component={Checkout} />
         </Switch>
     </BrowserRouter>
 );
