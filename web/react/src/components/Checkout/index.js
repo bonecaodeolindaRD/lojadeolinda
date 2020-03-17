@@ -22,8 +22,8 @@ import Header from '../Header';
 
 export default class Checkout extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
@@ -77,6 +77,10 @@ export default class Checkout extends Component {
             }
 
         }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
+        }
         this.listStates();
         this.listCities("AC");
     }
@@ -86,7 +90,7 @@ export default class Checkout extends Component {
 
         let totalCart = 0;
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
         for (var i in cart) {
             totalCart += cart[i].totalItem;
@@ -118,7 +122,8 @@ export default class Checkout extends Component {
                 },
                 address: {
                     id: returnAddress.data.id
-                }
+                },
+                shipping: 200
             }
             this.state.products.forEach(p => obj.orderItem.push({
                 product: {
@@ -128,7 +133,7 @@ export default class Checkout extends Component {
                 value: p.price
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
-            localStorage.setItem('order', JSON.stringify(order));
+            sessionStorage.setItem('order', JSON.stringify(order));
             return true;
         } catch(eee){
             return false;

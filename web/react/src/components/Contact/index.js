@@ -29,15 +29,11 @@ export default class Contact extends Component {
       };
 
       submit = () =>{
-      
-        this.reset();
-     
+        this.reset();     
         this.toggleModal();
-
       }
 
       reset = () =>{
-
         this.setState({ name: '', email: '', phone: '', message:''});
       }
 
@@ -48,7 +44,7 @@ export default class Contact extends Component {
 
         let {name, email, phone, message} = this.state;
 
-        if(name.length <= 3 ){
+        if(name.length <= 3 || this.isName(name)){
           this.setState({nameError: true});     
           return false;
         }else{
@@ -86,6 +82,13 @@ export default class Contact extends Component {
         this.setState({[nam]: val});     
       
       }
+
+      isName = (name) => {
+
+        let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
+        return !re.test(name);
+          
+      };
      
   render() {
     return (

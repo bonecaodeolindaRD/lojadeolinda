@@ -14,10 +14,10 @@ export default class Success extends Component {
     }
 
     clearLocal = () => {
-        let {id} = JSON.parse(localStorage.getItem('order'));
+        let {id} = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        localStorage.removeItem('cart');
-        localStorage.removeItem('order');
+        sessionStorage.removeItem('cart');
+        sessionStorage.removeItem('order');
         setTimeout(() => this.props.history.push("/"), 30000);
     }
 
