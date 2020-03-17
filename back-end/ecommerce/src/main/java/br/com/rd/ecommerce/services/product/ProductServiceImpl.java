@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository repository;
     private Converter converter = new Converter();
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public ResponseEntity findAllProducts() {
@@ -45,7 +50,10 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity findProductByName(String name) {
         if(name == null || name == "")
             return ResponseEntity.badRequest().body(new ProductException("Favor informe o nome de um produto"));
-        List<Product> products = repository.findByName(name);
+
+        Query query = em.createQuery("select p from Product p where upper(p.name) like '%" + name.toUpperCase() + "%'", Product.class);
+
+        List<Product> products = query.getResultList();
         if(products == null || products.size() <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
         List<ProductDTO> productDTOS = new ArrayList<>();
