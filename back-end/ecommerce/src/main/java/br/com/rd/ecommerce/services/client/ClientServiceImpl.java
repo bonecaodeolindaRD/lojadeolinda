@@ -68,15 +68,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity findClientLogin(String email) {
-        if (email == null || email == "")
-            return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
-        Client clients = clientRepository.findByEmail(email);
+    public ResponseEntity findClientLogin(String email, String password) {
+        if (email == null || email == "" || password == null || password == "")
+            return ResponseEntity.badRequest().body(new ClientException("Informe o login do usuario"));
+        Client clients = clientRepository.findByEmailAndPassword(email, password);
         if (clients == null)
             return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
 
         ClientDTO clientDTO = converter.convertTo(clients);
-        clientDTO.setPassword(clients.getPassword());
         return ResponseEntity.ok().body(clientDTO);
     }
 

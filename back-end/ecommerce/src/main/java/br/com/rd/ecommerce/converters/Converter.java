@@ -41,9 +41,6 @@ public class  Converter {
 
     public Order convertTo(OrderDTO orderDTO) {
         Order order = new Order();
-        for(OrderItemDTO oDTO: orderDTO.getOrderItem())
-            order.addItem(convertTo(oDTO));
-        order.setValue(order.total());
         order.setStatus(orderDTO.getStatus());
         order.setDate(orderDTO.getDate());
         order.setClient(convertTo(orderDTO.getClient()));
@@ -57,13 +54,10 @@ public class  Converter {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
         orderDTO.setClient(convertTo(order.getClient()));
         orderDTO.setShipping(order.getShipping());
-        for(OrderItem oi: order.getOrderItem())
-            orderDTO.addItem(convertTo(oi));
         return orderDTO;
     }
 

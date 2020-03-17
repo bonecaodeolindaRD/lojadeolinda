@@ -20,7 +20,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/list")
-    public ResponseEntity<List<Client>> findAll(){
+    public ResponseEntity findAll(){
             return service.findAllClient();
     }
 
@@ -30,13 +30,13 @@ public class ClientController {
     }
 
     @GetMapping("/client/email/{email}")
-    public ResponseEntity<Client> findByEmail(@PathVariable("email") String email){
+    public ResponseEntity findByEmail(@PathVariable("email") String email){
         return service.findClientByEmail(email);
     }
 
-    @GetMapping("/client/login/{email}")
-    public ResponseEntity login(@PathVariable("email") String email){
-        return service.findClientLogin(email);
+    @PostMapping("/client/login")
+    public ResponseEntity login(@RequestBody ClientDTO clientDTO){
+        return service.findClientLogin(clientDTO.getEmail(), clientDTO.getPassword());
     }
 
     @DeleteMapping("/client/delete/{id}")
