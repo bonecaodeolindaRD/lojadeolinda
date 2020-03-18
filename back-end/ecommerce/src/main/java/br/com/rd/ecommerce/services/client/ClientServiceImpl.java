@@ -6,7 +6,9 @@ import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 
 import br.com.rd.ecommerce.models.entities.Order;
+
 import br.com.rd.ecommerce.models.entities.OrderItem;
+
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
@@ -123,6 +125,5 @@ public class ClientServiceImpl implements ClientService {
             return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
         }
     }
-
 }
 

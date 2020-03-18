@@ -47,6 +47,13 @@ export default class ProductDetail extends Component {
                 balance: stock.balance
             });
         }
+
+
+        replaceComma = (valor) => {
+
+            return valor.toString().replace(".", ",");
+
+        }
             
 
         change(event) {
@@ -115,8 +122,8 @@ export default class ProductDetail extends Component {
                             <hr className="soft" />
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
-                                    <h5 className="mb-3"><del>De: R${(this.state.price).toFixed(2)}</del></h5>
-                                    <h5 className="mb-3">Por: R${(this.state.price - this.state.price * this.state.discount).toFixed(2)}</h5>        
+                                    <h6 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h6>
+                                    <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>          
                                     <p>Estoque disponivel: {this.state.balance}</p>                            
                                     {this.state.balance > 0 ? (
                                             <>
@@ -158,9 +165,9 @@ export default class ProductDetail extends Component {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td>{this.state.height}</td>
-                                    <td>{this.state.width}</td>
-                                    <td>{this.state.weight}</td>                           
+                                    <td>{this.replaceComma(this.state.height)}</td>
+                                    <td>{this.replaceComma(this.state.width)}</td>
+                                    <td>{this.replaceComma(this.state.weight)}</td>                           
                                     </tr>
                                 </tbody>
                             </Table>
