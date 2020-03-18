@@ -113,8 +113,10 @@ public class OrderServiceImpl implements OrderService {
 
             orderEntity.setOrderItem(orderItems);
             orderEntity.setValue(orderEntity.total());
+            orderEntity.setClient(converter.convertTo(order.getClient()));
             Order returnOrder = respository.save(orderEntity);
             OrderDTO returnOrderDTO = converter.convertTo(returnOrder);
+            returnOrderDTO.setClient(converter.convertTo(returnOrder.getClient()));
             for(OrderItem oi: returnOrder.getOrderItem())
                 returnOrderDTO.addItem(converter.convertTo(oi));
 
