@@ -45,7 +45,7 @@ class Account extends Component{
     render(){
         return(
             <>
-            <Header history={this.props.history}/>
+            <Header history={this.props.history} location={this.props.location}/>
             <Container className="tam"  justify-content="center">
             <div className="text-align-center" align="center">
                 <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle"/>

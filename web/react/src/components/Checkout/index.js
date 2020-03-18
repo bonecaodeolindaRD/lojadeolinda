@@ -335,7 +335,7 @@ export default class Checkout extends Component {
     render() {
         return (
             <>
-                <Header history={this.props.history}/>
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container ref={this.test}>
                     <Form onSubmit={this.finish}>
                         <Row>

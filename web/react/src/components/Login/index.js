@@ -66,7 +66,7 @@ class Login extends Component {
   render() {
     return (
       <>
-      <Header history={this.props.history}/>
+      <Header history={this.props.history} location={this.props.location}/>
         <Container className="tam" align="center" justify-content="center">
           <Row className="tam align-items-center">
             <Col xs="12" sm="6" md="6" >

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Header from '../Header';
-import Footer from '../Footer';
 
 import { 
     Container
@@ -28,7 +27,7 @@ export default class SearchResult extends Component {
     render() {
         return (
             <>
-            <Header history={this.props.history}/>
+            <Header history={this.props.history} location={this.props.location}/>
                 {this.state.products.length > 0 ? (
                     <Container>
 

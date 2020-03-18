@@ -19,7 +19,7 @@ export default class About extends Component {
     render() {
         return (
             <>
-                <Header history={this.props.history}/>
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container>
 
                     <Card inverse>

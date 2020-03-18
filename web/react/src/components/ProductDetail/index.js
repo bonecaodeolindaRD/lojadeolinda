@@ -99,7 +99,7 @@ export default class ProductDetail extends Component {
                 return (  
 
                     <>
-                    <Header history={this.props.history}/>
+                    <Header history={this.props.history} location={this.props.location}/>
                     <Container className="pt-5 pb-2 " >
                     <Row className="row">
 

@@ -66,6 +66,10 @@ export default class Header extends Component {
         const inputGroup = form.children[0];
         const inputText = inputGroup.children[0];
         this.props.history.push('/search/' + inputText.value);
+        let local = this.props.location.pathname.split('/');
+        console.log(local);
+        if(local[1] === 'search')
+            window.location.reload();
     }
 
     render() {
