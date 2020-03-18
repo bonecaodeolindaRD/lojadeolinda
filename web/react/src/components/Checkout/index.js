@@ -28,6 +28,7 @@ export default class Checkout extends Component {
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
         this.submeted = false;
+        this.noStock = false;
         this.state = {
             erro: " ",
             states: [],
@@ -97,6 +98,13 @@ export default class Checkout extends Component {
             totalCart += cart[i].totalItem;
         }
 
+
+        cart.forEach(async p => {
+            let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
+            if(response.balance < p.quantity)
+                this.noStock = true;
+        });
+
         this.setState({ total: totalCart, products: cart });
     }
 
@@ -126,6 +134,7 @@ export default class Checkout extends Component {
                 },
                 shipping: 200
             }
+
             this.state.products.forEach(p => obj.orderItem.push({
                 product: {
                     id: p.id
@@ -300,13 +309,18 @@ export default class Checkout extends Component {
 
   
 
-    finish = (evt) => {
+    finish = async (evt) => {
         evt.preventDefault();
         if(this.submeted)
             return;
+
+        if(this.noStock){
+            this.setState({ erro: "Um ou mais produtos esta fora de estoque" });
+            return;
+        }
         if (!this.validateFields())
             return;
-        if(this.gerateOrder()){
+        if(this.gerateOrder() && !this.noStock){
             setTimeout(() => this.props.history.push("/success"), 2000);
             this.submeted = true;
         }

@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
-    List<Status> findByIdStatus(Long id);
+    Status findByIdStatus(Long id);
     List<Status> findByStatus(String status);
 }
