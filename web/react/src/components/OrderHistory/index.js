@@ -7,30 +7,20 @@ import axios from 'axios';
 class OrderHistory extends Component{
     constructor(props){
         super(props);
-        this.getOrders();
         this.state = {
-            email: "",
             orders: []
         }
         this.loadAcccount();
+        console.log(this.loadAcccount());
+        
     }
 
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data : account} = await axios("http://localhost:8080/ecommerce/client/orders/{email}" + email);
+        let response = await axios("http://localhost:8080/ecommerce/client/orders/" + email);
         this.setState({
-            name : account.name,
-            email : account.email,
+            orders: response.data 
         })
-    }
-
-    getOrders = () => {
-        let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        console.log(account)
-        this.setState({ 
-            orders: account.orders,
-        });
-        return account.orders
     }
 
     render(){
@@ -50,7 +40,7 @@ class OrderHistory extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.orders.map(order => 
+                            {this.state.account.orders.map(order => 
                                 <tr key={order.id}>
                                     <td>
                                         {order.id}
@@ -65,7 +55,7 @@ class OrderHistory extends Component{
                                         {order.shipping}
                                     </td>
                                     <td>
-                                       
+                                       {order.status}
                                     </td>
                                 </tr>)}
                         </tbody>
