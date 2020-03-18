@@ -41,7 +41,6 @@ export default class Header extends Component {
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        console.log(account)
         this.setState({ 
             ...this.state,
             email: account.email,
@@ -63,14 +62,13 @@ export default class Header extends Component {
 
     search = (event) => {
         event.preventDefault();
+        const form = event.target;
+        const inputGroup = form.children[0];
+        const inputText = inputGroup.children[0];
+        this.props.history.push('/search/' + inputText.value);
     }
 
     render() {
-        const {name} = this.state;
-        console.log('name')
-        console.log(name)
-        console.log(typeof name)
-        console.log('name')
 
         return (
             <header>

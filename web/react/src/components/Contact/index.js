@@ -95,7 +95,7 @@ export default class Contact extends Component {
               
     <>
     
-    <Header/>
+    <Header history={this.props.history}/>
 
         <Form className="mt-5" id="form-contato" md="5" onSubmit={this.mySubmitHandler}>
 
