@@ -94,7 +94,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label>Bem-Vindo(a) {this.state.name} </Label>
+                                <Label><h6>Bem-Vindo(a) {this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
