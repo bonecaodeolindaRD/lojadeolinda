@@ -83,7 +83,7 @@ export default class Contact extends Component {
       this.setState({ emailError: false });
     }
 
-    if (phone.length === 0 || this.isPhone(ph)) {
+    if (phone.length === 0) {
       this.setState({ phoneError: true });
       return false;
     } else {

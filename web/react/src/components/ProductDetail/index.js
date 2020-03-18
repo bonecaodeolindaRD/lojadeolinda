@@ -113,7 +113,7 @@ export default class ProductDetail extends Component {
                             <hr className="soft" />
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
-                                    <h5 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h5>
+                                    <h6 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h6>
                                     <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>                                    
                                     <Input type="number" placeholder="Digite a quantidade" min="1" max="10"   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
                                             <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
