@@ -5,7 +5,7 @@ import br.com.rd.ecommerce.models.entities.Stock;
 import org.springframework.http.ResponseEntity;
 
 public interface StockService {
-    ResponseEntity findItemOnStock(Stock stock, ProductDTO productDTO);
+    ResponseEntity findItemOnStock(Long stock, Long product);
     ResponseEntity findAllStocks();
     ResponseEntity findItemInAllStocks(ProductDTO productDTO);
     ResponseEntity addItemOnStock(Stock stock, ProductDTO productDTO);

@@ -598,3 +598,6 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:461)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 55 more
+2020-03-18 11:46:17 jdbc[34]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_PRODUCT_STOCK" not found; SQL statement:
+select * from tb_product_stock p inner join tb_stock s on s.id_stock = p.id_stock [42102-200]

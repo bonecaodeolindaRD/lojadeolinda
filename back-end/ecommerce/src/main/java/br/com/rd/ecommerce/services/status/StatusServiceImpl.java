@@ -7,10 +7,12 @@ import br.com.rd.ecommerce.repositories.StatusRepository;
 import br.com.rd.ecommerce.services.exceptions.StatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class StatusServiceImpl  implements  StatusService{
     @Autowired
     private StatusRepository statusRepository;
