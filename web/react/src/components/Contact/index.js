@@ -19,6 +19,10 @@ export default class Contact extends Component {
       email: '',
       phone: '',
       message: '',
+      nameError:false,
+      emailError:false,
+      phoneError:false,
+      messageError:false,
       isOpen: false
     };
     
