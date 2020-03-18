@@ -36,7 +36,7 @@ public class ClientController {
 
     @GetMapping("/client/orders/{email}")
     public ResponseEntity findClientOrders(@PathVariable("email") String email){
-        return service.findClientOrders(email);
+         return service.findClientOrders(email);
     }
 
     @PostMapping("/client/login")

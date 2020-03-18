@@ -8,6 +8,7 @@ import br.com.rd.ecommerce.models.dto.OrderItemDTO;
 import br.com.rd.ecommerce.models.entities.*;
 import br.com.rd.ecommerce.repositories.OrderRespository;
 import br.com.rd.ecommerce.repositories.ProductRepository;
+import br.com.rd.ecommerce.services.exceptions.ClientException;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
 import br.com.rd.ecommerce.services.product.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
