@@ -601,3 +601,12 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 2020-03-18 11:46:17 jdbc[34]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_PRODUCT_STOCK" not found; SQL statement:
 select * from tb_product_stock p inner join tb_stock s on s.id_stock = p.id_stock [42102-200]
+2020-03-18 12:11:20 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO TB_STOCK_PRODUCT VALUES(2, 5, 2. 1[*])"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO TB_STOCK_PRODUCT VALUES(2, 5, 2. 1) [42001-200]
+2020-03-18 12:11:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO TB_STOCK_PRODUCT VALUES(2, 5, 2. 1[*])"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO TB_STOCK_PRODUCT VALUES(2, 5, 2. 1) [42001-200]
+2020-03-18 13:47:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT STOCKPRODU0_.ID_STOCK_PRODUCT AS ID_STOCK1_12_, STOCKPRODU0_.NR_BALANCE AS NR_BALAN2_12_, STOCKPRODU0_.ID_PRODUCT AS ID_PRODU3_12_, STOCKPRODU0_.ID_STOCK AS ID_STOCK4_12_ FROM TB_STOCK_PRODUCT STOCKPRODU0_ INNER JOIN TB_STOCK STOCK1_ ON WHERE[*] STOCKPRODU0_.ID_STOCK_PRODUCT=1"; expected "NOT, EXISTS, INTERSECTS, UNIQUE"; SQL statement:
+select stockprodu0_.id_stock_product as id_stock1_12_, stockprodu0_.nr_balance as nr_balan2_12_, stockprodu0_.id_product as id_produ3_12_, stockprodu0_.id_stock as id_stock4_12_ from tb_stock_product stockprodu0_ inner join tb_stock stock1_ on where stockprodu0_.id_stock_product=1 [42001-200]

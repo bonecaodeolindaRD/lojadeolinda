@@ -2,6 +2,7 @@ package br.com.rd.ecommerce.services.stock;
 
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ProductDTO;
+import br.com.rd.ecommerce.models.dto.StockDTO;
 import br.com.rd.ecommerce.models.dto.StockProductDTO;
 import br.com.rd.ecommerce.models.entities.Product;
 import br.com.rd.ecommerce.models.entities.Stock;
@@ -29,7 +30,7 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public ResponseEntity findItemOnStock(Long stock, Long product) {
-        Query query = em.createQuery("select p from StockProduct p inner join Stock s on s.id = p.stock where p.id = " + product + " and s.id = "
+        Query query = em.createQuery("select p from StockProduct p inner join Stock s on s.id = p.stock where p.product = " + product + " and s.id = "
                 + stock, StockProduct.class);
         try{
             List<StockProduct> stockProducts = query.getResultList();
@@ -40,18 +41,42 @@ public class StockServiceImpl implements StockService{
 
             return ResponseEntity.ok().body(spDTO);
         }catch (Exception e){
-            return ResponseEntity.badRequest().body(new StockException("Erro" + e.getMessage()));
+            return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
         }
     }
 
     @Override
     public ResponseEntity findAllStocks() {
-        return null;
+        try {
+            List<Stock> stocks = repository.findAll();
+            if(stocks == null || stocks.size() <= 0)
+                return ResponseEntity.badRequest().body(new StockException("Nenhum stock encontrado"));
+            List<StockDTO> stocksDTO = new ArrayList<>();
+            for(Stock s: stocks)
+                stocksDTO.add(converter.convertTo(s));
+
+            return ResponseEntity.ok().body(stocksDTO);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
+        }
     }
 
     @Override
-    public ResponseEntity findItemInAllStocks(ProductDTO productDTO) {
-        return null;
+    public ResponseEntity findItemInAllStocks(Long product) {
+        Query query = em.createQuery("select p from StockProduct p inner join Stock s on s.id = p.stock where p.product =" + product, StockProduct.class);
+        try{
+            List<StockProduct> stockProducts = query.getResultList();
+            if(stockProducts == null || stockProducts.size() <= 0)
+                return ResponseEntity.badRequest().body(new StockException("Nenhum produto encontrado"));
+
+            List<StockProductDTO> spDTO = new ArrayList<>();
+            for(StockProduct sp: stockProducts)
+                spDTO.add(converter.convertTo(sp));
+
+            return ResponseEntity.ok().body(spDTO);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
+        }
     }
 
 

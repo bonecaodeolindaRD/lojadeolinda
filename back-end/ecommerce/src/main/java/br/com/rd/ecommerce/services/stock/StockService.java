@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 public interface StockService {
     ResponseEntity findItemOnStock(Long stock, Long product);
     ResponseEntity findAllStocks();
-    ResponseEntity findItemInAllStocks(ProductDTO productDTO);
+    ResponseEntity findItemInAllStocks(Long product);
     ResponseEntity addItemOnStock(Stock stock, ProductDTO productDTO);
     ResponseEntity updateItemOnStock(Stock stock, ProductDTO productDTO);
 }

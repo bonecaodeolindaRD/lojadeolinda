@@ -17,4 +17,9 @@ public class StockController {
     public ResponseEntity findProductOnStock(@PathVariable("idproduct") Long product, @PathVariable("idstock") Long stock){
         return service.findItemOnStock(stock, product);
     }
+
+    @GetMapping("/stock/product/all/{id}")
+    public ResponseEntity findProductInAllStock(@PathVariable("id") Long id){
+        return service.findItemInAllStocks(id);
+    }
 }
