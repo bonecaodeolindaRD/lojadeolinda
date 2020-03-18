@@ -34,7 +34,6 @@ export default class Checkout extends Component {
             states: [],
             cities: [],
             products: [],
-            stockItems: [],
             total: 0,
             address: {
                 id: 1,
@@ -88,11 +87,6 @@ export default class Checkout extends Component {
         this.listCities("AC");
     }
 
-
-    getStockItems = async () => {
-        let stockItems = [];
-        console.log(this.state.products);
-    }
 
     componentDidMount() {
 

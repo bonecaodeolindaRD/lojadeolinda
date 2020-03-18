@@ -73,6 +73,7 @@ class Login extends Component {
               <Card body>
                 <Form onSubmit={this.handleSignIn}>
                   <CardTitle>Login</CardTitle>
+                  <p className="text-danger">{this.state.error}</p>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText><img src="img/person.svg" alt="logo do site" width="20px" /> Email: </InputGroupText>
