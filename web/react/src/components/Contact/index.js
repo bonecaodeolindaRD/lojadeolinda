@@ -19,13 +19,17 @@ export default class Contact extends Component {
       email: '',
       phone: '',
       message: '',
+      nameError: false,
+      emailError: false,
+      phoneError: false,
+      messageError: false,
       isOpen: false
     };
+    
     if (!sessionStorage.getItem('client')) {
-      this.props.history.push('/');
-      return;
-    }
-    this.loadAcccount();
+        return;
+      }
+      this.loadAcccount();
   }
 
 
@@ -63,6 +67,7 @@ export default class Contact extends Component {
     event.preventDefault();
 
     let { name, email, phone, message } = this.state;
+
 
     if (name.length <= 3 || this.isName(name)) {
       this.setState({ nameError: true });
@@ -109,6 +114,7 @@ export default class Contact extends Component {
     return !re.test(name);
 
   };
+
 
   render() {
     return (
