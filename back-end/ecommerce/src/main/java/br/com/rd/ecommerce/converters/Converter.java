@@ -142,4 +142,18 @@ public class  Converter {
         c.setId(category.getId());
         return c;
     }
+
+    public Status convertTo(StatusDTO statusDTO){
+        Status status = new Status();
+        status.setStatus(statusDTO.getName());
+        status.setIdStatus(statusDTO.getId());
+        return status;
+    }
+
+    public StatusDTO convertTo(Status status){
+        StatusDTO statusDTO = new StatusDTO();
+        statusDTO.setId(status.getIdStatus());
+        statusDTO.setName(status.getStatus());
+        return statusDTO;
+    }
 }
