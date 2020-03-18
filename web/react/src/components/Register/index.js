@@ -181,7 +181,7 @@ class Register extends Component {
                             <Col sm={3}></Col>
                             <Label sm={1} for="CONTACT">Contato: </Label>
                             <Col sm={5}>
-                                <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999" />
+                                <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" placeholder="Ex (11) 99999-9999" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
