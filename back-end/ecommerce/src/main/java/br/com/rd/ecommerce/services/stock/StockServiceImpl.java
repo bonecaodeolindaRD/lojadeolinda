@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,16 +95,16 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public ResponseEntity updateItemOnStockByOrder(Long stock, OrderItem productDTO) {
+    public ResponseEntity updateItemOnStockByOrder(Long stock, OrderItem productDTO) throws StockException{
         try{
             Stock s = repository.findById(stock).get();
             StockProduct sp = s.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(productDTO.getProduct().getId())).findFirst().orElse(null);
             if(sp.getBalance() < productDTO.getQuantity())
-                return ResponseEntity.badRequest().body(new StockException("Quantidade solicitada maior que a quantidade no estoque"));
+                throw new StockException("Quantidade solicitada maior que a quantidade no estoque");
             sp.setBalance(sp.getBalance() - productDTO.getQuantity());
             StockDTO returnStock = converter.convertTo(repository.save(s));
             return ResponseEntity.ok().body(returnStock);
-        }catch (Exception e){
+        }catch (PersistenceException e){
             return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
         }
     }
