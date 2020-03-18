@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import { Container } from 'reactstrap';
+import axios from 'axios';
 
 class OrderHistory extends Component{
     constructor(props){
         super(props);
         this.getOrders();
         this.state = {
+            email: "",
             orders: []
         }
+        this.loadAcccount();
+    }
+
+    loadAcccount = async () => {
+        let { email } = JSON.parse(sessionStorage.getItem('client'));
+        let { data : account} = await axios("http://localhost:8080/ecommerce/order/email/" + email);
+        this.setState({
+            name : account.name,
+            email : account.email,
+        })
     }
 
     getOrders = () => {
@@ -25,7 +37,7 @@ class OrderHistory extends Component{
         return(
             <>
             <Header></Header>
-            <Container>
+            <Container className="align-center">
                 <h3 align="center">Meus Pedidos</h3>
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead> 
@@ -39,12 +51,21 @@ class OrderHistory extends Component{
                         </thead>
                         <tbody>
                             {this.state.orders.map(order => 
-                                <tr key={order.ID_ORDER}>
+                                <tr key={order.id}>
                                     <td>
-                                        {order.ID_ORDER}
+                                        {order.id}
                                     </td>
                                     <td>
-                                        {order.VL_VALUE}
+                                        {order.value}
+                                    </td>
+                                    <td>
+                                        {}
+                                    </td>
+                                    <td>
+                                        {order.shipping}
+                                    </td>
+                                    <td>
+                                       
                                     </td>
                                 </tr>)}
                         </tbody>
