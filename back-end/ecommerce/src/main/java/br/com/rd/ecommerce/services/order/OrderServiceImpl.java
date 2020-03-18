@@ -114,9 +114,11 @@ public class OrderServiceImpl implements OrderService {
             orderEntity.setOrderItem(orderItems);
             orderEntity.setValue(orderEntity.total());
             Order returnOrder = respository.save(orderEntity);
-            order.setId(returnOrder.getId());
+            OrderDTO returnOrderDTO = converter.convertTo(returnOrder);
+            for(OrderItem oi: returnOrder.getOrderItem())
+                returnOrderDTO.addItem(converter.convertTo(oi));
 
-            return ResponseEntity.ok().body(returnOrder);
+            return ResponseEntity.ok().body(returnOrderDTO);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
         }
