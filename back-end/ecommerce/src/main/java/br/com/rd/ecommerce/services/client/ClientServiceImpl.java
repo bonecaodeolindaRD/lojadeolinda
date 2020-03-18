@@ -118,7 +118,8 @@ public class ClientServiceImpl implements ClientService {
                 OrderDTO orderDTO = converter.convertTo(o);
                 for(OrderItem oi: o.getOrderItem())
                     orderDTO.addItem(converter.convertTo(oi));
-                clientDTO.addOrder(converter.convertTo(o));
+                orderDTO.setValue(o.total());
+                clientDTO.addOrder(orderDTO);
             }
             return ResponseEntity.ok().body(clientDTO);
         }catch (Exception e){
