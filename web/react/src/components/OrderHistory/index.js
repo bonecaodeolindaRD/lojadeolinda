@@ -26,7 +26,29 @@ class OrderHistory extends Component{
             <>
             <Header></Header>
             <Container>
-                {this.state.orders}
+                <h3 align="center">Meus Pedidos</h3>
+                    <table className="table table-striped" style={{ marginTop: 20 }}>
+                        <thead> 
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Frete</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.orders.map(order => 
+                                <tr key={order.ID_ORDER}>
+                                    <td>
+                                        {order.ID_ORDER}
+                                    </td>
+                                    <td>
+                                        {order.VL_VALUE}
+                                    </td>
+                                </tr>)}
+                        </tbody>
+                    </table>
             </Container>
             <Footer></Footer>
             </>

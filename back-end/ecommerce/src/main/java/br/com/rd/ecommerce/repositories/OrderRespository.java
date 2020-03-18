@@ -10,5 +10,4 @@ public interface OrderRespository extends JpaRepository<Order, Long> {
     List<Order> findByDate(Date date);
     List<Order> findByClient(Client client);
     List<Order> findByStatus(Status status);
-    List<Order> findByEmail(String email);
 }

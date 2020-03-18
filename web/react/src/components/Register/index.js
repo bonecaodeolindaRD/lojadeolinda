@@ -200,6 +200,7 @@ class Register extends Component {
                         </FormGroup>
                     </Form>
                 </Container>
+                <Container><div></div></Container>
                 <Footer />
             </>
         )
