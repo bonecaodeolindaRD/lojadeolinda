@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,6 +16,7 @@ import java.util.List;
 public class ClientDTO {
     private Long id;
     private String name;
+    private Date birthday;
     private String cpf;
     private String email;
     private String phoneNumber;
