@@ -12,6 +12,7 @@ import br.com.rd.ecommerce.models.entities.OrderItem;
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class ClientServiceImpl implements ClientService {
             return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
         Client client = converter.convertTo(clientDTO);
         try {
+            String password = client.getPassword();
+            String salt = BCrypt.gensalt();
+            String passwordHash = BCrypt.hashpw(password, salt);
+            client.setPassword(passwordHash);
             Client clientReturn = clientRepository.save(client);
             return ResponseEntity.ok().body(clientReturn);
         } catch (Exception e){
@@ -93,12 +98,17 @@ public class ClientServiceImpl implements ClientService {
         if (email == null || email == "" || password == null || password == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe o login do usuario"));
         try {
-            Client clients = clientRepository.findByEmailAndPassword(email, password);
-            if (clients == null)
+            Client client = clientRepository.findByEmail(email);
+
+            if (client == null)
                 return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
 
-            ClientDTO clientDTO = converter.convertTo(clients);
-            return ResponseEntity.ok().body(clientDTO);
+            String passHash = client.getPassword();
+            if(BCrypt.checkpw(password, passHash)) {
+                ClientDTO clientDTO = converter.convertTo(client);
+                return ResponseEntity.ok().body(clientDTO);
+            }
+            return ResponseEntity.badRequest().body(new ClientException("Erro ao logar"));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
         }
