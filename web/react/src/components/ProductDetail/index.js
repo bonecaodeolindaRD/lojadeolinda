@@ -147,9 +147,9 @@ export default class ProductDetail extends Component {
                             <Table className="table table-sm">
                                 <thead>
                                     <tr>
-                                    <th>Altura</th>
-                                    <th>Largura</th>
-                                    <th>Peso</th>
+                                    <th>Altura (m)</th>
+                                    <th>Largura (m)</th>
+                                    <th>Peso (kg)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
