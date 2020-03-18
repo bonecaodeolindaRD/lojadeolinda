@@ -19,7 +19,7 @@ public class ClientDTO {
     private String email;
     private String phoneNumber;
     private String password;
-    private List<Address> addresses;
+    private List<AddressDTO> addresses;
     private List<OrderDTO> orders;
 
     public void addOrder(OrderDTO order){
