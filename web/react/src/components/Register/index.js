@@ -153,7 +153,7 @@ class Register extends Component {
                             <Col sm={3}></Col>
                             <Label sm={1} for="NAME">Nome: </Label>
                             <Col sm={5}>
-                                <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} placeholder="Seu nome completo" />
+                                <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} pattern="[A-Za-z\s]+$" placeholder="Seu nome completo" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
