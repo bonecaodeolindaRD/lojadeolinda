@@ -18,6 +18,7 @@ class Register extends Component {
         this.onChangeCPF = this.onChangeCPF.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
+        this.onChangeBirth = this.onChangeBirth.bind(this);
 
         this.onChangePassword = this.onChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +32,7 @@ class Register extends Component {
             PASSWORD: '',
             PASS_CONF: '',
             PHONENUMBER: '',
+            BIRTH: ''
         }
     }
 
@@ -58,10 +60,13 @@ class Register extends Component {
         this.setState({ PASSWORD: event.target.value });
     }
 
+    onChangeBirth = event => {
+        this.setState({ BIRTH: event.target.value });
+    }
+
     redirectHome = () => {
 
         this.props.history.push("/");
-
         
     }
 
@@ -73,6 +78,7 @@ class Register extends Component {
             cpf: this.state.CPF,
             email: this.state.EMAIL,
             name: this.state.NAME,
+            birthday: this.state.BIRTH,
             password: this.state.PASSWORD,
             phoneNumber: this.state.PHONENUMBER,
             pass_conf: this.state.PASS_CONF,
@@ -86,7 +92,8 @@ class Register extends Component {
                     name: "",
                     email: "",
                     phoneNumber: "",
-                    password: ""
+                    password: "",
+                    birth:""
                 })
                 this.props.history.push("/login");
             } catch (error) {
@@ -161,6 +168,13 @@ class Register extends Component {
                             <Label sm={1} for="NAME">Nome: </Label>
                             <Col sm={5}>
                                 <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} pattern="[A-Za-z\s]+$" placeholder="Seu nome completo" />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col sm={3}></Col>
+                            <Label sm={2} for="BIRTH">Data de Nascimento: </Label>
+                            <Col sm={4}>
+                                <Input type="date"  name="BIRTH" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
