@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,6 +20,10 @@ public class ClientDTO {
     private String phoneNumber;
     private String password;
     private List<Address> addresses;
-    private List<Order> orders;
+    private List<OrderDTO> orders;
 
+    public void addOrder(OrderDTO order){
+        if(orders == null) orders = new ArrayList<>();
+        orders.add(order);
+    }
 }

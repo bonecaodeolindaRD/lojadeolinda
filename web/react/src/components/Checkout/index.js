@@ -27,6 +27,7 @@ export default class Checkout extends Component {
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
+        this.submeted = false;
         this.state = {
             erro: " ",
             states: [],
@@ -130,7 +131,7 @@ export default class Checkout extends Component {
                     id: p.id
                 },
                 quantity: p.quantity,
-                value: p.price
+                value: p.value
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
             sessionStorage.setItem('order', JSON.stringify(order));
@@ -231,6 +232,19 @@ export default class Checkout extends Component {
           
     };
 
+    validateDate = (str) => {
+        let fields = str.split('/');
+        let month = parseInt(fields[0]);
+        let year = parseInt(fields[1]);
+        if(month > 12)
+            return false;
+        let now = new Date();
+        let cardDate = new Date(year, month);
+        if(now > cardDate)
+            return false;
+        return true;
+    }
+
     validateFields = () => {
         if (this.isEmpty(this.state.address.aCep)) {
             this.setState({ erro: "Digite o CEP!" });
@@ -272,6 +286,11 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite a data de validade do cartão!" });
             return false;
         }
+        if(!this.validateDate(this.state.client.card.cDate)){
+            this.setState({ erro: "Data do cartão invalida" });
+            return false;
+        }
+
         if (this.isEmpty(this.state.client.card.cCVV)) {
             this.setState({ erro: "Digite o codigo de segurança do cartão!" });
             return false;
@@ -283,10 +302,14 @@ export default class Checkout extends Component {
 
     finish = (evt) => {
         evt.preventDefault();
+        if(this.submeted)
+            return;
         if (!this.validateFields())
             return;
-        if(this.gerateOrder())
+        if(this.gerateOrder()){
             setTimeout(() => this.props.history.push("/success"), 2000);
+            this.submeted = true;
+        }
         else
             this.setState({ erro: "Erro ao gerar o pedido" });
     }
@@ -335,7 +358,7 @@ export default class Checkout extends Component {
     render() {
         return (
             <>
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container ref={this.test}>
                     <Form onSubmit={this.finish}>
                         <Row>

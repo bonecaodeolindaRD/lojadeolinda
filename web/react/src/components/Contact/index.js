@@ -112,10 +112,11 @@ export default class Contact extends Component {
 
   render() {
     return (
+              
+    <>
+    
+    <Header history={this.props.history} location={this.props.location}/>
 
-      <>
-
-        <Header />
 
         <Form className="mt-5" id="form-contato" md="5" onSubmit={this.mySubmitHandler}>
 

@@ -67,7 +67,7 @@ export default class Cart extends Component {
 
             <>
 
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
 
 
                 <Container className="contanier">
