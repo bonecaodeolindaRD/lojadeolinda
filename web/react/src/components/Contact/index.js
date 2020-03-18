@@ -19,17 +19,17 @@ export default class Contact extends Component {
       email: '',
       phone: '',
       message: '',
-      nameError:false,
-      emailError:false,
-      phoneError:false,
-      messageError:false,
+      nameError: false,
+      emailError: false,
+      phoneError: false,
+      messageError: false,
       isOpen: false
     };
     
     if (!sessionStorage.getItem('client')) {
-      return;
-    }
-    this.loadAcccount();
+        return;
+      }
+      this.loadAcccount();
   }
 
 
@@ -68,6 +68,7 @@ export default class Contact extends Component {
 
     let { name, email, phone, message } = this.state;
 
+
     if (name.length <= 3 || this.isName(name)) {
       this.setState({ nameError: true });
       return false;
@@ -82,7 +83,7 @@ export default class Contact extends Component {
       this.setState({ emailError: false });
     }
 
-    if (phone.length === 0) {
+    if (phone.length === 0 || this.isPhone(ph)) {
       this.setState({ phoneError: true });
       return false;
     } else {
@@ -113,6 +114,7 @@ export default class Contact extends Component {
     return !re.test(name);
 
   };
+
 
   render() {
     return (
