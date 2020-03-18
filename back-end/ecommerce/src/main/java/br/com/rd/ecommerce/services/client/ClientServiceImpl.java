@@ -6,7 +6,9 @@ import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 
 import br.com.rd.ecommerce.models.entities.Order;
+
 import br.com.rd.ecommerce.models.entities.OrderItem;
+
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
@@ -116,13 +118,13 @@ public class ClientServiceImpl implements ClientService {
                 OrderDTO orderDTO = converter.convertTo(o);
                 for(OrderItem oi: o.getOrderItem())
                     orderDTO.addItem(converter.convertTo(oi));
-                clientDTO.addOrder(converter.convertTo(o));
+                orderDTO.setValue(o.total());
+                clientDTO.addOrder(orderDTO);
             }
             return ResponseEntity.ok().body(clientDTO);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
         }
     }
-
 }
 

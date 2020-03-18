@@ -12,7 +12,6 @@ export default class ProductDetail extends Component {
         constructor(props){
             super(props);
             this.state = {
-
                 id: 12,
                 image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
                 name: "Bonecão Galvão Bueno ",
@@ -22,7 +21,8 @@ export default class ProductDetail extends Component {
                 height: 3.5,
                 width: 1.5,
                 weight: 20.0,
-                discount: 0.05             
+                discount: 0.05,
+                balance: 0         
             }
 
                 this.getProduct();
@@ -31,6 +31,8 @@ export default class ProductDetail extends Component {
 
         getProduct = async() => {
             let id = this.props.match.params.id;
+            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+            console.log(stock);
             const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
             this.setState({
                 id: product.id,
@@ -41,8 +43,8 @@ export default class ProductDetail extends Component {
                 height: product.height,
                 width: product.width,
                 weight: product.weight,
-                discount: product.off                
-
+                discount: product.off,       
+                balance: stock.balance
             });
         }
 
@@ -121,9 +123,18 @@ export default class ProductDetail extends Component {
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
                                     <h6 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h6>
-                                    <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>                                    
-                                    <Input type="number" placeholder="Digite a quantidade" min="1" max="10"   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
-                                            <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
+                                    <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>          
+                                    <p>Estoque disponivel: {this.state.balance}</p>                            
+                                    {this.state.balance > 0 ? (
+                                            <>
+                                                <Input type="number" placeholder="Digite a quantidade" min="1" max={this.state.balance}   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
+                                                <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
+                                            </>):
+                                            (
+                                                <Button color="dark" disabled> <FaShoppingCart/> Indisponivel</Button>
+                                            )
+
+                                    }
                                 </FormGroup>
                             </Form>
 
