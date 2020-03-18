@@ -18,6 +18,7 @@ class Register extends Component {
         this.onChangeCPF = this.onChangeCPF.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
+        this.onChangeBirth = this.onChangeBirth.bind(this);
 
         this.onChangePassword = this.onChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +32,7 @@ class Register extends Component {
             PASSWORD: '',
             PASS_CONF: '',
             PHONENUMBER: '',
+            BIRTH: ''
         }
     }
 
@@ -58,6 +60,16 @@ class Register extends Component {
         this.setState({ PASSWORD: event.target.value });
     }
 
+    onChangeBirth = event => {
+        this.setState({ BIRTH: event.target.value });
+    }
+
+    redirectHome = () => {
+
+        this.props.history.push("/");
+        
+    }
+
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -66,6 +78,7 @@ class Register extends Component {
             cpf: this.state.CPF,
             email: this.state.EMAIL,
             name: this.state.NAME,
+            birthday: this.state.BIRTH,
             password: this.state.PASSWORD,
             phoneNumber: this.state.PHONENUMBER,
             pass_conf: this.state.PASS_CONF,
@@ -79,7 +92,8 @@ class Register extends Component {
                     name: "",
                     email: "",
                     phoneNumber: "",
-                    password: ""
+                    password: "",
+                    birth:""
                 })
                 this.props.history.push("/login");
             } catch (error) {
@@ -153,7 +167,14 @@ class Register extends Component {
                             <Col sm={3}></Col>
                             <Label sm={1} for="NAME">Nome: </Label>
                             <Col sm={5}>
-                                <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} placeholder="Seu nome completo" />
+                                <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} pattern="[A-Za-z\s]+$" placeholder="Seu nome completo" />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col sm={3}></Col>
+                            <Label sm={2} for="BIRTH">Data de Nascimento: </Label>
+                            <Col sm={4}>
+                                <Input type="date"  name="BIRTH" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -174,7 +195,7 @@ class Register extends Component {
                             <Col sm={3}></Col>
                             <Label sm={1} for="CONTACT">Contato: </Label>
                             <Col sm={5}>
-                                <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" placeholder="Ex (11) 99999-9999" />
+                                <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" placeholder="Ex (11) 99999-9999" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -195,7 +216,7 @@ class Register extends Component {
                         <FormGroup>
                             <div className="text-align-center" align="center">
                                 <button type="submit" className="btn btn-success mr-3" > Salvar </button>
-                                <button type="button" className="btn btn-danger" to="index.html">Cancelar</button>
+                                <button type="button" className="btn btn-danger" onClick={this.redirectHome}>Cancelar</button>
                             </div>
                         </FormGroup>
                     </Form>

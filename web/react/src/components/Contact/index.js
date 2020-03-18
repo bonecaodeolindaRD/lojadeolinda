@@ -108,6 +108,14 @@ export default class Contact extends Component {
 
   }
 
+  isPhone = (phone) => {
+
+    let re = /^\+?\d{2}?\s*\(\d{2}\)?\s*\d{4}-\d{4}$/;
+
+    return !re.test(phone);
+
+  }
+
   isName = (name) => {
 
     let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
@@ -135,7 +143,7 @@ export default class Contact extends Component {
 
             <FormGroup className="form-group required">
               <Label for="contatoNome" className="control-label">Nome Completo</Label>
-              <Input type="text" className={`form-control ${this.state.nameError ? 'is-invalid' : null}`} name="name" onChange={this.myChangeHandler} value={this.state.name} required
+              <Input type="text" className={`form-control ${this.state.nameError ? 'is-invalid' : null}`} name="name" onChange={this.myChangeHandler} value={this.state.name} pattern="[A-Za-z\s]+$"  required
                 placeholder="Digite o seu nome completo" />
             </FormGroup>
 
@@ -150,7 +158,7 @@ export default class Contact extends Component {
             <FormGroup className="form-group row required">
               <Col className="col-6">
                 <Label for="contatoTel" className="control-label">Celular</Label>
-                <Input type="tel" mask="(99) 99999-9999" tag={InputMask} className={`form-control ${this.state.phoneError ? 'is-invalid' : null}`} value={this.state.phone} onChange={this.myChangeHandler} name="phone" required
+                <Input type="tel" mask="(99) 99999-9999" tag={InputMask} className={`form-control ${this.state.phoneError ? 'is-invalid' : null}`} value={this.state.phone} onChange={this.myChangeHandler} pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" name="phone" required
                   placeholder="Ex (11) 99999-9999" />
               </Col>
 
