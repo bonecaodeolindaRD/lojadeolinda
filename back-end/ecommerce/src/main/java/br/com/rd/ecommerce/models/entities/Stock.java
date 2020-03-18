@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,4 +25,9 @@ public class Stock {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_stock")
     private List<StockProduct> stockProducts;
+
+    public void addProduct(StockProduct stockProduct){
+        if(stockProducts == null) stockProducts = new ArrayList<>();
+        stockProducts.add(stockProduct);
+    }
 }

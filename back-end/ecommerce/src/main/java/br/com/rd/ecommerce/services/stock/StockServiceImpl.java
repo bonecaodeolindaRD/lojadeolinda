@@ -4,7 +4,7 @@ import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ProductDTO;
 import br.com.rd.ecommerce.models.dto.StockDTO;
 import br.com.rd.ecommerce.models.dto.StockProductDTO;
-import br.com.rd.ecommerce.models.entities.Product;
+import br.com.rd.ecommerce.models.entities.OrderItem;
 import br.com.rd.ecommerce.models.entities.Stock;
 import br.com.rd.ecommerce.models.entities.StockProduct;
 import br.com.rd.ecommerce.repositories.StockRepository;
@@ -81,12 +81,47 @@ public class StockServiceImpl implements StockService{
 
 
     @Override
-    public ResponseEntity addItemOnStock(Stock stock, ProductDTO productDTO) {
-        return null;
+    public ResponseEntity addItemOnStock(Long idStock, Long idproduct, Integer quantity) {
+        try{
+            Stock stock = repository.findById(idStock).get();
+            StockProduct sp = stock.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(idproduct)).findFirst().orElse(null);
+            sp.setBalance(sp.getBalance() + quantity);
+            StockDTO returnStock = converter.convertTo(repository.save(stock));
+            return ResponseEntity.ok().body(returnStock);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body("Erro " + e.getMessage());
+        }
     }
 
     @Override
-    public ResponseEntity updateItemOnStock(Stock stock, ProductDTO productDTO) {
-        return null;
+    public ResponseEntity updateItemOnStockByOrder(Long stock, OrderItem productDTO) {
+        try{
+            Stock s = repository.findById(stock).get();
+            StockProduct sp = s.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(productDTO.getProduct().getId())).findFirst().orElse(null);
+            if(sp.getBalance() < productDTO.getQuantity())
+                return ResponseEntity.badRequest().body(new StockException("Quantidade solicitada maior que a quantidade no estoque"));
+            sp.setBalance(sp.getBalance() - productDTO.getQuantity());
+            StockDTO returnStock = converter.convertTo(repository.save(s));
+            return ResponseEntity.ok().body(returnStock);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
+        }
     }
+
+    @Override
+    public ResponseEntity registerProductOnStock(Long stock, ProductDTO productDTO) {
+        try{
+            Stock s = repository.findById(stock).get();
+            StockProduct sp = new StockProduct();
+            sp.setProduct(converter.convertTo(productDTO));
+            sp.setBalance(0);
+            s.addProduct(sp);
+            StockDTO stockDTO = converter.convertTo(repository.save(s));
+            return ResponseEntity.ok().body(stockDTO);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
+        }
+    }
+
+
 }

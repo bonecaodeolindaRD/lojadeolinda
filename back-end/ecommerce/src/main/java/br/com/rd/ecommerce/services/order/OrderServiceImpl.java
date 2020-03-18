@@ -10,6 +10,7 @@ import br.com.rd.ecommerce.repositories.OrderRespository;
 import br.com.rd.ecommerce.repositories.ProductRepository;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
 import br.com.rd.ecommerce.services.product.ProductServiceImpl;
+import br.com.rd.ecommerce.services.stock.StockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRespository respository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private StockServiceImpl stockService;
     private Converter converter = new Converter();
 
     @Override
@@ -117,8 +120,10 @@ public class OrderServiceImpl implements OrderService {
             Order returnOrder = respository.save(orderEntity);
             OrderDTO returnOrderDTO = converter.convertTo(returnOrder);
             returnOrderDTO.setClient(converter.convertTo(returnOrder.getClient()));
-            for(OrderItem oi: returnOrder.getOrderItem())
+            for(OrderItem oi: returnOrder.getOrderItem()) {
                 returnOrderDTO.addItem(converter.convertTo(oi));
+                stockService.updateItemOnStockByOrder(1L, oi);
+            }
 
             return ResponseEntity.ok().body(returnOrderDTO);
         } catch (Exception e){
