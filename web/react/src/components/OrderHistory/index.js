@@ -17,7 +17,7 @@ class OrderHistory extends Component{
 
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data : account} = await axios("http://localhost:8080/ecommerce/order/email/" + email);
+        let { data : account} = await axios("http://localhost:8080/ecommerce/client/orders/{email}" + email);
         this.setState({
             name : account.name,
             email : account.email,
@@ -36,10 +36,10 @@ class OrderHistory extends Component{
     render(){
         return(
             <>
-            <Header></Header>
+            <Header/>
             <Container className="align-center">
                 <h3 align="center">Meus Pedidos</h3>
-                    <table className="table table-striped" style={{ marginTop: 20 }}>
+                    <table bordered className="table table-striped mt-20" > >
                         <thead> 
                             <tr>
                                 <th>Pedido</th>
@@ -71,7 +71,7 @@ class OrderHistory extends Component{
                         </tbody>
                     </table>
             </Container>
-            <Footer></Footer>
+            <Footer/>
             </>
         )
     }

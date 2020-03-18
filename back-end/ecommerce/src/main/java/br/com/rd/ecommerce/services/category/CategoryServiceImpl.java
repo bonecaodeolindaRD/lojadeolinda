@@ -14,52 +14,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository repository;
     private Converter converter = new Converter();
 
     @Override
     public ResponseEntity createCategory(Category category) {
-        if(category == null)
+        if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao criar a categoria"));
-        Category cat = repository.save(category);
-        return ResponseEntity.ok().body(converter.convertTo(cat));
+        try {
+            Category cat = repository.save(category);
+            return ResponseEntity.ok().body(converter.convertTo(cat));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity findCategoryById(Long id) {
-        Category category = repository.findById(id).get();
-        if(category == null)
-            return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        CategoryDTO catDTO = converter.convertTo(category);
-        return ResponseEntity.ok().body(catDTO);
+        try {
+            Category category = repository.findById(id).get();
+            if (category == null)
+                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+            CategoryDTO catDTO = converter.convertTo(category);
+            return ResponseEntity.ok().body(catDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity findAllCategories() {
-        List<Category> categories = repository.findAll();
-        if(categories == null || categories.size() <= 0)
-            return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        List<CategoryDTO> catDTO = new ArrayList<>();
-        for(Category cat: categories)
-            catDTO.add(converter.convertTo(cat));
+        try {
+            List<Category> categories = repository.findAll();
+            if (categories == null || categories.size() <= 0)
+                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+            List<CategoryDTO> catDTO = new ArrayList<>();
+            for (Category cat : categories)
+                catDTO.add(converter.convertTo(cat));
 
-        return ResponseEntity.ok().body(catDTO);
+            return ResponseEntity.ok().body(catDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
+        }
     }
 
     @Override
     public ResponseEntity findByCategoryByName(String name) {
-        if(name == null || name == "")
+        if (name == null || name == "")
             return ResponseEntity.badRequest().body(new CategoryException("Informe uma descricao"));
-        List<Category> categories = repository.findByName(name);
-        if(categories == null || categories.size() <= 0)
-            return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        List<CategoryDTO> catDTO = new ArrayList<>();
-        for(Category cat: categories)
-            catDTO.add(converter.convertTo(cat));
+        try {
+            List<Category> categories = repository.findByName(name);
+            if (categories == null || categories.size() <= 0)
+                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+            List<CategoryDTO> catDTO = new ArrayList<>();
+            for (Category cat : categories)
+                catDTO.add(converter.convertTo(cat));
 
-        return ResponseEntity.ok().body(catDTO);
+            return ResponseEntity.ok().body(catDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
+        }
     }
 
     @Override
@@ -69,12 +85,16 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public ResponseEntity update(Category category) {
-        if(category == null)
+        if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao atualizar a categoria"));
-        Category cat = repository.findById(category.getId()).get();
-        cat.setName(category.getName());
-        cat = repository.save(cat);
-        CategoryDTO catDTO = converter.convertTo(cat);
-        return ResponseEntity.ok().body(catDTO);
+        try {
+            Category cat = repository.findById(category.getId()).get();
+            cat.setName(category.getName());
+            cat = repository.save(cat);
+            CategoryDTO catDTO = converter.convertTo(cat);
+            return ResponseEntity.ok().body(catDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
+        }
     }
 }

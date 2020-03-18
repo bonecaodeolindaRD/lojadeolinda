@@ -25,7 +25,7 @@ export default class Success extends Component {
 
         return (
             <>
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container  >
                 <Card >
                     <CardHeader className="bg-success text-white text-center text"><h5>Compra concluída com sucesso</h5></CardHeader>

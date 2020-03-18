@@ -2,9 +2,13 @@ package br.com.rd.ecommerce.services.client;
 
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
+import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 
 import br.com.rd.ecommerce.models.entities.Order;
+
+import br.com.rd.ecommerce.models.entities.OrderItem;
+
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
@@ -25,30 +29,42 @@ public class ClientServiceImpl implements ClientService {
         if(clientDTO == null)
             return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
         Client client = converter.convertTo(clientDTO);
-        Client clientReturn = clientRepository.save(client);
-        return ResponseEntity.ok().body(clientReturn);
+        try {
+            Client clientReturn = clientRepository.save(client);
+            return ResponseEntity.ok().body(clientReturn);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
     public ResponseEntity findAllClient() {
-        List<Client> clients = clientRepository.findAll();
+        try {
+            List<Client> clients = clientRepository.findAll();
 
-        if(clients == null || clients.size() <= 0)
-            return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
-        List<ClientDTO> clientDTO = new ArrayList<>();
-        for(Client client: clients)
-            clientDTO.add(converter.convertTo(client));
+            if (clients == null || clients.size() <= 0)
+                return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
+            List<ClientDTO> clientDTO = new ArrayList<>();
+            for (Client client : clients)
+                clientDTO.add(converter.convertTo(client));
 
-        return ResponseEntity.ok().body(clientDTO);
+            return ResponseEntity.ok().body(clientDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
     public ResponseEntity findClientById(Long id) {
-        Client client = clientRepository.findById(id).get();
-        if(client == null)
-            return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
-        ClientDTO clientDTO = converter.convertTo(client);
-        return ResponseEntity.ok().body(clientDTO);
+        try {
+            Client client = clientRepository.findById(id).get();
+            if (client == null)
+                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+            ClientDTO clientDTO = converter.convertTo(client);
+            return ResponseEntity.ok().body(clientDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
@@ -60,37 +76,54 @@ public class ClientServiceImpl implements ClientService {
     public ResponseEntity findClientByEmail(String email) {
         if (email == null || email == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
-        Client clients = clientRepository.findByEmail(email);
-        if (clients == null)
-            return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
+        try {
+            Client clients = clientRepository.findByEmail(email);
+            if (clients == null)
+                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
 
-        ClientDTO clientDTO = converter.convertTo(clients);
-        return ResponseEntity.ok().body(clientDTO);
+            ClientDTO clientDTO = converter.convertTo(clients);
+            return ResponseEntity.ok().body(clientDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
     public ResponseEntity findClientLogin(String email, String password) {
         if (email == null || email == "" || password == null || password == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe o login do usuario"));
-        Client clients = clientRepository.findByEmailAndPassword(email, password);
-        if (clients == null)
-            return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
+        try {
+            Client clients = clientRepository.findByEmailAndPassword(email, password);
+            if (clients == null)
+                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
 
-        ClientDTO clientDTO = converter.convertTo(clients);
-        return ResponseEntity.ok().body(clientDTO);
+            ClientDTO clientDTO = converter.convertTo(clients);
+            return ResponseEntity.ok().body(clientDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
 
-    @Override
-    public ResponseEntity findClientOrders(String email) {
-        Client c = clientRepository.findByEmail(email);
-        ClientDTO cDTO = converter.convertTo(c);
+    public ResponseEntity findClientOrders(String email){
+        if(email == null || email =="")
+            return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
+        try{
+            Client client = clientRepository.findByEmail(email);
+            if(client == null)
+                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
 
-        for(Order o: c.getOrders())
-            cDTO.addOrder(converter.convertTo(o));
+            ClientDTO clientDTO = converter.convertTo(client);
 
-        return ResponseEntity.ok().body(cDTO);
+            for(Order o: client.getOrders()){
+                OrderDTO orderDTO = converter.convertTo(o);
+                for(OrderItem oi: o.getOrderItem())
+                    orderDTO.addItem(converter.convertTo(oi));
+                clientDTO.addOrder(converter.convertTo(o));
+            }
+            return ResponseEntity.ok().body(clientDTO);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
     }
-
-
 }
 
