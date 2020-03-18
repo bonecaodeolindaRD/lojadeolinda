@@ -58,6 +58,13 @@ class Register extends Component {
         this.setState({ PASSWORD: event.target.value });
     }
 
+    redirectHome = () => {
+
+        this.props.history.push("/");
+
+        
+    }
+
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -195,7 +202,7 @@ class Register extends Component {
                         <FormGroup>
                             <div className="text-align-center" align="center">
                                 <button type="submit" className="btn btn-success mr-3" > Salvar </button>
-                                <button type="button" className="btn btn-danger" to="index.html">Cancelar</button>
+                                <button type="button" className="btn btn-danger" onClick={this.redirectHome}>Cancelar</button>
                             </div>
                         </FormGroup>
                     </Form>
