@@ -59,7 +59,7 @@ class OrderHistory extends Component{
                                         {order.value}
                                     </td>
                                     <td>
-                                        {}
+                                        {order.date}
                                     </td>
                                     <td>
                                         {order.shipping}
@@ -69,7 +69,7 @@ class OrderHistory extends Component{
                                     </td>
                                     <td>
                                         <div align="center">
-                                        <Link to={`/orders/datails/${order.id}`} ><Button  className="btn btn-primary">Detalhes</Button></Link>
+                                        <Link to={"/order/detail/" +order.id} ><Button color="info" className="btn btn-primary">Detalhes</Button></Link>
                                         </div>
                                     </td>
                                 </tr>)}

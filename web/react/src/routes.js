@@ -12,6 +12,7 @@ import ProductDetail from './components/ProductDetail';
 import OrderHistory from './components/OrderHistory';
 import CreateProduct from './components/CreateProduct'
 import SearchResult from './components/SearchResult';
+import OrderDetails from './components/OrderDetail';
 
 import Success from './components/Success';
 
@@ -32,6 +33,7 @@ import Success from './components/Success';
             <Route path="/checkout" exact component={Checkout} />
             <Route path="/history" exact component={OrderHistory}/>
             <Route path="/search/:product" exact component={SearchResult} />
+            <Route path="/order/detail/:id" exact component={OrderDetails} />
         </Switch>
     </BrowserRouter>
 );
