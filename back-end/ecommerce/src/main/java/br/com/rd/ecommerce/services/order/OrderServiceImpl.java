@@ -31,16 +31,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity findAllOrders() {
-        List<Order> orders = respository.findAll();
+        try {
+            List<Order> orders = respository.findAll();
 
-        if(orders == null || orders.size() <= 0)
-            return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
-        List<OrderDTO> ordersDTO = new ArrayList<>();
-        for(Order order: orders)
-            ordersDTO.add(converter.convertTo(order));
+            if (orders == null || orders.size() <= 0)
+                return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
+            List<OrderDTO> ordersDTO = new ArrayList<>();
+            for (Order order : orders)
+                ordersDTO.add(converter.convertTo(order));
 
 
-        return ResponseEntity.ok().body(ordersDTO);
+            return ResponseEntity.ok().body(ordersDTO);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
@@ -67,11 +71,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity findById(Long id) {
-        Order item = respository.findById(id).get();
-        if(item == null || id == null)
-            return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
-        OrderDTO oDTO = converter.convertTo(item);
-        return ResponseEntity.ok().body(oDTO);
+        try {
+            Order item = respository.findById(id).get();
+            if (item == null || id == null)
+                return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
+            OrderDTO oDTO = converter.convertTo(item);
+            return ResponseEntity.ok().body(oDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
+        }
     }
 
 
@@ -92,23 +100,26 @@ public class OrderServiceImpl implements OrderService {
 
         if(order.getOrderItem() == null || order.getOrderItem().size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("O pedido não contem items"));
+        try {
+            Order orderEntity = converter.convertTo(order);
 
-        Order orderEntity = converter.convertTo(order);
+            List<OrderItem> orderItems = new ArrayList<>();
+            for (OrderItemDTO p : order.getOrderItem()) {
+                OrderItem orderItem = converter.convertTo(p);
+                Product product = productRepository.findById(p.getProduct().getId()).get();
+                orderItem.setProduct(product);
+                orderItems.add(orderItem);
+            }
 
-        List<OrderItem> orderItems = new ArrayList<>();
-        for(OrderItemDTO p: order.getOrderItem()){
-            OrderItem orderItem = converter.convertTo(p);
-            Product product = productRepository.findById(p.getProduct().getId()).get();
-            orderItem.setProduct(product);
-            orderItems.add(orderItem);
+            orderEntity.setOrderItem(orderItems);
+            orderEntity.setValue(orderEntity.total());
+            Order returnOrder = respository.save(orderEntity);
+            order.setId(returnOrder.getId());
+
+            return ResponseEntity.ok().body(returnOrder);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
         }
-
-        orderEntity.setOrderItem(orderItems);
-        orderEntity.setValue(orderEntity.total());
-        Order returnOrder = respository.save(orderEntity);
-        order.setId(returnOrder.getId());
-
-        return ResponseEntity.ok().body(returnOrder);
     }
 
     @Override
