@@ -73,7 +73,6 @@ export default class Header extends Component {
     }
 
     render() {
-
         return (
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
@@ -95,7 +94,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label>Bem-Vindo(a) {this.state.name} </Label>
+                                <Label><h6>Bem-Vindo(a) {this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
@@ -105,6 +104,9 @@ export default class Header extends Component {
                                             <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
+                                            </DropdownItem>
+                                            <DropdownItem >
+                                                <Link to="/history">Minhas Compras</Link>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <Link onClick={this.logout}>Sair</Link>
