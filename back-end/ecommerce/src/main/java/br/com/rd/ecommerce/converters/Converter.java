@@ -68,6 +68,7 @@ public class  Converter {
         client.setCpf(clientDTO.getCpf());
         client.setEmail(clientDTO.getEmail());
         client.setName(clientDTO.getName());
+        client.setBirthday(clientDTO.getBirthday());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
         client.setPassword(clientDTO.getPassword());
         return client;
@@ -80,6 +81,7 @@ public class  Converter {
         clientDTO.setEmail(client.getEmail());
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());
+        clientDTO.setBirthday(client.getBirthday());
         clientDTO.setPhoneNumber(client.getPhoneNumber());
         return clientDTO;
     }
