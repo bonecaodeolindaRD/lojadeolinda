@@ -21,8 +21,8 @@ export default class Contact extends Component {
       message: '',
       isOpen: false
     };
+    
     if (!sessionStorage.getItem('client')) {
-      this.props.history.push('/');
       return;
     }
     this.loadAcccount();
