@@ -45,6 +45,13 @@ export default class ProductDetail extends Component {
 
             });
         }
+
+
+        replaceComma = (valor) => {
+
+            return valor.toString().replace(".", ",");
+
+        }
             
 
         change(event) {
@@ -147,9 +154,9 @@ export default class ProductDetail extends Component {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td>{this.state.height}</td>
-                                    <td>{this.state.width}</td>
-                                    <td>{this.state.weight}</td>                           
+                                    <td>{this.replaceComma(this.state.height)}</td>
+                                    <td>{this.replaceComma(this.state.width)}</td>
+                                    <td>{this.replaceComma(this.state.weight)}</td>                           
                                     </tr>
                                 </tbody>
                             </Table>
