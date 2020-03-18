@@ -12,5 +12,7 @@ public interface ProductService {
     ResponseEntity findProductByCategory(Long category);
     ResponseEntity createProduct(ProductDTO productDTO);
     ResponseEntity updateProduct(ProductDTO productDTO);
+    ResponseEntity findProductByDescription(String description);
+    ResponseEntity findProductByNameOrCategory(String str);
     void deleteProduct(Long id);
 }
