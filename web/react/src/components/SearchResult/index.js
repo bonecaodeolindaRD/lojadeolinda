@@ -51,13 +51,14 @@ export default class SearchResult extends Component {
                                             <img src={p.image} alt={p.name} title={p.name}/>
                                         </Col>
                                         <Col md="7" >
+                                            <p className="h4">{p.name}</p>
                                             <p>
                                                 {p.description.substring(0, 200) + "..."}
                                             </p>
                                         </Col>
                                         <Col md="2">
-                                            <p className="h6">De: <del>R$ {p.price}</del></p>
-                                            <p className="h5">Por: R$ {p.price - p.price * p.off}</p>
+                                            <p className="h6">De: <del>{(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></p>
+                                            <p className="h5">Por: {(p.price - p.price * p.off).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                         </Col>
                                     </Row>
                                     <spam className="d-none">{p.id}</spam>
