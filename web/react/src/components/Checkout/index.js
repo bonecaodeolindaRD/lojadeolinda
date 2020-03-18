@@ -27,6 +27,7 @@ export default class Checkout extends Component {
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
+        this.submeted = false;
         this.state = {
             erro: " ",
             states: [],
@@ -301,10 +302,14 @@ export default class Checkout extends Component {
 
     finish = (evt) => {
         evt.preventDefault();
+        if(this.submeted)
+            return;
         if (!this.validateFields())
             return;
-        if(this.gerateOrder())
+        if(this.gerateOrder()){
             setTimeout(() => this.props.history.push("/success"), 2000);
+            this.submeted = true;
+        }
         else
             this.setState({ erro: "Erro ao gerar o pedido" });
     }
