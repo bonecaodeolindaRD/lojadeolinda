@@ -231,6 +231,19 @@ export default class Checkout extends Component {
           
     };
 
+    validateDate = (str) => {
+        let fields = str.split('/');
+        let month = parseInt(fields[0]);
+        let year = parseInt(fields[1]);
+        if(month > 12)
+            return false;
+        let now = new Date();
+        let cardDate = new Date(year, month);
+        if(now > cardDate)
+            return false;
+        return true;
+    }
+
     validateFields = () => {
         if (this.isEmpty(this.state.address.aCep)) {
             this.setState({ erro: "Digite o CEP!" });
@@ -272,6 +285,11 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite a data de validade do cartão!" });
             return false;
         }
+        if(!this.validateDate(this.state.client.card.cDate)){
+            this.setState({ erro: "Data do cartão invalida" });
+            return false;
+        }
+
         if (this.isEmpty(this.state.client.card.cCVV)) {
             this.setState({ erro: "Digite o codigo de segurança do cartão!" });
             return false;
