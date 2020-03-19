@@ -18,7 +18,7 @@ import './footer.css';
 export default class Footer extends Component {
     render() {
         return (
-            <Navbar color="dark" className="mt-5">
+            <Navbar color="dark" className=" mt-5">
                 <Nav>
                     <NavItem className="space-footer">
                         <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
