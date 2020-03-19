@@ -119,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByNameOrCategory(String str) {
+    public ResponseEntity findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
         Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'");
         Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'");

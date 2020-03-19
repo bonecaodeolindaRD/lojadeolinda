@@ -27,7 +27,6 @@ export default class Cart extends Component {
             totalCart += cart[i].totalItem;
         }
 
-
         this.setState({ total: totalCart, products: cart });
 
     }
