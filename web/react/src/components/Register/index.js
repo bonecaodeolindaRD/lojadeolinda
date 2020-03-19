@@ -72,15 +72,22 @@ class Register extends Component {
 
 
     handleSubmit = async event => {
+
         event.preventDefault();
 
+        let cpf = this.state.CPF;
+        cpf = cpf.replace(".","").replace("-","").replace(" ","").replace(".","").trim();
+
+        let phone = this.state.PHONENUMBER
+        phone = phone.replace(")","").replace("(","").replace("-","").replace(" ","").trim();
+
         const user = {
-            cpf: this.state.CPF,
-            email: this.state.EMAIL,
-            name: this.state.NAME,
+            cpf: cpf,
+            email: this.state.EMAIL.trim(),
+            name: this.state.NAME.trim().toUpperCase(),
             birthday: this.state.BIRTH,
             password: this.state.PASSWORD,
-            phoneNumber: this.state.PHONENUMBER,
+            phoneNumber: phone,
             pass_conf: this.state.PASS_CONF,
         };
 
