@@ -31,8 +31,6 @@ export default class ProductDetail extends Component {
 
         getProduct = async() => {
             let id = this.props.match.params.id;
-            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
-            console.log(stock);
             const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
             this.setState({
                 id: product.id,
@@ -44,7 +42,10 @@ export default class ProductDetail extends Component {
                 width: product.width,
                 weight: product.weight,
                 discount: product.off,       
-                balance: stock.balance
+            });
+            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+            this.setState({
+                balance: stock ? stock.balance : 0
             });
         }
 
