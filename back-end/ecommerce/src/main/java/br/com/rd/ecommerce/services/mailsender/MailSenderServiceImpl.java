@@ -1,6 +1,7 @@
 package br.com.rd.ecommerce.services.mailsender;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class MailSenderServiceImpl implements MailSenderService {
     private JavaMailSender mailSender;
 
     @Override
-    public String sendMail(String to, String from, String text, String subject) {
+    public void sendMail(String to, String from, String text, String subject) throws MailSendException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setText(text);
         message.setTo(to);
@@ -21,10 +22,8 @@ public class MailSenderServiceImpl implements MailSenderService {
 
         try {
             mailSender.send(message);
-            return "Email enviado com sucesso!";
         } catch (Exception e) {
-            e.printStackTrace();
-            return "Erro ao enviar email.";
+            throw new MailSendException("Erro ao enviar o email");
         }
     }
 }

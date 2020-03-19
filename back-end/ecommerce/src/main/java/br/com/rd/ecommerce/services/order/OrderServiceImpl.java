@@ -16,6 +16,7 @@ import br.com.rd.ecommerce.services.product.ProductServiceImpl;
 import br.com.rd.ecommerce.services.stock.StockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -110,6 +111,7 @@ public class OrderServiceImpl implements OrderService {
 
         if(order.getOrderItem() == null || order.getOrderItem().size() <= 0)
             return ResponseEntity.badRequest().body(new OrderException("O pedido não contem items"));
+        OrderDTO returnOrderDTO = new OrderDTO();
         try {
             Order orderEntity = converter.convertTo(order);
 
@@ -125,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
             orderEntity.setValue(orderEntity.total());
             orderEntity.setClient(converter.convertTo(order.getClient()));
             Order returnOrder = respository.save(orderEntity);
-            OrderDTO returnOrderDTO = converter.convertTo(returnOrder);
+            returnOrderDTO = converter.convertTo(returnOrder);
             returnOrderDTO.setClient(converter.convertTo(returnOrder.getClient()));
             for(OrderItem oi: returnOrder.getOrderItem()) {
                 returnOrderDTO.addItem(converter.convertTo(oi));
@@ -151,7 +153,9 @@ public class OrderServiceImpl implements OrderService {
 
             mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
             return ResponseEntity.ok().body(returnOrderDTO);
-        } catch (Exception e){
+        } catch(MailSendException e){
+            return ResponseEntity.ok().body(returnOrderDTO);
+        }  catch(Exception e){
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
         }
     }

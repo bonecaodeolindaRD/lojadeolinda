@@ -32,6 +32,7 @@ class OrderDetail extends Component {
     render() {
         return (
             <>
+
                 <Header />
                 <Container align="center">
                     <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>

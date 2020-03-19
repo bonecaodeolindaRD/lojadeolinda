@@ -34,6 +34,11 @@ public class ProductController {
         return service.findProductByName(name.toUpperCase());
     }
 
+    @GetMapping("/product/category/{id}")
+    public ResponseEntity findByCategory(@PathVariable("id") Long id){
+        return service.findProductByCategory(id);
+    }
+
     @GetMapping("/product/home")
     public ResponseEntity findProductHome(){
         return service.findProductHome();
@@ -46,7 +51,7 @@ public class ProductController {
 
     @GetMapping("/product/find/{str}")
     public ResponseEntity findProduct(@PathVariable("str") String str){
-        return service.findProductByNameOrCategory(str);
+        return service.findProductByNameOrDescription(str);
     }
 
     @DeleteMapping("/product/delete/{id}")
