@@ -10,6 +10,10 @@ export default class Success extends Component {
     constructor(props){
         super(props);
         this.id = 0;
+        if(!sessionStorage.getItem('order')){
+            this.props.history.push('/');
+            return;
+        }
         this.clearLocal();
     }
 
@@ -18,7 +22,6 @@ export default class Success extends Component {
         this.id = id;
         sessionStorage.removeItem('cart');
         sessionStorage.removeItem('order');
-        setTimeout(() => this.props.history.push("/"), 30000);
     }
 
     render() {
