@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import axios from 'axios';
+
 import {
     Collapse,
     Navbar,
@@ -45,7 +47,7 @@ export default class Header extends Component {
 
     findCategory = async () => {
         this.setState({loading: true});
-        const { data: productss } = await axios("http://localhost:8080/ecommerce/category/all");
+        const { data: productss } = await axios("http://localhost:8080/ecommerce/product/category/");
         let products = [];
         productss.forEach(p => products.push({
             id: p.id,
@@ -53,10 +55,18 @@ export default class Header extends Component {
             nome: p.name,
             desc: p.description,
             preco: p.price,
-            desconto: p.off
+            desconto: p.off,
+            category: p.category
         }));
         this.setState({ products });
         this.setState({loading: false});
+    }
+
+    redirect = (evt) => {
+        let obj = evt.target;
+        while (obj.id !== "card")
+            obj = obj.parentNode;
+        this.props.history.push(`/category/${obj.children[2].innerHTML.toString()}`);
     }
 
     getLogin = () => {
@@ -111,9 +121,9 @@ export default class Header extends Component {
                                 <Form onSubmit={this.search} className="search-input border">
                                     <InputGroup>
                                         <FormGroup>
-                                            <Input type="select" name="select" id="exampleSelect">
+                                            <Input type="select" name="select" id="exampleSelect" onChange={this.redirect}>
                                                 <option>Categorias</option>
-                                                <option>Atletas</option>
+                                                <option id="1">Atletas</option>
                                                 <option>Artistas</option>
                                                 <option>Jornalistas</option>
                                                 <option>Politicos</option>
