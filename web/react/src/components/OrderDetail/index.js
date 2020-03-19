@@ -31,7 +31,7 @@ class OrderDetail extends Component{
             <>
             <Header/>
             <Container align="center">
-                <h2>Detalhes do Pedido: <a className="text-danger">{this.state.id}</a></h2>
+                <h2>Detalhes do Pedido: <spam className="text-danger">{this.state.id}</spam></h2>
 
             </Container>
             <div className="footer">

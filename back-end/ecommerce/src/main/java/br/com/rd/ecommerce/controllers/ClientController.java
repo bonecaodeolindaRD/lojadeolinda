@@ -39,6 +39,11 @@ public class ClientController {
          return service.findClientOrders(email);
     }
 
+    @GetMapping("/client/addresses/{email}")
+    public ResponseEntity findClientAddress(@PathVariable("email") String email){
+        return service.findClientAddress(email);
+    }
+
     @PostMapping("/client/login")
     public ResponseEntity login(@RequestBody ClientDTO clientDTO){
         return service.findClientLogin(clientDTO.getEmail(), clientDTO.getPassword());
