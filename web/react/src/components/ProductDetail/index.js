@@ -9,6 +9,7 @@ import Footer from '../Footer';
 
 export default class ProductDetail extends Component {
 
+    
         constructor(props){
             super(props);
             this.state = {
@@ -105,7 +106,6 @@ export default class ProductDetail extends Component {
 
 
         render() {
-
                 return (  
 
                     <>

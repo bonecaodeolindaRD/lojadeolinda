@@ -3,10 +3,10 @@ import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
 import Axios from 'axios';
-import { Container } from 'reactstrap';
+import { Container, Row, Card, CardTitle } from 'reactstrap';
 
-class OrderDetail extends Component{
-    constructor(props){
+class OrderDetail extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             id: ""
@@ -16,27 +16,40 @@ class OrderDetail extends Component{
     async componentDidMount() {
         const { id } = this.props.match.params;
 
-        try{
-            const { data : order } = await Axios.get("http://localhost:8080/ecommerce/order/id/"+id)
+        try {
+            const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/id/" + id)
             this.setState({
                 id: order.id,
             })
-        } catch ( error ) {
+        } catch (error) {
 
         }
-    }    
+    }
 
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <Header/>
-            <Container align="center">
-                <h2>Detalhes do Pedido: <a className="text-danger">{this.state.id}</a></h2>
-
-            </Container>
-            <div className="footer">
-                <Footer/>
-            </div>
+                <Header />
+                <Container align="center">
+                    <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>
+                    <br></br>
+                    <Card>
+                        <Row>
+                            <Card body>
+                                <CardTitle>Endereço</CardTitle>
+                            </Card>
+                            <Card body>
+                                <CardTitle>Itens</CardTitle>
+                            </Card>
+                            <Card body>
+                                <CardTitle>Outros</CardTitle>
+                            </Card>
+                        </Row>
+                    </Card>
+                </Container>
+                <div className="footer">
+                    <Footer />
+                </div>
             </>
         )
     }

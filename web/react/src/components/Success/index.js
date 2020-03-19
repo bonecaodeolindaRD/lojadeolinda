@@ -16,12 +16,12 @@ export default class Success extends Component {
             ]
         }
         this.id = 0;
-
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
         }
 
+        this.clearLocal();
         this.getProducts();
     }
 
@@ -35,8 +35,20 @@ export default class Success extends Component {
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
+<<<<<<< HEAD
 
         productsItem.forEach(p => this.state.products.push({
+=======
+    
+
+        
+
+        if (productsItem === null) {
+            //this.props.history.push("/");
+            return
+        }
+        this.state.products.forEach(p => productsItem.push({
+>>>>>>> ade2059cbcce3df64c8b6024412842b200242cab
             id: p.id,
             img: p.image,
             name: p.name,
@@ -45,8 +57,13 @@ export default class Success extends Component {
             quantity: p.quantity
 
         }));
+<<<<<<< HEAD
+=======
+
+        
+>>>>>>> ade2059cbcce3df64c8b6024412842b200242cab
         this.setState({ products: productsItem });
-        this.clearLocal();
+
 
 
     }
