@@ -25,10 +25,10 @@ export default class Cart extends Component {
         for (var i in cart) {
             totalCart += cart[i].totalItem;
         }
-        
+
 
         this.setState({ total: totalCart, products: cart });
-        
+
     }
 
 
@@ -54,8 +54,8 @@ export default class Cart extends Component {
 
     };
 
-    finish = () =>{
-        if(sessionStorage.getItem('client'))
+    finish = () => {
+        if (sessionStorage.getItem('client'))
             this.props.history.push("/checkout");
         else
             this.props.history.push("/login");
@@ -69,7 +69,7 @@ export default class Cart extends Component {
 
             <>
 
-                <Header history={this.props.history} location={this.props.location}/>
+                <Header history={this.props.history} location={this.props.location} />
 
 
                 <Container className="contanier">
