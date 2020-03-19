@@ -40,8 +40,12 @@ export default class Header extends Component {
     }
 
     getLogin = () => {
-        let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        this.setState({
+        let account = "";
+        if( sessionStorage.getItem('client') )
+            account =  JSON.parse(sessionStorage.getItem('client'));
+        else
+            return;
+        this.setState({ 
             ...this.state,
             email: account.email,
             name: account.name
