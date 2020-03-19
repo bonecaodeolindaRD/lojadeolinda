@@ -26,7 +26,6 @@ class OrderHistory extends Component {
         this.setState({
             orders: response.orders
         })
-        console.log(this.state);
     }
 
     loadAcccount(e) {
@@ -57,13 +56,13 @@ class OrderHistory extends Component {
                                         {order.id}
                                     </td>
                                     <td>
-                                        {order.value}
+                                        {(order.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>
                                     <td>
-                                        {order.date}
+                                        {(order.date)}
                                     </td>
                                     <td>
-                                        {order.shipping}
+                                        {(order.shipping).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>
                                     <td>
                                         {order.status.status}
@@ -78,7 +77,7 @@ class OrderHistory extends Component {
                     </Table>
                 </Container>
                 <div className="footer" id="footer">
-                <Footer/>
+                    <Footer />
                 </div>
             </>
         )
