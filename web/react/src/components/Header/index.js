@@ -108,6 +108,9 @@ export default class Header extends Component {
                                             <DropdownItem >
                                                 <Link to="/history">Minhas Compras</Link>
                                             </DropdownItem>
+                                            <DropdownItem >
+                                                <Link to="/address">Endereços</Link>
+                                            </DropdownItem>
                                             <DropdownItem>
                                                 <Link onClick={this.logout}>Sair</Link>
                                             </DropdownItem>

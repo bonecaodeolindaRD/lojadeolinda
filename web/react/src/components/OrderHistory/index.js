@@ -26,7 +26,6 @@ class OrderHistory extends Component {
         this.setState({
             orders: response.orders
         })
-        console.log(this.state);
     }
 
     loadAcccount(e) {
