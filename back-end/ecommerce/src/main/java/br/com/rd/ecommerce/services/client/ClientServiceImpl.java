@@ -17,8 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service("ClientService")
 public class ClientServiceImpl implements ClientService {
@@ -31,6 +35,13 @@ public class ClientServiceImpl implements ClientService {
             return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
         Client client = converter.convertTo(clientDTO);
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:MM:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Calendar cal = Calendar.getInstance();
+            client.setBirthday(sdf.parse(sdf.format(client.getBirthday())));
+            cal.setTime(client.getBirthday());
+            cal.add(Calendar.DAY_OF_WEEK, 1);
+            client.setBirthday(cal.getTime());
             String password = client.getPassword();
             String salt = BCrypt.gensalt();
             String passwordHash = BCrypt.hashpw(password, salt);
