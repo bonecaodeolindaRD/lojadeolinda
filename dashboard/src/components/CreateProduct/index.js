@@ -24,19 +24,29 @@ import {
 export default class CreateProduct extends Component {
 
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            categories: [],
             name: '',
             description: '',
-            price: '',
-            nameError: false,
-            descriptionError: false,
-            priceError: false,
-            isOpen: false
+            price: 2000.2,
+            width: 1.0,
+            heigth: 3.5,
+            weigth: 15,
+            image: '',
+            error: ''
         };
+        this.getCategories();
     }
 
+
+    getCategories = async () => {
+        const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+        if (!category)
+            return;
+        this.setState({ categories: category });
+    }
 
 
     toggleModal = () => {
@@ -44,38 +54,33 @@ export default class CreateProduct extends Component {
     };
 
 
-    mySubmitHandler = (event) => {
+    validateFields = () => {
 
-        event.preventDefault();
 
-        let { name, description, price } = this.state;
-
-        if (name.length <= 3) {
-            this.setState({ nameError: true });
-            return false;
-        } else {
-            this.setState({ nameError: false });
-        }
-
-        alert(name + "" + description + "" + price);
-
-        this.toggleModal();
-
+        return true;
     }
 
-    myChangeHandler = (event) => {
-        let nam = event.target.name;
-        let val = event.target.value;
-        this.setState({ [nam]: val });
+    createProduct = async () => {
+        let obj = {
 
+        }
+        let product = await axios.post("", obj);
+    }
+
+    finish = (event) => {
+        event.preventDefault();
+        this.mySubmitHandler(event);
+        if (this.validateFields())
+            this.createProduct();
+        console.log("teste");
     }
 
     render() {
         return (
             <>
-                <Header/>
+                <Header />
                 <Container className="border border-primary rounded mt-5 p-4">
-                    <Form className="App" >
+                    <Form className="App" onSubmit={this.finish}>
                         <FormGroup className="bg-warning rounded  p-2">
                             <Label>Cadastro de Produdos</Label>
                         </FormGroup>
@@ -83,36 +88,56 @@ export default class CreateProduct extends Component {
                             <Col md={8}>
                                 <FormGroup ref="myForm" className="myForm">
                                     <Label for="name">Nome do Produto*</Label>
-                                    <Input type="text" ref="name" placeholder="Digite um novo produto" className="formField" />
+                                    <Input value={this.state.name} onChange={e => this.setState({ name: e.target.value })} type="text" placeholder="Digite um novo produto" className="formField" required />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="description">Descrição do produto*</Label>
-                                    <Input type="textarea" ref="address" placeholder="Digite uma descrição..." className="formField" />
+                                    <Input value={this.state.description} onChange={e => this.setState({ description: e.target.value })} type="textarea" ref="address" placeholder="Digite uma descrição..." className="formField" required />
                                 </FormGroup>
+                                <Row>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label for="width">Largura*:</Label>
+                                            <Input value={this.state.width} onChange={e => this.setState({width: e.target.value})} type="text" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label for="heigth">Altura*:</Label>
+                                            <Input value={this.state.heigth} onChange={e => this.setState({heigth: e.target.value})} type="text" name="heigth" id="heigth" placeholder="Apenas numeros decimais" required/>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup>
+                                            <Label for="weigth">Largura*:</Label>
+                                            <Input value={this.state.weigth} onChange={e => this.setState({weigth: e.target.value})} type="text" name="weigth" id="weigth" placeholder="Apenas numeros decimais" required/>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
                                 <p>*Campos obrigatórios</p>
                             </Col>
                             <Col md={4}>
                                 <FormGroup>
                                     <Label for="categoriaProduto">Categoria*</Label>
-                                    <Input type="select" name="categoria" id="categoriaProduto">
-                                        <option>-</option>
-                                        <option>Atletas</option>
-                                        <option>Jornalistas</option>
-                                        <option>Politicos</option>
-                                        <option>Personalizados</option>
+                                    <Input type="select" name="categoria" id="categoriaProduto" defaultValue="0">
+                                        <option value="0">-</option>
+                                        {this.state.categories.map(c => (
+                                            <option value={c.id}>{c.name}</option>
+                                        ))}
                                     </Input>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="price">Link da imagem*</Label>
-                                    <Input type="text" name="price" id="price" placeholder="Cole o link imagem aqui" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
+                                    <Input type="text" value={this.state.image} onChange={e => this.setState({ image: e.target.value })} name="price" id="price" placeholder="Cole o link imagem aqui" required />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="price">Preço:*</Label>
-                                    <Input type="text" name="price" id="price" placeholder="Digite o valor do produto" className={`form-control ${this.state.priceError ? 'is-invalid' : null}`} onChange={this.myChangeHandler} required />
+                                    <Input value={this.state.price} onChange={e => this.setState({ price: e.target.value })} type="text" name="price" id="price" placeholder="Digite o valor do produto" required />
                                 </FormGroup>
+                                <span className="text-dange">{this.state.error}</span>
                                 <Button color="primary"
                                     outline type="submit"
-                                    value="Enviar"  onClick={this.mySubmitHandler} className="myButton" >
+                                    value="Enviar" className="myButton" >
                                     Adicionar
                                 </Button>
 
