@@ -56,13 +56,13 @@ class OrderHistory extends Component {
                                         {order.id}
                                     </td>
                                     <td>
-                                        {order.value}
+                                        {(order.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>
                                     <td>
                                         {order.date}
                                     </td>
                                     <td>
-                                        {order.shipping}
+                                        {(order.shipping).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </td>
                                     <td>
                                         {order.status.status}
