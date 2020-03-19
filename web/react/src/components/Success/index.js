@@ -21,9 +21,8 @@ export default class Success extends Component {
             this.props.history.push('/');
             return;
         }
-
         this.getProducts();
-    }
+    } 
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
@@ -47,10 +46,7 @@ export default class Success extends Component {
 
         
         this.setState({ products: productsItem });
-
         this.clearLocal();
-
-
     }
 
     componentDidMount() {

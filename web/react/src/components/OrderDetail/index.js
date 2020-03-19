@@ -12,6 +12,11 @@ class OrderDetail extends Component {
             id: "",
             address: ""
         }
+         if (!sessionStorage.getItem('client')) {
+            this.props.history.push('/');
+            return;
+        }
+        this.loadAcccount();
     }
 
     async componentDidMount() {
@@ -27,6 +32,14 @@ class OrderDetail extends Component {
         } catch (error) {
 
         }
+    }
+
+    loadAcccount = async () => {
+         JSON.parse(sessionStorage.getItem('client'));
+    }
+
+    loadAcccount(e) {
+        e.preventDefault();
     }
 
     render() {
