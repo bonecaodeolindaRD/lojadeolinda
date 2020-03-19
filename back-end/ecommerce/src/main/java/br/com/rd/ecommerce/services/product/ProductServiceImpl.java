@@ -139,7 +139,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity findProductHome() {
-        Query query = em.createQuery("select p from Product p order by p.off desc", Product.class).setMaxResults(8);
+        Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
         try{
             List<Product> products = query.getResultList();
             if(products == null || products.size() <= 0)
