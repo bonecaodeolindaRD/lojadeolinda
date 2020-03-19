@@ -23,43 +23,9 @@ export default class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: [
-                {
-                    id: 1,
-                    img: "https://picsum.photos/200/200",
-                    nome: "Nome do produto",
-                    desc: "Descricao produto",
-                    preco: 999.99,
-                    desconto: 0.05
-                },
-                {
-                    id: 2,
-                    img: "https://picsum.photos/200/200",
-                    nome: "Nome do produto",
-                    desc: "Descricao produto",
-                    preco: 999.99,
-                    desconto: 0.05
-                },
-                {
-                    id: 3,
-                    img: "https://picsum.photos/200/200",
-                    nome: "Nome do produto",
-                    desc: "Descricao produto",
-                    preco: 999.99,
-                    desconto: 0.05
-                },
-                {
-                    id: 4,
-                    img: "https://picsum.photos/200/200",
-                    nome: "Nome do produto",
-                    desc: "Descricao produto",
-                    preco: 999.99,
-                    desconto: 0.05
-                }
-            ],
+            products: [],
             loading: false
         }
-
         this.findProducts();
     }
 
