@@ -122,6 +122,7 @@ export default class Checkout extends Component {
             let {data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
             if(!returnAddress){
                 this.setState({ erro: "Erro ao gerar o pedido" });
+                this.submeted = false;
                 return false;
             }
             let obj = {
@@ -149,6 +150,7 @@ export default class Checkout extends Component {
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
             if(!order){
                 this.setState({ erro: "Erro ao gerar o pedido" });
+                this.submeted = false;
                 return false;
             }
             sessionStorage.setItem('order', JSON.stringify(order));
