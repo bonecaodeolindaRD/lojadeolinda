@@ -31,7 +31,7 @@ class OrderDetail extends Component {
             <>
                 <Header />
                 <Container align="center">
-                    <h2>Detalhes do Pedido: <a className="text-danger">{this.state.id}</a></h2>
+                    <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>
                     <br></br>
                     <Card>
                         <Row>
