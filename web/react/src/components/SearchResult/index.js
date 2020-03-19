@@ -22,8 +22,10 @@ export default class SearchResult extends Component {
 
     getResult = async () => {
         const { data: products } = await axios("http://localhost:8080/ecommerce/product/find/" + this.props.match.params.product);
+        if(!products)
+            return;
         this.setState({ products });
-        console.log(products);
+
     }
 
     redirect = (evt) => {
@@ -38,7 +40,7 @@ export default class SearchResult extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location} />
-                {this.state.order.length > 0 ? (
+                {this.state.products.length > 0 ? (
                     <Container>
                         <Row>
                             {this.state.products.map(p => (
