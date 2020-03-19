@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
-import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
+import { Col, Row, Container, Input, Button, Alert} from 'reactstrap';
+import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms} from 'react-icons/fa';
+
 import './index.css';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
@@ -25,10 +26,10 @@ export default class Cart extends Component {
         for (var i in cart) {
             totalCart += cart[i].totalItem;
         }
-        
+
 
         this.setState({ total: totalCart, products: cart });
-        
+
     }
 
 
@@ -54,8 +55,8 @@ export default class Cart extends Component {
 
     };
 
-    finish = () =>{
-        if(sessionStorage.getItem('client'))
+    finish = () => {
+        if (sessionStorage.getItem('client'))
             this.props.history.push("/checkout");
         else
             this.props.history.push("/login");
@@ -69,7 +70,7 @@ export default class Cart extends Component {
 
             <>
 
-                <Header history={this.props.history} location={this.props.location}/>
+                <Header history={this.props.history} location={this.props.location} />
 
 
                 <Container className="contanier">
@@ -151,11 +152,23 @@ export default class Cart extends Component {
 
                             </Alert>
 
-                            <Row className="d-flex justify-content-end mt-5 mb-5  mr-1">
-
-                                <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+                            <Row className="d-flex justify-content-end mt-5 mr-1 ">
+                            <Link to="/">
+                                    <Button color="warning" >  Adicionar mais produtos</Button>
+                                </Link>
 
                             </Row>
+
+                            <Col className="d-flex justify-content-end mt-3 mb-5 mr-1">
+                                
+
+                                    <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+
+                                </Col>
+                               
+                           
+                            
+                            
 
                         </>
 
