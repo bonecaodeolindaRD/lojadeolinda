@@ -118,6 +118,7 @@ export default class Header extends Component {
                                                 <DropdownItem>
                                                     <Link onClick={this.logout}>Sair</Link>
                                                 </DropdownItem>
+
                                             </>) : (
                                                 <>
                                                     <DropdownItem to="/login">
