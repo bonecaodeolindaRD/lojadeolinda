@@ -18,7 +18,12 @@ class Account extends Component{
             email: "",
             contact: "",
             cpf: "",
-            error: ""
+            error: "",
+            birth:""
+        }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
         }
         this.loadAcccount();
     }
@@ -30,7 +35,8 @@ class Account extends Component{
             name : account.name,
             email : account.email,
             contact : account.phoneNumber,
-            cpf: account.cpf
+            cpf: account.cpf,
+            birth: account.birthday
         })
     }
 
@@ -41,7 +47,7 @@ class Account extends Component{
     render(){
         return(
             <>
-            <Header/>
+            <Header history={this.props.history} location={this.props.location}/>
             <Container className="tam"  justify-content="center">
             <div className="text-align-center" align="center">
                 <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle"/>
@@ -51,12 +57,19 @@ class Account extends Component{
                 <h1>Detalhes da Conta</h1>
             </div>
             <br></br>
-                <Form text-align-center >
+                <Form text-align-center>
                     <FormGroup row>
                         <Col sm={3}></Col>
                         <Label sm={1} for="nameUser">Nome: </Label>
                         <Col sm={5}>
                             <Input value={this.state.name} disabled onChange={e => this.setState({name: e.target.value})} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                        <Col sm={3}></Col>
+                        <Label sm={2} for="nameUser">Data de Nascimento: </Label>
+                        <Col sm={4}>
+                            <Input value={this.state.birth} disabled onChange={e => this.setState({birth: e.target.value})} type="date" name="birth" id="birth" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>

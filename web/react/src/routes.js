@@ -9,8 +9,11 @@ import About from './components/About';
 import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
+import OrderHistory from './components/OrderHistory';
 import CreateProduct from './components/CreateProduct'
-
+import SearchResult from './components/SearchResult';
+import OrderDetails from './components/OrderDetail';
+import Address from './components/Address';
 import Success from './components/Success';
 
   const Routes = () => (
@@ -28,6 +31,10 @@ import Success from './components/Success';
             <Route path="/createproduct" exact component={CreateProduct} />  
             <Route path="/success" exact component={Success}/>         
             <Route path="/checkout" exact component={Checkout} />
+            <Route path="/history" exact component={OrderHistory}/>
+            <Route path="/search/:product" exact component={SearchResult} />
+            <Route path="/order/detail/:id" exact component={OrderDetails} />
+            <Route path="/address" exact component={Address} />
         </Switch>
     </BrowserRouter>
 );
