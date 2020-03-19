@@ -83,8 +83,8 @@ export default class Checkout extends Component {
             this.props.history.push('/');
             return;
         }
+
         this.listStates();
-        this.listCities("AC");
     }
 
 
@@ -98,6 +98,8 @@ export default class Checkout extends Component {
             totalCart += cart[i].totalItem;
         }
 
+        this.listStates();
+        
 
         cart.forEach(async p => {
             let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
@@ -105,11 +107,15 @@ export default class Checkout extends Component {
                 this.noStock = true;
         });
 
+        
+        this.listCities("AC");
+
         this.setState({ total: totalCart, products: cart });
     }
 
     gerateOrder = async () => {
         try {
+            this.submeted = true;
             const email = JSON.parse(sessionStorage.getItem('client'));
             const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
             const address = {
@@ -150,7 +156,7 @@ export default class Checkout extends Component {
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
             if(!order){
                 this.setState({ erro: "Erro ao gerar o pedido" });
-                
+                this.submeted = false;
                 return false;
             }
             sessionStorage.setItem('order', JSON.stringify(order));
@@ -330,8 +336,8 @@ export default class Checkout extends Component {
         }
         if (!this.validateFields())
             return;
-        if(this.gerateOrder() && !this.noStock){
-            setTimeout(() => this.props.history.push("/success"), 2000);
+        if(await this.gerateOrder() && !this.noStock){
+           this.props.history.push("/success");
             this.submeted = true;
         }
         else

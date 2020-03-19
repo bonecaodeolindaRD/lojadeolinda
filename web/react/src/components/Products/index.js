@@ -31,7 +31,7 @@ export default class Products extends Component {
 
     findProducts = async () => {
         this.setState({loading: true});
-        const { data: productss } = await axios("http://localhost:8080/ecommerce/product/all");
+        const { data: productss } = await axios("http://localhost:8080/ecommerce/product/home");
         let products = [];
         productss.forEach(p => products.push({
             id: p.id,

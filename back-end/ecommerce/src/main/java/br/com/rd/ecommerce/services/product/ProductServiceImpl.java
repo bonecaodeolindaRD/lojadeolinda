@@ -43,6 +43,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+
+
     @Override
     public ResponseEntity findProductById(Long id) {
         if (id == null || id <= 0)
@@ -136,12 +138,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ResponseEntity findProductHome() {
+        Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
+        try{
+            List<Product> products = query.getResultList();
+            if(products == null || products.size() <= 0)
+                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+            List<ProductDTO> pDTO = new ArrayList<>();
+            for(Product p: products)
+                pDTO.add(converter.convertTo(p));
+            return ResponseEntity.ok().body(pDTO);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new ProductException("Erro " + e.getMessage()));
+        }
+    }
+
+    @Override
     public ResponseEntity createProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         Product product = converter.convertTo(productDTO);
-        Product returnEntity = repository.save(product);
-        return ResponseEntity.ok().body(returnEntity);
+        try {
+            Product returnEntity = repository.save(product);
+            return ResponseEntity.ok().body(returnEntity);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ProductException("Erro " + e.getMessage()));
+        }
     }
 
     @Override
