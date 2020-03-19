@@ -28,6 +28,7 @@ export default class CreateProduct extends Component {
         super(props);
         this.state = {
             categories: [],
+            category: 0,
             name: '',
             description: '',
             price: 2000.2,
@@ -54,8 +55,64 @@ export default class CreateProduct extends Component {
     };
 
 
+    isEmpty = str => str.toString().trim().length <= 0; 
+
     validateFields = () => {
 
+        if(!isNaN(this.state.price)){
+            this.setState({error: "O preço deve ser um numero"});
+            return false;
+        }
+
+        if(this.state.price <= 0){
+            this.setState({error: "O preço não pode ser menor ou igual a zero"});
+            return false;
+        }
+
+        if(!isNaN(this.state.width)){
+            this.setState({error: "A largura deve ser um numero"});
+            return false;
+        }
+
+        if(this.state.width <= 0){
+            this.setState({error: "A largura não pode ser menor ou igual a zero"});
+            return false;
+        }
+
+        if(!isNaN(this.state.heigth)){
+            this.setState({error: "A altura deve ser um numero"});
+            return false;
+        }
+
+        if(this.state.heigth <= 0){
+            this.setState({error: "A altura não pode ser menor ou igual a zero"});
+            return false;
+        }
+
+        if(!isNaN(this.state.weigth)){
+            this.setState({error: "O peso deve ser um numero"});
+            return false;
+        }
+        
+        if(this.state.weigth <= 0){
+            this.setState({error: "O peso não pode ser menor ou igual a zero"});
+            return false;
+        }
+
+        if(this.isEmpty(this.state.name)){
+            this.setState({error: "Preencha um nome para o produto"});
+            return false;
+        }
+
+        if(this.isEmpty(this.state.name)){
+            this.setState({error: "Preencha uma descrição para o produto"});
+            return false;
+        }
+
+        if(this.state.category <= 0){
+            this.state({error: "Selecione uma categoria"});
+            return false;
+        }
 
         return true;
     }
@@ -64,7 +121,10 @@ export default class CreateProduct extends Component {
         let obj = {
 
         }
-        let product = await axios.post("", obj);
+        let {data: product} = await axios.post("http://localhost:8080/ecommerce/product/new", obj);
+        if(!product){
+            this.setState({error: "Erro ao adicionar o produto"});
+        }
     }
 
     finish = (event) => {
@@ -98,19 +158,19 @@ export default class CreateProduct extends Component {
                                     <Col md={4}>
                                         <FormGroup>
                                             <Label for="width">Largura*:</Label>
-                                            <Input value={this.state.width} onChange={e => this.setState({width: e.target.value})} type="text" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
+                                            <Input value={this.state.width} onChange={e => this.setState({width: e.target.value})} type="number" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup>
                                             <Label for="heigth">Altura*:</Label>
-                                            <Input value={this.state.heigth} onChange={e => this.setState({heigth: e.target.value})} type="text" name="heigth" id="heigth" placeholder="Apenas numeros decimais" required/>
+                                            <Input value={this.state.heigth} onChange={e => this.setState({heigth: e.target.value})} type="number" name="heigth" id="heigth" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup>
-                                            <Label for="weigth">Largura*:</Label>
-                                            <Input value={this.state.weigth} onChange={e => this.setState({weigth: e.target.value})} type="text" name="weigth" id="weigth" placeholder="Apenas numeros decimais" required/>
+                                            <Label for="weigth">Peso*:</Label>
+                                            <Input value={this.state.weigth} onChange={e => this.setState({weigth: e.target.value})} type="number" name="weigth" id="weigth" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -119,7 +179,7 @@ export default class CreateProduct extends Component {
                             <Col md={4}>
                                 <FormGroup>
                                     <Label for="categoriaProduto">Categoria*</Label>
-                                    <Input type="select" name="categoria" id="categoriaProduto" defaultValue="0">
+                                    <Input type="select" name="categoria" id="categoriaProduto" value={this.state.category} onChange={e => this.setState({category: e.target.value})}>
                                         <option value="0">-</option>
                                         {this.state.categories.map(c => (
                                             <option value={c.id}>{c.name}</option>
