@@ -83,8 +83,8 @@ export default class Checkout extends Component {
             this.props.history.push('/');
             return;
         }
+
         this.listStates();
-        this.listCities("AC");
     }
 
 
@@ -98,12 +98,17 @@ export default class Checkout extends Component {
             totalCart += cart[i].totalItem;
         }
 
+        this.listStates();
+        
 
         cart.forEach(async p => {
             let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
             if(response.balance < p.quantity)
                 this.noStock = true;
         });
+
+        
+        this.listCities("AC");
 
         this.setState({ total: totalCart, products: cart });
     }
