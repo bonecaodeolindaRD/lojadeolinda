@@ -46,7 +46,7 @@ export default class Success extends Component {
         }
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
-            img: p.image,
+            image: p.image,
             name: p.name,
             desc: p.description,
             price: p.price,
