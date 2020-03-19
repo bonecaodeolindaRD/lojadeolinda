@@ -25,6 +25,8 @@ public class Address implements Serializable {
     private String cep;
     @Column(name = "ds_district", nullable = false, length = 45)
     private String district;
+    @Column(name = "ds_citie")
+    private String citie;
     @Column(name = "nr_number", nullable = false)
     private Integer number;
     @Column(name = "ds_uf", nullable = false, length = 5)

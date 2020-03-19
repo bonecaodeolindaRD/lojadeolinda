@@ -63,16 +63,6 @@ export default class Checkout extends Component {
                         aDistrict: "Higienópolis",
                         aCitie: "São Paulo",
                         aState: "SP",
-                    },
-                    {
-                        id: 2,
-                        aCep: "11111111",
-                        aStreet: "Av. Pres. Costa e Silva",
-                        aNumber: 550,
-                        aComplement: "Loja 1",
-                        aDistrict: "Helena Maria",
-                        aCitie: "Osasco",
-                        aState: "SP",
                     }
                 ],
 
@@ -85,6 +75,7 @@ export default class Checkout extends Component {
         }
 
         this.listStates();
+        this.getAddresses();
     }
 
 
@@ -107,10 +98,21 @@ export default class Checkout extends Component {
                 this.noStock = true;
         });
 
-        
         this.listCities("AC");
-
         this.setState({ total: totalCart, products: cart });
+    }
+
+    getAddresses = async () => {
+        const  { email }  = JSON.parse(sessionStorage.getItem('client'));
+        let {data : add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        this.setState({
+            ...this.state,
+            client: {
+                ...this.state.client,
+                addresses: add.addresses
+            }
+        });
+        console.log(this.state.client.addresses);
     }
 
     gerateOrder = async () => {
