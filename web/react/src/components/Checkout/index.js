@@ -94,6 +94,8 @@ export default class Checkout extends Component {
     getAddresses = async () => {
         const  { email }  = JSON.parse(sessionStorage.getItem('client'));
         let {data : add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        if(!add.addresses)
+            return;
         this.setState({
             ...this.state,
             client: {
