@@ -3,7 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
 import Axios from 'axios';
-import { Container, Row, Col, Card, CardTitle } from 'reactstrap';
+import { Container, Row, Card, CardTitle } from 'reactstrap';
 
 class OrderDetail extends Component {
     constructor(props) {
