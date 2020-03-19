@@ -46,7 +46,7 @@ export default class Header extends Component {
             email: account.email,
             name: account.name
         });
-        return account.name
+        return account.name.indexOf(" ") < 0 ? account.name : account.name.substring(0, account.name.indexOf(" "));
     }
 
     toggle = () => {
@@ -94,7 +94,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label><h6>Bem-Vindo(a) {this.state.name} </h6></Label>
+                                <Label><h6>Bem-Vindo(a) <br/>{this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
