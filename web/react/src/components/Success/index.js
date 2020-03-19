@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import { Jumbotron, CardText, Button, Col, Row, Input } from 'reactstrap';
+import { Jumbotron, CardText, Button, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 
@@ -13,7 +13,8 @@ export default class Success extends Component {
         this.state = {
             products: [
 
-            ]
+            ],
+            total: 0
         }
         this.id = 0;
         if (!sessionStorage.getItem('order')) {
@@ -37,7 +38,7 @@ export default class Success extends Component {
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
         // this.state.products.push(productsItem);
 
-
+        //let total = await JSON.parse(sessionStorage)
 
         if (productsItem === null) {
             //this.props.history.push("/");
@@ -49,9 +50,16 @@ export default class Success extends Component {
             name: p.name,
             desc: p.description,
             price: p.price,
-            quantity: p.quantity
+            quantity: p.quantity,
+            
+            
+
 
         }));
+
+        // this.state.total.forEach(p => this.setState(
+        //    {total: total}
+        // ))
         this.setState({ products: productsItem });
 
 
@@ -104,7 +112,7 @@ export default class Success extends Component {
 
                                 <Col className="mb-3" xs="7" sm="2">
                                     <h5 className="h3-price">
-                                       {(item.quantity)}
+                                        {(item.quantity)}
                                     </h5>
 
                                     <small>Quantidade</small>
@@ -113,7 +121,15 @@ export default class Success extends Component {
 
                             </Row>
 
+
+
                         ))}
+                        
+                            <h6 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
+                       
+
+
+
 
                         <Link to='/home'>
                             <Button color="warning" > <FaShoppingBasket /> Voltar as compras</Button>
