@@ -28,18 +28,22 @@ export default class Success extends Component {
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        sessionStorage.removeItem('cart');
-        sessionStorage.removeItem('order');
+        // sessionStorage.removeItem('cart');
+        // sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
+        // this.state.products.push(productsItem);
 
-        if (productsItem == null) {
-            return setTimeout(() => this.props.history.push("/"), 30000);
+
+
+        if (productsItem === null) {
+            //this.props.history.push("/");
+            return
         }
-        productsItem.forEach(p => this.state.products.push({
+        this.state.products.forEach(p => productsItem.push({
             id: p.id,
             img: p.image,
             name: p.name,
@@ -67,7 +71,7 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido:
+                            Número do pedido: {this.id}
 
 
                         </CardText>
@@ -78,7 +82,7 @@ export default class Success extends Component {
                     </CardText>
                         {this.state.products.map(item => (
 
-                            <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={this.state.id}>
+                            <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={item.id}>
 
                                 <Col xs="12" sm="2">
 
@@ -99,10 +103,12 @@ export default class Success extends Component {
                                 </Col>
 
                                 <Col className="mb-3" xs="7" sm="2">
-                                    <div className="form-group">
-                                        <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
-                                        <small>Quantidade</small>
-                                    </div>
+                                    <h5 className="h3-price">
+                                       {(item.quantity)}
+                                    </h5>
+
+                                    <small>Quantidade</small>
+
                                 </Col>
 
                             </Row>
