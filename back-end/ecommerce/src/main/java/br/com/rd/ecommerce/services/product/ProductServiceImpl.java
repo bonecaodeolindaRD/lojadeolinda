@@ -157,6 +157,15 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity createProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        if(productDTO.getPrice() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getHeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWidth() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
+
         Product product = converter.convertTo(productDTO);
         try {
             Product returnEntity = repository.save(product);
@@ -170,6 +179,14 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity updateProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        if(productDTO.getPrice() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getHeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWidth() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
         try {
             Product product = repository.findById(productDTO.getId()).get();
             Category category = new Category();
