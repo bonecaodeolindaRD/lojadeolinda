@@ -24,6 +24,7 @@ public class Client implements Serializable {
     private Long id;
     @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
+    @Temporal(TemporalType.DATE)
     @Column(name = "dt_birth")
     private Date birthday;
     @Column(name = "nr_cpf", nullable = false, length = 15)
