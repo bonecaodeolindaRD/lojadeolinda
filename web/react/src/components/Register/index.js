@@ -11,7 +11,7 @@ import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 class Register extends Component {
     constructor(props) {
         super(props);
-        if(sessionStorage.getItem('client'))
+        if (sessionStorage.getItem('client'))
             this.props.history.push('/');
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -52,7 +52,7 @@ class Register extends Component {
         this.setState({ PHONENUMBER: event.target.value });
     }
 
-    onChangeConfPass= event => {
+    onChangeConfPass = event => {
         this.setState({ PASS_CONF: event.target.value });
     }
 
@@ -67,24 +67,31 @@ class Register extends Component {
     redirectHome = () => {
 
         this.props.history.push("/");
-        
+
     }
 
 
     handleSubmit = async event => {
+
         event.preventDefault();
 
+        let cpf = this.state.CPF;
+        cpf = cpf.replace(".","").replace("-","").replace(" ","").replace(".","").trim();
+
+        let phone = this.state.PHONENUMBER
+        phone = phone.replace(")","").replace("(","").replace("-","").replace(" ","").trim();
+
         const user = {
-            cpf: this.state.CPF,
-            email: this.state.EMAIL,
-            name: this.state.NAME,
+            cpf: cpf,
+            email: this.state.EMAIL.trim(),
+            name: this.state.NAME.trim().toUpperCase(),
             birthday: this.state.BIRTH,
             password: this.state.PASSWORD,
-            phoneNumber: this.state.PHONENUMBER,
+            phoneNumber: phone,
             pass_conf: this.state.PASS_CONF,
         };
 
-        if(this.state.PASSWORD === this.state.PASS_CONF){
+        if (this.state.PASSWORD === this.state.PASS_CONF) {
             try {
                 await axios.post("http://localhost:8080/ecommerce/client/new", user);
                 this.setState({
@@ -93,15 +100,15 @@ class Register extends Component {
                     email: "",
                     phoneNumber: "",
                     password: "",
-                    birth:""
+                    birth: ""
                 })
                 this.props.history.push("/login");
             } catch (error) {
-                this.setState({alert_message: "error" })
-              
+                this.setState({ alert_message: "error" })
+
             }
         } else {
-            this.setState({alert_pass: "error" })
+            this.setState({ alert_pass: "error" })
         }
     }
 
@@ -148,7 +155,7 @@ class Register extends Component {
     render() {
         return (
             <>
-                <Header history={this.props.history} location={this.props.location}/>
+                <Header history={this.props.history} location={this.props.location} />
                 <Container className="tam" justify-content="center">
                     <div className="text-align-center" align="center">
                         <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
@@ -158,8 +165,8 @@ class Register extends Component {
                         <h1>Registro de Conta</h1>
                     </div>
                     <div className="text-align-center" align="center">
-                    {this.state.alert_message==="error"?<AlertEvent/>: null}
-                    {this.state.alert_pass==="error"?<AlertPass/>: null}
+                        {this.state.alert_message === "error" ? <AlertEvent /> : null}
+                        {this.state.alert_pass === "error" ? <AlertPass /> : null}
                     </div>
                     <br></br>
                     <Form onSubmit={this.handleSubmit} text-align-center >
@@ -174,7 +181,7 @@ class Register extends Component {
                             <Col sm={3}></Col>
                             <Label sm={2} for="BIRTH">Data de Nascimento: </Label>
                             <Col sm={4}>
-                                <Input type="date"  name="BIRTH" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
+                                <Input type="date" name="BIRTH" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>

@@ -12,44 +12,54 @@ export default class Success extends Component {
         super(props);
         this.state = {
             products: [
-        
-            ],
-            
-            total: 0
+
+            ]
         }
-        
+        this.id = 0;
+        if (!sessionStorage.getItem('order')) {
+            this.props.history.push('/');
+            return;
+        }
+
+        this.clearLocal();
         this.getProducts();
     }
 
+    clearLocal = () => {
+        let { id } = JSON.parse(sessionStorage.getItem('order'));
+        this.id = id;
+        sessionStorage.removeItem('cart');
+        sessionStorage.removeItem('order');
+    }
 
-    getProducts = async () =>{
-       
-         let productsItem =  await JSON.parse(sessionStorage.getItem('cart'));
-        
-        if (productsItem == null){
-         return  setTimeout(() => this.props.history.push("/"), 30000);
+    getProducts = async () => {
+
+        let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
+
+        if (productsItem == null) {
+            return setTimeout(() => this.props.history.push("/"), 30000);
         }
-         productsItem.forEach(p => this.state.products.push( {
-             id : p.id,
-             img: p.image,
-             name: p.name,
-             desc: p.description,
-             price: p.price,
-             quantity: p.quantity
-             
-         }));
-         this.setState({products: productsItem});
-         
-        
-       
-        }
+        productsItem.forEach(p => this.state.products.push({
+            id: p.id,
+            img: p.image,
+            name: p.name,
+            desc: p.description,
+            price: p.price,
+            quantity: p.quantity
+
+        }));
+        this.setState({ products: productsItem });
+
+
+
+    }
     render() {
 
         return (
             <>
 
                 <Header history={this.props.history} location={this.props.location} />
-                
+
                 <section className="d-flex justify-content-center">
                     <Jumbotron className="col-9">
                         <h1 className="display-3 text-success">Compras concluídas</h1>
@@ -57,9 +67,9 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido: 
+                            Número do pedido:
 
-        
+
                         </CardText>
 
                         <CardText >
@@ -71,7 +81,7 @@ export default class Success extends Component {
                             <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={this.state.id}>
 
                                 <Col xs="12" sm="2">
-                            
+
                                     <img src={item.img} alt={item.name} title={item.name}
                                         className="img-responsive mb-3" width="100%" />
                                 </Col>
@@ -95,10 +105,10 @@ export default class Success extends Component {
                                     </div>
                                 </Col>
 
-                            </Row> 
+                            </Row>
 
                         ))}
-                        
+
                         <Link to='/home'>
                             <Button color="warning" > <FaShoppingBasket /> Voltar as compras</Button>
                         </Link>

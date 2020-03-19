@@ -31,8 +31,6 @@ export default class ProductDetail extends Component {
 
         getProduct = async() => {
             let id = this.props.match.params.id;
-            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
-            console.log(stock);
             const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
             this.setState({
                 id: product.id,
@@ -44,7 +42,10 @@ export default class ProductDetail extends Component {
                 width: product.width,
                 weight: product.weight,
                 discount: product.off,       
-                balance: stock.balance
+            });
+            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+            this.setState({
+                balance: stock ? stock.balance : 0
             });
         }
 
@@ -124,14 +125,14 @@ export default class ProductDetail extends Component {
                                 <FormGroup className="control-group">
                                     <h6 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h6>
                                     <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>          
-                                    <p>Estoque disponivel: {this.state.balance}</p>                            
+                                    <p>Estoque disponível: {this.state.balance}</p>                            
                                     {this.state.balance > 0 ? (
                                             <>
                                                 <Input type="number" placeholder="Digite a quantidade" min="1" max={this.state.balance}   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
                                                 <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
                                             </>):
                                             (
-                                                <Button color="dark" disabled> <FaShoppingCart/> Indisponivel</Button>
+                                                <Button color="dark" disabled> <FaShoppingCart/> Indisponível</Button>
                                             )
 
                                     }
