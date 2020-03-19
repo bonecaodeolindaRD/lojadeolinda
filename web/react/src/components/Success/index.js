@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import { Jumbotron, CardText, Button, Col, Row, Input } from 'reactstrap';
+import { Jumbotron, CardText, Button, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaShoppingBasket } from 'react-icons/fa';
 
@@ -13,40 +13,53 @@ export default class Success extends Component {
         this.state = {
             products: [
 
-            ]
+            ],
+            total: 0
         }
         this.id = 0;
-
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
         }
 
+        this.clearLocal();
         this.getProducts();
     }
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        sessionStorage.removeItem('cart');
-        sessionStorage.removeItem('order');
+        // sessionStorage.removeItem('cart');
+        // sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
+    
 
-        productsItem.forEach(p => this.state.products.push({
+        
+
+        if (productsItem === null) {
+            //this.props.history.push("/");
+            return
+        }
+        this.state.products.forEach(p => productsItem.push({
             id: p.id,
             img: p.image,
             name: p.name,
             desc: p.description,
             price: p.price,
-            quantity: p.quantity
+            quantity: p.quantity,
+            
+            
+
 
         }));
+
+        
         this.setState({ products: productsItem });
-        this.clearLocal();
+
 
 
     }
@@ -75,7 +88,7 @@ export default class Success extends Component {
                     </CardText>
                         {this.state.products.map(item => (
 
-                            <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={this.state.id}>
+                            <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={item.id}>
 
                                 <Col xs="12" sm="2">
 
@@ -96,15 +109,25 @@ export default class Success extends Component {
                                 </Col>
 
                                 <Col className="mb-3" xs="7" sm="2">
-                                    <div className="form-group">
-                                        <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
-                                        <small>Quantidade</small>
-                                    </div>
+                                    <h5 className="h3-price">
+                                        {(item.quantity)}
+                                    </h5>
+
+                                    <small>Quantidade</small>
+
                                 </Col>
 
                             </Row>
 
+
+
                         ))}
+                        
+                            <h6 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
+                       
+
+
+
 
                         <Link to='/home'>
                             <Button color="warning" > <FaShoppingBasket /> Voltar as compras</Button>

@@ -77,7 +77,7 @@ class OrderHistory extends Component {
                     </Table>
                 </Container>
                 <div className="footer" id="footer">
-                <Footer/>
+                    <Footer />
                 </div>
             </>
         )
