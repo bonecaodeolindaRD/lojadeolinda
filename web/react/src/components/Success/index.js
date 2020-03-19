@@ -16,13 +16,12 @@ export default class Success extends Component {
             ]
         }
         this.id = 0;
-        
+
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
         }
 
-        this.clearLocal();
         this.getProducts();
     }
 
@@ -47,7 +46,7 @@ export default class Success extends Component {
 
         }));
         this.setState({ products: productsItem });
-
+        this.clearLocal();
 
 
     }
@@ -65,7 +64,7 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido:
+                            Número do pedido: {this.id}
 
 
                         </CardText>
