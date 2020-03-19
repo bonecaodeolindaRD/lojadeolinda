@@ -92,7 +92,7 @@ export default class Success extends Component {
 
                                 <Col xs="12" sm="2">
 
-                                    <img src={item.img} alt={item.name} title={item.name}
+                                    <img src={item.image} alt={item.name} title={item.name}
                                         className="img-responsive mb-3" width="100%" />
                                 </Col>
 

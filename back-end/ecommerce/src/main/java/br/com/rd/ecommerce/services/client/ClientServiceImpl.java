@@ -3,6 +3,7 @@ package br.com.rd.ecommerce.services.client;
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
+import br.com.rd.ecommerce.models.entities.Address;
 import br.com.rd.ecommerce.models.entities.Client;
 
 import br.com.rd.ecommerce.models.entities.Order;
@@ -145,6 +146,25 @@ public class ClientServiceImpl implements ClientService {
             return ResponseEntity.ok().body(clientDTO);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        }
+    }
+
+    public ResponseEntity findClientAddress(String email){
+        if(email == null || email == "")
+            return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
+        try{
+            Client client = clientRepository.findByEmail(email);
+            if(client == null )
+                return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
+            ClientDTO clientDTO = converter.convertTo(client);
+
+            for(Address a: client.getAddresses())
+                clientDTO.addAddress(converter.convertTo(a));
+
+            return ResponseEntity.badRequest().body(clientDTO);
+
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new ClientException("Erro " + e.getMessage()));
         }
     }
 }

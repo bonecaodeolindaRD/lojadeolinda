@@ -12,7 +12,7 @@ public class MailSenderController {
     private MailSenderServiceImpl mailSenderService;
 
     @PostMapping("/mail/send")
-    public String sendemail(){
-        return mailSenderService.sendMail("","","","");
+    public void sendemail(){
+        mailSenderService.sendMail("","","","");
     }
 }
