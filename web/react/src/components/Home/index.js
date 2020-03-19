@@ -16,7 +16,7 @@ export default class Home extends Component {
 
         return (
             <>
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container>
                     <Carrossel />
                     <Produtos history={this.props.history}/>

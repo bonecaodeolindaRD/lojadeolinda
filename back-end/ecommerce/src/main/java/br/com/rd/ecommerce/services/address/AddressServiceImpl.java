@@ -24,25 +24,33 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public ResponseEntity findAllAddress() {
-        List<Address> addresses = repository.findAll();
-        if(addresses == null || addresses.size() <= 0)
-            return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
-        List<AddressDTO> addressDTOS = new ArrayList<>();
-        for(Address a: addresses)
-            addressDTOS.add(converter.convertTo(a));
-        return ResponseEntity.ok().body(addressDTOS);
+        try {
+            List<Address> addresses = repository.findAll();
+            if (addresses == null || addresses.size() <= 0)
+                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+            List<AddressDTO> addressDTOS = new ArrayList<>();
+            for (Address a : addresses)
+                addressDTOS.add(converter.convertTo(a));
+            return ResponseEntity.ok().body(addressDTOS);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
     public ResponseEntity findAddressById(Long id) {
         if(id == null || id <= 0)
             return ResponseEntity.badRequest().body(new AddressException("Favor informe o id de um endereco"));
-        Address address = repository.findById(id).get();
-        if(address == null)
-            return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
-        AddressDTO addressDTO = converter.convertTo(address);
+        try {
+            Address address = repository.findById(id).get();
+            if (address == null)
+                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+            AddressDTO addressDTO = converter.convertTo(address);
 
-        return ResponseEntity.ok().body(addressDTO);
+            return ResponseEntity.ok().body(addressDTO);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
 
     }
 
@@ -51,28 +59,36 @@ public class AddressServiceImpl implements AddressService {
         if(client == null)
             return ResponseEntity.badRequest().body(new AddressException("Favor informe um cliente"));
         Client c = converter.convertTo(client);
-        List<Address> addresses = repository.findByClient(c);
-        if(addresses == null || addresses.size() <= 0)
-            return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
-        List<AddressDTO> aDTO = new ArrayList<>();
-        for(Address a: addresses)
-            aDTO.add(converter.convertTo(a));
+        try {
+            List<Address> addresses = repository.findByClient(c);
+            if (addresses == null || addresses.size() <= 0)
+                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+            List<AddressDTO> aDTO = new ArrayList<>();
+            for (Address a : addresses)
+                aDTO.add(converter.convertTo(a));
 
-        return ResponseEntity.ok().body(aDTO);
+            return ResponseEntity.ok().body(aDTO);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
     public ResponseEntity findAddressByCEP(String CEP) {
         if(CEP == null || CEP.length() <= 0 || CEP.length() > 8)
             return ResponseEntity.badRequest().body(new AddressException("CEP informado e invalido"));
-        List<Address> addresses = repository.findByCep(CEP);
-        if(addresses == null || addresses.size() <= 0)
-            return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
-        List<AddressDTO> aDTO = new ArrayList<>();
-        for(Address a: addresses)
-            aDTO.add(converter.convertTo(a));
+        try {
+            List<Address> addresses = repository.findByCep(CEP);
+            if (addresses == null || addresses.size() <= 0)
+                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+            List<AddressDTO> aDTO = new ArrayList<>();
+            for (Address a : addresses)
+                aDTO.add(converter.convertTo(a));
 
-        return ResponseEntity.ok().body(aDTO);
+            return ResponseEntity.ok().body(aDTO);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
 
     }
 
@@ -81,8 +97,12 @@ public class AddressServiceImpl implements AddressService {
         if(addressDTO == null)
             return ResponseEntity.badRequest().body(new AddressException("O endereco e invalido"));
         Address address = converter.convertTo(addressDTO);
-        Address addressReturn = repository.save(address);
-        return ResponseEntity.ok().body(addressReturn);
+        try {
+            Address addressReturn = repository.save(address);
+            return ResponseEntity.ok().body(addressReturn);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 
     @Override
@@ -94,13 +114,17 @@ public class AddressServiceImpl implements AddressService {
     public ResponseEntity updateAddress(AddressDTO addressDTO) {
         if(addressDTO == null)
             return ResponseEntity.badRequest().body(new AddressException("Endereco invalido"));
-        Address address = repository.findById(addressDTO.getId()).get();
-        address.setStreet(addressDTO.getStreet());
-        address.setNumber(addressDTO.getNumber());
-        address.setDistrict(addressDTO.getDistrict());
-        address.setCep(addressDTO.getCep());
-        address.setUf(addressDTO.getUf());
-        Address addressReturn = repository.save(address);
-        return ResponseEntity.ok().body(addressReturn);
+        try {
+            Address address = repository.findById(addressDTO.getId()).get();
+            address.setStreet(addressDTO.getStreet());
+            address.setNumber(addressDTO.getNumber());
+            address.setDistrict(addressDTO.getDistrict());
+            address.setCep(addressDTO.getCep());
+            address.setUf(addressDTO.getUf());
+            Address addressReturn = repository.save(address);
+            return ResponseEntity.ok().body(addressReturn);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 }

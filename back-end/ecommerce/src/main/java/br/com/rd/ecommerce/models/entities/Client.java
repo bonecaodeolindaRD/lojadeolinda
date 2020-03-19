@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,6 +24,8 @@ public class Client implements Serializable {
     private Long id;
     @Column(name = "ds_name", nullable = false, length = 100)
     private String name;
+    @Column(name = "dt_birth")
+    private Date birthday;
     @Column(name = "nr_cpf", nullable = false, length = 15)
     private String cpf;
     @Column(name = "ds_email", nullable = false, unique = true, length = 100)

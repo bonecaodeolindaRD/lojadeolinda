@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,11 +16,16 @@ import java.util.List;
 public class ClientDTO {
     private Long id;
     private String name;
+    private Date birthday;
     private String cpf;
     private String email;
     private String phoneNumber;
     private String password;
-    private List<Address> addresses;
-    private List<Order> orders;
+    private List<AddressDTO> addresses;
+    private List<OrderDTO> orders;
 
+    public void addOrder(OrderDTO order){
+        if(orders == null) orders = new ArrayList<>();
+        orders.add(order);
+    }
 }

@@ -41,7 +41,6 @@ export default class Header extends Component {
 
     getLogin = () => {
         let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
-        console.log(account)
         this.setState({ 
             ...this.state,
             email: account.email,
@@ -63,15 +62,17 @@ export default class Header extends Component {
 
     search = (event) => {
         event.preventDefault();
+        const form = event.target;
+        const inputGroup = form.children[0];
+        const inputText = inputGroup.children[0];
+        this.props.history.push('/search/' + inputText.value);
+        let local = this.props.location.pathname.split('/');
+        console.log(local);
+        if(local[1] === 'search')
+            window.location.reload();
     }
 
     render() {
-        const {name} = this.state;
-        console.log('name')
-        console.log(name)
-        console.log(typeof name)
-        console.log('name')
-
         return (
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
@@ -93,7 +94,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label>Bem-Vindo(a) {this.state.name} </Label>
+                                <Label><h6>Bem-Vindo(a) {this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
@@ -103,6 +104,9 @@ export default class Header extends Component {
                                             <>
                                             <DropdownItem >
                                                 <Link to="/account">Minha conta</Link>
+                                            </DropdownItem>
+                                            <DropdownItem >
+                                                <Link to="/history">Minhas Compras</Link>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <Link onClick={this.logout}>Sair</Link>

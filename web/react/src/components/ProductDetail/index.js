@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Table, ListGroup, ListGroupItem, Button, Form, Label, FormGroup, Input } from 'reactstrap';
+import { Container, Row, Col, Table, Button, Form, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -9,119 +9,177 @@ import Footer from '../Footer';
 
 export default class ProductDetail extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
+        constructor(props){
+            super(props);
+            this.state = {
+                id: 12,
+                image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
+                name: "Bonecão Galvão Bueno ",
+                description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
+                quantity: 1,                
+                price: 1000,
+                height: 3.5,
+                width: 1.5,
+                weight: 20.0,
+                discount: 0.05,
+                balance: 0         
+            }
 
-            id: 11,
-            image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
-            name: "Bonecão Galvão Bueno ",
-            description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil.",
-            quantity: 1,
-            price: 10000
+                this.getProduct();
+                                        
+        } 
+
+        getProduct = async() => {
+            let id = this.props.match.params.id;
+            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+            console.log(stock);
+            const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
+            this.setState({
+                id: product.id,
+                image: product.image,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                height: product.height,
+                width: product.width,
+                weight: product.weight,
+                discount: product.off,       
+                balance: stock.balance
+            });
         }
 
-        this.getProduct();
 
-    }
+        replaceComma = (valor) => {
 
-    getProduct = async () => {
-        console.log(this.props.match.params.id);
-    }
+            return valor.toString().replace(".", ",");
 
+        }
+            
 
-    change(event) {
+        change(event) {
 
-        this.setState({ quantity: event.target.value });
-    };
+              this.setState({ quantity: event.target.value });      
+        };
 
-    handleFormSubmit = (event) => {
+        handleFormSubmit = (event) => {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
-        if (cart.length > 0) {
-            for (var i in cart) {
-                if (cart[i].id == this.state.id) {
-                    cart[i].quantity = this.state.quantity + cart[i].quantity;
-                    cart[i].totalItem = this.state.price * cart[i].quantity;
-                    localStorage.cart = JSON.stringify(cart);
-                    return;
+            if(cart.length > 0) {
+                for (var i in cart) {
+                    if(cart[i].id === this.state.id){
+                        cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
+
+                        cart[i].totalItem =  (this.state.price - this.state.price * this.state.discount) *  cart[i].quantity;
+                      
+                        sessionStorage.cart = JSON.stringify(cart);
+                        this.props.history.push("/cart");
+                        return;
+                    }
                 }
             }
-        }
 
-        cart.push({
-            id: this.state.id,
-            image: this.state.image,
-            name: this.state.name,
-            description: this.state.description,
-            quantity: this.state.quantity,
-            price: this.state.price,
-            totalItem: this.state.price * this.state.quantity
+     
 
-        });
-
-        localStorage.setItem('cart', JSON.stringify(cart));
+            cart.push({
+                id: this.state.id,
+                name: this.state.name,
+                image: this.state.image,
+                description: this.state.description,
+                quantity: parseInt(this.state.quantity),
+                price: this.state.price,
+                totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity,
+                value: this.state.price - this.state.price * this.state.discount
 
 
-    };
+            });
+
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            
+            this.props.history.push("/cart");
+
+          };
 
 
-    render() {
+        render() {
 
-        return (
+                return (  
 
-            <>
-                <Header />
-                <Container className="pt-5 pb-2 " >
+                    <>
+                    <Header history={this.props.history} location={this.props.location}/>
+                    <Container className="pt-5 pb-2 " >
                     <Row className="row">
 
                         <Col className="mb-3" xs="12" sm="4" md="4" lg="4">
-                            <img src={this.state.image} className="rounded" width="100%"
-                                title="Imagem Produto" alt="Imagem do produto" />
+                                <img src={this.state.image} className="rounded" width="100%"
+                                    title="Imagem Produto" alt="Imagem do produto" />
                         </Col>
 
-                        <Col xs="12" sm="6" md="6" lg="6">
-
+                        <Col xs="12"  sm="6" md="6" lg="6">
                             <h3>{this.state.name}</h3>
                             <hr className="soft" />
                             <Form className="form-horizontal qtyFrm">
                                 <FormGroup className="control-group">
-                                    <Label for="qtd" className="control-label pb-2 pr-5"><h5>R${this.state.price}</h5></Label >
-                                    <Input type="number" placeholder="Digite a quantidade" min="1" max="10" id="qtd" value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-2" />
-                                    
-                                        <Button outline color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart /> Comprar</Button>
-                                    
+                                    <h6 className="mb-3"><del>De: {(this.state.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></h6>
+                                    <h5 className="mb-3">Por: {(this.state.price - this.state.price * this.state.discount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>          
+                                    <p>Estoque disponivel: {this.state.balance}</p>                            
+                                    {this.state.balance > 0 ? (
+                                            <>
+                                                <Input type="number" placeholder="Digite a quantidade" min="1" max={this.state.balance}   value={this.state.quantity} onChange={(e) => this.change(e)} className="col-6 mb-3"  />
+                                                <Button color="warning" onClick={this.handleFormSubmit}> <FaShoppingCart/> Comprar</Button>
+                                            </>):
+                                            (
+                                                <Button color="dark" disabled> <FaShoppingCart/> Indisponivel</Button>
+                                            )
+
+                                    }
                                 </FormGroup>
                             </Form>
 
-                            <ShippingCalculator />
+                            <ShippingCalculator/>
 
-                            <ListGroup id="productDetail" className="nav nav-tabs pt-3">
-                                <ListGroupItem><h6 data-toggle="tab">Descrição do Produto</h6></ListGroupItem>
-                            </ListGroup>
-
-                            <Table>
+                            <Table className="mt-2">
                                 <thead>
+                                <tr>
+                                <th>Descrição do Produto</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            {this.state.description}
+                                        {this.state.description}
                                         </td>
                                     </tr>
                                 </tbody>
                             </Table >
+
+                            <Table className="table table-sm">
+                                <thead>
+                                    <tr>
+                                    <th>Altura (m)</th>
+                                    <th>Largura (m)</th>
+                                    <th>Peso (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>{this.replaceComma(this.state.height)}</td>
+                                    <td>{this.replaceComma(this.state.width)}</td>
+                                    <td>{this.replaceComma(this.state.weight)}</td>                           
+                                    </tr>
+                                </tbody>
+                            </Table>
+                                    
                         </Col>
-                    </Row>
+                    </Row>    
 
-                </Container >
+                    </Container >
+                    
+                    <Footer/>
 
-                <Footer />
-
-            </>
-        );
-    }
+                    </>
+               );
+       }
 }
