@@ -34,6 +34,11 @@ public class ProductController {
         return service.findProductByName(name.toUpperCase());
     }
 
+    @GetMapping("/product/home")
+    public ResponseEntity findProductHome(){
+        return service.findProductHome();
+    }
+
     @GetMapping("/product/description/{description}")
     public ResponseEntity findByDescription(@PathVariable("description") String description){
         return service.findProductByDescription(description);

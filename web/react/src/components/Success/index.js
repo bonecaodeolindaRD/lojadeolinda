@@ -16,6 +16,7 @@ export default class Success extends Component {
             ]
         }
         this.id = 0;
+        
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
@@ -36,9 +37,6 @@ export default class Success extends Component {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
 
-        if (productsItem == null) {
-            return setTimeout(() => this.props.history.push("/"), 30000);
-        }
         productsItem.forEach(p => this.state.products.push({
             id: p.id,
             img: p.image,
