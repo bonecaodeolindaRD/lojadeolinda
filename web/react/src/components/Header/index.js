@@ -16,6 +16,7 @@ import {
     InputGroupAddon,
     Input,
     Form,
+    FormGroup,
     Label,
 
 } from 'reactstrap';
@@ -35,17 +36,36 @@ export default class Header extends Component {
         this.state = {
             isOpen: false,
             email: "",
-            name: this.getLogin()
+            name: this.getLogin(),
+            category: [],
+            loading: false
         }
+        this.findCategory();
+    }
+
+    findCategory = async () => {
+        this.setState({loading: true});
+        const { data: productss } = await axios("http://localhost:8080/ecommerce/category/all");
+        let products = [];
+        productss.forEach(p => products.push({
+            id: p.id,
+            img: p.image,
+            nome: p.name,
+            desc: p.description,
+            preco: p.price,
+            desconto: p.off
+        }));
+        this.setState({ products });
+        this.setState({loading: false});
     }
 
     getLogin = () => {
         let account = "";
-        if( sessionStorage.getItem('client') )
-            account =  JSON.parse(sessionStorage.getItem('client'));
+        if (sessionStorage.getItem('client'))
+            account = JSON.parse(sessionStorage.getItem('client'));
         else
             return;
-        this.setState({ 
+        this.setState({
             ...this.state,
             email: account.email,
             name: account.name
@@ -90,6 +110,15 @@ export default class Header extends Component {
                                 </NavItem>
                                 <Form onSubmit={this.search} className="search-input border">
                                     <InputGroup>
+                                        <FormGroup>
+                                            <Input type="select" name="select" id="exampleSelect">
+                                                <option>Categorias</option>
+                                                <option>Atletas</option>
+                                                <option>Artistas</option>
+                                                <option>Jornalistas</option>
+                                                <option>Politicos</option>
+                                            </Input>
+                                        </FormGroup>
                                         <Input className="form-control border border-right-0" placeholder="Buscar..." />
                                         <InputGroupAddon addonType="append">
                                             <Button color="blue">
@@ -98,7 +127,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label><h6>Bem-Vindo(a) <br/>{this.state.name} </h6></Label>
+                                <Label><h6>Bem-Vindo(a) <br />{this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
