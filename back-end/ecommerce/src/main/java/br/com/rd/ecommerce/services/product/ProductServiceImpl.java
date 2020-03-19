@@ -165,7 +165,9 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
         if(productDTO.getWeight() <= 0)
             return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
-
+        if(productDTO.getOff() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O produto tem que ter um desconto"));
+        
         Product product = converter.convertTo(productDTO);
         try {
             Product returnEntity = repository.save(product);
@@ -187,6 +189,8 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
         if(productDTO.getWeight() <= 0)
             return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getOff() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O produto tem que ter um desconto"));
         try {
             Product product = repository.findById(productDTO.getId()).get();
             Category category = new Category();

@@ -119,20 +119,30 @@ export default class CreateProduct extends Component {
 
     createProduct = async () => {
         let obj = {
-
+            name: this.state.name,
+            description: this.state.description,
+            image: this.state.image,
+            price: parseFloat(this.state.price),
+            category: this.state.category,
+            width: parseFloat(this.state.width),
+            height: parseFloat(this.state.heigth),
+            weight: parseFloat(this.state.weigth),
+            off: 0.01
         }
         let {data: product} = await axios.post("http://localhost:8080/ecommerce/product/new", obj);
         if(!product){
             this.setState({error: "Erro ao adicionar o produto"});
+            return false;
         }
+        return true;
     }
 
-    finish = (event) => {
+    finish = async (event) => {
         event.preventDefault();
         this.mySubmitHandler(event);
         if (this.validateFields())
-            this.createProduct();
-        console.log("teste");
+            if(await this.createProduct())
+                this.toggleModal();
     }
 
     render() {
