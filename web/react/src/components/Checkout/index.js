@@ -53,28 +53,7 @@ export default class Checkout extends Component {
                     cCVV: "",
                     cDate: ""
                 },
-                addresses: [
-                    {
-                        id: 1,
-                        aCep: "00000000",
-                        aStreet: "Av. Paulista",
-                        aNumber: 550,
-                        aComplement: "",
-                        aDistrict: "Higienópolis",
-                        aCitie: "São Paulo",
-                        aState: "SP",
-                    },
-                    {
-                        id: 2,
-                        aCep: "11111111",
-                        aStreet: "Av. Pres. Costa e Silva",
-                        aNumber: 550,
-                        aComplement: "Loja 1",
-                        aDistrict: "Helena Maria",
-                        aCitie: "Osasco",
-                        aState: "SP",
-                    }
-                ],
+                addresses: [],
 
             }
 
@@ -85,6 +64,7 @@ export default class Checkout extends Component {
         }
 
         this.listStates();
+        this.getAddresses();
     }
 
 
@@ -107,10 +87,23 @@ export default class Checkout extends Component {
                 this.noStock = true;
         });
 
-        
         this.listCities("AC");
-
         this.setState({ total: totalCart, products: cart });
+    }
+
+    getAddresses = async () => {
+        const  { email }  = JSON.parse(sessionStorage.getItem('client'));
+        let {data : add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        if(!add.addresses)
+            return;
+        this.setState({
+            ...this.state,
+            client: {
+                ...this.state.client,
+                addresses: add.addresses
+            }
+        });
+        console.log(this.state.client.addresses);
     }
 
     gerateOrder = async () => {
@@ -123,7 +116,9 @@ export default class Checkout extends Component {
                 cep: this.state.address.aCep,
                 district: this.state.address.aDistrict,
                 number: this.state.address.aNumber,
-                uf: this.state.address.aState
+                uf: this.state.address.aState,
+                citie: this.state.address.aCitie,
+                complement: this.state.address.aComplement
             }
             let {data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
             if(!returnAddress){
@@ -205,16 +200,27 @@ export default class Checkout extends Component {
 
     autoFill = (evt) => {
         let end = this.state.client.addresses.find(x => x.id.toString() === evt.target.value);
+        if(!end){
+            let obj = {
+                ...this.state,
+                address: {
+                    id: 0
+                }
+            }
+            this.setState({obj});
+            return;
+        }
         let obj = {
             ...this.state,
             address: {
-                aCep: end.aCep,
-                aStreet: end.aStreet,
-                aNumber: end.aNumber,
-                aComplement: end.aComplement,
-                aDistrict: end.aDistrict,
-                aCitie: end.aCitie.replace(" ", ""),
-                aState: end.aState
+                id: end.id,
+                aCep: end.cep,
+                aStreet: end.street,
+                aNumber: end.number,
+                aComplement: end.complement,
+                aDistrict: end.district,
+                aCitie: end.citie,
+                aState: end.state
             }
         }
 
@@ -418,6 +424,16 @@ export default class Checkout extends Component {
 
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Entrega</h5>
+                                {this.state.client.addresses.length > 0 && (
+                                <FormGroup>
+                                    <Input type="select" defaultValue="0" onChange={this.autoFill}>
+                                        <option value="0">Seus enderecos cadastrados</option>
+                                        {this.state.client.addresses.map(ad => (
+                                            <option value={ad.id}>{ad.street +", " + ad.number}</option>
+                                        ))}
+                                    </Input>
+                                </FormGroup>)
+                                }
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
