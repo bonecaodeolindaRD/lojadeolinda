@@ -22,22 +22,34 @@ export default class Success extends Component {
     }
 
 
-    getProducts =() =>{
+    getProducts = async () =>{
        
-         let productsItem = JSON.parse(sessionStorage.getItem('cart'));
+         let productsItem =  await JSON.parse(sessionStorage.getItem('cart'));
+        
+        if (productsItem == null){
+         return  setTimeout(() => this.props.history.push("/"), 30000);
+        }
+         productsItem.forEach(p => this.state.products.push( {
+             id : p.id,
+             img: p.image,
+             name: p.name,
+             desc: p.description,
+             price: p.price,
+             quantity: p.quantity
+             
+         }));
          this.setState({products: productsItem});
          
-         
         
-        // setTimeout(() => this.props.history.push("/"), 30000);
-    }
-
+       
+        }
     render() {
 
         return (
             <>
 
                 <Header history={this.props.history} location={this.props.location} />
+                
                 <section className="d-flex justify-content-center">
                     <Jumbotron className="col-9">
                         <h1 className="display-3 text-success">Compras concluídas</h1>
@@ -45,7 +57,7 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido: {this.state.id}
+                            Número do pedido: 
 
         
                         </CardText>
@@ -60,30 +72,30 @@ export default class Success extends Component {
 
                                 <Col xs="12" sm="2">
                             
-                                    <img src={this.state.products.image} alt={this.state.products.name} title={this.state.products.name}
+                                    <img src={item.img} alt={item.name} title={item.name}
                                         className="img-responsive mb-3" width="100%" />
                                 </Col>
 
                                 <Col className="mb-3" xs="12" sm="4" id="p">
-                                    <h5>{this.state.products.name}</h5>
+                                    <h5>{item.name}</h5>
                                     <small>Nome do Produto</small>
                                 </Col>
 
                                 <Col className="mb-3" xs="5" sm="2">
                                     <h5 className="h3-price">
-                                        R${(this.state.products.price).toFixed(2)}
+                                        R${(item.price).toFixed(2)}
                                     </h5>
                                     <small>Preço Unitário</small>
                                 </Col>
 
                                 <Col className="mb-3" xs="7" sm="2">
                                     <div className="form-group">
-                                        <Input type="text" name="quantidade" value={this.state.products.quantity} id={this.state.products.id} min="1" className="cart-qty-input" readOnly />
+                                        <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
                                         <small>Quantidade</small>
                                     </div>
                                 </Col>
 
-                            </Row>
+                            </Row> 
 
                         ))}
                         
