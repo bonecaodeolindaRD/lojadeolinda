@@ -27,6 +27,8 @@ public class Address implements Serializable {
     private String district;
     @Column(name = "ds_citie")
     private String citie;
+    @Column(name = "ds_complement")
+    private String complement;
     @Column(name = "nr_number", nullable = false)
     private Integer number;
     @Column(name = "ds_uf", nullable = false, length = 5)

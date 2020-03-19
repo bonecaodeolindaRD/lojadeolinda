@@ -15,6 +15,7 @@ public class AddressDTO {
     private String street;
     private String cep;
     private String district;
+    private String complement;
     private String citie;
     private Integer number;
     private String uf;
