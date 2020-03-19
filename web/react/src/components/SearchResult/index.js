@@ -38,7 +38,7 @@ export default class SearchResult extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location} />
-                {this.state.products.length > 0 ? (
+                {this.state.order.length > 0 ? (
                     <Container>
                         <Row>
                             {this.state.products.map(p => (

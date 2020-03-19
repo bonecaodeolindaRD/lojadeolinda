@@ -161,7 +161,7 @@ public class ClientServiceImpl implements ClientService {
             for(Address a: client.getAddresses())
                 clientDTO.addAddress(converter.convertTo(a));
 
-            return ResponseEntity.badRequest().body(clientDTO);
+            return ResponseEntity.ok().body(clientDTO);
 
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new ClientException("Erro " + e.getMessage()));
