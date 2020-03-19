@@ -8,6 +8,7 @@ import br.com.rd.ecommerce.models.entities.OrderItem;
 import br.com.rd.ecommerce.models.entities.Stock;
 import br.com.rd.ecommerce.models.entities.StockProduct;
 import br.com.rd.ecommerce.repositories.StockRepository;
+import br.com.rd.ecommerce.services.exceptions.ProductException;
 import br.com.rd.ecommerce.services.exceptions.StockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +87,10 @@ public class StockServiceImpl implements StockService{
         try{
             Stock stock = repository.findById(idStock).get();
             StockProduct sp = stock.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(idproduct)).findFirst().orElse(null);
+            if(sp == null)
+                return ResponseEntity.badRequest().body(new StockException("Produto não encontrado"));
+            if(quantity <= 0)
+                return ResponseEntity.badRequest().body(new StockException("Quantidade informada invalida"));
             sp.setBalance(sp.getBalance() + quantity);
             StockDTO returnStock = converter.convertTo(repository.save(stock));
             return ResponseEntity.ok().body(returnStock);
@@ -96,6 +101,8 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public ResponseEntity updateItemOnStockByOrder(Long stock, OrderItem productDTO) throws StockException{
+        if(productDTO.getQuantity() <= 0)
+            return ResponseEntity.badRequest().body(new StockException("Erro, quantidade informada é invalida"));
         try{
             Stock s = repository.findById(stock).get();
             StockProduct sp = s.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(productDTO.getProduct().getId())).findFirst().orElse(null);
@@ -111,6 +118,16 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public ResponseEntity registerProductOnStock(Long stock, ProductDTO productDTO) {
+        if(productDTO == null)
+            return ResponseEntity.badRequest().body(new StockException("O produto informado esta vazio"));
+        if(productDTO.getPrice() <= 0)
+            return ResponseEntity.badRequest().body(new StockException("O preco do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getHeight() <= 0)
+            return ResponseEntity.badRequest().body(new StockException("A altura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWidth() <= 0)
+            return ResponseEntity.badRequest().body(new StockException("A largura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWeight() <= 0)
+            return ResponseEntity.badRequest().body(new StockException("O peso do produto não pode ser menor ou igual a zero"));
         try{
             Stock s = repository.findById(stock).get();
             StockProduct sp = new StockProduct();

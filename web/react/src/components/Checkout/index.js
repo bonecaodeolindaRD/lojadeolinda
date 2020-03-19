@@ -13,7 +13,8 @@ import {
     Form,
     Button,
     Card,
-    CardTitle
+    CardTitle,
+    Spinner
 } from 'reactstrap';
 
 import InputMask from 'react-input-mask';
@@ -30,6 +31,7 @@ export default class Checkout extends Component {
         this.submeted = false;
         this.noStock = false;
         this.state = {
+            loading: false,
             erro: " ",
             states: [],
             cities: [],
@@ -333,21 +335,28 @@ export default class Checkout extends Component {
 
     finish = async (evt) => {
         evt.preventDefault();
+        this.setState({loading: true});
         if(this.submeted)
             return;
 
         if(this.noStock){
             this.setState({ erro: "Um ou mais produtos esta fora de estoque" });
+            this.setState({loading: false});
             return;
         }
-        if (!this.validateFields())
+        if (!this.validateFields()){
+            this.setState({loading: false});
             return;
+        }
         if(await this.gerateOrder() && !this.noStock){
-           this.props.history.push("/success");
+            this.setState({loading: false});
+            this.props.history.push("/success");
             this.submeted = true;
         }
-        else
+        else{
             this.setState({ erro: "Erro ao gerar o pedido" });
+            this.setState({loading: false});
+        }
     }
 
     testCPF = (CPF) => {
@@ -396,6 +405,7 @@ export default class Checkout extends Component {
             <>
                 <Header history={this.props.history} location={this.props.location}/>
                 <Container ref={this.test}>
+                    {this.state.loading ? (<Container className="text-center"><Spinner color="warning" size="lg"/></Container>) : (
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
@@ -521,7 +531,9 @@ export default class Checkout extends Component {
                             </Col>
                         </Row>
                     </Form>
+                    )}
                 </Container >
+                
             </>
         );
     }
