@@ -52,6 +52,22 @@ export default class Success extends Component {
 
 
     }
+
+    componentDidMount() {
+
+        let totalCart = 0;
+
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+
+        for (var i in cart) {
+            totalCart += cart[i].totalItem;
+        }
+
+
+        this.setState({ total: totalCart });
+
+    }
+
     render() {
 
         return (
@@ -112,13 +128,13 @@ export default class Success extends Component {
 
                         ))}
                         
-                            <h6 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
+                            <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
                        
 
 
 
 
-                        <Link to='/home'>
+                        <Link to='/home' className="d-flex justify-content-end mt-3 mb-5 mr-1">
                             <Button color="warning" > <FaShoppingBasket /> Voltar as compras</Button>
                         </Link>
 
