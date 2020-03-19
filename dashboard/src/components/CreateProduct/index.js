@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import Header from '../Header';
+
 import {
     Container,
     Col,
@@ -12,7 +15,6 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-    NavLink
 } from 'reactstrap';
 
 
@@ -70,9 +72,7 @@ export default class CreateProduct extends Component {
     render() {
         return (
             <>
-                <NavLink className="navbar navbar-dark bg-dark">
-                    <NavLink className="navbar-brand" href="#">Adicione um novo produto</NavLink>
-                </NavLink>
+                <Header/>
                 <Container className="border border-primary rounded mt-5 p-4">
                     <Form className="App" >
                         <FormGroup className="bg-warning rounded  p-2">
