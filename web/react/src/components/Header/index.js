@@ -40,13 +40,17 @@ export default class Header extends Component {
     }
 
     getLogin = () => {
-        let account = sessionStorage.getItem('client') ? JSON.parse(sessionStorage.getItem('client')) : "";
+        let account = "";
+        if( sessionStorage.getItem('client') )
+            account =  JSON.parse(sessionStorage.getItem('client'));
+        else
+            return;
         this.setState({ 
             ...this.state,
             email: account.email,
-            name : account.name
+            name: account.name
         });
-        return account.name
+        return account.name.indexOf(" ") < 0 ? account.name : account.name.substring(0, account.name.indexOf(" "));
     }
 
     toggle = () => {
@@ -68,7 +72,7 @@ export default class Header extends Component {
         this.props.history.push('/search/' + inputText.value);
         let local = this.props.location.pathname.split('/');
         console.log(local);
-        if(local[1] === 'search')
+        if (local[1] === 'search')
             window.location.reload();
     }
 
@@ -77,7 +81,7 @@ export default class Header extends Component {
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container>
-                        <Link to ="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></Link>
+                        <Link to="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /></Link>
                         <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">
@@ -94,7 +98,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label><h6>Bem-Vindo(a) {this.state.name} </h6></Label>
+                                <Label><h6>Bem-Vindo(a) <br/>{this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
@@ -102,18 +106,19 @@ export default class Header extends Component {
                                     <DropdownMenu>
                                         {sessionStorage.getItem('client') ? (
                                             <>
-                                            <DropdownItem >
-                                                <Link to="/account">Minha conta</Link>
-                                            </DropdownItem>
-                                            <DropdownItem >
-                                                <Link to="/history">Minhas Compras</Link>
-                                            </DropdownItem>
-                                            <DropdownItem >
-                                                <Link to="/address">Endereços</Link>
-                                            </DropdownItem>
-                                            <DropdownItem>
-                                                <Link onClick={this.logout}>Sair</Link>
-                                            </DropdownItem>
+                                                <DropdownItem >
+                                                    <Link to="/account">Minha conta</Link>
+                                                </DropdownItem>
+                                                <DropdownItem >
+                                                    <Link to="/history">Minhas Compras</Link>
+                                                </DropdownItem>
+                                                <DropdownItem >
+                                                    <Link to="/address">Endereços</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                    <Link onClick={this.logout}>Sair</Link>
+                                                </DropdownItem>
+
                                             </>) : (
                                                 <>
                                                     <DropdownItem to="/login">

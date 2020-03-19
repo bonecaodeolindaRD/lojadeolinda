@@ -83,8 +83,8 @@ export default class Checkout extends Component {
             this.props.history.push('/');
             return;
         }
+
         this.listStates();
-        this.listCities("AC");
     }
 
 
@@ -98,12 +98,17 @@ export default class Checkout extends Component {
             totalCart += cart[i].totalItem;
         }
 
+        this.listStates();
+        
 
         cart.forEach(async p => {
             let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
             if(response.balance < p.quantity)
                 this.noStock = true;
         });
+
+        
+        this.listCities("AC");
 
         this.setState({ total: totalCart, products: cart });
     }
@@ -399,9 +404,9 @@ export default class Checkout extends Component {
                                                     <img src={p.image} alt={p.name} title={p.name} />
                                                 </Col>
                                                 <Col xs="5">
-                                                    <p className="h6">R${(p.price).toFixed(2)}</p>
+                                                    <p className="h6">{(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                     <p className="h6">Qtd: {p.quantity}</p>
-                                                    <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
+                                                    <p className="h6">Subtotal: {(p.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                 </Col>
                                             </Row>
                                         </Card>
@@ -462,8 +467,8 @@ export default class Checkout extends Component {
                                 <h5 className="bg-warning p-2 text-center">Pagamento</h5>
 
                                 <FormGroup>
-                                    <h6>Frete: R$200.00</h6>
-                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>
+                                    <h6>Frete: R$200,00</h6>
+                                    <h6>Total: R${(this.state.total + 200.00).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
                                 </FormGroup>
 
                                 <FormGroup>

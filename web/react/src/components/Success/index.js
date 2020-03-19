@@ -36,9 +36,9 @@ export default class Success extends Component {
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
-        // this.state.products.push(productsItem);
+    
 
-        //let total = await JSON.parse(sessionStorage)
+        
 
         if (productsItem === null) {
             //this.props.history.push("/");
@@ -57,9 +57,7 @@ export default class Success extends Component {
 
         }));
 
-        // this.state.total.forEach(p => this.setState(
-        //    {total: total}
-        // ))
+        
         this.setState({ products: productsItem });
 
 
