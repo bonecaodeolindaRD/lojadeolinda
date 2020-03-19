@@ -10,7 +10,6 @@ import Checkout from './components/Checkout';
 import Cart from './components/Cart';
 import ProductDetail from './components/ProductDetail';
 import OrderHistory from './components/OrderHistory';
-import CreateProduct from './components/CreateProduct'
 import SearchResult from './components/SearchResult';
 import OrderDetails from './components/OrderDetail';
 import Address from './components/Address';
@@ -28,7 +27,6 @@ import Success from './components/Success';
             <Route path="/login" exact component={Login} />
             <Route path="/detail/:id" exact component={ProductDetail} />            
             <Route path="/account" exact component={Account} />
-            <Route path="/createproduct" exact component={CreateProduct} />  
             <Route path="/success" exact component={Success}/>         
             <Route path="/checkout" exact component={Checkout} />
             <Route path="/history" exact component={OrderHistory}/>
