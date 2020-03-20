@@ -28,4 +28,9 @@ public class ClientDTO {
         if(orders == null) orders = new ArrayList<>();
         orders.add(order);
     }
+
+    public void addAddress(AddressDTO addressDTO){
+        if(addresses == null) addresses = new ArrayList<>();
+        addresses.add(addressDTO);
+    }
 }

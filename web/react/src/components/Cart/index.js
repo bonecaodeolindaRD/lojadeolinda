@@ -27,7 +27,6 @@ export default class Cart extends Component {
             totalCart += cart[i].totalItem;
         }
 
-
         this.setState({ total: totalCart, products: cart });
 
     }
@@ -53,6 +52,7 @@ export default class Cart extends Component {
 
         this.setState({ total: totalCart, products: products });
         sessionStorage.removeItem(item);
+
 
 
     };
@@ -121,7 +121,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="5" sm="2">
                                 <h5 className="h3-price">
-                                    {(item.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                    {(item.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                 </h5>
                                 <small>Preço Unitário</small>
                             </Col>
@@ -158,23 +158,24 @@ export default class Cart extends Component {
                             </Alert>
 
                             <Row className="d-flex justify-content-end mt-5 mr-1 ">
-                                <Link to="/">
-                                    <Button color="warning" >  Adicionar mais produtos</Button>
+
+                             
+
+                            <Link to="/">
+                                    <Button color="warning" ><FaShoppingBasket />  Adicionar mais produtos</Button>
+
                                 </Link>
 
                             </Row>
 
                             <Col className="d-flex justify-content-end mt-3 mb-5 mr-1">
 
-
                                 <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
 
                             </Col>
 
 
-
-
-
+                            
                         </>
 
                         : ''}

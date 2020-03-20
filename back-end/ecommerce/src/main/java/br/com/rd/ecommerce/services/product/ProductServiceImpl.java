@@ -119,16 +119,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByNameOrCategory(String str) {
+    public ResponseEntity findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
-        Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'");
-        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'");
-
+        Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'", Product.class);
+        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'", Product.class);
+        Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category where upper(c.name) like '%" + str.toUpperCase() + "%'", Product.class);
         try{
             List<Product> prods = name.getResultList();
             for(Product p: prods)
                 products.add(p);
             prods = desc.getResultList();
+            for(Product p: prods)
+                products.add(p);
+            prods = categ.getResultList();
             for(Product p: prods)
                 products.add(p);
             return ResponseEntity.ok().body(products);
@@ -157,8 +160,27 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity createProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        if(productDTO.getPrice() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getHeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWidth() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getOff() <= 0 || productDTO.getOff() >= 100)
+            return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
+        
         Product product = converter.convertTo(productDTO);
+        Query name = em.createQuery("select p from Product p where upper(name) like '%" + productDTO.getName().toUpperCase() + "%'", Product.class);
+        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + productDTO.getDescription().toUpperCase() + "%'", Product.class);
         try {
+            List<Product> products = name.getResultList();
+            if(products.size() > 0)
+                return ResponseEntity.badRequest().body(new ProductException("Já existe um produto com esse nome, verifique se o produto ja esta cadastrado"));
+            products = desc.getResultList();
+            if(products.size() > 0)
+                return ResponseEntity.badRequest().body(new ProductException("Pode ser que ja tenha um produto cadastrado com essa mesma descricao, verifique se o produto ja esta cadastrado"));
             Product returnEntity = repository.save(product);
             return ResponseEntity.ok().body(returnEntity);
         } catch (Exception e){
@@ -170,6 +192,16 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity updateProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
+        if(productDTO.getPrice() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getHeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWidth() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getWeight() <= 0)
+            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
+        if(productDTO.getOff() <= 0 || productDTO.getOff() >= 100)
+            return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
         try {
             Product product = repository.findById(productDTO.getId()).get();
             Category category = new Category();

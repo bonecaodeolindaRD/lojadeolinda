@@ -17,6 +17,7 @@ export default class ShippingCalculator extends Component {
       mySubmitHandler = async (event) => {
 
         event.preventDefault();
+ 
         let code = this.state.code;
 
         code = code.replace('_','').replace('-','');
@@ -59,9 +60,9 @@ export default class ShippingCalculator extends Component {
                         <Label for="cepFrete"  className="control-label pt-2"><h6>Simular Frete e Prazo</h6></Label>
                             <Input name="code" type="text" className="col-6 mb-1" placeholder="Digite o CEP" onChange={this.myChangeHandler} mask="99999-999"  tag={InputMask}/>
                             <p id="freteCalculado">{this.state.message}</p>
-                            <Button color="warning" onClick={this.mySubmitHandler} >  <FaCheckCircle/> OK</Button>
+                            <Button color="warning" onClick={this.mySubmitHandler}><FaCheckCircle/> OK</Button>
                     </FormGroup>
-                </Form>
+          </Form>
           
         );
       }

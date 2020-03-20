@@ -9,8 +9,14 @@ class OrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: ""
+            id: "",
+            address: ""
         }
+         if (!sessionStorage.getItem('client')) {
+            this.props.history.push('/');
+            return;
+        }
+        this.loadAcccount();
     }
 
     async componentDidMount() {
@@ -20,15 +26,26 @@ class OrderDetail extends Component {
             const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/id/" + id)
             this.setState({
                 id: order.id,
+                address: order.address
             })
+            console.log(order)
         } catch (error) {
 
         }
     }
 
+    loadAcccount = async () => {
+         JSON.parse(sessionStorage.getItem('client'));
+    }
+
+    loadAcccount(e) {
+        e.preventDefault();
+    }
+
     render() {
         return (
             <>
+
                 <Header />
                 <Container align="center">
                     <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>
@@ -37,9 +54,11 @@ class OrderDetail extends Component {
                         <Row>
                             <Card body>
                                 <CardTitle>Endereço</CardTitle>
+                                {this.address}
                             </Card>
                             <Card body>
                                 <CardTitle>Itens</CardTitle>
+                     
                             </Card>
                             <Card body>
                                 <CardTitle>Outros</CardTitle>

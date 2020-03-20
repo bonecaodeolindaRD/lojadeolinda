@@ -12,4 +12,5 @@ public interface StockService {
     ResponseEntity addItemOnStock(Long idStock, Long idproduct, Integer quantity);
     ResponseEntity updateItemOnStockByOrder(Long stock, OrderItem productDTO) throws StockException;
     ResponseEntity registerProductOnStock(Long stock, ProductDTO productDTO);
+    ResponseEntity getNotRegisteredItems();
 }

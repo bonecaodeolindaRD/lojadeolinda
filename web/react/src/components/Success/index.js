@@ -21,34 +21,26 @@ export default class Success extends Component {
             this.props.history.push('/');
             return;
         }
-
-        this.clearLocal();
         this.getProducts();
-    }
+    } 
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        // sessionStorage.removeItem('cart');
-        // sessionStorage.removeItem('order');
+         sessionStorage.removeItem('cart');
+         sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
-    
-
-        
-
-        if (productsItem === null) {
-            //this.props.history.push("/");
-            return
-        }
+  
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
             image: p.image,
             name: p.name,
             desc: p.description,
+
             value: p.value,
             quantity: p.quantity
             
@@ -56,9 +48,7 @@ export default class Success extends Component {
 
         
         this.setState({ products: productsItem });
-
-
-
+        this.clearLocal();
     }
 
     componentDidMount() {
