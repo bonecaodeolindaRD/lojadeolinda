@@ -120,9 +120,7 @@ export default class ProductDetail extends Component {
 
     };
 
-    finish(event) {
-       
-    }
+   
 
 
 
@@ -147,7 +145,7 @@ export default class ProductDetail extends Component {
                                 title="Imagem Produto" alt="Imagem do produto" />
                             <Link to="/cart" >
 
-                                <Button color="success" size="lg" id="finish" className="mt-2" onClick={this.finish}> <FaShoppingCart /> Finalizar pedido</Button>
+                                <Button color="success" size="lg" id="finish" className="mt-2" > <FaShoppingCart /> Finalizar pedido</Button>
 
                             </Link>
                         </Col>
