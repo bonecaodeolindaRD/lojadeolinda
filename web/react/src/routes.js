@@ -15,6 +15,8 @@ import SearchResult from './components/SearchResult';
 import OrderDetails from './components/OrderDetail';
 import Address from './components/Address';
 import Success from './components/Success';
+import Category from './components/Category';
+
 
   const Routes = () => (
     <BrowserRouter>
@@ -34,6 +36,7 @@ import Success from './components/Success';
             <Route path="/history" exact component={OrderHistory}/>
             <Route path="/search/:product" exact component={SearchResult} />
             <Route path="/order/detail/:id" exact component={OrderDetails} />
+            <Route path="/category" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
         </Switch>
     </BrowserRouter>

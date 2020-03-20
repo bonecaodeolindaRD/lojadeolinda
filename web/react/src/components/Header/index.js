@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import axios from 'axios';
 
 import {
     Collapse,
@@ -18,7 +17,6 @@ import {
     InputGroupAddon,
     Input,
     Form,
-    FormGroup,
     Label,
 
 } from 'reactstrap';
@@ -39,35 +37,13 @@ export default class Header extends Component {
             isOpen: false,
             email: "",
             name: this.getLogin(),
-            category: [],
+            
             loading: false
         }
-        this.findCategory();
+      
     }
 
-    findCategory = async () => {
-        this.setState({loading: true});
-        const { data: productss } = await axios("http://localhost:8080/ecommerce/product/category/");
-        let products = [];
-        productss.forEach(p => products.push({
-            id: p.id,
-            img: p.image,
-            nome: p.name,
-            desc: p.description,
-            preco: p.price,
-            desconto: p.off,
-            category: p.category
-        }));
-        this.setState({ products });
-        this.setState({loading: false});
-    }
 
-    redirect = (evt) => {
-        let obj = evt.target;
-        while (obj.id !== "card")
-            obj = obj.parentNode;
-        this.props.history.push(`/category/${obj.children[2].innerHTML.toString()}`);
-    }
 
     getLogin = () => {
         let account = "";
@@ -120,15 +96,25 @@ export default class Header extends Component {
                                 </NavItem>
                                 <Form onSubmit={this.search} className="search-input border">
                                     <InputGroup>
-                                        <FormGroup>
-                                            <Input type="select" name="select" id="exampleSelect" onChange={this.redirect}>
-                                                <option>Categorias</option>
-                                                <option id="1">Atletas</option>
-                                                <option>Artistas</option>
-                                                <option>Jornalistas</option>
-                                                <option>Politicos</option>
-                                            </Input>
-                                        </FormGroup>
+                                        <UncontrolledDropdown nav inNavbar>
+                                            <DropdownToggle nav caret>
+                                                Categorias
+                                            </DropdownToggle>
+                                            <DropdownMenu right>
+                                                <DropdownItem>
+                                                    <Link to="/category/">Artistas</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Atletas</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Jornalistas</Link> 
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Politicos</Link> 
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
                                         <Input className="form-control border border-right-0" placeholder="Buscar..." />
                                         <InputGroupAddon addonType="append">
                                             <Button color="blue">
