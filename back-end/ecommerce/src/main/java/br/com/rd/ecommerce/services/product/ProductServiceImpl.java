@@ -172,7 +172,15 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
         
         Product product = converter.convertTo(productDTO);
+        Query name = em.createQuery("select p from Product p where upper(name) like '%" + productDTO.getName().toUpperCase() + "%'", Product.class);
+        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + productDTO.getDescription().toUpperCase() + "%'", Product.class);
         try {
+            List<Product> products = name.getResultList();
+            if(products.size() > 0)
+                return ResponseEntity.badRequest().body(new ProductException("Já existe um produto com esse nome, verifique se o produto ja esta cadastrado"));
+            products = desc.getResultList();
+            if(products.size() > 0)
+                return ResponseEntity.badRequest().body(new ProductException("Pode ser que ja tenha um produto cadastrado com essa mesma descricao, verifique se o produto ja esta cadastrado"));
             Product returnEntity = repository.save(product);
             return ResponseEntity.ok().body(returnEntity);
         } catch (Exception e){
