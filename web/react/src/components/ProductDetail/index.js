@@ -84,7 +84,7 @@ export default class ProductDetail extends Component {
                     sessionStorage.cart = JSON.stringify(cart);
                     this.setState({ visible: true });
 
-                    if ()
+                    
                      setTimeout(() => {
                         this.props.history.push("/");
                     }, 4000);
