@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import {
     Collapse,
     Navbar,
@@ -35,17 +36,22 @@ export default class Header extends Component {
         this.state = {
             isOpen: false,
             email: "",
-            name: this.getLogin()
+            name: this.getLogin(),
+            
+            loading: false
         }
+      
     }
+
+
 
     getLogin = () => {
         let account = "";
-        if( sessionStorage.getItem('client') )
-            account =  JSON.parse(sessionStorage.getItem('client'));
+        if (sessionStorage.getItem('client'))
+            account = JSON.parse(sessionStorage.getItem('client'));
         else
             return;
-        this.setState({ 
+        this.setState({
             ...this.state,
             email: account.email,
             name: account.name
@@ -90,6 +96,25 @@ export default class Header extends Component {
                                 </NavItem>
                                 <Form onSubmit={this.search} className="search-input border">
                                     <InputGroup>
+                                        <UncontrolledDropdown nav inNavbar>
+                                            <DropdownToggle nav caret>
+                                                Categorias
+                                            </DropdownToggle>
+                                            <DropdownMenu right>
+                                                <DropdownItem>
+                                                    <Link to="/category/">Artistas</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Atletas</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Jornalistas</Link> 
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                <Link to="/category/">Politicos</Link> 
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
                                         <Input className="form-control border border-right-0" placeholder="Buscar..." />
                                         <InputGroupAddon addonType="append">
                                             <Button color="blue">
@@ -98,7 +123,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label><h6>Bem-Vindo(a) <br/>{this.state.name} </h6></Label>
+                                <Label><h6>Bem-Vindo(a) <br />{this.state.name} </h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
