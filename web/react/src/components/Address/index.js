@@ -3,7 +3,7 @@ import Header from '../Header';
 import './styles.css';
 import Footer from '../Footer';
 import axios from 'axios';
-import { Container, Table } from 'reactstrap';
+import { Container, Table} from 'reactstrap';
 
 class Address extends Component {
     constructor(props) {
