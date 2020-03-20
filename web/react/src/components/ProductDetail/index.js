@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Table, Button, Form, FormGroup, Input, Alert } from 'reactstrap';
-import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
+import { Container, Row, Col, Table, Button, Form, FormGroup, Input } from 'reactstrap';
+import { FaShoppingCart} from 'react-icons/fa';
 import axios from 'axios';
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
-import { Link } from 'react-router-dom';
+
 
 
 
@@ -27,7 +27,6 @@ export default class ProductDetail extends Component {
             discount: 0.05,
             balance: 0,
 
-            visible: false
         }
 
         this.getProduct();
@@ -84,18 +83,11 @@ export default class ProductDetail extends Component {
                     cart[i].totalItem = (this.state.price - this.state.price * this.state.discount) * cart[i].quantity;
 
                     sessionStorage.cart = JSON.stringify(cart);
-                    this.setState({ visible: true });
-
+                   this.props.history.push("/cart");
+                    return;
                   
-                    // setTimeout(() => {
-                    //     this.props.history.push("/");
-                    // }, 4000);
                 
-                  
-                    
                 }
-
-
             }
         }
         
@@ -129,25 +121,13 @@ export default class ProductDetail extends Component {
 
             <>
                 <Header history={this.props.history} location={this.props.location} />
-                <Col className="d-flex justify-content-center">
-                    <Alert color="success" className="col-9 d-flex justify-content-center" isOpen={this.state.visible}>
-
-                        {this.state.name} adicionado ao carrinho
-                    <FaCheckCircle />
-                    </Alert>
-                </Col>
-
-                <Container className="pt-5 pb-2 " >
+                    <Container className="pt-5 pb-2 " >
                     <Row className="row">
 
                         <Col className="mb-3" xs="12" sm="4" md="4" lg="4">
                             <img src={this.state.image} className="rounded" width="100%"
                                 title="Imagem Produto" alt="Imagem do produto" />
-                            <Link to="/cart" >
-
-                                <Button color="success" size="lg" id="finish" className="mt-2" > <FaShoppingCart /> Finalizar pedido</Button>
-
-                            </Link>
+                          
                         </Col>
 
                         <Col xs="12" sm="6" md="6" lg="6">
