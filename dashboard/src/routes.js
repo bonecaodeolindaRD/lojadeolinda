@@ -15,7 +15,7 @@ export default class Routes extends Component {
                 <Route path="/" exact component={Products}/>
                 <Route path="/create" exact component={CreateProduct}/>
                 <Route path="/add" exact component={AddItemToStock}/>
-                <Route path="/edit/:id" exact component={EditProduct}/>
+                <Route path="/edit/:id?" exact component={EditProduct}/>
                 <Route path="/sales" exact component={Sales}/>
             </Switch>
         </BrowserRouter>
