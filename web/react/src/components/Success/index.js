@@ -21,34 +21,41 @@ export default class Success extends Component {
             this.props.history.push('/');
             return;
         }
+
+        this.clearLocal();
         this.getProducts();
-    } 
+    }
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-         sessionStorage.removeItem('cart');
-         sessionStorage.removeItem('order');
+        // sessionStorage.removeItem('cart');
+        // sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
-  
+        if (productsItem === null) {
+            //this.props.history.push("/");
+            return
+        }
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
             image: p.image,
             name: p.name,
             desc: p.description,
-
             value: p.value,
-            quantity: p.quantity
+            quantity: p.quantity,
+            totalItem: p.totalItem
             
         }));
 
         
         this.setState({ products: productsItem });
-        this.clearLocal();
+
+
+
     }
 
     componentDidMount() {
@@ -108,7 +115,14 @@ export default class Success extends Component {
                                     <h5 className="h3-price">
                                         R${(item.value).toFixed(2)}
                                     </h5>
-                                    <small>Preço Unitário</small>
+                                    <small>Valor Unitario</small>
+                                </Col>
+
+                                <Col className="mb-3" xs="5" sm="2" >
+                                    <h5 className="h3-price text-success" >
+                                        R${(item.totalItem).toFixed(2)}
+                                    </h5>
+                                    <small>Valor total</small>
                                 </Col>
 
                                 <Col className="mb-3" xs="7" sm="2">
