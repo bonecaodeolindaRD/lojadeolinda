@@ -59,7 +59,7 @@ public class ProductController {
        service.deleteProduct(id);
     }
 
-    @PutMapping("/product/update")
+    @PostMapping("/product/update")
     public ResponseEntity updateProduct(@RequestBody ProductDTO product) {
         return service.updateProduct(product);
     }

@@ -97,7 +97,7 @@ public class  Converter {
         address.setStreet(addressDTO.getStreet());
         address.setCitie(addressDTO.getCitie());
         address.setComplement(addressDTO.getComplement());
-        address.setClient(convertTo(addressDTO.getClient()));
+        //address.setClient(convertTo(addressDTO.getClient()));
         return address;
     }
 

@@ -28,6 +28,7 @@ export default class CreateProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isOpen: false,
             categories: [],
             category: 0,
             name: '',
