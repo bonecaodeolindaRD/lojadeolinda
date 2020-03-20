@@ -22,6 +22,7 @@ public class OrderDTO {
     private Status status;
     private List<OrderItemDTO> orderItem;
     private AddressDTO address;
+    private Double shipping;
 
     public void addItem(OrderItemDTO item){
         if(orderItem == null) orderItem = new ArrayList<>();

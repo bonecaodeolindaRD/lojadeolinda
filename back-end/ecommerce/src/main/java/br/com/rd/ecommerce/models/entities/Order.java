@@ -23,6 +23,8 @@ public class Order {
     private Double value;
     @Column(name = "dt_order")
     private Date date;
+    @Column(name = "vl_shipping")
+    private Double shipping;
     @OneToOne(targetEntity = Order.class)
     @JoinColumn(name = "id_invoice")
     private Invoice invoice;
@@ -48,6 +50,8 @@ public class Order {
         double sum = 0.0;
         for(OrderItem o: orderItem)
             sum += o.calcSubValue();
-        return sum;
+        if(shipping == null)
+            return sum + 200;
+        return sum + this.shipping;
     }
 }

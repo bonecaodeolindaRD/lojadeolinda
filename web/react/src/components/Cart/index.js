@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
-import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
+import { Col, Row, Container, Input, Button, Alert} from 'reactstrap';
+import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms} from 'react-icons/fa';
+
 import './index.css';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
@@ -20,13 +21,14 @@ export default class Cart extends Component {
 
         let totalCart = 0;
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
         for (var i in cart) {
             totalCart += cart[i].totalItem;
         }
 
         this.setState({ total: totalCart, products: cart });
+
     }
 
 
@@ -34,13 +36,13 @@ export default class Cart extends Component {
 
         let totalCart = 0;
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
         let item = cart.find(x => x.id === id);
 
         cart.splice(cart.indexOf(item), 1);
 
-        localStorage.setItem('cart', JSON.stringify(cart));
+        sessionStorage.setItem('cart', JSON.stringify(cart));
 
         let products = this.state.products.filter((item) => item.id !== id);
 
@@ -52,8 +54,8 @@ export default class Cart extends Component {
 
     };
 
-    finish = () =>{
-        if(sessionStorage.getItem('client'))
+    finish = () => {
+        if (sessionStorage.getItem('client'))
             this.props.history.push("/checkout");
         else
             this.props.history.push("/login");
@@ -67,7 +69,7 @@ export default class Cart extends Component {
 
             <>
 
-                <Header />
+                <Header history={this.props.history} location={this.props.location} />
 
 
                 <Container className="contanier">
@@ -114,7 +116,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="5" sm="2">
                                 <h5 className="h3-price">
-                                    R${(item.price).toFixed(2)}
+                                    {(item.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                 </h5>
                                 <small>Preço Unitário</small>
                             </Col>
@@ -128,7 +130,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="12" sm="2">
                                 <h5 className="h3-price">
-                                    R${(item.totalItem).toFixed(2)}
+                                    {(item.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                 </h5>
                                 <small>Total Item</small>
                             </Col>
@@ -145,16 +147,24 @@ export default class Cart extends Component {
 
                             <Alert className="d-flex justify-content-end mt-3 mb-5  mr-1">
 
-                                <h6>Total: R${(this.state.total).toFixed(2)}</h6>
+                                <h6>Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
 
                             </Alert>
 
-                            <Row className="d-flex justify-content-end mt-5 mb-5  mr-1">
-
-                                <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+                            <Row className="d-flex justify-content-end mt-5 mr-1 ">
+                            <Link to="/">
+                                    <Button color="warning" ><FaShoppingBasket />  Adicionar mais produtos</Button>
+                                </Link>
 
                             </Row>
 
+                            <Col className="d-flex justify-content-end mt-3 mb-5 mr-1">
+                                
+
+                                    <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+
+                            </Col>
+                           
                         </>
 
                         : ''}

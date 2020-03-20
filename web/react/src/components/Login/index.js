@@ -4,10 +4,11 @@ import { Card, Form, Button, CardTitle, CardText, Row, Col, Container, InputGrou
 
 import { withRouter, Link } from "react-router-dom";
 
-import api from "../../services/api";
+import axios from "axios";
 
 import './styles.css';
 import Footer from '../Footer';
+import Header from '../Header';
 
 class Login extends Component {
 
@@ -17,8 +18,11 @@ class Login extends Component {
       this.props.history.push('/');
 
     this.state = {
+      alert_message: '',
       email: "",
+      name: "",
       password: "",
+      orders: "",
       error: ""
     };
   }
@@ -32,11 +36,18 @@ class Login extends Component {
       this.setState({ error: "Preencha e-mail e senha para continuar!" });
     } else {
       try {
-        const { data: response } = await api.get("/client/login/" + email);
-        let client = {
-          email: response.email
+        let obj = {
+          email,
+          password
         }
-        if (response.password === password) {
+        const { data: response } = await axios.post("http://localhost:8080/ecommerce/client/login/", obj);
+
+        let client = {
+          email: response.email,
+          name: response.name,
+          orders: response.orders
+        }
+        if (response) {
           this.props.history.push("/");
           sessionStorage.setItem("client", JSON.stringify(client));
           window.location.reload();
@@ -46,7 +57,7 @@ class Login extends Component {
             error:
               "Houve um problema com o login, verifique suas credenciais."
           });
-      } catch (err) {
+      } catch (error) {
         this.setState({
           error:
             "Houve um problema com o login, verifique suas credenciais."
@@ -58,12 +69,14 @@ class Login extends Component {
   render() {
     return (
       <>
+        <Header history={this.props.history} location={this.props.location} />
         <Container className="tam" align="center" justify-content="center">
           <Row className="tam align-items-center">
             <Col xs="12" sm="6" md="6" >
               <Card body>
                 <Form onSubmit={this.handleSignIn}>
                   <CardTitle>Login</CardTitle>
+                  <p className="text-danger">{this.state.error}</p>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText><img src="img/person.svg" alt="logo do site" width="20px" /> Email: </InputGroupText>

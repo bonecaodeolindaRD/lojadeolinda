@@ -15,6 +15,10 @@ public class  Converter {
         Category category = new Category();
         category.setId(productDTO.getCategory());
         product.setCategory(category);
+        product.setHeight(productDTO.getHeight());
+        product.setWidth(productDTO.getWidth());
+        product.setWeight(productDTO.getWeight());
+        product.setOff(productDTO.getOff());
         return product;
     }
 
@@ -27,19 +31,21 @@ public class  Converter {
         productDTO.setImage(product.getImage());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
+        productDTO.setHeight(product.getHeight());
+        productDTO.setWidth(product.getWidth());
+        productDTO.setWeight(product.getWeight());
+        productDTO.setOff(product.getOff());
         return productDTO;
     }
 
 
     public Order convertTo(OrderDTO orderDTO) {
         Order order = new Order();
-        for(OrderItemDTO oDTO: orderDTO.getOrderItem())
-            order.addItem(convertTo(oDTO));
-        order.setValue(order.total());
         order.setStatus(orderDTO.getStatus());
         order.setDate(orderDTO.getDate());
-        order.setClient(convertTo(orderDTO.getClient()));
+        //order.setClient(convertTo(orderDTO.getClient()));
         order.setAddress(convertTo(orderDTO.getAddress()));
+        order.setShipping(orderDTO.getShipping());
         return order;
     }
 
@@ -48,12 +54,10 @@ public class  Converter {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setAddress(convertTo(order.getAddress()));
         orderDTO.setId(order.getId());
-        orderDTO.setValue(order.total());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
-        orderDTO.setClient(convertTo(order.getClient()));
-        for(OrderItem oi: order.getOrderItem())
-            orderDTO.addItem(convertTo(oi));
+        //orderDTO.setClient(convertTo(order.getClient()));
+        orderDTO.setShipping(order.getShipping());
         return orderDTO;
     }
 
@@ -64,6 +68,7 @@ public class  Converter {
         client.setCpf(clientDTO.getCpf());
         client.setEmail(clientDTO.getEmail());
         client.setName(clientDTO.getName());
+        client.setBirthday(clientDTO.getBirthday());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
         client.setPassword(clientDTO.getPassword());
         return client;
@@ -76,6 +81,7 @@ public class  Converter {
         clientDTO.setEmail(client.getEmail());
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());
+        clientDTO.setBirthday(client.getBirthday());
         clientDTO.setPhoneNumber(client.getPhoneNumber());
         return clientDTO;
     }
@@ -89,6 +95,8 @@ public class  Converter {
         address.setDistrict(addressDTO.getDistrict());
         address.setNumber(addressDTO.getNumber());
         address.setStreet(addressDTO.getStreet());
+        address.setCitie(addressDTO.getCitie());
+        address.setComplement(addressDTO.getComplement());
         return address;
     }
 
@@ -101,6 +109,8 @@ public class  Converter {
         aDTO.setNumber(address.getNumber());
         aDTO.setStreet(address.getStreet());
         aDTO.setUf(address.getUf());
+        aDTO.setCitie(address.getCitie());
+        aDTO.setComplement(address.getComplement());
         return aDTO;
     }
 
@@ -137,5 +147,51 @@ public class  Converter {
         c.setName(category.getName());
         c.setId(category.getId());
         return c;
+    }
+
+    public Status convertTo(StatusDTO statusDTO){
+        Status status = new Status();
+        status.setStatus(statusDTO.getName());
+        status.setIdStatus(statusDTO.getId());
+        return status;
+    }
+
+    public StatusDTO convertTo(Status status){
+        StatusDTO statusDTO = new StatusDTO();
+        statusDTO.setId(status.getIdStatus());
+        statusDTO.setName(status.getStatus());
+        return statusDTO;
+    }
+
+    public Stock convertTo(StockDTO stockDTO){
+        Stock stock = new Stock();
+        stock.setId(stockDTO.getId());
+        stock.setName(stockDTO.getName());
+        return stock;
+    }
+
+    public StockDTO convertTo(Stock stock){
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setName(stock.getName());
+        stockDTO.setId(stock.getId());
+        return stockDTO;
+    }
+
+    public StockProduct convertTo(StockProductDTO stockProductDTO){
+        StockProduct stockProduct = new StockProduct();
+        stockProduct.setBalance(stockProductDTO.getBalance());
+        stockProduct.setId(stockProductDTO.getId());
+        stockProduct.setProduct(convertTo(stockProductDTO.getProduct()));
+        stockProduct.setStock(convertTo(stockProductDTO.getStock()));
+        return stockProduct;
+    }
+
+    public StockProductDTO convertTo(StockProduct stockProduct){
+        StockProductDTO stockProductDTO = new StockProductDTO();
+        stockProductDTO.setBalance(stockProduct.getBalance());
+        stockProductDTO.setId(stockProduct.getId());
+        stockProductDTO.setProduct(convertTo(stockProduct.getProduct()));
+        stockProductDTO.setStock(convertTo(stockProduct.getStock()));
+        return stockProductDTO;
     }
 }

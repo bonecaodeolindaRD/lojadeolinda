@@ -13,7 +13,8 @@ import {
     Form,
     Button,
     Card,
-    CardTitle
+    CardTitle,
+    Spinner
 } from 'reactstrap';
 
 import InputMask from 'react-input-mask';
@@ -22,12 +23,15 @@ import Header from '../Header';
 
 export default class Checkout extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
         this.cep = React.createRef();
         this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
+        this.submeted = false;
+        this.noStock = false;
         this.state = {
+            loading: false,
             erro: " ",
             states: [],
             cities: [],
@@ -51,34 +55,18 @@ export default class Checkout extends Component {
                     cCVV: "",
                     cDate: ""
                 },
-                addresses: [
-                    {
-                        id: 1,
-                        aCep: "00000000",
-                        aStreet: "Av. Paulista",
-                        aNumber: 550,
-                        aComplement: "",
-                        aDistrict: "Higienópolis",
-                        aCitie: "São Paulo",
-                        aState: "SP",
-                    },
-                    {
-                        id: 2,
-                        aCep: "11111111",
-                        aStreet: "Av. Pres. Costa e Silva",
-                        aNumber: 550,
-                        aComplement: "Loja 1",
-                        aDistrict: "Helena Maria",
-                        aCitie: "Osasco",
-                        aState: "SP",
-                    }
-                ],
+                addresses: [],
 
             }
 
         }
+        if(!sessionStorage.getItem('client')){
+            this.props.history.push('/');
+            return;
+        }
+
         this.listStates();
-        this.listCities("AC");
+        this.getAddresses();
     }
 
 
@@ -86,17 +74,43 @@ export default class Checkout extends Component {
 
         let totalCart = 0;
 
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
         for (var i in cart) {
             totalCart += cart[i].totalItem;
         }
 
+        this.listStates();
+        
+
+        cart.forEach(async p => {
+            let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
+            if(response.balance < p.quantity)
+                this.noStock = true;
+        });
+
+        this.listCities("AC");
         this.setState({ total: totalCart, products: cart });
+    }
+
+    getAddresses = async () => {
+        const  { email }  = JSON.parse(sessionStorage.getItem('client'));
+        let {data : add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        if(!add.addresses)
+            return;
+        this.setState({
+            ...this.state,
+            client: {
+                ...this.state.client,
+                addresses: add.addresses
+            }
+        });
+        console.log(this.state.client.addresses);
     }
 
     gerateOrder = async () => {
         try {
+            this.submeted = true;
             const email = JSON.parse(sessionStorage.getItem('client'));
             const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
             const address = {
@@ -104,9 +118,16 @@ export default class Checkout extends Component {
                 cep: this.state.address.aCep,
                 district: this.state.address.aDistrict,
                 number: this.state.address.aNumber,
-                uf: this.state.address.aState
+                uf: this.state.address.aState,
+                citie: this.state.address.aCitie,
+                complement: this.state.address.aComplement
             }
-            let returnAddress = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            let {data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            if(!returnAddress){
+                this.setState({ erro: "Erro ao gerar o pedido" });
+                this.submeted = false;
+                return false;
+            }
             let obj = {
                 date: new Date(),
                 client: {
@@ -114,21 +135,28 @@ export default class Checkout extends Component {
                 },
                 orderItem: [],
                 status: {
-                    idStatus: 1
+                    idStatus: 2
                 },
                 address: {
-                    id: returnAddress.data.id
-                }
+                    id: returnAddress.id
+                },
+                shipping: 200
             }
+
             this.state.products.forEach(p => obj.orderItem.push({
                 product: {
                     id: p.id
                 },
                 quantity: p.quantity,
-                value: p.price
+                value: p.value
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
-            localStorage.setItem('order', JSON.stringify(order));
+            if(!order){
+                this.setState({ erro: "Erro ao gerar o pedido" });
+                this.submeted = false;
+                return false;
+            }
+            sessionStorage.setItem('order', JSON.stringify(order));
             return true;
         } catch(eee){
             return false;
@@ -174,16 +202,27 @@ export default class Checkout extends Component {
 
     autoFill = (evt) => {
         let end = this.state.client.addresses.find(x => x.id.toString() === evt.target.value);
+        if(!end){
+            let obj = {
+                ...this.state,
+                address: {
+                    id: 0
+                }
+            }
+            this.setState({obj});
+            return;
+        }
         let obj = {
             ...this.state,
             address: {
-                aCep: end.aCep,
-                aStreet: end.aStreet,
-                aNumber: end.aNumber,
-                aComplement: end.aComplement,
-                aDistrict: end.aDistrict,
-                aCitie: end.aCitie.replace(" ", ""),
-                aState: end.aState
+                id: end.id,
+                aCep: end.cep,
+                aStreet: end.street,
+                aNumber: end.number,
+                aComplement: end.complement,
+                aDistrict: end.district,
+                aCitie: end.citie,
+                aState: end.state
             }
         }
 
@@ -219,6 +258,26 @@ export default class Checkout extends Component {
 
     isEmpty = str => str.toString().trim().length <= 0;
 
+    isName = (name) => {
+
+        let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
+        return !re.test(name);
+          
+    };
+
+    validateDate = (str) => {
+        let fields = str.split('/');
+        let month = parseInt(fields[0]);
+        let year = parseInt(fields[1]);
+        if(month > 12)
+            return false;
+        let now = new Date();
+        let cardDate = new Date(year, month);
+        if(now > cardDate)
+            return false;
+        return true;
+    }
+
     validateFields = () => {
         if (this.isEmpty(this.state.address.aCep)) {
             this.setState({ erro: "Digite o CEP!" });
@@ -248,6 +307,10 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite o nome do titular do cartão!" });
             return false;
         }
+        if(this.isName(this.state.client.card.cHolder)){
+            this.setState({erro: "O nome do titular não pode conter numeros ou caracteres especiais"});
+            return false;
+        }
         if (this.isEmpty(this.state.client.card.cNumber)) {
             this.setState({ erro: "Digite o numero do cartão!" });
             return false;
@@ -256,6 +319,11 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite a data de validade do cartão!" });
             return false;
         }
+        if(!this.validateDate(this.state.client.card.cDate)){
+            this.setState({ erro: "Data do cartão invalida" });
+            return false;
+        }
+
         if (this.isEmpty(this.state.client.card.cCVV)) {
             this.setState({ erro: "Digite o codigo de segurança do cartão!" });
             return false;
@@ -263,14 +331,32 @@ export default class Checkout extends Component {
         return true;
     }
 
-    finish = (evt) => {
+  
+
+    finish = async (evt) => {
         evt.preventDefault();
-        if (!this.validateFields())
+        this.setState({loading: true});
+        if(this.submeted)
             return;
-        if(this.gerateOrder())
-            setTimeout(() => this.props.history.push("/success"), 2000);
-        else
+
+        if(this.noStock){
+            this.setState({ erro: "Um ou mais produtos esta fora de estoque" });
+            this.setState({loading: false});
+            return;
+        }
+        if (!this.validateFields()){
+            this.setState({loading: false});
+            return;
+        }
+        if(await this.gerateOrder() && !this.noStock){
+            this.setState({loading: false});
+            this.props.history.push("/success");
+            this.submeted = true;
+        }
+        else{
             this.setState({ erro: "Erro ao gerar o pedido" });
+            this.setState({loading: false});
+        }
     }
 
     testCPF = (CPF) => {
@@ -317,8 +403,9 @@ export default class Checkout extends Component {
     render() {
         return (
             <>
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
                 <Container ref={this.test}>
+                    {this.state.loading ? (<Container className="text-center"><Spinner color="warning" size="lg"/></Container>) : (
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
@@ -334,9 +421,9 @@ export default class Checkout extends Component {
                                                     <img src={p.image} alt={p.name} title={p.name} />
                                                 </Col>
                                                 <Col xs="5">
-                                                    <p className="h6">R${(p.price).toFixed(2)}</p>
+                                                    <p className="h6">{(p.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                     <p className="h6">Qtd: {p.quantity}</p>
-                                                    <p className="h6">Subtotal: R${(p.totalItem).toFixed(2)}</p>
+                                                    <p className="h6">Subtotal: {(p.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                 </Col>
                                             </Row>
                                         </Card>
@@ -347,6 +434,16 @@ export default class Checkout extends Component {
 
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Entrega</h5>
+                                {this.state.client.addresses.length > 0 && (
+                                <FormGroup>
+                                    <Input type="select" defaultValue="0" onChange={this.autoFill}>
+                                        <option value="0">Seus enderecos cadastrados</option>
+                                        {this.state.client.addresses.map(ad => (
+                                            <option value={ad.id}>{ad.street +", " + ad.number}</option>
+                                        ))}
+                                    </Input>
+                                </FormGroup>)
+                                }
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
@@ -397,8 +494,8 @@ export default class Checkout extends Component {
                                 <h5 className="bg-warning p-2 text-center">Pagamento</h5>
 
                                 <FormGroup>
-                                    <h6>Frete: R$200.00</h6>
-                                    <h6>Total: R${(this.state.total + 200.00).toFixed(2)}</h6>
+                                    <h6>Frete: R$200,00</h6>
+                                    <h6>Total: {(this.state.total + 200.00).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
                                 </FormGroup>
 
                                 <FormGroup>
@@ -434,7 +531,9 @@ export default class Checkout extends Component {
                             </Col>
                         </Row>
                     </Form>
+                    )}
                 </Container >
+                
             </>
         );
     }
