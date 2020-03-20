@@ -35,6 +35,7 @@ export default class CreateProduct extends Component {
             width: 1.0,
             heigth: 3.5,
             weigth: 15,
+            off: 5,
             image: '',
             error: ''
         };
@@ -66,6 +67,16 @@ export default class CreateProduct extends Component {
 
         if(this.state.price <= 0){
             this.setState({error: "O preço não pode ser menor ou igual a zero"});
+            return false;
+        }
+
+        if(!isNaN(this.state.off)){
+            this.setState({error: "O preço deve ser um numero"});
+            return false;
+        }
+
+        if(this.state.off <= 0 || this.state >= 100){
+            this.setState({error: "Valor para desconto invalido"});
             return false;
         }
 
@@ -127,7 +138,7 @@ export default class CreateProduct extends Component {
             width: parseFloat(this.state.width),
             height: parseFloat(this.state.heigth),
             weight: parseFloat(this.state.weigth),
-            off: 0.01
+            off: parseFloat(this.state.off) / 100
         }
         let {data: product} = await axios.post("http://localhost:8080/ecommerce/product/new", obj);
         if(!product){
@@ -165,22 +176,28 @@ export default class CreateProduct extends Component {
                                     <Input value={this.state.description} onChange={e => this.setState({ description: e.target.value })} type="textarea" ref="address" placeholder="Digite uma descrição..." className="formField" required />
                                 </FormGroup>
                                 <Row>
-                                    <Col md={4}>
+                                    <Col md={3}>
+                                        <FormGroup>
+                                            <Label for="width">Desconto (%)*:</Label>
+                                            <Input value={this.state.off} onChange={e => this.setState({off: e.target.value})} type="number" min="0" max="100" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={3}>
                                         <FormGroup>
                                             <Label for="width">Largura*:</Label>
-                                            <Input value={this.state.width} onChange={e => this.setState({width: e.target.value})} type="number" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
+                                            <Input value={this.state.width} onChange={e => this.setState({width: e.target.value})} type="number" min="0" name="widht" id="width" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
-                                    <Col md={4}>
+                                    <Col md={3}>
                                         <FormGroup>
                                             <Label for="heigth">Altura*:</Label>
-                                            <Input value={this.state.heigth} onChange={e => this.setState({heigth: e.target.value})} type="number" name="heigth" id="heigth" placeholder="Apenas numeros decimais" required/>
+                                            <Input value={this.state.heigth} onChange={e => this.setState({heigth: e.target.value})} type="number" min="0" name="heigth" id="heigth" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
-                                    <Col md={4}>
+                                    <Col md={3}>
                                         <FormGroup>
                                             <Label for="weigth">Peso*:</Label>
-                                            <Input value={this.state.weigth} onChange={e => this.setState({weigth: e.target.value})} type="number" name="weigth" id="weigth" placeholder="Apenas numeros decimais" required/>
+                                            <Input value={this.state.weigth} onChange={e => this.setState({weigth: e.target.value})} type="number" min="0" name="weigth" id="weigth" placeholder="Apenas numeros decimais" required/>
                                         </FormGroup>
                                     </Col>
                                 </Row>
