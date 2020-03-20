@@ -495,7 +495,7 @@ export default class Checkout extends Component {
 
                                 <FormGroup>
                                     <h6>Frete: R$200,00</h6>
-                                    <h6>Total: R${(this.state.total + 200.00).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
+                                    <h6>Total: {(this.state.total + 200.00).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h6>
                                 </FormGroup>
 
                                 <FormGroup>
