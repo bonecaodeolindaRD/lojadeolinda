@@ -123,14 +123,6 @@ public class StockServiceImpl implements StockService{
     public ResponseEntity registerProductOnStock(Long stock, ProductDTO productDTO) {
         if(productDTO == null)
             return ResponseEntity.badRequest().body(new StockException("O produto informado esta vazio"));
-        if(productDTO.getPrice() <= 0)
-            return ResponseEntity.badRequest().body(new StockException("O preco do produto não pode ser menor ou igual a zero"));
-        if(productDTO.getHeight() <= 0)
-            return ResponseEntity.badRequest().body(new StockException("A altura do produto não pode ser menor ou igual a zero"));
-        if(productDTO.getWidth() <= 0)
-            return ResponseEntity.badRequest().body(new StockException("A largura do produto não pode ser menor ou igual a zero"));
-        if(productDTO.getWeight() <= 0)
-            return ResponseEntity.badRequest().body(new StockException("O peso do produto não pode ser menor ou igual a zero"));
         try{
             Stock s = repository.findById(stock).get();
             StockProduct find = s.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(productDTO.getId())).findFirst().orElse(null);

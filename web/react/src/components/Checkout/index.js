@@ -408,7 +408,6 @@ export default class Checkout extends Component {
             <>
                 <Header history={this.props.history} location={this.props.location}/>
                 <Container ref={this.test}>
-                    {this.state.loading ? (<Container className="text-center"><Spinner color="warning" size="lg"/></Container>) : (
                     <Form onSubmit={this.finish}>
                         <Row>
                             <Col md="4">
@@ -529,12 +528,18 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
+                                {this.state.loading ?
+                                    (
+                                        <Container className="text-center">
+                                            <Spinner color="warning" size="lg"/>
+                                        </Container>) : 
+                                    (
+                                        <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
+                                    )}
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Form>
-                    )}
                 </Container >
                 
             </>
