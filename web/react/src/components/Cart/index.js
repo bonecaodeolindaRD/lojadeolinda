@@ -51,6 +51,8 @@ export default class Cart extends Component {
         }
 
         this.setState({ total: totalCart, products: products });
+        sessionStorage.removeItem(item);
+        
 
     };
 
@@ -123,7 +125,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly  onChange={(e) => this.change(e)}  />
+                                    <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
                                     <small>Quantidade</small>
                                 </div>
                             </Col>
