@@ -64,25 +64,6 @@ export default class Cart extends Component {
             this.props.history.push("/login");
     }
 
-//   increment  =  async () => {
-
-//    let quantity = await JSON.parse(sessionStorage.getItem('cart'))
-
-//    this.state.products.forEach(p => quantity.push({
-//        quantity: p.quantity
-//    }))
-//    ;
-//    let sum = this.state.products.quantity;
-//    let quant = sum + 1 ; 
-//    this.setState({products : quant})
-//    console.log("adicionei mais um item");
-      
-    //   let sum = this.state.products.quantity + 1;
-    //   await
-    //   this.setState({quantity: sum});
-    //   console.log("aumentando quantidade" + "guardado no state "+ this.state.products.quantity);
-   // this.setState.products({ quantity: this.state.product.quantity + 1 })
-   
 
 
     render() {
@@ -147,8 +128,8 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1"  onclick={this.increment} className="cart-qty-input" readOnly />
-                                    <Input type="number" value={item.quantity} min="1" onClick={this.increment}> </Input>
+                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1"  className="cart-qty-input" readOnly />
+                                    
                                     <small>Quantidade</small>
                                 </div>
                             </Col>
