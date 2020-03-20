@@ -49,12 +49,9 @@ export default class Success extends Component {
             image: p.image,
             name: p.name,
             desc: p.description,
-            price: p.price,
-            quantity: p.quantity,
+            value: p.value,
+            quantity: p.quantity
             
-            
-
-
         }));
 
         
@@ -119,7 +116,7 @@ export default class Success extends Component {
 
                                 <Col className="mb-3" xs="5" sm="2">
                                     <h5 className="h3-price">
-                                        R${(item.price).toFixed(2)}
+                                        R${(item.value).toFixed(2)}
                                     </h5>
                                     <small>Preço Unitário</small>
                                 </Col>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Input, Button, Alert} from 'reactstrap';
-import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms} from 'react-icons/fa';
+import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
+import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
 
 import './index.css';
 import Header from '../Header';
@@ -53,7 +53,7 @@ export default class Cart extends Component {
 
         this.setState({ total: totalCart, products: products });
         sessionStorage.removeItem(item);
-        
+
 
     };
 
@@ -63,6 +63,27 @@ export default class Cart extends Component {
         else
             this.props.history.push("/login");
     }
+
+//   increment  =  async () => {
+
+//    let quantity = await JSON.parse(sessionStorage.getItem('cart'))
+
+//    this.state.products.forEach(p => quantity.push({
+//        quantity: p.quantity
+//    }))
+//    ;
+//    let sum = this.state.products.quantity;
+//    let quant = sum + 1 ; 
+//    this.setState({products : quant})
+//    console.log("adicionei mais um item");
+      
+    //   let sum = this.state.products.quantity + 1;
+    //   await
+    //   this.setState({quantity: sum});
+    //   console.log("aumentando quantidade" + "guardado no state "+ this.state.products.quantity);
+   // this.setState.products({ quantity: this.state.product.quantity + 1 })
+   
+
 
     render() {
 
@@ -126,7 +147,8 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
+                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1"  onclick={this.increment} className="cart-qty-input" readOnly />
+                                    <Input type="number" value={item.quantity} min="1" onClick={this.increment}> </Input>
                                     <small>Quantidade</small>
                                 </div>
                             </Col>
@@ -155,22 +177,22 @@ export default class Cart extends Component {
                             </Alert>
 
                             <Row className="d-flex justify-content-end mt-5 mr-1 ">
-                            <Link to="/">
+                                <Link to="/">
                                     <Button color="warning" >  Adicionar mais produtos</Button>
                                 </Link>
 
                             </Row>
 
                             <Col className="d-flex justify-content-end mt-3 mb-5 mr-1">
-                                
 
-                                    <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
 
-                                </Col>
-                               
-                           
-                            
-                            
+                                <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+
+                            </Col>
+
+
+
+
 
                         </>
 
