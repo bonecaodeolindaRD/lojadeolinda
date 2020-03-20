@@ -40,6 +40,7 @@ export default class Products extends Component {
             desc: p.description,
             preco: p.price,
             desconto: p.off
+            
         }));
         this.setState({ products });
         this.setState({loading: false});
