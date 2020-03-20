@@ -189,11 +189,7 @@ export default class Contact extends Component {
             <Button color="secondary" onClick={this.submit}>OK</Button>
           </ModalFooter>
         </Modal>
-
-        <div className="footer" id="footer">
-          <Footer />
-        </div>
-
+        <Footer />
       </>
 
 
