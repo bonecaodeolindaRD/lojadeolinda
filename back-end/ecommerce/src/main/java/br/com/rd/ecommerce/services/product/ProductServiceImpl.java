@@ -1,7 +1,9 @@
 package br.com.rd.ecommerce.services.product;
 
 import br.com.rd.ecommerce.converters.Converter;
+import br.com.rd.ecommerce.models.dto.AddressDTO;
 import br.com.rd.ecommerce.models.dto.ProductDTO;
+import br.com.rd.ecommerce.models.entities.Address;
 import br.com.rd.ecommerce.models.entities.Category;
 import br.com.rd.ecommerce.models.entities.Product;
 import br.com.rd.ecommerce.repositories.ProductRepository;
@@ -212,4 +214,5 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         repository.deleteById(id);
     }
+
 }

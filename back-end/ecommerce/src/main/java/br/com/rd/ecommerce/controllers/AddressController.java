@@ -17,8 +17,8 @@ public class AddressController {
     private AddressServiceImpl service;
 
     @PostMapping("/address/new")
-    public ResponseEntity save(@RequestBody AddressDTO address){
-        return service.createAddress(address);
+    public ResponseEntity save(@RequestBody Address address){
+        return service.createAddress2(address);
     }
 
     @GetMapping("/address/all")
