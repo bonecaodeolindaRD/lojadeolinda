@@ -16,6 +16,7 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
+    InputGroup
 } from 'reactstrap';
 
 
@@ -37,7 +38,9 @@ export default class CreateProduct extends Component {
             weigth: 15,
             off: 5,
             image: '',
-            error: ''
+            error: '',
+            newCategory: '',
+            categoryMessage: ''
         };
         this.getCategories();
     }
@@ -158,7 +161,7 @@ export default class CreateProduct extends Component {
         if (this.validateFields())
             if (await this.createProduct()) {
                 this.toggleModal();
-                this.setState({ 
+                this.setState({
                     name: "",
                     category: 0,
                     description: "",
@@ -170,6 +173,22 @@ export default class CreateProduct extends Component {
                 });
             } else
                 this.setState({ error: "Erro ao cadastrar o produto, verifique se o proto já não esta cadastrado" });
+    }
+
+    newCategory = async (event) => {
+        event.preventDefault();
+        try {
+            let obj = {
+                name: this.state.newCategory
+            }
+            let { data: category } = await axios.post("http://localhost:8080/ecommerce/category/new", obj);
+            if (!category)
+                this.setState({ categoryMessage: "Erro ao cadastrar a nova categoria" });
+            this.setState({categoryMessage: "Categoria cadastrada com sucesso"});
+            setTimeout(() => window.location.reload(), 1000);
+        } catch{
+            this.setState({ categoryMessage: "Erro ao cadastrar a nova categoria" });
+        }
     }
 
     render() {
@@ -249,8 +268,23 @@ export default class CreateProduct extends Component {
                             </Col>
                         </Row>
                     </Form>
-
+                    <Form className="mt-5 App" onSubmit={this.newCategory} >
+                        <FormGroup className="bg-warning rounded  p-2">
+                            <Label>Cadastrar nova categoria:</Label>
+                        </FormGroup>
+                        <Row>
+                            <Col xs={12}>
+                                <Label for="description">Descrição: </Label>
+                                <InputGroup>
+                                    <Input value={this.state.newCategory} onChange={e => this.setState({newCategory: e.target.value})} type="text" id="description" name="description" />
+                                    <Button type="submit">Cadastrar</Button>
+                                </InputGroup>
+                                <span>{this.state.categoryMessage}</span>
+                            </Col>
+                        </Row>
+                    </Form>
                 </Container>
+
 
                 <Modal isOpen={this.state.isOpen} >
                     <ModalHeader toggle={this.toggleModal}>Pronto!</ModalHeader>
