@@ -42,7 +42,7 @@ export default class Sales extends Component {
 
   getTotal = () => {
     let sum = 0;
-    this.state.ordersDisplay.map(o => 
+    this.state.ordersDisplay.map(o =>
       sum += o.venda
     );
     this.setState({ total: sum });
@@ -66,18 +66,18 @@ export default class Sales extends Component {
           new Date(o[0]).getFullYear()
         )
       });
-       this.setState({
-         orders,
-         ordersDisplay: orders,
-         years
-       });
-       this.getTotal();
+      this.setState({
+        orders,
+        ordersDisplay: orders,
+        years
+      });
+      this.getTotal();
     } catch{
       this.setState({ erro: "" });
     }
   }
 
-  filter = (str) => {
+  filter = async (str) => {
     let ordersDisplay;
     if (str === "")
       ordersDisplay = this.state.orders;
@@ -85,9 +85,9 @@ export default class Sales extends Component {
       ordersDisplay = this.state.orders.filter(x => {
         let dateFilter = new Date(str).getMonth();
         let date = new Date(x.name);
-        return dateFilter === date.getMonth() && date.getFullYear() === this.state.year;
+        return dateFilter === date.getMonth() && date.getFullYear() === parseInt(this.state.year);
       });
-    this.setState({ ordersDisplay });
+    await this.setState({ ordersDisplay });
     this.getTotal();
   }
 
@@ -98,14 +98,14 @@ export default class Sales extends Component {
         <Container className="text-center mt-5">
           <FormGroup className="bg-warning rounded  p-2">
             <Label>Vendas</Label>
-            <br/>
+            <br />
             <Label>Total: {this.state.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Label>
           </FormGroup>
           <Row>
             <Col xs="3">
               <FormGroup className="bg-warning rounded  p-2">
                 <Label>Datas</Label>
-                <Input type="select" value={this.state.year} onChange={e => this.setState({year: e.target.value})} id="year">
+                <Input type="select" value={this.state.year} onChange={e => this.setState({ year: e.target.value })} id="year">
                   <option value="0">Selecione o ano</option>
                   {this.state.years.map(y => (
                     <option value={y}>{y}</option>
@@ -142,7 +142,7 @@ export default class Sales extends Component {
                     <XAxis dataKey='name' />
                     <Legend />
                   </LineChart>
-                  
+
                 </>
               ) :
                 (<Container className="text-center">
