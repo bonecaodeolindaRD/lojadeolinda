@@ -139,23 +139,24 @@ public class OrderServiceImpl implements OrderService {
             sb.append("Resumo da sua compra\n\n\nProdutos:\n");
             for(OrderItem oi: returnOrder.getOrderItem()){
                 sb.append(oi.getProduct().getName());
-                sb.append(", valor: ");
+                sb.append(", valor: R$ ");
                 sb.append(String.format("%.2f", oi.getValue()));
                 sb.append(", quantidade: ");
                 sb.append(oi.getQuantity());
-                sb.append("total do item: ");
-                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()));
+                sb.append("total do item: R$ ");
+                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()) + "\n");
             }
             sb.append("\n\n\nTotal da compra: ");
             sb.append(String.format("%.2f", orderEntity.getValue()));
 
             Client c = clientRepository.findById(order.getClient().getId()).get();
-
-            mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
+            if(c.getEmail() != null)
+                mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
             return ResponseEntity.ok().body(returnOrderDTO);
         } catch(MailSendException e){
             return ResponseEntity.ok().body(returnOrderDTO);
         }  catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
         }
     }
