@@ -131,15 +131,6 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public ResponseEntity createAddress2(Address address) {
         Address addressReturn = repository.save(address);
-        address.setId(address.getId());
-        address.setUf(address.getUf());
-        address.setCep(address.getCep());
-        address.setDistrict(address.getDistrict());
-        address.setNumber(address.getNumber());
-        address.setStreet(address.getStreet());
-        address.setCitie(address.getCitie());
-        address.setComplement(address.getComplement());
-        address.setClient(address.getClient());
         return ResponseEntity.ok().body(addressReturn);
     }
 }
