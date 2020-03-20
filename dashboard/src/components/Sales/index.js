@@ -20,7 +20,8 @@ import {
   FormGroup,
   Label,
   ListGroup,
-  ListGroupItem
+  ListGroupItem,
+  Input
 } from 'reactstrap';
 
 export default class Sales extends Component {
@@ -31,6 +32,8 @@ export default class Sales extends Component {
       orders: [],
       ordersDisplay: [],
       erro: "",
+      year: 0,
+      years: [],
       total: 0
     }
     this.getSales();
@@ -52,31 +55,40 @@ export default class Sales extends Component {
       if (!data)
         return;
       let orders = [];
+      let years = [];
       data.forEach(o => {
         orders.push({
           name: o[0],
           venda: o[1],
           amt: o[1]
         });
+        years.push(
+          new Date(o[0]).getFullYear()
+        )
       });
-      this.setState({
-        orders,
-        ordersDisplay: orders
-      });
-      this.getTotal();
+       this.setState({
+         orders,
+         ordersDisplay: orders,
+         years
+       });
+       this.getTotal();
     } catch{
       this.setState({ erro: "" });
     }
   }
 
   filter = (str) => {
-    let ordersDisplay
+    let ordersDisplay;
     if (str === "")
       ordersDisplay = this.state.orders;
     else
-      ordersDisplay = this.state.orders.filter(x => x.name === str);
-    this.getTotal();
+      ordersDisplay = this.state.orders.filter(x => {
+        let dateFilter = new Date(str).getMonth();
+        let date = new Date(x.name);
+        return dateFilter === date.getMonth() && date.getFullYear() === this.state.year;
+      });
     this.setState({ ordersDisplay });
+    this.getTotal();
   }
 
   render() {
@@ -93,11 +105,19 @@ export default class Sales extends Component {
             <Col xs="3">
               <FormGroup className="bg-warning rounded  p-2">
                 <Label>Datas</Label>
+                <Input type="select" value={this.state.year} onChange={e => this.setState({year: e.target.value})} id="year">
+                  <option value="0">Selecione o ano</option>
+                  {this.state.years.map(y => (
+                    <option value={y}>{y}</option>
+                  ))}
+                </Input>
               </FormGroup>
               <ListGroup>
                 <ListGroupItem className="cursor-pointer" onClick={e => this.filter("")}>Todas</ListGroupItem>
                 {this.state.orders.map(o => (
-                  <ListGroupItem className="cursor-pointer" onClick={e => this.filter(o.name)}>{o.name}</ListGroupItem>
+                  <ListGroupItem className="cursor-pointer" onClick={e => this.filter(o.name)}>{new Date(o.name).toLocaleDateString("pt-br", {
+                    month: "long"
+                  })}</ListGroupItem>
                 ))}
               </ListGroup>
             </Col>
