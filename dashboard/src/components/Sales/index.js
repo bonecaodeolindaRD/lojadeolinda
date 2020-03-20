@@ -40,7 +40,7 @@ export default class Sales extends Component {
   getTotal = () => {
     let sum = 0;
     this.state.ordersDisplay.map(o => 
-      sum += o.pv
+      sum += o.venda
     );
     this.setState({ total: sum });
   }
@@ -55,7 +55,7 @@ export default class Sales extends Component {
       data.forEach(o => {
         orders.push({
           name: o[0],
-          pv: o[1],
+          venda: o[1],
           amt: o[1]
         });
       });
@@ -87,7 +87,7 @@ export default class Sales extends Component {
           <FormGroup className="bg-warning rounded  p-2">
             <Label>Vendas</Label>
             <br/>
-            <Label>Total: {this.state.total}</Label>
+            <Label>Total: {this.state.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Label>
           </FormGroup>
           <Row>
             <Col xs="3">
@@ -112,7 +112,7 @@ export default class Sales extends Component {
                   >
                     <Line
                       type='monotone'
-                      dataKey='pv'
+                      dataKey='venda'
                       stroke='#8884d8'
                       activeDot={{ r: 8 }}
                     />
