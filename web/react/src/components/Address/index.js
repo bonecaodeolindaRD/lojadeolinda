@@ -3,9 +3,10 @@ import Header from '../Header';
 import './styles.css';
 import Footer from '../Footer';
 import axios from 'axios';
+import { Container } from 'reactstrap';
 
 class Address extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             addresses: []
@@ -14,19 +15,25 @@ class Address extends Component {
             this.props.history.push('/');
             return;
         }
-        this.loadAcccount();
-        console.log(this.addresses)
+        this.getAddresses();
     }
 
-    loadAcccount = async () => {
-        let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: response } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+    getAddresses = async () => {
+        const { email } = JSON.parse(sessionStorage.getItem('client'));
+        let { data: add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        if (!add.addresses)
+            return;
         this.setState({
-            addresses: response.addresses
-        })
+            ...this.state,
+            client: {
+                ...this.state.client,
+                addresses: add.addresses
+            }
+        });
+        console.log(this.state.client.addresses);
     }
 
-    loadAcccount(e) {
+    getAddresses(e) {
         e.preventDefault();
     }
 
@@ -34,10 +41,20 @@ class Address extends Component {
         return (
             <>
                 <Header />
+                {this.state.addresses ? (
+                    <Container>
+
+                    </Container>
+                ): (
+                    <Container className = "text-center">
+                        <span className = "h2">Nenhum endereço encontrado!</span>
+                    </Container >
+                )
+    }
 
                 <div className="footer">
-                    <Footer/>
-                </div>
+    <Footer />
+</div>
             </>
         )
     }
