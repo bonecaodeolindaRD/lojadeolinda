@@ -421,7 +421,7 @@ export default class Checkout extends Component {
                                                     <img src={p.image} alt={p.name} title={p.name} />
                                                 </Col>
                                                 <Col xs="5">
-                                                    <p className="h6">{(p.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                                    <p className="h6">{(p.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                     <p className="h6">Qtd: {p.quantity}</p>
                                                     <p className="h6">Subtotal: {(p.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                                 </Col>
