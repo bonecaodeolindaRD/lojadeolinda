@@ -225,12 +225,12 @@ export default class Checkout extends Component {
                 aComplement: end.complement,
                 aDistrict: end.district,
                 aCitie: end.citie,
-                aState: end.state
+                aState: end.uf
             }
         }
 
         this.setState({ ...obj });
-        this.listCities(obj.address.aState);
+        this.listCities(end.uf);
 
     }
 
