@@ -109,7 +109,7 @@ class Register extends Component {
             }
         } else {
             this.setState({ alert_pass: "error" })
-        }
+        } 
     }
 
     testCPF = (strCPF) => {

@@ -36,6 +36,7 @@ export default class Success extends Component {
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
+
         if (productsItem === null) {
             //this.props.history.push("/");
             return
