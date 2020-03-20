@@ -3,7 +3,7 @@ import Header from '../Header';
 import './styles.css';
 import Footer from '../Footer';
 import axios from 'axios';
-import { Container } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 
 class Address extends Component {
     constructor(props) {
@@ -21,16 +21,9 @@ class Address extends Component {
     getAddresses = async () => {
         const { email } = JSON.parse(sessionStorage.getItem('client'));
         let { data: add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
-        if (!add.addresses)
-            return;
         this.setState({
-            ...this.state,
-            client: {
-                ...this.state.client,
-                addresses: add.addresses
-            }
-        });
-        console.log(this.state.client.addresses);
+            addresses: add.addresses
+        })
     }
 
     getAddresses(e) {
@@ -42,19 +35,58 @@ class Address extends Component {
             <>
                 <Header />
                 {this.state.addresses ? (
-                    <Container>
-
+                    <Container className="align-center">
+                        <h3 align="center">Meus Endereços</h3>
+                        <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                            <thead>
+                                <tr align="center">
+                                    <th>CEP</th>
+                                    <th>Rua</th>
+                                    <th>Numero</th>
+                                    <th>Compl.</th>
+                                    <th>Bairro</th>
+                                    <th>Cidade</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody align="center">
+                                {this.state.addresses.map(addresses =>
+                                    <tr key={addresses.id}>
+                                        <td>
+                                            {addresses.cep}
+                                        </td>
+                                        <td>
+                                            {addresses.street}
+                                        </td>
+                                        <td>
+                                            {addresses.number}
+                                        </td>
+                                        <td>
+                                            {addresses.complement}
+                                        </td>
+                                        <td>
+                                            {addresses.district}
+                                        </td>
+                                        <td>
+                                            {addresses.citie}
+                                        </td>
+                                        <td>
+                                            {addresses.uf}
+                                        </td>
+                                    </tr>)}
+                            </tbody>
+                        </Table>
                     </Container>
-                ): (
-                    <Container className = "text-center">
-                        <span className = "h2">Nenhum endereço encontrado!</span>
-                    </Container >
-                )
-    }
+                ) : (
+                        <Container className="text-center">
+                            <span className="h2">Nenhum endereço encontrado!</span>
+                        </Container >
+                    )
+                }
 
                 <div className="footer">
-    <Footer />
-</div>
+                    <Footer />
+                </div>
             </>
         )
     }
