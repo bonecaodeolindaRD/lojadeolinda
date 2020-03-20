@@ -1,24 +1,23 @@
 package br.com.rd.ecommerce.services.order;
 
 import br.com.rd.ecommerce.converters.Converter;
-import br.com.rd.ecommerce.models.dto.AddressDTO;
-import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
 import br.com.rd.ecommerce.models.dto.OrderItemDTO;
 import br.com.rd.ecommerce.models.entities.*;
 import br.com.rd.ecommerce.repositories.ClientRepository;
 import br.com.rd.ecommerce.repositories.OrderRespository;
 import br.com.rd.ecommerce.repositories.ProductRepository;
-import br.com.rd.ecommerce.services.exceptions.ClientException;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
 import br.com.rd.ecommerce.services.mailsender.MailSenderServiceImpl;
-import br.com.rd.ecommerce.services.product.ProductServiceImpl;
 import br.com.rd.ecommerce.services.stock.StockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private ClientRepository clientRepository;
     @Autowired
     private MailSenderServiceImpl mailSender;
+    @PersistenceContext
+    private EntityManager em;
     private Converter converter = new Converter();
 
     @Override
@@ -139,24 +140,37 @@ public class OrderServiceImpl implements OrderService {
             sb.append("Resumo da sua compra\n\n\nProdutos:\n");
             for(OrderItem oi: returnOrder.getOrderItem()){
                 sb.append(oi.getProduct().getName());
-                sb.append(", valor: ");
+                sb.append(", valor: R$ ");
                 sb.append(String.format("%.2f", oi.getValue()));
                 sb.append(", quantidade: ");
                 sb.append(oi.getQuantity());
-                sb.append("total do item: ");
-                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()));
+                sb.append("total do item: R$ ");
+                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()) + "\n");
             }
             sb.append("\n\n\nTotal da compra: ");
             sb.append(String.format("%.2f", orderEntity.getValue()));
 
             Client c = clientRepository.findById(order.getClient().getId()).get();
-
-            mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
+            if(c.getEmail() != null)
+                mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
             return ResponseEntity.ok().body(returnOrderDTO);
         } catch(MailSendException e){
             return ResponseEntity.ok().body(returnOrderDTO);
         }  catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
+        }
+    }
+
+    public ResponseEntity findSales(){
+        Query query = em.createQuery("select o.date as date, sum(o.value) as value from Order o group by o.date");
+        try{
+            List<Order> orders = query.getResultList();
+            if(orders == null || orders.size() <= 0)
+                return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
+            return ResponseEntity.ok().body(orders);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new OrderException("Erro " + e.getMessage()));
         }
     }
 
