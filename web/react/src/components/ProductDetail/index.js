@@ -84,9 +84,10 @@ export default class ProductDetail extends Component {
                     sessionStorage.cart = JSON.stringify(cart);
                     this.setState({ visible: true });
 
+                    
                      setTimeout(() => {
                         this.props.history.push("/");
-                    }, 2000);
+                    }, 4000);
 
                     return;
                 }
@@ -193,7 +194,7 @@ export default class ProductDetail extends Component {
 
                                 <Link to="/cart">
 
-                                    <Button color="success" size="lg" > <FaShoppingCart /> Finalizar pedido</Button>
+                                    <Button color="success" size="lg" id="finish"> <FaShoppingCart /> Finalizar pedido</Button>
 
                                 </Link>
                             </Table>
