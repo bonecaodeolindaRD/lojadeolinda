@@ -51,8 +51,6 @@ export default class Cart extends Component {
         }
 
         this.setState({ total: totalCart, products: products });
-        sessionStorage.removeItem(item);
-        
 
     };
 
@@ -118,7 +116,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="5" sm="2">
                                 <h5 className="h3-price">
-                                    {(item.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                    {(item.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                 </h5>
                                 <small>Preço Unitário</small>
                             </Col>
