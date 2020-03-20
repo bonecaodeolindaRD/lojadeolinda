@@ -139,12 +139,12 @@ public class OrderServiceImpl implements OrderService {
             sb.append("Resumo da sua compra\n\n\nProdutos:\n");
             for(OrderItem oi: returnOrder.getOrderItem()){
                 sb.append(oi.getProduct().getName());
-                sb.append(", valor: ");
+                sb.append(", valor: R$ ");
                 sb.append(String.format("%.2f", oi.getValue()));
                 sb.append(", quantidade: ");
                 sb.append(oi.getQuantity());
-                sb.append("total do item: ");
-                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()));
+                sb.append("total do item: R$ ");
+                sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()) + "\n");
             }
             sb.append("\n\n\nTotal da compra: ");
             sb.append(String.format("%.2f", orderEntity.getValue()));
