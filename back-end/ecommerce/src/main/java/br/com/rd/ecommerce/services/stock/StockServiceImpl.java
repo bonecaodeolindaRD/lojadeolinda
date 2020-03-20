@@ -5,6 +5,7 @@ import br.com.rd.ecommerce.models.dto.ProductDTO;
 import br.com.rd.ecommerce.models.dto.StockDTO;
 import br.com.rd.ecommerce.models.dto.StockProductDTO;
 import br.com.rd.ecommerce.models.entities.OrderItem;
+import br.com.rd.ecommerce.models.entities.Product;
 import br.com.rd.ecommerce.models.entities.Stock;
 import br.com.rd.ecommerce.models.entities.StockProduct;
 import br.com.rd.ecommerce.repositories.StockRepository;
@@ -19,7 +20,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StockServiceImpl implements StockService{
@@ -130,6 +133,9 @@ public class StockServiceImpl implements StockService{
             return ResponseEntity.badRequest().body(new StockException("O peso do produto não pode ser menor ou igual a zero"));
         try{
             Stock s = repository.findById(stock).get();
+            StockProduct find = s.getStockProducts().stream().filter(x -> x.getProduct().getId().equals(productDTO.getId())).findFirst().orElse(null);
+            if(find != null)
+                return ResponseEntity.badRequest().body(new StockException("O produto já existe no estoque"));
             StockProduct sp = new StockProduct();
             sp.setProduct(converter.convertTo(productDTO));
             sp.setBalance(0);
@@ -138,6 +144,22 @@ public class StockServiceImpl implements StockService{
             return ResponseEntity.ok().body(stockDTO);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new StockException("Erro " + e.getMessage()));
+        }
+    }
+
+    @Override
+    public ResponseEntity getNotRegisteredItems() {
+        Query query = em.createQuery("select p from Product p left join StockProduct sp on p.id = sp.product where sp.stock is null", Product.class);
+        Set<Product> returnProducts = new HashSet<>();
+        try{
+            List<Product> products = query.getResultList();
+            if(products == null != products.size() <= 0)
+                return ResponseEntity.badRequest().body(new StockException("Nenhum item encontrado"));
+            for(Product p : products)
+                returnProducts.add(p);
+            return ResponseEntity.ok().body(returnProducts);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new StockException("Erro" + e.getMessage()));
         }
     }
 
