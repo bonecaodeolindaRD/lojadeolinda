@@ -22,8 +22,10 @@ export default class SearchResult extends Component {
 
     getResult = async () => {
         const { data: products } = await axios("http://localhost:8080/ecommerce/product/find/" + this.props.match.params.product);
+        if(!products)
+            return;
         this.setState({ products });
-        console.log(products);
+
     }
 
     redirect = (evt) => {

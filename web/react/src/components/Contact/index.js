@@ -25,11 +25,11 @@ export default class Contact extends Component {
       messageError: false,
       isOpen: false
     };
-    
+
     if (!sessionStorage.getItem('client')) {
-        return;
-      }
-      this.loadAcccount();
+      return;
+    }
+    this.loadAcccount();
   }
 
 
@@ -126,10 +126,10 @@ export default class Contact extends Component {
 
   render() {
     return (
-              
-    <>
-    
-    <Header history={this.props.history} location={this.props.location}/>
+
+      <>
+
+        <Header history={this.props.history} location={this.props.location} />
 
 
         <Form className="mt-5" id="form-contato" md="5" onSubmit={this.mySubmitHandler}>
@@ -143,7 +143,7 @@ export default class Contact extends Component {
 
             <FormGroup className="form-group required">
               <Label for="contatoNome" className="control-label">Nome Completo</Label>
-              <Input type="text" className={`form-control ${this.state.nameError ? 'is-invalid' : null}`} name="name" onChange={this.myChangeHandler} value={this.state.name} pattern="[A-Za-z\s]+$"  required
+              <Input type="text" className={`form-control ${this.state.nameError ? 'is-invalid' : null}`} name="name" onChange={this.myChangeHandler} value={this.state.name} pattern="[A-Za-z\s]+$" required
                 placeholder="Digite o seu nome completo" />
             </FormGroup>
 
@@ -190,11 +190,11 @@ export default class Contact extends Component {
           </ModalFooter>
         </Modal>
 
-        <Footer />
+        <div className="footer" id="footer">
+          <Footer />
+        </div>
 
       </>
-
-
     );
   }
 

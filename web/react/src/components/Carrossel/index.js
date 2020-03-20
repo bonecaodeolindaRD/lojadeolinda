@@ -17,8 +17,8 @@ export default class Carrossel extends Component {
             items : [
                 {
                     src: 'https://i.imgur.com/CNqS0j6.jpg',
-                    altText: 'Politicos',
-                    caption: 'Politicos'
+                    altText: 'Políticos',
+                    caption: 'Políticos'
                 },
                 {
                     src: 'https://i.imgur.com/k1mLXOD.jpg',
