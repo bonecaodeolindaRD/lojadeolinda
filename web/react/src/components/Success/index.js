@@ -22,15 +22,15 @@ export default class Success extends Component {
             return;
         }
 
-        this.clearLocal();
+        
         this.getProducts();
     }
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-        // sessionStorage.removeItem('cart');
-        // sessionStorage.removeItem('order');
+        sessionStorage.removeItem('cart');
+        sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
@@ -38,12 +38,6 @@ export default class Success extends Component {
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
     
 
-        
-
-        if (productsItem === null) {
-            //this.props.history.push("/");
-            return
-        }
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
             image: p.image,
@@ -57,6 +51,7 @@ export default class Success extends Component {
         
         this.setState({ products: productsItem });
 
+		this.clearLocal();
 
 
     }
