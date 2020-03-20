@@ -5,6 +5,7 @@ import { Container } from 'reactstrap';
 import axios from 'axios';
 import { Button, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import './styles.css'
 
 class OrderHistory extends Component {
     constructor(props) {
@@ -82,8 +83,9 @@ class OrderHistory extends Component {
                             <span className="h2">Nenhuma compra encontrada</span>
                         </Container>
                     )}
-                <div className="fixed-bottom">
-                    <Footer />
+                    <div className="space"></div>
+                <div className="footer">
+                    <Footer/>
                 </div>
             </>
         )

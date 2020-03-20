@@ -3,6 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import axios from 'axios';
 import { Container, Table } from 'reactstrap';
+import './styles.css'
 
 class Address extends Component {
     constructor(props) {
@@ -83,7 +84,7 @@ class Address extends Component {
                     )
                 }
 
-                <div className="fixed-bottom">
+                <div className="footer">
                     <Footer />
                 </div>
             </>
