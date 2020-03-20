@@ -115,7 +115,7 @@ export default class Success extends Component {
                                     <h5 className="h3-price">
                                         R${(item.value).toFixed(2)}
                                     </h5>
-                                    <small>Valor Unitario</small>
+                                    <small>Valor Unitário</small>
                                 </Col>
 
                                 <Col className="mb-3" xs="5" sm="2" >
