@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, Button, Form, FormGroup, Input, Alert } from 'reactstrap';
-import { FaShoppingCart,FaCheckCircle } from 'react-icons/fa';
+import { FaShoppingCart, FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
-
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
 import { Link } from 'react-router-dom';
+
+
 
 export default class ProductDetail extends Component {
 
@@ -81,13 +82,19 @@ export default class ProductDetail extends Component {
                     cart[i].totalItem = (this.state.price - this.state.price * this.state.discount) * cart[i].quantity;
 
                     sessionStorage.cart = JSON.stringify(cart);
-                    this.setState({visible : true});
+                    this.setState({ visible: true });
+
+                     setTimeout(() => {
+                        this.props.history.push("/");
+                    }, 2000);
 
                     return;
                 }
+
+
             }
         }
-    
+
         cart.push({
             id: this.state.id,
             name: this.state.name,
@@ -103,7 +110,7 @@ export default class ProductDetail extends Component {
 
         sessionStorage.setItem('cart', JSON.stringify(cart));
 
-       
+
 
     };
 
@@ -114,13 +121,13 @@ export default class ProductDetail extends Component {
 
             <>
                 <Header history={this.props.history} location={this.props.location} />
-               <Col className="d-flex justify-content-center">
-                <Alert color="success" className="col-9 d-flex justify-content-center" isOpen={this.state.visible}>
-               
-                    {this.state.name} adicionado ao carrinho 
+                <Col className="d-flex justify-content-center">
+                    <Alert color="success" className="col-9 d-flex justify-content-center" isOpen={this.state.visible}>
+
+                        {this.state.name} adicionado ao carrinho
                     <FaCheckCircle />
-                </Alert>
-               </Col>
+                    </Alert>
+                </Col>
 
                 <Container className="pt-5 pb-2 " >
                     <Row className="row">
@@ -184,9 +191,9 @@ export default class ProductDetail extends Component {
                                     </tr>
                                 </tbody>
 
-                                <Link to ="/cart">
+                                <Link to="/cart">
 
-                                <Button color="success" size="lg" > <FaShoppingCart /> Finalizar pedido</Button>
+                                    <Button color="success" size="lg" > <FaShoppingCart /> Finalizar pedido</Button>
 
                                 </Link>
                             </Table>
