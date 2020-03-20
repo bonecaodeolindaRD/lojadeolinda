@@ -15,6 +15,7 @@ import OrderDetails from './components/OrderDetail';
 import Address from './components/Address';
 import Success from './components/Success';
 import Category from './components/Category';
+import NotFound from './components/NotFound';
 
 
   const Routes = () => (
@@ -36,6 +37,7 @@ import Category from './components/Category';
             <Route path="/order/detail/:id" exact component={OrderDetails} />
             <Route path="/category" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
+            <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
 );
