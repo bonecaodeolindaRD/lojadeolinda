@@ -158,14 +158,16 @@ export default class CreateProduct extends Component {
         if (this.validateFields())
             if (await this.createProduct()) {
                 this.toggleModal();
-                this.state.name = "";
-                this.state.category = 0;
-                this.state.description = "";
-                this.state.error = "";
-                this.state.heigth = 3.5;
-                this.state.weigth = 15.0;
-                this.state.width = 1.0;
-                this.state.off = 5;
+                this.setState({ 
+                    name: "",
+                    category: 0,
+                    description: "",
+                    error: "",
+                    height: 3.5,
+                    weight: 15.00,
+                    width: 1.0,
+                    off: 5
+                });
             } else
                 this.setState({ error: "Erro ao cadastrar o produto, verifique se o proto já não esta cadastrado" });
     }

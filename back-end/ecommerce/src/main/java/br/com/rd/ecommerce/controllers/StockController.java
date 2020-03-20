@@ -32,7 +32,7 @@ public class StockController {
         return service.getNotRegisteredItems();
     }
 
-    @PutMapping("/stock/product/edit/{idstock}/{idProduct}/{quantity}")
+    @PostMapping("/stock/product/edit/{idstock}/{idProduct}/{quantity}")
     public ResponseEntity editProsuct(@PathVariable("idstock") Long idStock, @PathVariable("idProduct") Long idProduct, @PathVariable("quantity") Integer quantity){
         return service.addItemOnStock(idStock, idProduct, quantity);
     }
