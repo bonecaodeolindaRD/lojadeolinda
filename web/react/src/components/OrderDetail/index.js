@@ -10,13 +10,14 @@ class OrderDetail extends Component {
         super(props);
         this.state = {
             id: "",
-            address: ""
+            address: []
         }
          if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
         this.loadAcccount();
+        console.log(this.state.address)
     }
 
     async componentDidMount() {
@@ -28,7 +29,6 @@ class OrderDetail extends Component {
                 id: order.id,
                 address: order.address
             })
-            console.log(order)
         } catch (error) {
 
         }
@@ -45,7 +45,6 @@ class OrderDetail extends Component {
     render() {
         return (
             <>
-
                 <Header />
                 <Container align="center">
                     <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>
@@ -54,7 +53,6 @@ class OrderDetail extends Component {
                         <Row>
                             <Card body>
                                 <CardTitle>Endereço</CardTitle>
-                                {this.address}
                             </Card>
                             <Card body>
                                 <CardTitle>Itens</CardTitle>

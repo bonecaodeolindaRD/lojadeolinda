@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,4 +17,5 @@ public class AddressDTO {
     private String citie;
     private Integer number;
     private String uf;
+    private ClientDTO client;
 }

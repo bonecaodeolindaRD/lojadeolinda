@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Input, Button, Alert} from 'reactstrap';
-import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms} from 'react-icons/fa';
+import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
+import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
 
 import './index.css';
 import Header from '../Header';
@@ -51,6 +51,9 @@ export default class Cart extends Component {
         }
 
         this.setState({ total: totalCart, products: products });
+        sessionStorage.removeItem(item);
+
+
 
     };
 
@@ -60,6 +63,8 @@ export default class Cart extends Component {
         else
             this.props.history.push("/login");
     }
+
+
 
     render() {
 
@@ -123,7 +128,8 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="text" name="quantidade" value={item.quantity} id={item.id} min="1" className="cart-qty-input" readOnly />
+                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1"  className="cart-qty-input" readOnly />
+                                    
                                     <small>Quantidade</small>
                                 </div>
                             </Col>
@@ -152,19 +158,24 @@ export default class Cart extends Component {
                             </Alert>
 
                             <Row className="d-flex justify-content-end mt-5 mr-1 ">
+
+                             
+
                             <Link to="/">
                                     <Button color="warning" ><FaShoppingBasket />  Adicionar mais produtos</Button>
+
                                 </Link>
 
                             </Row>
 
                             <Col className="d-flex justify-content-end mt-3 mb-5 mr-1">
-                                
 
-                                    <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
+                                <Button color="success" onClick={this.finish}> <FaWpforms /> Finalizar Compra</Button>
 
                             </Col>
-                           
+
+
+                            
                         </>
 
                         : ''}

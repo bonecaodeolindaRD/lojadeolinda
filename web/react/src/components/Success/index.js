@@ -21,32 +21,44 @@ export default class Success extends Component {
             this.props.history.push('/');
             return;
         }
+
+        this.clearLocal();
         this.getProducts();
-    } 
+    }
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-         sessionStorage.removeItem('cart');
-         sessionStorage.removeItem('order');
+        // sessionStorage.removeItem('cart');
+        // sessionStorage.removeItem('order');
     }
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
-  
+    
+
+        
+
+        if (productsItem === null) {
+            //this.props.history.push("/");
+            return
+        }
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
             image: p.image,
             name: p.name,
             desc: p.description,
-            price: p.price,
-            quantity: p.quantity,
+            value: p.value,
+            quantity: p.quantity
+            
         }));
 
         
         this.setState({ products: productsItem });
-        this.clearLocal();
+
+
+
     }
 
     componentDidMount() {
@@ -104,7 +116,7 @@ export default class Success extends Component {
 
                                 <Col className="mb-3" xs="5" sm="2">
                                     <h5 className="h3-price">
-                                        R${(item.price).toFixed(2)}
+                                        R${(item.value).toFixed(2)}
                                     </h5>
                                     <small>Preço Unitário</small>
                                 </Col>
