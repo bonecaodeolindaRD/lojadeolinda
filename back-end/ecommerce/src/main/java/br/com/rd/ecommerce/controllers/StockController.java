@@ -22,6 +22,11 @@ public class StockController {
         return service.findItemInAllStocks(id);
     }
 
+    @GetMapping("/stock/all")
+    public ResponseEntity findAllStocks(){
+        return service.findAllStocks();
+    }
+
     @GetMapping("/stock/notregistered")
     public ResponseEntity findNotRegistered(){
         return service.getNotRegisteredItems();

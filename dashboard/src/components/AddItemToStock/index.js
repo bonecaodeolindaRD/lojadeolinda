@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../Header';
+import axios from 'axios';
 
 import {
   Container,
@@ -12,14 +12,32 @@ import {
   FormGroup
 } from 'reactstrap';
 
+import Header from '../Header';
+
 export default class AddItemToStock extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       stocks: [],
-      products: []
+      products: [],
+      message: " "
     }
+    this.getStocks();
+    this.getItemsNotRegistered();
+  }
+
+
+  getStocks = async () => {
+    const { data: stocks} = await axios("http://localhost:8080/ecommerce/stock/all");
+    if(!stocks)
+      return;
+    this.setState({stocks});
+  }
+
+  getItemsNotRegistered = async () => {
+    const { data: products} = await axios("http://localhost:8080/ecommerce/stock/notregistered");
+    this.setState({products});
   }
 
   render() {
@@ -60,6 +78,7 @@ export default class AddItemToStock extends Component {
               <Col xs={3}>
                 <Label>Finalizar</Label>
                 <Button color="success" type="submit" className="form-control">Adicionar</Button>
+                <span>{this.state.message}</span>
               </Col>
             </Row>
           </Form>
