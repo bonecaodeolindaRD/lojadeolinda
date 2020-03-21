@@ -1,8 +1,7 @@
 package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.dto.OrderDTO;
-import br.com.rd.ecommerce.models.entities.Order;
-import br.com.rd.ecommerce.services.order.OrderServiceImpl;
+import br.com.rd.ecommerce.services.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderServiceImpl service;
+    private OrderService service;
 
     @GetMapping("/order/all")
     public ResponseEntity findAll(){

@@ -60,7 +60,7 @@ class OrderHistory extends Component {
                                             {(order.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                         </td>
                                         <td>
-                                            {(order.date)}
+                                            {(new Date(order.date).toLocaleDateString('pt-Br'))}
                                         </td>
                                         <td>
                                             {(order.shipping).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}

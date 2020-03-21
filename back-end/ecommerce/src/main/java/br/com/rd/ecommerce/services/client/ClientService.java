@@ -12,4 +12,5 @@ public interface ClientService {
     ResponseEntity findClientLogin(String email, String password);
     ResponseEntity findClientOrders(String email);
     ResponseEntity createClient(ClientDTO client);
+    ResponseEntity findClientAddress(String email);
 }
