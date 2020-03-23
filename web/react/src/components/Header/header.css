@@ -3,7 +3,7 @@
 }
 
 .search-input{
-    width: 70%;
+    width: 40%;
 }
 
 @media (max-width: 767px){
@@ -15,4 +15,9 @@
         flex-direction: column;
         align-items: center;
     }
+}
+
+.name{
+    display: inline;
+    text-decoration: none;
 }

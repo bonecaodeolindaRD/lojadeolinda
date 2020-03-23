@@ -35,50 +35,64 @@ export default class Footer extends Component {
                             <NavItem>
                                 <Link className="text-muted" to="/">Cartão de débito</Link>
                             </NavItem>
+                            <NavItem>
+                                <Link className="text-muted" to="/"><img src="https://www.valeriowagner.com.br/wp-content/uploads/2019/07/Cartao-que-aceitamos.jpg" width="120px" height="60px" /></Link>
+                            </NavItem>
                         </Nav>
                     </NavItem>
                     <NavItem className="space-footer">
                         <Nav vertical>
                             <NavItem className="text-white h-5">
-                                <Link  to="/" className="text-white" disabled>Redes sociais</Link>
+                                <Link to="/" className="text-white" disabled>Redes sociais</Link>
                             </NavItem>
                             <NavItem>
-                                <Link className="text-muted" to="/"><FaFacebook /></Link>
+                                <Link className="text-muted" to="/"><FaFacebook /> <h6> Bonecão de Olinda </h6></Link>
                             </NavItem>
                             <NavItem>
-                                <Link className="text-muted" to="/"><FaInstagram /></Link>
+                                <Link className="text-muted" to="/"><FaInstagram /> <h6> @Bonecão_de_Olinda </h6></Link>
                             </NavItem>
                             <NavItem>
-                                <Link className="text-muted" to="/"><FaTwitter /></Link>
+                                <Link className="text-muted" to="/"><FaTwitter /> <h6> @Bonecão_de_Olinda </h6></Link>
+                            </NavItem>
+                     </Nav>
+
+                     </NavItem>
+
+                            <NavItem className="space-footer">
+                                <Nav vertical>
+                                    <NavItem>
+
+                                        <Link to="/" className="text-white" disabled>Contato</Link>
+                                    </NavItem>
+
+                                    <NavItem>
+                                        <Link className="text-muted" to="/contact">
+                                            Entrar em contato
+                                   </Link>
+
+                                    </NavItem>
+                                </Nav>
+                            </NavItem>
+                            
+                            <NavItem className="space-footer">
+
+                                <div>
+                                    <Link to="/" className="text-white" disabled>Sobre</Link>
+                                </div>
+
+                                <div>
+                                    <Link className="text-muted" to="/about">
+                                        Nossa História
+                        </Link>
+                                </div>
+
                             </NavItem>
                         </Nav>
-                    </NavItem>
-                    <NavItem className="space-footer">
-                        <div>
-                        <Link to="/" className="text-white" disabled>Contato</Link>
-                        </div>
-                        <div>
-                            <Link className="text-muted" to="/contact">
-                                Entrar em contato
-                            </Link>
-                            </div>
-                    </NavItem>
-                    <NavItem className="space-footer">
-                     
-                        <div>
-                            <Link to="/" className="text-white" disabled>Sobre</Link>
-                        </div>
+                       
 
-                        <div>
-                        <Link className="text-muted" to="/about">
-                                Nossa História
-                        </Link>
-                        </div>
-                  
-                    </NavItem>
-                </Nav>
-            </Navbar>
-        );
+                       </Navbar>
 
-    }
-}
+                    
+                 )  
+                }
+            }
