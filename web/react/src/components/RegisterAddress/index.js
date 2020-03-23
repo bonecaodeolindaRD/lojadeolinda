@@ -31,7 +31,6 @@ class RegisterAddress extends Component {
             return;
         }
         this.listStates();
-        this.getAddresses();
     }
 
     componentDidMount() {
@@ -39,23 +38,6 @@ class RegisterAddress extends Component {
         this.listCities("AC");
     }
 
-    getAddresses = async () => {
-        const { email } = JSON.parse(sessionStorage.getItem('client'));
-        try {
-            let add = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
-            if (!add.data.addresses)
-                return;
-            this.setState({
-                ...this.state,
-                client: {
-                    ...this.state.client,
-                    addresses: add.addresses
-                }
-            });
-        } catch (error) {
-            this.setState({ erro: "" });
-        }
-    }
 
     listStates = async () => {
         try {
