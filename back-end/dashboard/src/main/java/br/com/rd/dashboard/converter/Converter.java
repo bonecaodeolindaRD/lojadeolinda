@@ -9,7 +9,6 @@ public class Converter {
 
     public Employee convertTo(EmployeeDTO employeeDTO){
         Employee emp = new Employee();
-
         emp.setId(employeeDTO.getId());
         if(employeeDTO.getEmail() != null)
             emp.setEmail(employeeDTO.getEmail());
@@ -20,7 +19,7 @@ public class Converter {
         return emp;
     }
 
-    public EmployeeDTO convetTo(Employee employee){
+    public EmployeeDTO convertTo(Employee employee){
         EmployeeDTO emp = new EmployeeDTO();
         emp.setId(employee.getId());
         if(employee.getEmail() != null)
