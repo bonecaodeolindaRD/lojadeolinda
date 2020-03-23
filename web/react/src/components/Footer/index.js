@@ -20,21 +20,22 @@ import './footer.css';
 export default class Footer extends Component {
     render() {
         return (
+           
             <Navbar color="dark" className=" mt-5">
 
                 <Nav>
-                    
+
                     <Col className="col-2">
-                    
+
                         <NavItem className="space-footer">
-                        
+
                             <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
                             <small className="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
-                        
+
                         </NavItem>
-                       
+
                     </Col>
-                     
+
                     <Col className="col-3 mr-2">
                         <NavItem className="space-footer">
                             <Nav vertical>
@@ -85,47 +86,47 @@ export default class Footer extends Component {
                             </Nav>
                         </NavItem>
 
-                   
-                    <NavItem>
-                        <Nav vertical>
-                            <NavItem>
-                                <Link className="text-muted" to="/contact">
-                                    Entrar em contato
+
+                        <NavItem>
+                            <Nav vertical>
+                                <NavItem>
+                                    <Link className="text-muted" to="/contact">
+                                        Entrar em contato
                                    </Link>
 
-                            </NavItem>
+                                </NavItem>
 
-                            <NavItem>
-                                <Link className="text-muted" to="/contact">
-                                    Ligue (11) 93537-4847
+                                <NavItem>
+                                    <Link className="text-muted" to="/contact">
+                                        Ligue (11) 93537-4847
                                    </Link>
 
-                            </NavItem>
-                        </Nav>
-                    </NavItem>
+                                </NavItem>
+                            </Nav>
+                        </NavItem>
                     </Col>
 
                     <Col>
 
-                    <NavItem className="col-2">
-                      <Row>
-                        <div>
-                            <Link to="/" className="text-white" disabled>Sobre</Link>
-                        </div>
+                        <NavItem className="col-2">
+                            <Row>
+                                <div>
+                                    <Link to="/" className="text-white" disabled>Sobre</Link>
+                                </div>
 
-                        <div>
-                            <Link className="text-muted" to="/about">
-                                Nossa História
+                                <div>
+                                    <Link className="text-muted" to="/about">
+                                        Nossa História
                         </Link>
-                        </div>
-                       </Row>
-                    </NavItem>
-                </Col>
+                                </div>
+                            </Row>
+                        </NavItem>
+                    </Col>
                 </Nav>
-               
-
+             
+                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small>
+              
             </Navbar >
-
 
         )
     }
