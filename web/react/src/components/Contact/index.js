@@ -187,7 +187,8 @@ export default class Contact extends Component {
           </ModalFooter>
         </Modal>
 
-          <Footer />
+        <Footer />
+
 
       </>
     );
