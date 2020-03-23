@@ -43,10 +43,6 @@ export default class Contact extends Component {
     })
   }
 
-  loadAcccount(e) {
-    e.preventDefault();
-  }
-
 
   toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
@@ -55,6 +51,7 @@ export default class Contact extends Component {
   submit = () => {
     this.reset();
     this.toggleModal();
+    this.props.history.push("/");
   }
 
   reset = () => {
@@ -137,8 +134,8 @@ export default class Contact extends Component {
           <Col className="m-auto" md="5">
 
             <header className="card-header bg-warning mb-3">
-              <FaEnvelopeSquare /> <a href="mailto:contato@lojadeolinda.com.br">
-                contato@bonecaodeolinda.com.br</a>
+              <FaEnvelopeSquare /> <a href="mailto:deolindabonecao@gmail.com">
+                deolindabonecao@gmail.com</a>
             </header>
 
             <FormGroup className="form-group required">
