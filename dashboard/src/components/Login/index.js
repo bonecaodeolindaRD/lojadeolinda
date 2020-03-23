@@ -21,7 +21,7 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            user: '',
             password: ''
         }
     }
@@ -29,7 +29,7 @@ export default class Login extends Component {
     handleSignIn = () => {
 
     }
-    
+
     render() {
         return (
             <>
@@ -41,9 +41,9 @@ export default class Login extends Component {
                                     <p className="text-danger">{this.state.error}</p>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
-                                            <InputGroupText><img src="img/person.svg" alt="logo do site" width="20px" /> Email: </InputGroupText>
+                                            <InputGroupText><img src="img/person.svg" alt="logo do site" width="20px" /> Usuario: </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input id="email" onChange={e => this.setState({ email: e.target.value })} placeholder="user@mail.com" />
+                                        <Input id="email" onChange={e => this.setState({ user: e.target.value })} placeholder="user@mail.com" />
                                     </InputGroup>
                                     <br />
                                     <InputGroup>
