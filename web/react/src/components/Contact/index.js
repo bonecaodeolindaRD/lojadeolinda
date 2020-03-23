@@ -55,6 +55,7 @@ export default class Contact extends Component {
   submit = () => {
     this.reset();
     this.toggleModal();
+    this.props.history.push("/");
   }
 
   reset = () => {
