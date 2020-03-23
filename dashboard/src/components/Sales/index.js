@@ -132,7 +132,7 @@ export default class Sales extends Component {
               </ListGroup>
             </Col>
             <Col xs="9">
-              {this.state.orders.length > 0 ? (
+              {this.state.ordersDisplay.length > 0 ? (
                 <>
                   <LineChart
                     width={600}

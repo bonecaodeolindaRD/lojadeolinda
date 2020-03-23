@@ -36,7 +36,7 @@ export default class Footer extends Component {
                                 <Link className="text-muted" to="/">Cartão de débito</Link>
                             </NavItem>
                             <NavItem>
-                                <Link className="text-muted" to="/"><img src="https://www.valeriowagner.com.br/wp-content/uploads/2019/07/Cartao-que-aceitamos.jpg" width="120px" height="60px" /></Link>
+                                <Link className="text-muted" to="/"><img src="https://www.valeriowagner.com.br/wp-content/uploads/2019/07/Cartao-que-aceitamos.jpg" width="120px" height="60px" alt="cartoes"/></Link>
                             </NavItem>
                         </Nav>
                     </NavItem>
