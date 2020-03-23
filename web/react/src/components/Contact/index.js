@@ -190,9 +190,9 @@ export default class Contact extends Component {
           </ModalFooter>
         </Modal>
 
-        <div className="fixed-bottom">
+        {/* <div className="fixed-bottom"> */}
           <Footer />
-        </div>
+        {/* </div> */}
 
       </>
     );
