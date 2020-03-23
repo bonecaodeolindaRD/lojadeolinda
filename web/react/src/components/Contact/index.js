@@ -137,8 +137,8 @@ export default class Contact extends Component {
           <Col className="m-auto" md="5">
 
             <header className="card-header bg-warning mb-3">
-              <FaEnvelopeSquare /> <a href="mailto:contato@lojadeolinda.com.br">
-                contato@bonecaodeolinda.com.br</a>
+              <FaEnvelopeSquare /> <a href="mailto:deolindabonecao@gmail.com">
+                deolindabonecao@gmail.com</a>
             </header>
 
             <FormGroup className="form-group required">
