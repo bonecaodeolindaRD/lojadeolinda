@@ -11,5 +11,6 @@ public interface OrderService {
     ResponseEntity findById(Long id);
 //    ResponseEntity<List<OrderDTO>> findByClient(Client client);
     ResponseEntity createOrder(OrderDTO order);
+    ResponseEntity findSales();
     void deleteOrder(Long id);
 }

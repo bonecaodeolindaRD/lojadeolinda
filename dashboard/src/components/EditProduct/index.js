@@ -25,7 +25,7 @@ export default class EditProduct extends Component {
     super(props);
     this.state = {
       categories: [],
-      id: 0,
+      id: null,
       category: 0,
       name: '',
       description: '',
@@ -194,8 +194,9 @@ export default class EditProduct extends Component {
   render() {
     return (
       <>
-        <Header />
+        <Header />}
         <Container className="border border-primary rounded mt-5 p-4">
+          {this.state.id ? (
           <Form className="App" onSubmit={this.finish}>
             <FormGroup className="bg-warning rounded  p-2">
               <Label>Editar produto</Label>
@@ -268,6 +269,9 @@ export default class EditProduct extends Component {
               </Col>
             </Row>
           </Form>
+          ) : (
+            <h2>Produto não encontrado, não é possivel edita-lo</h2>
+          )}
         </Container>
 
         <Modal isOpen={this.state.isOpen} >

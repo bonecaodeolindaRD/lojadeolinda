@@ -16,3 +16,8 @@
         align-items: center;
     }
 }
+
+.name{
+    display: inline;
+    text-decoration: none;
+}

@@ -22,6 +22,7 @@ public class Order {
     @Column(name = "vl_value")
     private Double value;
     @Column(name = "dt_order")
+    @Temporal(TemporalType.DATE)
     private Date date;
     @Column(name = "vl_shipping")
     private Double shipping;

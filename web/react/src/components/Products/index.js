@@ -12,8 +12,6 @@ import {
     Container
 } from 'reactstrap';
 
-import axios from 'axios';
-
 import { IoMdCart } from 'react-icons/io';
 import './product.css';
 
@@ -24,27 +22,11 @@ export default class Products extends Component {
         super(props);
         this.state = {
             products: [],
-            loading: false
+            loading: true
         }
-        this.findProducts();
     }
 
-    findProducts = async () => {
-        this.setState({loading: true});
-        const { data: productss } = await axios("http://localhost:8080/ecommerce/product/home");
-        let products = [];
-        productss.forEach(p => products.push({
-            id: p.id,
-            img: p.image,
-            nome: p.name,
-            desc: p.description,
-            preco: p.price,
-            desconto: p.off
-            
-        }));
-        this.setState({ products });
-        this.setState({loading: false});
-    }
+
 
     redirect = (evt) => {
         let obj = evt.target;
@@ -57,8 +39,9 @@ export default class Products extends Component {
     render() {
         return (
             <Row>
-                {!this.state.loading ?
-                        this.state.products.map(item => (
+                {!this.props.loading ?
+                    this.props.products.length > 0 ?
+                        (this.props.products.map(item => (
                             <Col md="3" className="mb-4">
                                 <Card className="p-1 cursor-pointer" id="card" onClick={this.redirect}>
                                     <CardImg top width="100%" src={item.img} alt="Imagem do produto" />
@@ -78,12 +61,24 @@ export default class Products extends Component {
                                     <span className="d-none">{item.id}</span>
                                 </Card>
                             </Col>
-                        )) : (
-                            <Container className="text-center">
-                                <Spinner color="warning"/>
-                            </Container>
-                        )
-                    }
+                        ))) : (<Container className="text-center">
+                            <pre className="h2">
+                                Erro ao carregar os produtos
+                        <br />
+                            Tente novamente mais tarde
+                            <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </pre>
+                        </Container>) : (
+                        <Container className="text-center">
+                            <Spinner color="warning" />
+                        </Container>
+                    )
+                }
             </Row>
         );
     }

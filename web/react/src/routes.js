@@ -28,13 +28,13 @@ import NotFound from './components/NotFound';
             <Route path="/about" exact component={About}/>
             <Route path="/cart" exact component={Cart}/>
             <Route path="/login" exact component={Login} />
-            <Route path="/detail/:id" exact component={ProductDetail} />            
+            <Route path="/detail/:id?" exact component={ProductDetail} />            
             <Route path="/account" exact component={Account} /> 
             <Route path="/success" exact component={Success}/>         
             <Route path="/checkout" exact component={Checkout} />
             <Route path="/history" exact component={OrderHistory}/>
-            <Route path="/search/:product" exact component={SearchResult} />
-            <Route path="/order/detail/:id" exact component={OrderDetails} />
+            <Route path="/search/:product?" exact component={SearchResult} />
+            <Route path="/order/detail/:id?" exact component={OrderDetails} />
             <Route path="/category" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
             <Route component={NotFound} />

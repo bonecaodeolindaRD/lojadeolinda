@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import './styles.css';
 import Footer from '../Footer';
 import axios from 'axios';
-import { Container, Table} from 'reactstrap';
+import { Container, Table, Button } from 'reactstrap';
+import './styles.css'
+import { Link } from 'react-router-dom';
 
 class Address extends Component {
     constructor(props) {
@@ -37,6 +38,9 @@ class Address extends Component {
                 {this.state.addresses ? (
                     <Container className="align-center">
                         <h3 align="center">Meus Endereços</h3>
+                        <div className="text-align-center" align="center">
+                                <Button to="/new/adress" className="btn btn-success mr-3" > Cadastrar </Button>
+                            </div>
                         <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
                             <thead>
                                 <tr align="center">
@@ -79,12 +83,16 @@ class Address extends Component {
                     </Container>
                 ) : (
                         <Container className="text-center">
-                            <span className="h2">Nenhum endereço encontrado!</span>
+                            <span className="h2">Nenhum endereço cadastrado!</span>
+                            <div className="text-align-center" align="center">
+                                <br/>
+                                <Link to="/new/address"><Button to="/new/adress" className="btn btn-success mr-3" > Cadastrar </Button></Link>
+                            </div>
                         </Container >
                     )
                 }
 
-                <div className="footer">
+                <div className="fixed-bottom footer">
                     <Footer />
                 </div>
             </>

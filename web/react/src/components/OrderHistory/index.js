@@ -60,7 +60,7 @@ class OrderHistory extends Component {
                                             {(order.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                         </td>
                                         <td>
-                                            {(order.date)}
+                                            {(new Date(order.date).toLocaleDateString('pt-Br'))}
                                         </td>
                                         <td>
                                             {(order.shipping).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
@@ -80,10 +80,14 @@ class OrderHistory extends Component {
                 ) :
                     (
                         <Container className="text-center">
-                            <span className="h2">Nenhuma compra encontrada</span>
+                            <span className="h2">Nenhuma compra encontrada!</span>
+                            <div className="mt-3">
+                             <Link to="/"><Button className="btn btn-success mr-3" > Comprar </Button></Link>
+                            </div>
                         </Container>
                     )}
-                <div className="footer" id="footer">
+
+                <div className="fixed-bottom footer">
                     <Footer />
                 </div>
             </>
