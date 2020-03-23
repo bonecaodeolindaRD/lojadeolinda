@@ -10,8 +10,7 @@ import {
 import {
     FaFacebook,
     FaTwitter,
-    FaInstagram,
-    FaPhone
+    FaInstagram
 } from "react-icons/fa";
 
 import { Link } from 'react-router-dom';
@@ -26,7 +25,7 @@ export default class Footer extends Component {
 
                 <Nav>
 
-                    <Col className="col-3">
+                    <Col className="col-2">
 
                         <NavItem className="space-footer">
 
@@ -44,7 +43,7 @@ export default class Footer extends Component {
                                     <Link to="/" className="text-white" disabled>Pagamento</Link>
                                 </NavItem>
                                 <NavItem>
-                                    <Link className="text-muted" to="/">Cartão de crédito</Link>
+                                    <Link className="text-muted" to="/">Cartão de credito</Link>
                                 </NavItem>
                                 <NavItem>
                                     <Link className="text-muted" to="/">Cartão de débito</Link>
@@ -56,11 +55,11 @@ export default class Footer extends Component {
                         </NavItem>
                     </Col>
 
-                    <Col className="col-3 mr-1">
+                    <Col className="col-3 mr-2">
                         <NavItem className="space-footer">
                             <Nav vertical>
                                 <NavItem className="text-white">
-                                    <Link to="/" className="text-white" disabled>Redes Sociais</Link>
+                                    <Link to="/" className="text-white" disabled>Redes sociais</Link>
                                 </NavItem>
                                 <NavItem>
                                     <Link className="text-muted" to="/"><FaFacebook /> <h6>Bonecão de Olinda</h6></Link>
@@ -99,7 +98,7 @@ export default class Footer extends Component {
 
                                 <NavItem>
                                     <Link className="text-muted" to="/contact">
-                                        <FaPhone/> (11) 93537-4847
+                                        Ligue (11) 93537-4847
                                    </Link>
 
                                 </NavItem>
@@ -125,7 +124,7 @@ export default class Footer extends Component {
                     </Col>
                 </Nav>
              
-                {/* <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small> */}
+                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small>
               
             </Navbar >
           
