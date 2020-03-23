@@ -13,16 +13,16 @@ export default class ProductDetail extends Component {
         constructor(props){
             super(props);
             this.state = {
-                id: 12,
-                image: "https://odia.ig.com.br/_midias/jpg/2019/03/05/700x470/1_d021stjx0airpfp-10035734.jpg",
-                name: "Bonecão Galvão Bueno ",
-                description: "Carlos Eduardo dos Santos Galvão Bueno, mais conhecido como Galvão Bueno (Rio de Janeiro, 21 de julho de 1950), é um empresário, narrador, radialista e apresentador esportivo brasileiro.É considerado o narrador esportivo mais famoso do Brasil." ,
-                quantity: 1,                
-                price: 1000,
-                height: 3.5,
-                width: 1.5,
-                weight: 20.0,
-                discount: 0.05,
+                id: 0,
+                image: "",
+                name: "",
+                description: "" ,
+                quantity: 0,                
+                price: 0,
+                height: 0,
+                width: 0,
+                weight: 0,
+                discount: 0,
                 balance: 0         
             }
 
