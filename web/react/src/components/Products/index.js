@@ -12,8 +12,6 @@ import {
     Container
 } from 'reactstrap';
 
-import axios from 'axios';
-
 import { IoMdCart } from 'react-icons/io';
 import './product.css';
 
