@@ -23,7 +23,7 @@ public class Employee {
     private String email;
     @Lob
     @Column(name = "ds_password", nullable = false)
-    private String senha;
+    private String password;
     @Column(name = "ds_username", nullable = false)
     private String username;
     @ManyToOne
