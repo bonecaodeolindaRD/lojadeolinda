@@ -74,7 +74,7 @@ export default class Header extends Component {
         event.preventDefault();
         const form = event.target;
         const inputGroup = form.children[0];
-        const inputText = inputGroup.children[0];
+        const inputText = inputGroup.children[1];
         this.props.history.push('/search/' + inputText.value);
         let local = this.props.location.pathname.split('/');
         console.log(local);
