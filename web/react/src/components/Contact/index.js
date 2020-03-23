@@ -43,9 +43,6 @@ export default class Contact extends Component {
     })
   }
 
-  loadAcccount(e) {
-    e.preventDefault();
-  }
 
   toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
