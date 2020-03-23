@@ -124,7 +124,7 @@ export default class ProductDetail extends Component {
 
                         <Col className="mb-3" xs="12" sm="4" md="4" lg="4">
                                 <img src={this.state.image} className="rounded" width="100%"
-                                    title={this.state.name} alt="Imagem do produto" />
+                                    title={this.state.name} alt={this.state.name} />
                         </Col>
 
                         <Col xs="12"  sm="6" md="6" lg="6">
