@@ -6,6 +6,32 @@ import { Container, Form, Row, Col, FormGroup, Input, Label, Button } from 'reac
 import axios from 'axios';
 
 class RegisterAddress extends Component {
+    constructor(props){
+        super(props);
+        this.API_VIA_CEP = "http://viacep.com.br/ws/";
+        this.cep = React.createRef();
+        this.LINK_ESTADO_CIDADE = "https://br-cidade-estado-nodejs.glitch.me/estados";
+        this.state = {
+            erro: "",
+            states: [],
+            cities: [],
+            products: [],
+            address: {
+                id: 1,
+                aCep: "",
+                aStreet: "",
+                aNumber: 0,
+                aComplement: "",
+                aDistrict: "",
+                aCitie: "",
+                aState: "",
+            },
+        }
+        if (!sessionStorage.getItem('client')) {
+            this.props.history.push('/');
+            return;
+        }
+    }
 
 
     render() {
