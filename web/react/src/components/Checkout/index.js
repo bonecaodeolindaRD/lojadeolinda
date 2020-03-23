@@ -60,7 +60,7 @@ export default class Checkout extends Component {
             }
 
         }
-        if(!sessionStorage.getItem('client')){
+        if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
@@ -81,12 +81,16 @@ export default class Checkout extends Component {
         }
 
         this.listStates();
-        
+
 
         cart.forEach(async p => {
-            let {data: response} = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
-            if(response.balance < p.quantity)
-                this.noStock = true;
+            try {
+                let { data: response } = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
+                if (response.balance < p.quantity)
+                    this.noStock = true;
+            } catch (erro) {
+                this.setState({ erro: "Erro ao consultar o estoque" });
+            }
         });
 
         this.listCities("AC");
@@ -94,18 +98,21 @@ export default class Checkout extends Component {
     }
 
     getAddresses = async () => {
-        const  { email }  = JSON.parse(sessionStorage.getItem('client'));
-        let {data : add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
-        if(!add.addresses)
-            return;
-        this.setState({
-            ...this.state,
-            client: {
-                ...this.state.client,
-                addresses: add.addresses
-            }
-        });
-        console.log(this.state.client.addresses);
+        const { email } = JSON.parse(sessionStorage.getItem('client'));
+        try {
+            let add = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+            if (!add.data.addresses)
+                return;
+            this.setState({
+                ...this.state,
+                client: {
+                    ...this.state.client,
+                    addresses: add.addresses
+                }
+            });
+        } catch (error) {
+            this.setState({ erro: "" });
+        }
     }
 
     gerateOrder = async () => {
@@ -122,10 +129,10 @@ export default class Checkout extends Component {
                 citie: this.state.address.aCitie,
                 complement: this.state.address.aComplement
             }
-            let {data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
-            if(!returnAddress){
+            let { data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            if (!returnAddress) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
-                this.setState({loading: false});
+                this.setState({ loading: false });
                 this.submeted = false;
                 return false;
             }
@@ -152,30 +159,39 @@ export default class Checkout extends Component {
                 value: p.value
             }));
             let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
-            if(!order){
+            if (!order) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
-                this.setState({loading: false});
+                this.setState({ loading: false });
                 this.submeted = false;
                 return false;
             }
             sessionStorage.setItem('order', JSON.stringify(order));
             return true;
-        } catch(eee){
-            this.setState({loading: false});
+        } catch (eee) {
+            this.setState({ loading: false });
             return false;
         }
     }
 
     listStates = async () => {
-        const { data: states } = await axios(this.LINK_ESTADO_CIDADE);
-        this.setState({ states });
+        try {
+            const { data: states } = await axios(this.LINK_ESTADO_CIDADE);
+            this.setState({ states });
+        }
+        catch{
+            return;
+        }
     }
 
     listCities = async (state) => {
-        const { data: cities } = await axios(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
-        this.setState({
-            cities
-        });
+        try {
+            const { data: cities } = await axios(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
+            this.setState({
+                cities
+            });
+        } catch{
+            return;
+        }
     }
 
     showCities = (evt) => {
@@ -186,33 +202,41 @@ export default class Checkout extends Component {
     findAddress = async (evt) => {
         let cep = evt.target.value;
         if (cep.length === 9) {
-            const { data: address } = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
-
-            this.setState({
-                ...this.state,
-                address: {
-                    ...this.state.address,
-                    aStreet: address.logradouro,
-                    aCitie: typeof (address.localidade) == "string" ? address.localidade.replace(" ", "") : "",
-                    aState: address.uf,
-                    aDistrict: address.bairro
+            try {
+                const address = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+                if (address.data.erro){
+                    this.setState({erro: "Erro ao buscar o CEP"});
+                    return;
                 }
-            });
-            this.listCities(address.uf);
+                this.setState({
+                    ...this.state,
+                    address: {
+                        ...this.state.address,
+                        aStreet: address.data.logradouro,
+                        aCitie: typeof (address.data.localidade) == "string" ? address.data.localidade.replace(" ", "") : "",
+                        aState: address.data.uf,
+                        aDistrict: address.data.bairro
+                    }
+                });
+                this.setState({erro: ""});
+                this.listCities(address.data.uf); 
+            } catch(erro){
+                console.log(erro);
+                this.setState({erro: "Erro ao buscar o CEP"});
+            }
         }
-
     }
 
     autoFill = (evt) => {
         let end = this.state.client.addresses.find(x => x.id.toString() === evt.target.value);
-        if(!end){
+        if (!end) {
             let obj = {
                 ...this.state,
                 address: {
                     id: 0
                 }
             }
-            this.setState({obj});
+            this.setState({ obj });
             return;
         }
         let obj = {
@@ -265,18 +289,18 @@ export default class Checkout extends Component {
 
         let re = /^[a-zA-ZéúíóáÉÚÍÓÁèùìòàçÇÈÙÌÒÀõãñÕÃÑêûîôâÊÛÎÔÂëÿüïöäËYÜÏÖÄ\-\\ \s]+$/;
         return !re.test(name);
-          
+
     };
 
     validateDate = (str) => {
         let fields = str.split('/');
         let month = parseInt(fields[0]);
         let year = parseInt(fields[1]);
-        if(month > 12)
+        if (month > 12)
             return false;
         let now = new Date();
         let cardDate = new Date(year, month);
-        if(now > cardDate)
+        if (now > cardDate)
             return false;
         return true;
     }
@@ -310,8 +334,8 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite o nome do titular do cartão!" });
             return false;
         }
-        if(this.isName(this.state.client.card.cHolder)){
-            this.setState({erro: "O nome do titular não pode conter numeros ou caracteres especiais"});
+        if (this.isName(this.state.client.card.cHolder)) {
+            this.setState({ erro: "O nome do titular não pode conter numeros ou caracteres especiais" });
             return false;
         }
         if (this.isEmpty(this.state.client.card.cNumber)) {
@@ -322,7 +346,7 @@ export default class Checkout extends Component {
             this.setState({ erro: "Digite a data de validade do cartão!" });
             return false;
         }
-        if(!this.validateDate(this.state.client.card.cDate)){
+        if (!this.validateDate(this.state.client.card.cDate)) {
             this.setState({ erro: "Data do cartão invalida" });
             return false;
         }
@@ -334,31 +358,31 @@ export default class Checkout extends Component {
         return true;
     }
 
-  
+
 
     finish = async (evt) => {
         evt.preventDefault();
-        this.setState({loading: true});
-        if(this.submeted)
+        this.setState({ loading: true });
+        if (this.submeted)
             return;
 
-        if(this.noStock){
+        if (this.noStock) {
             this.setState({ erro: "Um ou mais produtos esta fora de estoque" });
-            this.setState({loading: false});
+            this.setState({ loading: false });
             return;
         }
-        if (!this.validateFields()){
-            this.setState({loading: false});
+        if (!this.validateFields()) {
+            this.setState({ loading: false });
             return;
         }
-        if(await this.gerateOrder() && !this.noStock){
-            this.setState({loading: false});
+        if (await this.gerateOrder() && !this.noStock) {
+            this.setState({ loading: false });
             this.props.history.push("/success");
             this.submeted = true;
         }
-        else{
+        else {
             this.setState({ erro: "Erro ao gerar o pedido" });
-            this.setState({loading: false});
+            this.setState({ loading: false });
         }
     }
 
@@ -406,7 +430,7 @@ export default class Checkout extends Component {
     render() {
         return (
             <>
-                <Header history={this.props.history} location={this.props.location}/>
+                <Header history={this.props.history} location={this.props.location} />
                 <Container ref={this.test}>
                     <Form onSubmit={this.finish}>
                         <Row>
@@ -437,14 +461,14 @@ export default class Checkout extends Component {
                             <Col md="4">
                                 <h5 className="bg-warning p-2 text-center">Entrega</h5>
                                 {this.state.client.addresses.length > 0 && (
-                                <FormGroup>
-                                    <Input type="select" defaultValue="0" onChange={this.autoFill}>
-                                        <option value="0">Seus enderecos cadastrados</option>
-                                        {this.state.client.addresses.map(ad => (
-                                            <option value={ad.id}>{ad.street +", " + ad.number}</option>
-                                        ))}
-                                    </Input>
-                                </FormGroup>)
+                                    <FormGroup>
+                                        <Input type="select" defaultValue="0" onChange={this.autoFill}>
+                                            <option value="0">Seus enderecos cadastrados</option>
+                                            {this.state.client.addresses.map(ad => (
+                                                <option value={ad.id}>{ad.street + ", " + ad.number}</option>
+                                            ))}
+                                        </Input>
+                                    </FormGroup>)
                                 }
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
@@ -528,20 +552,20 @@ export default class Checkout extends Component {
                                     <span className="text-danger">{this.state.erro}</span>
                                 </FormGroup>
                                 <FormGroup>
-                                {this.state.loading ?
-                                    (
-                                        <Container className="text-center">
-                                            <Spinner color="warning" size="lg"/>
-                                        </Container>) : 
-                                    (
-                                        <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
-                                    )}
+                                    {this.state.loading ?
+                                        (
+                                            <Container className="text-center">
+                                                <Spinner color="warning" size="lg" />
+                                            </Container>) :
+                                        (
+                                            <Button color="success" type="submit"><FaCheckCircle /> Finalizar Compra</Button>
+                                        )}
                                 </FormGroup>
                             </Col>
                         </Row>
                     </Form>
                 </Container >
-                
+
             </>
         );
     }
