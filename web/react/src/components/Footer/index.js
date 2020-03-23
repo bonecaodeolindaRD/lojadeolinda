@@ -56,11 +56,11 @@ export default class Footer extends Component {
                         </NavItem>
                     </Col>
 
-                    <Col className="col-3 mr-2">
+                    <Col className="col-3 mr-1">
                         <NavItem className="space-footer">
                             <Nav vertical>
                                 <NavItem className="text-white">
-                                    <Link to="/" className="text-white" disabled>Redes sociais</Link>
+                                    <Link to="/" className="text-white" disabled>Redes Sociais</Link>
                                 </NavItem>
                                 <NavItem>
                                     <Link className="text-muted" to="/"><FaFacebook /> <h6>Bonecão de Olinda</h6></Link>
@@ -125,7 +125,7 @@ export default class Footer extends Component {
                     </Col>
                 </Nav>
              
-                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small>
+                {/* <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small> */}
               
             </Navbar >
           
