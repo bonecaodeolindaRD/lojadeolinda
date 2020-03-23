@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import InputMask from 'react-input-mask';
-import { Container, Form, Row, Col, FormGroup, Input, Label } from 'reactstrap';
+import { Container, Form, Row, Col, FormGroup, Input, Label, Button } from 'reactstrap';
 import axios from 'axios';
 
 class RegisterAddress extends Component {
@@ -17,7 +17,7 @@ class RegisterAddress extends Component {
                         <Row>
                             <Col md="4"></Col>
                             <Col md="4">
-                            <h5 className="bg-warning p-2 text-center">Endereços</h5>
+                                <h5 className="bg-warning p-2 text-center">Cadastrar Endereço</h5>
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
@@ -58,6 +58,11 @@ class RegisterAddress extends Component {
                                             </Input>
                                         </Col>
                                     </Row>
+                                </FormGroup>
+                                <FormGroup>
+                                    <div className="justify-content-center">
+                                        <Button color="success" type="submit"> Cadastrar </Button>
+                                    </div>
                                 </FormGroup>
                             </Col>
                         </Row>
