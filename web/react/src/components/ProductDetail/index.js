@@ -8,7 +8,6 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 export default class ProductDetail extends Component {
-
     
         constructor(props){
             super(props);
@@ -17,7 +16,7 @@ export default class ProductDetail extends Component {
                 image: "",
                 name: "",
                 description: "" ,
-                quantity: 0,                
+                quantity: 1,                
                 price: 0,
                 height: 0,
                 width: 0,
@@ -31,23 +30,35 @@ export default class ProductDetail extends Component {
         } 
 
         getProduct = async() => {
+
             let id = this.props.match.params.id;
-            const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
-            this.setState({
-                id: product.id,
-                image: product.image,
-                name: product.name,
-                description: product.description,
-                price: product.price,
-                height: product.height,
-                width: product.width,
-                weight: product.weight,
-                discount: product.off,       
-            });
-            const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
-            this.setState({
-                balance: stock ? stock.balance : 0
-            });
+
+            try {
+
+                    const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
+                    console.log(product);
+                    this.setState({
+                        id: product.id,
+                        image: product.image,
+                        name: product.name,
+                        description: product.description,
+                        price: product.price,
+                        height: product.height,
+                        width: product.width,
+                        weight: product.weight,
+                        discount: product.off,       
+                    });
+                    const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+                    this.setState({
+                        balance: stock ? stock.balance : 0
+                    });
+
+                } catch (error) {
+
+                    this.props.history.push("/NotFound");
+
+            }
+
         }
 
 
@@ -82,9 +93,7 @@ export default class ProductDetail extends Component {
                     }
                 }
             }
-
-     
-
+   
             cart.push({
                 id: this.state.id,
                 name: this.state.name,
@@ -102,7 +111,7 @@ export default class ProductDetail extends Component {
             
             this.props.history.push("/cart");
 
-          };
+        };
 
 
         render() {
