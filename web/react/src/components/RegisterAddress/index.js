@@ -39,6 +39,34 @@ class RegisterAddress extends Component {
         }
     }
 
+    validateFields = () => {
+        if (this.isEmpty(this.state.address.aCep)) {
+            this.setState({ erro: "Digite o CEP!" });
+            return false;
+        }
+        if (this.isEmpty(this.state.address.aStreet)) {
+            this.setState({ erro: "Digite o nome da rua!" });
+            return false;
+        }
+        if (this.isEmpty(this.state.address.aNumber)) {
+            this.setState({ erro: "Digite o numero do local!" });
+            return false;
+        }
+        if (this.isEmpty(this.state.address.aDistrict)) {
+            this.setState({ erro: "Digite o bairro!" });
+            return false;
+        }
+        return true;
+    }
+
+    finish = async (evt) => {
+        evt.preventDefault();
+        if (!this.validateFields()) {
+            this.setState({ loading: false });
+            return;
+        }
+    }
+
     render() {
         return (
             <>
