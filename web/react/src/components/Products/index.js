@@ -65,7 +65,7 @@ export default class Products extends Component {
                             </Col>
                         ))) : (<Container className="text-center">
                             <pre className="h2">
-                                Erro ao carregar os produtos da home
+                                Erro ao carregar os produtos
                         <br />
                             Tente novamente mais tarde
                             <br />
