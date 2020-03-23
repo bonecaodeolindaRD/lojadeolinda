@@ -32,13 +32,13 @@ export default class Header extends Component {
       <div>
         <Navbar color="light" light expand="md">
           <Container fluid>
-            <NavbarBrand href="/">Bonecão de olinda dashboard</NavbarBrand>
+            <NavbarBrand href="/home">Bonecão de olinda dashboard</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
                   <NavLink>
-                    <Link to="/">Inicio</Link>
+                    <Link to="/home">Inicio</Link>
                   </NavLink>
                 </NavItem>
                 <NavItem>
