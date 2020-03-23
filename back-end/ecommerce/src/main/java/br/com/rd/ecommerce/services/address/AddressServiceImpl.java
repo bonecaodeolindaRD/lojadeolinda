@@ -129,8 +129,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity createAddress2(Address address) {
-        Address addressReturn = repository.save(address);
-        return ResponseEntity.ok().body(addressReturn);
+    public ResponseEntity createClientAddress(AddressDTO address) {
+        try {
+            Address addr = converter.convertTo(address);
+            addr.setClient(converter.convertTo(address.getClient()));
+            Address addressReturn = repository.save(addr);
+            return ResponseEntity.ok().body(addressReturn);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 }
