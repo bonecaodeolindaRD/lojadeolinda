@@ -9,6 +9,24 @@ class RegisterAddress extends Component {
     constructor(props) {
         super(props);
         this.API_VIA_CEP = "http://viacep.com.br/ws/";
+        this.state = {
+            loading: false,
+            erro: " ",
+            states: [],
+            cities: [],
+            products: [],
+            total: 0,
+            address: {
+                id: 1,
+                aCep: "",
+                aStreet: "",
+                aNumber: 0,
+                aComplement: "",
+                aDistrict: "",
+                aCitie: "",
+                aState: "",
+            }
+        }
     }
 
     findAddress = async (evt) => {
@@ -16,8 +34,8 @@ class RegisterAddress extends Component {
         if (cep.length === 9) {
             try {
                 const address = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
-                if (address.data.erro){
-                    this.setState({erro: "Erro ao buscar o CEP"});
+                if (address.data.erro) {
+                    this.setState({ erro: "Erro ao buscar o CEP" });
                     return;
                 }
                 this.setState({
@@ -30,11 +48,11 @@ class RegisterAddress extends Component {
                         aDistrict: address.data.bairro
                     }
                 });
-                this.setState({erro: ""});
-                this.listCities(address.data.uf); 
-            } catch(erro){
+                this.setState({ erro: "" });
+                this.listCities(address.data.uf);
+            } catch (erro) {
                 console.log(erro);
-                this.setState({erro: "Erro ao buscar o CEP"});
+                this.setState({ erro: "Erro ao buscar o CEP" });
             }
         }
     }
@@ -77,39 +95,41 @@ class RegisterAddress extends Component {
                             <Col md="4">
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
-                                    <Input  type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
+                                    <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="input-street"><span className="text-danger">*</span>Rua:</Label>
-                                    <Input type="text" name="aStreet" id="aStreet" onChange={this.editAddress} />
+                                    <Input value={this.state.address.aStreet} type="text" name="aStreet" id="aStreet" onChange={this.editAddress} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
                                         <Col xs="4">
                                             <Label for="aNumber"><span className="text-danger">*</span>Numero:</Label>
-                                            <Input  type="text" name="aNumber" id="aNumber" onChange={this.editAddress} />
+                                            <Input value={this.state.address.aNumber} type="text" name="aNumber" id="aNumber" onChange={this.editAddress} />
                                         </Col>
                                         <Col xs="8">
                                             <Label for="aComplement">Complemento:</Label>
-                                            <Input  type="text" name="aComplement" id="aComplement" onChange={this.editAddress} />
+                                            <Input value={this.state.address.aComplement} type="text" name="aComplement" id="aComplement" onChange={this.editAddress} />
                                         </Col>
                                     </Row>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="input-district"><span className="text-danger">*</span>Bairro:</Label>
-                                    <Input type="text" id="aDistrict" name="aDistrict" onChange={this.editAddress} />
+                                    <Input value={this.state.address.aDistrict} type="text" id="aDistrict" name="aDistrict" onChange={this.editAddress} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
                                         <Col xs="6">
                                             <Label for="aState"><span className="text-danger">*</span>Estado:</Label>
 
-                                            <Input  type="select" id="aState" name="aState" >
+                                            <Input value={this.state.address.aState} type="select" id="aState" name="aState" onChange={this.showCities}>
+                                                {this.state.states.map(state => (<option value={state.id}>{state.estado}</option>))}
                                             </Input>
                                         </Col>
                                         <Col xs="6">
                                             <Label for="aCitie"><span className="text-danger">*</span>Cidade:</Label>
-                                            <Input type="select" id="aCitie" name="aCitie" >
+                                            <Input value={this.state.address.aCitie} type="select" id="aCitie" name="aCitie" onChange={this.editAddress}>
+                                                {this.state.cities.map(citie => (<option value={citie.cidade}>{citie.cidade}</option>))}
                                             </Input>
                                         </Col>
                                     </Row>
