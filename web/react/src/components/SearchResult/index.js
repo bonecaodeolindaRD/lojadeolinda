@@ -21,10 +21,14 @@ export default class SearchResult extends Component {
     }
 
     getResult = async () => {
-        const { data: products } = await axios("http://localhost:8080/ecommerce/product/find/" + this.props.match.params.product);
-        if(!products)
+        try {
+            const { data: products } = await axios("http://localhost:8080/ecommerce/product/find/" + this.props.match.params.product);
+            if (!products)
+                return;
+            this.setState({ products });
+        } catch{
             return;
-        this.setState({ products });
+        }
 
     }
 
@@ -47,7 +51,7 @@ export default class SearchResult extends Component {
                                 <Card className="cursor-pointer p-1 mb-2" id="card" onClick={this.redirect}>
                                     <Row className="d-flex align-items-center ">
                                         <Col md="3">
-                                            <img src={p.image} alt={p.name} title={p.name}/>
+                                            <img src={p.image} alt={p.name} title={p.name} />
                                         </Col>
                                         <Col md="7" >
                                             <p className="h4">{p.name}</p>

@@ -128,14 +128,11 @@ public class ProductServiceImpl implements ProductService {
         Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category where upper(c.name) like '%" + str.toUpperCase() + "%'", Product.class);
         try{
             List<Product> prods = name.getResultList();
-            for(Product p: prods)
-                products.add(p);
+            products.addAll(prods);
             prods = desc.getResultList();
-            for(Product p: prods)
-                products.add(p);
+            products.addAll(prods);
             prods = categ.getResultList();
-            for(Product p: prods)
-                products.add(p);
+            products.addAll(prods);
             return ResponseEntity.ok().body(products);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());

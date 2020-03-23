@@ -31,6 +31,7 @@ export default class Sales extends Component {
     this.state = {
       orders: [],
       ordersDisplay: [],
+      months: [],
       erro: "",
       year: 0,
       years: [],
@@ -56,20 +57,29 @@ export default class Sales extends Component {
         return;
       let orders = [];
       let years = [];
+      let months = [];
       data.forEach(o => {
         orders.push({
           name: o[0],
           venda: o[1],
           amt: o[1]
         });
+        let m = new Date(o[0]).toLocaleDateString("pt-br", {
+          month: "long"
+        });
+        if(months.find(x => x === m) === undefined)
+          months.push(m);
+        let y = new Date(o[0]).getFullYear();
+        if(years.find(x => x === y) === undefined)
         years.push(
-          new Date(o[0]).getFullYear()
+          y
         )
       });
       this.setState({
         orders,
         ordersDisplay: orders,
-        years
+        years,
+        months
       });
       this.getTotal();
     } catch{
@@ -78,15 +88,17 @@ export default class Sales extends Component {
   }
 
   filter = async (str) => {
-    let ordersDisplay;
-    if (str === "")
-      ordersDisplay = this.state.orders;
-    else
+    let ordersDisplay = [];
+    if (str !== "")
       ordersDisplay = this.state.orders.filter(x => {
-        let dateFilter = new Date(str).getMonth();
-        let date = new Date(x.name);
-        return dateFilter === date.getMonth() && date.getFullYear() === parseInt(this.state.year);
+        let date = new Date(x.name).toLocaleDateString("pt-br", {
+          month: "long"
+        });
+        let year = new Date(x.name).getFullYear();
+        return str === date && year === parseInt(this.state.year);
       });
+    else
+      ordersDisplay = this.state.orders;
     await this.setState({ ordersDisplay });
     this.getTotal();
   }
@@ -114,15 +126,13 @@ export default class Sales extends Component {
               </FormGroup>
               <ListGroup>
                 <ListGroupItem className="cursor-pointer" onClick={e => this.filter("")}>Todas</ListGroupItem>
-                {this.state.orders.map(o => (
-                  <ListGroupItem className="cursor-pointer" onClick={e => this.filter(o.name)}>{new Date(o.name).toLocaleDateString("pt-br", {
-                    month: "long"
-                  })}</ListGroupItem>
+                {this.state.months.map(o => (
+                  <ListGroupItem className="cursor-pointer" onClick={e => this.filter(o)}>{o}</ListGroupItem>
                 ))}
               </ListGroup>
             </Col>
             <Col xs="9">
-              {this.state.orders.length > 0 ? (
+              {this.state.ordersDisplay.length > 0 ? (
                 <>
                   <LineChart
                     width={600}
