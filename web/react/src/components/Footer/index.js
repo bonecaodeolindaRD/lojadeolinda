@@ -10,7 +10,8 @@ import {
 import {
     FaFacebook,
     FaTwitter,
-    FaInstagram
+    FaInstagram,
+    FaPhone
 } from "react-icons/fa";
 
 import { Link } from 'react-router-dom';
@@ -25,7 +26,7 @@ export default class Footer extends Component {
 
                 <Nav>
 
-                    <Col className="col-2">
+                    <Col className="col-3">
 
                         <NavItem className="space-footer">
 
@@ -43,7 +44,7 @@ export default class Footer extends Component {
                                     <Link to="/" className="text-white" disabled>Pagamento</Link>
                                 </NavItem>
                                 <NavItem>
-                                    <Link className="text-muted" to="/">Cartão de credito</Link>
+                                    <Link className="text-muted" to="/">Cartão de crédito</Link>
                                 </NavItem>
                                 <NavItem>
                                     <Link className="text-muted" to="/">Cartão de débito</Link>
@@ -98,7 +99,7 @@ export default class Footer extends Component {
 
                                 <NavItem>
                                     <Link className="text-muted" to="/contact">
-                                        Ligue (11) 93537-4847
+                                        <FaPhone/> (11) 93537-4847
                                    </Link>
 
                                 </NavItem>
