@@ -34,6 +34,11 @@ class RegisterAddress extends Component {
         this.getAddresses();
     }
 
+    componentDidMount() {
+        this.listStates();
+        this.listCities("AC");
+    }
+
     getAddresses = async () => {
         const { email } = JSON.parse(sessionStorage.getItem('client'));
         try {
@@ -146,7 +151,7 @@ class RegisterAddress extends Component {
     render() {
         return (
             <>
-                <Header history={this.props.history} location={this.props.location}/>
+                <Header />
                 <Container > 
                     <Form onSubmit={this.finish}>
                         <Row>
