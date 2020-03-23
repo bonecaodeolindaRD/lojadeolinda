@@ -47,7 +47,6 @@ export default class Contact extends Component {
     e.preventDefault();
   }
 
-
   toggleModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
