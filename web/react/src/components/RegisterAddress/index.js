@@ -17,6 +17,7 @@ class RegisterAddress extends Component {
                         <Row>
                             <Col md="4"></Col>
                             <Col md="4">
+                            <h5 className="bg-warning p-2 text-center">Endereços</h5>
                                 <FormGroup>
                                     <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                     <Input type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={this.editAddress} onKeyUp={this.findAddress} />
