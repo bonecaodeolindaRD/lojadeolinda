@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<?> findCategoryById(Long id) {
         try {
-            Category category = repository.findById(id).get();
+            Category category = repository.findById(id).orElse(null);
             if (category == null)
-                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             CategoryDTO catDTO = converter.convertTo(category);
             return ResponseEntity.ok().body(catDTO);
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             List<Category> categories = repository.findAll();
             if (categories == null || categories.size() <= 0)
-                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             List<CategoryDTO> catDTO = new ArrayList<>();
             for (Category cat : categories)
                 catDTO.add(converter.convertTo(cat));
@@ -62,12 +62,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseEntity<?> findByCategoryByName(String name) {
-        if (name == null || name == "")
+        if (name == null || name.equals(""))
             return ResponseEntity.badRequest().body(new CategoryException("Informe uma descricao"));
         try {
             List<Category> categories = repository.findByName(name);
             if (categories == null || categories.size() <= 0)
-                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             List<CategoryDTO> catDTO = new ArrayList<>();
             for (Category cat : categories)
                 catDTO.add(converter.convertTo(cat));
@@ -88,7 +88,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao atualizar a categoria"));
         try {
-            Category cat = repository.findById(category.getId()).get();
+            Category cat = repository.findById(category.getId()).orElse(null);
+            if(cat == null)
+                return ResponseEntity.badRequest().body(new CategoryException("Erro ao editar a categoria"));
             cat.setName(category.getName());
             cat = repository.save(cat);
             CategoryDTO catDTO = converter.convertTo(cat);

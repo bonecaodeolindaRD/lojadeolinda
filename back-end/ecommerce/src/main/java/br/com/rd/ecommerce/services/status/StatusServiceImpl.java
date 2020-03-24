@@ -38,7 +38,7 @@ public class StatusServiceImpl  implements  StatusService{
         try{
             Status status = statusRepository.findByIdStatus(id);
             if(status == null)
-                return ResponseEntity.badRequest().body(new StatusException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             StatusDTO statusDTO = converter.convertTo(status);
             return ResponseEntity.ok().body(statusDTO);
         }catch (Exception e){
@@ -53,7 +53,7 @@ public class StatusServiceImpl  implements  StatusService{
         try{
             List<Status> s = statusRepository.findByStatus(status);
             if(s == null || s.size() <= 0)
-                return ResponseEntity.badRequest().body(new StatusException("Nenhum item encontrado"));
+                return ResponseEntity.notFound().build();
             List<StatusDTO> sDTO = new ArrayList<>();
             for(Status st: s)
                 sDTO.add(converter.convertTo(st));

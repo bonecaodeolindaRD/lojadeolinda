@@ -76,7 +76,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             Client client = clientRepository.findById(id).orElse(null);
             if (client == null)
-                return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             ClientDTO clientDTO = converter.convertTo(client);
             return ResponseEntity.ok().body(clientDTO);
         } catch (Exception e){
@@ -91,12 +91,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ResponseEntity<?> findClientByEmail(String email) {
-        if (email == null || email == "")
-            return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
+        if (email == null || email.equals(""))
+            return ResponseEntity.badRequest().body(new ClientException("Informe um email"));
         try {
             Client clients = clientRepository.findByEmail(email);
             if (clients == null)
-                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
 
             ClientDTO clientDTO = converter.convertTo(clients);
             return ResponseEntity.ok().body(clientDTO);
@@ -113,7 +113,7 @@ public class ClientServiceImpl implements ClientService {
             Client client = clientRepository.findByEmail(email);
 
             if (client == null)
-                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
 
             String passHash = client.getPassword();
             if(BCrypt.checkpw(password, passHash)) {
@@ -127,12 +127,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public ResponseEntity<?> findClientOrders(String email){
-        if(email == null || email =="")
+        if(email == null || email.equals(""))
             return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
         try{
             Client client = clientRepository.findByEmail(email);
             if(client == null)
-                return ResponseEntity.badRequest().body(new ClientException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
 
             ClientDTO clientDTO = converter.convertTo(client);
 
@@ -150,12 +150,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public ResponseEntity<?> findClientAddress(String email){
-        if(email == null || email == "")
+        if(email == null || email.equals(""))
             return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
         try{
             Client client = clientRepository.findByEmail(email);
             if(client == null )
-                return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
+                return ResponseEntity.notFound().build();
             ClientDTO clientDTO = converter.convertTo(client);
 
             for(Address a: client.getAddresses())

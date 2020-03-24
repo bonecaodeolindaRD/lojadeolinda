@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
             List<Order> orders = respository.findAll();
 
             if (orders == null || orders.size() <= 0)
-                return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
+                return ResponseEntity.notFound().build();
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for (Order order : orders)
                 ordersDTO.add(converter.convertTo(order));
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
                 return ResponseEntity.badRequest().body(new OrderException("Data invalida"));
             List<Order> orders = respository.findByDate(dt);
             if (orders == null || orders.size() <= 0)
-                return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
+                return ResponseEntity.notFound().build();
 
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for(Order order: orders)
@@ -84,9 +84,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<?> findById(Long id) {
         try {
-            Order item = respository.findById(id).get();
-            if (item == null || id == null)
-                return ResponseEntity.badRequest().body(new OrderException("Erro ao encontrar o pedido"));
+            Order item = respository.findById(id).orElse(null);
+            if (item == null || id <= 0)
+                return ResponseEntity.notFound().build();
             OrderDTO oDTO = converter.convertTo(item);
             return ResponseEntity.ok().body(oDTO);
         } catch (Exception e){
@@ -167,7 +167,7 @@ public class OrderServiceImpl implements OrderService {
         try{
             List<Order> orders = query.getResultList();
             if(orders == null || orders.size() <= 0)
-                return ResponseEntity.badRequest().body(new OrderException("Nenhum pedido encontrado"));
+                return ResponseEntity.notFound().build();
             return ResponseEntity.ok().body(orders);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new OrderException("Erro " + e.getMessage()));

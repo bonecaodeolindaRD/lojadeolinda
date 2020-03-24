@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Product> products = repository.findAll();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productsDTO = new ArrayList<>();
             for (Product p : products)
                 productsDTO.add(converter.convertTo(p));
@@ -52,7 +52,9 @@ public class ProductServiceImpl implements ProductService {
         if (id == null || id <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Favor informe um id"));
         try {
-            Product product = repository.findById(id).get();
+            Product product = repository.findById(id).orElse(null);
+            if(product == null)
+                return ResponseEntity.notFound().build();
             ProductDTO productDTO = converter.convertTo(product);
 
             return ResponseEntity.ok().body(productDTO);
@@ -63,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<?> findProductByName(String name) {
-        if (name == null || name == "")
+        if (name == null || name.equals(""))
             return ResponseEntity.badRequest().body(new ProductException("Favor informe o nome de um produto"));
 
         Query query = em.createQuery("select p from Product p where upper(p.name) like '%" + name.toUpperCase() + "%'", Product.class);
@@ -71,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Product> products = query.getResultList();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -84,14 +86,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<?> findProductByDescription(String description) {
-        if (description == null || description == "")
+        if (description == null || description.equals(""))
             return ResponseEntity.badRequest().body(new ProductException("Digite uma descricao para o produto"));
 
         Query query = em.createQuery("select p from Product p where upper(description) like '%" + description.toUpperCase() + "%'", Product.class);
         try {
             List<Product> products = query.getResultList();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -110,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Product> products = repository.findByCategory(categ);
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrada"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -133,6 +135,8 @@ public class ProductServiceImpl implements ProductService {
             products.addAll(prods);
             prods = categ.getResultList();
             products.addAll(prods);
+            if(products.size() <= 0)
+                return ResponseEntity.notFound().build();
             return ResponseEntity.ok().body(products);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());
@@ -145,7 +149,7 @@ public class ProductServiceImpl implements ProductService {
         try{
             List<Product> products = query.getResultList();
             if(products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> pDTO = new ArrayList<>();
             for(Product p: products)
                 pDTO.add(converter.convertTo(p));
