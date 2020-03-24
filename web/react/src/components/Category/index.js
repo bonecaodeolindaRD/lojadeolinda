@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
-
-import {
-    Container
-} from 'reactstrap';
-
+import axios from 'axios';
+import { Container } from 'reactstrap';
 
 import Header from '../Header';
+import Produtos from '../Products';
 import Footer from '../Footer';
 
-export default class Home extends Component {
+export default class Category extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            products: [],
+            loading: true
+        }
+        this.findProducts();
+    }
+
+
+    findProducts = async () => {
+        this.setState({ loading: true });
+        try {
+            const { data: productss } = await axios("http://localhost:8080/ecommerce/product/category/" + this.props.match.params.id);
+            let products = [];
+            productss.forEach(p => products.push({
+                id: p.id,
+                img: p.image,
+                nome: p.name,
+                desc: p.description,
+                preco: p.price,
+                desconto: p.off
+
+            }));
+            this.setState({ products });
+            this.setState({ loading: false });
+        } catch {
+            this.setState({ products: [] });
+        }
+    }
+
+    
 
 
     render() {
@@ -17,8 +48,7 @@ export default class Home extends Component {
             <>
                 <Header history={this.props.history} location={this.props.location}/>
                 <Container>
-                  <h1>Categoria</h1>
-                    {/* <Produtos history={this.props.history}/> */}
+                     <Produtos products={this.state.products}/>
                 </Container>
                 <Footer />
             </>

@@ -35,7 +35,7 @@ import NotFound from './components/NotFound';
             <Route path="/history" exact component={OrderHistory}/>
             <Route path="/search/:product?" exact component={SearchResult} />
             <Route path="/order/detail/:id?" exact component={OrderDetails} />
-            <Route path="/category" exact component={Category} /> 
+            <Route path="/category/:id?" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
             <Route component={NotFound} />
         </Switch>

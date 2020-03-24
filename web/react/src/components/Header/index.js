@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 
 import {
     Collapse,
@@ -35,12 +35,21 @@ export default class Header extends Component {
         this.getLogin();
         this.state = {
             isOpen: false,
+            categories: [],
+            category: 0,
             email: "",
             name: this.getLogin(),
             
             loading: false
         }
-      
+        this.getCategories();
+    }
+
+    getCategories = async () => {
+        const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+        if (!category)
+            return;
+        this.setState({ categories: category });
     }
 
 
@@ -96,24 +105,15 @@ export default class Header extends Component {
                                     <Link to="/components/"></Link>
                                 </NavItem>
                                 <Form onSubmit={this.search} className="search-input border">
-                                    <InputGroup>
+                                    <InputGroup className="rounded" >
                                         <UncontrolledDropdown nav inNavbar>
                                             <DropdownToggle nav caret>
                                                 Categorias
                                             </DropdownToggle>
-                                            <DropdownMenu right>
-                                                <DropdownItem>
-                                                    <Link to="/category/">Artistas</Link>
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Atletas</Link>
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Jornalistas</Link> 
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Politicos</Link> 
-                                                </DropdownItem>
+                                            <DropdownMenu right  value={this.state.category} onChange={e => this.setState({ category: e.target.value })}>
+                                            {this.state.categories.map(c => (
+                                           <Link  onClick={ e => this.props.history.push("/category/" + c.id)}> <DropdownItem >{c.name}</DropdownItem></Link>
+                                             ))}  
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                         <Input className="form-control border border-right-0" placeholder="Buscar..." />
