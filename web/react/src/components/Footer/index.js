@@ -21,22 +21,22 @@ export default class Footer extends Component {
     render() {
         return (
            
-            <Navbar color="dark" className=" mt-5 footer">
+            <Navbar color="dark" className=" mt-5 footer ">
 
                 <Nav>
 
-                    <Col className="col-2">
+                    <Col className="col-md-2 col-sm-1">
 
                         <NavItem className="space-footer">
 
                             <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
-                            <small className="d-block mb-3 text-muted">&copy; Bonecão de Olinda</small>
+                            
 
                         </NavItem>
 
                     </Col>
 
-                    <Col className="col-3 mr-2">
+                    <Col className="col-md-3 col-sm-2 mr-2">
                         <NavItem className="space-footer">
                             <Nav vertical>
                                 <NavItem className="text-white">
@@ -55,7 +55,7 @@ export default class Footer extends Component {
                         </NavItem>
                     </Col>
 
-                    <Col className="col-3 mr-2">
+                    <Col className="col-md-3 col-sm-2 mr-2">
                         <NavItem className="space-footer">
                             <Nav vertical>
                                 <NavItem className="text-white">
@@ -75,7 +75,7 @@ export default class Footer extends Component {
                         </NavItem>
                     </Col>
 
-                    <Col className="col-2">
+                    <Col className="col-md-2 col-sm-1">
 
                         <NavItem className="space-footer">
                             <Nav vertical>
@@ -108,7 +108,7 @@ export default class Footer extends Component {
 
                     <Col>
 
-                        <NavItem className="col-2">
+                        <NavItem className="col-ms-2 col-sm-1">
                             <Row>
                                 <div>
                                     <Link to="/" className="text-white" disabled>Sobre</Link>
