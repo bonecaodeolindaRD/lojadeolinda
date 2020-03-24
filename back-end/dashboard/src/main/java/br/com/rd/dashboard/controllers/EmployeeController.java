@@ -23,7 +23,7 @@ public class EmployeeController {
         return service.updateEmployee(employeeDTO);
     }
 
-    @GetMapping("/employee/login")
+    @PostMapping("/employee/login")
     public ResponseEntity login(@RequestBody EmployeeDTO employeeDTO){
         return service.login(employeeDTO);
     }

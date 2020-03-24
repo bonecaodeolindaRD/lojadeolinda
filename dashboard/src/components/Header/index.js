@@ -19,8 +19,16 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      username: this.getUsername()
     }
+  }
+
+  getUsername = () => {
+    if(!sessionStorage.getItem('user'))
+      return;
+    let  {username} = JSON.parse(sessionStorage.getItem('user'));
+    return username;
   }
 
   toggle = () => {
@@ -32,7 +40,7 @@ export default class Header extends Component {
       <div>
         <Navbar color="light" light expand="md">
           <Container fluid>
-            <NavbarBrand href="/home">Bonecão de olinda dashboard</NavbarBrand>
+            <NavbarBrand href="/home">{this.state.username}</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="mr-auto" navbar>
@@ -54,6 +62,14 @@ export default class Header extends Component {
                 <NavItem>
                   <NavLink>
                     <Link to="/sales">Vendas</Link>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink>
+                    <Link onClick={e => {
+                      sessionStorage.removeItem('user');
+                      window.location.reload();
+                    }}>Sair</Link>
                   </NavLink>
                 </NavItem>
               </Nav>

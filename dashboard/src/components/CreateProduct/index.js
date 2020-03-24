@@ -43,6 +43,10 @@ export default class CreateProduct extends Component {
             newCategory: '',
             categoryMessage: ''
         };
+        if(!sessionStorage.getItem('user')){
+            this.props.history.push("/");
+            return;
+          }
         this.getCategories();
     }
 

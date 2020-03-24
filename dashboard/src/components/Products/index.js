@@ -12,6 +12,10 @@ export default class Products extends Component {
             products: [],
             displayProducts: []
         }
+        if(!sessionStorage.getItem('user')){
+            this.props.history.push("/");
+            return;
+          }
         this.getProducts();
     }
 

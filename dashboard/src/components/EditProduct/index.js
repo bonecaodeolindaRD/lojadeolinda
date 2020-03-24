@@ -37,6 +37,10 @@ export default class EditProduct extends Component {
       image: '',
       error: ''
     };
+    if(!sessionStorage.getItem('user')){
+      this.props.history.push("/");
+      return;
+    }
     this.getCategories();
     this.loadProduct();
   }
