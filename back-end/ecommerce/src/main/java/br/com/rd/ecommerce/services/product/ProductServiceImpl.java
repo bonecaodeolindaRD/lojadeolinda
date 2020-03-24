@@ -30,11 +30,11 @@ public class ProductServiceImpl implements ProductService {
     private EntityManager em;
 
     @Override
-    public ResponseEntity findAllProducts() {
+    public ResponseEntity<?> findAllProducts() {
         try {
             List<Product> products = repository.findAll();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productsDTO = new ArrayList<>();
             for (Product p : products)
                 productsDTO.add(converter.convertTo(p));
@@ -48,11 +48,13 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity findProductById(Long id) {
+    public ResponseEntity<?> findProductById(Long id) {
         if (id == null || id <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Favor informe um id"));
         try {
-            Product product = repository.findById(id).get();
+            Product product = repository.findById(id).orElse(null);
+            if(product == null)
+                return ResponseEntity.notFound().build();
             ProductDTO productDTO = converter.convertTo(product);
 
             return ResponseEntity.ok().body(productDTO);
@@ -62,8 +64,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByName(String name) {
-        if (name == null || name == "")
+    public ResponseEntity<?> findProductByName(String name) {
+        if (name == null || name.equals(""))
             return ResponseEntity.badRequest().body(new ProductException("Favor informe o nome de um produto"));
 
         Query query = em.createQuery("select p from Product p where upper(p.name) like '%" + name.toUpperCase() + "%'", Product.class);
@@ -71,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Product> products = query.getResultList();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -83,15 +85,15 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity findProductByDescription(String description) {
-        if (description == null || description == "")
+    public ResponseEntity<?> findProductByDescription(String description) {
+        if (description == null || description.equals(""))
             return ResponseEntity.badRequest().body(new ProductException("Digite uma descricao para o produto"));
 
         Query query = em.createQuery("select p from Product p where upper(description) like '%" + description.toUpperCase() + "%'", Product.class);
         try {
             List<Product> products = query.getResultList();
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -102,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByCategory(Long category) {
+    public ResponseEntity<?> findProductByCategory(Long category) {
         if (category == null || category <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Favor informe uma categoria"));
         Category categ = new Category();
@@ -110,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Product> products = repository.findByCategory(categ);
             if (products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrada"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> productDTOS = new ArrayList<>();
             for (Product p : products)
                 productDTOS.add(converter.convertTo(p));
@@ -121,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByNameOrDescription(String str) {
+    public ResponseEntity<?> findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
         Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'", Product.class);
         Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'", Product.class);
@@ -133,6 +135,8 @@ public class ProductServiceImpl implements ProductService {
             products.addAll(prods);
             prods = categ.getResultList();
             products.addAll(prods);
+            if(products.size() <= 0)
+                return ResponseEntity.notFound().build();
             return ResponseEntity.ok().body(products);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new ProductException("Erro: ") + e.getMessage());
@@ -140,12 +144,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductHome() {
+    public ResponseEntity<?> findProductHome() {
         Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
         try{
             List<Product> products = query.getResultList();
             if(products == null || products.size() <= 0)
-                return ResponseEntity.badRequest().body(new ProductException("Nenhum produto encontrado"));
+                return ResponseEntity.notFound().build();
             List<ProductDTO> pDTO = new ArrayList<>();
             for(Product p: products)
                 pDTO.add(converter.convertTo(p));
@@ -156,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity createProduct(ProductDTO productDTO) {
+    public ResponseEntity<?> createProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         if(productDTO.getPrice() <= 0)
@@ -188,7 +192,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity updateProduct(ProductDTO productDTO) {
+    public ResponseEntity<?> updateProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         if(productDTO.getPrice() <= 0)

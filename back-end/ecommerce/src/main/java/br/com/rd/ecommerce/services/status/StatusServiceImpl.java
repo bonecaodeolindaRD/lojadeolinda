@@ -19,7 +19,7 @@ public class StatusServiceImpl  implements  StatusService{
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity createStatus(StatusDTO status) {
+    public ResponseEntity<?> createStatus(StatusDTO status) {
         if(status == null)
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um status"));
         Status stat = converter.convertTo(status);
@@ -32,13 +32,13 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity findStatusById(Long id) {
+    public ResponseEntity<?> findStatusById(Long id) {
         if(id <= 0)
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um id valido"));
         try{
             Status status = statusRepository.findByIdStatus(id);
             if(status == null)
-                return ResponseEntity.badRequest().body(new StatusException("Nenhum dado encontrado"));
+                return ResponseEntity.notFound().build();
             StatusDTO statusDTO = converter.convertTo(status);
             return ResponseEntity.ok().body(statusDTO);
         }catch (Exception e){
@@ -47,13 +47,13 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity findStatusByDesc(String status) {
+    public ResponseEntity<?> findStatusByDesc(String status) {
         if(status == null || status == "")
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um status"));
         try{
             List<Status> s = statusRepository.findByStatus(status);
             if(s == null || s.size() <= 0)
-                return ResponseEntity.badRequest().body(new StatusException("Nenhum item encontrado"));
+                return ResponseEntity.notFound().build();
             List<StatusDTO> sDTO = new ArrayList<>();
             for(Status st: s)
                 sDTO.add(converter.convertTo(st));
@@ -70,7 +70,7 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity updateStatus(StatusDTO status) {
+    public ResponseEntity<?> updateStatus(StatusDTO status) {
         if(status == null)
             return ResponseEntity.badRequest().body(new StatusException("Informe um status"));
         try {
