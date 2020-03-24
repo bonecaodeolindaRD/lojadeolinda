@@ -88,6 +88,7 @@ public class OrderServiceImpl implements OrderService {
             if (item == null || id <= 0)
                 return ResponseEntity.notFound().build();
             OrderDTO oDTO = converter.convertTo(item);
+
             return ResponseEntity.ok().body(oDTO);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
