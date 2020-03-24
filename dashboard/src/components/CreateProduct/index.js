@@ -41,11 +41,30 @@ export default class CreateProduct extends Component {
             image: '',
             error: '',
             newCategory: '',
-            categoryMessage: ''
+            categoryMessage: '',
         };
+        if(!sessionStorage.getItem('user')){
+            this.props.history.push("/");
+            return;
+        }
+        this.existentUser();
+        this.existentUser();
         this.getCategories();
     }
 
+    existentUser = async () => {
+        try{
+            let { username }  = JSON.parse(sessionStorage.getItem('user'));
+            let user = await axios("http://localhost:9090/employee/find/" +  username).catch(e => undefined);
+            if(!user){
+                sessionStorage.removeItem('user');
+                this.props.history.push("/"); 
+            }
+        } catch{
+            this.props.history.push("/");
+            sessionStorage.removeItem('user');
+        }
+    }
 
     getCategories = async () => {
         const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
