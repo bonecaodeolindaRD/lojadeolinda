@@ -3,7 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
 import Axios from 'axios';
-import { Container, Row, Card, CardTitle, Label } from 'reactstrap';
+import { Container, Row, Card, CardTitle, Label, Col } from 'reactstrap';
 
 class OrderDetail extends Component {
     constructor(props) {
@@ -11,6 +11,7 @@ class OrderDetail extends Component {
         this.state = {
             id: "",
             date: "",
+            value: "",
             address: {
                 cep: "",
                 street: "",
@@ -22,7 +23,8 @@ class OrderDetail extends Component {
             },
             status: {
                 status: "",
-            }
+            },
+            orderItem: []
         }
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
@@ -40,11 +42,14 @@ class OrderDetail extends Component {
                 id: order.id,
                 address: order.address,
                 status: order.status,
-                date: order.date
-            }) 
+                date: order.date,
+                value: order.value,
+                orderItem: order.orderItem
+            })
         } catch (error) {
-            return("Não há nenhum pedido!")
+            return ("Não há nenhum pedido!")
         }
+        console.log(this.state)
     }
 
     loadAcccount = async () => {
@@ -59,12 +64,14 @@ class OrderDetail extends Component {
         return (
             <>
                 <Header />
-                <Container align="center">
-                    <h2>Detalhes do Pedido <h2 className="text-danger">{this.state.id}</h2></h2>
+                <Container >
+                    <div align="center">
+                        <h2 className="bg-warning p-2 text-center">Detalhes do Pedido: <span className="text-danger">{this.state.id}</span></h2>
+                    </div>
                     <br></br>
-                    <Card>
+                    <Card className="mb-2">
                         <Row>
-                            <Card body>
+                            <Card body align="center">
                                 <CardTitle><h5 className="bg-warning p-2 text-center">ENDEREÇO</h5></CardTitle>
                                 <Label>CEP: {this.state.address.cep}</Label>
                                 <Label>Rua: {this.state.address.street}</Label>
@@ -72,15 +79,32 @@ class OrderDetail extends Component {
                                 <Label>Bairro: {this.state.address.district} </Label>
                                 <Label>Cidade: {this.state.address.citie} - {this.state.address.uf}</Label>
                             </Card>
+                            <Card body align="center">
+                                <CardTitle><h5 className="bg-warning p-2 text-center">OUTROS</h5></CardTitle>
+                                <h5>Valor Total: {(this.state.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                                <Label>Data do Pedido: {(new Date(this.state.date).toLocaleDateString('pt-Br'))}</Label>
+                                <Label>Status do Pedido: <p className="text-danger">{this.state.status.status}</p></Label>
+                                <Label>Entrega: Prevista para 10 dias utéis.</Label>
+                            </Card>
+                        </Row>
+                    </Card>
+                    <Card>
+                        <Row>
                             <Card body>
                                 <CardTitle><h5 className="bg-warning p-2 text-center">ITENS</h5></CardTitle>
-
-                            </Card>
-                            <Card body>
-                                <CardTitle><h5 className="bg-warning p-2 text-center">OUTROS</h5></CardTitle>
-                                <Label>Data do Pedido: {(new Date(this.state.date).toLocaleDateString('pt-Br'))}</Label>
-                                <Label>Status do Pedido: {this.state.status.status}</Label>
-                                <Label>Entrega: Prevista para 10 dias utéis.</Label>
+                                <Row>
+                                    {this.state.orderItem.map(p => (
+                                        <Col md="4">
+                                            <Card className="border-dark mb-4" align="center">
+                                                <Label><h4>{p.product.name}</h4></Label>
+                                                <img src={p.product.image} alt="imagem" className="img-responsive mb-3" width="50%" />
+                                                <Label><h5>Quantidade: {p.quantity}</h5></Label>
+                                                <h5>Valor Unitário: {(p.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                                                <h5>Total: {(p.value * p.quantity).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
                             </Card>
                         </Row>
                     </Card>
