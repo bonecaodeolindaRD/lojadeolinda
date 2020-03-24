@@ -11,6 +11,6 @@ public interface ClientService {
     ResponseEntity<?> findClientByEmail(String email);
     ResponseEntity<?> findClientLogin(String email, String password);
     ResponseEntity<?> findClientOrders(String email);
-    ResponseEntity<?> createClient(ClientDTO client);
+    ResponseEntity<?> createClient(Client client);
     ResponseEntity<?> findClientAddress(String email);
 }

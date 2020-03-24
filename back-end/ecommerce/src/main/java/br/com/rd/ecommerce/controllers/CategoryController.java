@@ -15,27 +15,27 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/category/all")
-    public ResponseEntity findAllCategory(){
+    public ResponseEntity<?> findAllCategory(){
         return service.findAllCategories();
     }
 
     @GetMapping("/category/id/{id}")
-    public ResponseEntity findCategoryById(@PathVariable("id") Long id){
+    public ResponseEntity<?> findCategoryById(@PathVariable("id") Long id){
         return service.findCategoryById(id);
     }
 
     @GetMapping("/category/name/{name}")
-    public ResponseEntity findByCategoryName(@PathVariable("name") String name){
+    public ResponseEntity<?> findByCategoryName(@PathVariable("name") String name){
         return service.findByCategoryByName(name);
     }
 
     @PostMapping("/category/new")
-    public ResponseEntity createCategory(@RequestBody Category category){
+    public ResponseEntity<?> createCategory(@RequestBody Category category){
         return service.createCategory(category);
     }
 
     @PutMapping("/category/edit")
-    public ResponseEntity editCategory(@RequestBody Category category){
+    public ResponseEntity<?> editCategory(@RequestBody Category category){
         return service.update(category);
     }
 

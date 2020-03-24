@@ -16,22 +16,22 @@ public class AddressController {
     private AddressService service;
 
     @PostMapping("/address/new")
-    public ResponseEntity save(@RequestBody Address address){
+    public ResponseEntity<?> save(@RequestBody Address address){
         return service.createAddress2(address);
     }
 
     @GetMapping("/address/all")
-    public ResponseEntity findAll(){
+    public ResponseEntity<?> findAll(){
         return service.findAllAddress();
     }
 
     @GetMapping("/address/id/{id}")
-    public ResponseEntity findById(@PathVariable("id")Long id){
+    public ResponseEntity<?> findById(@PathVariable("id")Long id){
         return service.findAddressById(id);
     }
 
     @GetMapping("/address/cep/{cep}")
-    public ResponseEntity findByCEP(@PathVariable("cep") String cep){
+    public ResponseEntity<?> findByCEP(@PathVariable("cep") String cep){
         return service.findAddressByCEP(cep);
     }
 
@@ -41,7 +41,7 @@ public class AddressController {
     }
 
     @PutMapping("/address/update")
-    public ResponseEntity edit(@RequestBody AddressDTO address){
+    public ResponseEntity<?> edit(@RequestBody AddressDTO address){
         return service.updateAddress(address);
     }
 }

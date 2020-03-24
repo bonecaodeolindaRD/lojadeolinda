@@ -13,32 +13,32 @@ public class StockController {
     private StockService service;
 
     @GetMapping("/stock/product/{idproduct}/{idstock}")
-    public ResponseEntity findProductOnStock(@PathVariable("idproduct") Long product, @PathVariable("idstock") Long stock){
+    public ResponseEntity<?> findProductOnStock(@PathVariable("idproduct") Long product, @PathVariable("idstock") Long stock){
         return service.findItemOnStock(stock, product);
     }
 
     @GetMapping("/stock/product/all/{id}")
-    public ResponseEntity findProductInAllStock(@PathVariable("id") Long id){
+    public ResponseEntity<?> findProductInAllStock(@PathVariable("id") Long id){
         return service.findItemInAllStocks(id);
     }
 
     @GetMapping("/stock/all")
-    public ResponseEntity findAllStocks(){
+    public ResponseEntity<?> findAllStocks(){
         return service.findAllStocks();
     }
 
     @GetMapping("/stock/notregistered")
-    public ResponseEntity findNotRegistered(){
+    public ResponseEntity<?> findNotRegistered(){
         return service.getNotRegisteredItems();
     }
 
     @PostMapping("/stock/product/edit/{idstock}/{idProduct}/{quantity}")
-    public ResponseEntity editProsuct(@PathVariable("idstock") Long idStock, @PathVariable("idProduct") Long idProduct, @PathVariable("quantity") Integer quantity){
+    public ResponseEntity<?> editProsuct(@PathVariable("idstock") Long idStock, @PathVariable("idProduct") Long idProduct, @PathVariable("quantity") Integer quantity){
         return service.addItemOnStock(idStock, idProduct, quantity);
     }
 
     @PostMapping("/stock/product/new/{idstock}")
-    public ResponseEntity registerProduct(@PathVariable("idstock") Long idStock, @RequestBody ProductDTO productDTO){
+    public ResponseEntity<?> registerProduct(@PathVariable("idstock") Long idStock, @RequestBody ProductDTO productDTO){
         return service.registerProductOnStock(idStock, productDTO);
     }
 }

@@ -31,10 +31,9 @@ public class ClientServiceImpl implements ClientService {
     ClientRepository clientRepository;
     private Converter converter = new Converter();
 
-    public ResponseEntity<?> createClient(ClientDTO clientDTO){
-        if(clientDTO == null)
+    public ResponseEntity<?> createClient(Client client){
+        if(client == null)
             return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
-        Client client = converter.convertTo(clientDTO);
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:MM:ss");
             sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
