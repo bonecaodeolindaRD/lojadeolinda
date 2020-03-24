@@ -107,7 +107,7 @@ export default class Checkout extends Component {
                 ...this.state,
                 client: {
                     ...this.state.client,
-                    addresses: add.addresses
+                    addresses: add.data.addresses
                 }
             });
         } catch (error) {

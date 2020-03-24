@@ -3,21 +3,32 @@ import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
 import Axios from 'axios';
-import { Container, Row, Card, CardTitle } from 'reactstrap';
+import { Container, Row, Card, CardTitle, Label } from 'reactstrap';
 
 class OrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: "",
-            address: []
+            date: "",
+            address: {
+                cep: "",
+                street: "",
+                number: 0,
+                complement: "",
+                district: "",
+                citie: "",
+                state: "",
+            },
+            status: {
+                status: "",
+            }
         }
-         if (!sessionStorage.getItem('client')) {
+        if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
         this.loadAcccount();
-        console.log(this.state.address)
     }
 
     async componentDidMount() {
@@ -27,15 +38,18 @@ class OrderDetail extends Component {
             const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/id/" + id)
             this.setState({
                 id: order.id,
-                address: order.address
-            })
+                address: order.address,
+                status: order.status,
+                date: order.date
+            }) 
+            console.log(this.state)
         } catch (error) {
 
         }
     }
 
     loadAcccount = async () => {
-         JSON.parse(sessionStorage.getItem('client'));
+        JSON.parse(sessionStorage.getItem('client'));
     }
 
     loadAcccount(e) {
@@ -52,21 +66,27 @@ class OrderDetail extends Component {
                     <Card>
                         <Row>
                             <Card body>
-                                <CardTitle>Endereço</CardTitle>
+                                <CardTitle><h5 className="bg-warning p-2 text-center">ENDEREÇO</h5></CardTitle>
+                                <Label>CEP: {this.state.address.cep}</Label>
+                                <Label>Rua: {this.state.address.street}</Label>
+                                <Label>Nº {this.state.address.number} Compl: {this.state.address.complement}</Label>
+                                <Label>Bairro: {this.state.address.district} </Label>
+                                <Label>Cidade: {this.state.address.citie} - {this.state.address.uf}</Label>
                             </Card>
                             <Card body>
-                                <CardTitle>Itens</CardTitle>
-                     
+                                <CardTitle><h5 className="bg-warning p-2 text-center">ITENS</h5></CardTitle>
+
                             </Card>
                             <Card body>
-                                <CardTitle>Outros</CardTitle>
+                                <CardTitle><h5 className="bg-warning p-2 text-center">OUTROS</h5></CardTitle>
+                                <Label>Data do Pedido: {(new Date(this.state.date).toLocaleDateString('pt-Br'))}</Label>
+                                <Label>Status do Pedido: {this.state.status.status}</Label>
+                                <Label>Entrega: Prevista para 10 dias utéis.</Label>
                             </Card>
                         </Row>
                     </Card>
                 </Container>
-                <div className="footer">
-                    <Footer />
-                </div>
+                <Footer />
             </>
         )
     }
