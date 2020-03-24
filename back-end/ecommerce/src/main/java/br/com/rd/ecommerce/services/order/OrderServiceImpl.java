@@ -9,7 +9,7 @@ import br.com.rd.ecommerce.repositories.OrderRespository;
 import br.com.rd.ecommerce.repositories.ProductRepository;
 import br.com.rd.ecommerce.services.exceptions.OrderException;
 import br.com.rd.ecommerce.services.mailsender.MailSenderServiceImpl;
-import br.com.rd.ecommerce.services.stock.StockServiceImpl;
+import br.com.rd.ecommerce.services.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private StockServiceImpl stockService;
+    private StockService stockService;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity findAllOrders() {
+    public ResponseEntity<?> findAllOrders() {
         try {
             List<Order> orders = respository.findAll();
 
@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity findByDate(String date) {
+    public ResponseEntity<?> findByDate(String date) {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         try {
@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity findById(Long id) {
+    public ResponseEntity<?> findById(Long id) {
         try {
             Order item = respository.findById(id).get();
             if (item == null || id == null)
@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 //    }
 
     @Override
-    public ResponseEntity createOrder(OrderDTO order) {
+    public ResponseEntity<?> createOrder(OrderDTO order) {
 
         if(order == null || order.getClient() == null)
             return ResponseEntity.badRequest().body(new OrderException("Cliente não informado"));
@@ -144,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
                 sb.append(String.format("%.2f", oi.getValue()));
                 sb.append(", quantidade: ");
                 sb.append(oi.getQuantity());
-                sb.append("total do item: R$ ");
+                sb.append(" unidades, total do item: R$ ");
                 sb.append(String.format("%.2f", oi.getQuantity() * oi.getValue()) + "\n");
             }
             sb.append("\n\n\nTotal da compra: ");
@@ -162,7 +162,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public ResponseEntity findSales(){
+    public ResponseEntity<?> findSales(){
         Query query = em.createQuery("select o.date as date, sum(o.value) as value from Order o group by o.date");
         try{
             List<Order> orders = query.getResultList();

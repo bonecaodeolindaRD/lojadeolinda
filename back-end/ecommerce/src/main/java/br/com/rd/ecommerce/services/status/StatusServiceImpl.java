@@ -19,7 +19,7 @@ public class StatusServiceImpl  implements  StatusService{
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity createStatus(StatusDTO status) {
+    public ResponseEntity<?> createStatus(StatusDTO status) {
         if(status == null)
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um status"));
         Status stat = converter.convertTo(status);
@@ -32,7 +32,7 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity findStatusById(Long id) {
+    public ResponseEntity<?> findStatusById(Long id) {
         if(id <= 0)
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um id valido"));
         try{
@@ -47,7 +47,7 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity findStatusByDesc(String status) {
+    public ResponseEntity<?> findStatusByDesc(String status) {
         if(status == null || status == "")
             return ResponseEntity.badRequest().body(new StatusException("Favor informe um status"));
         try{
@@ -70,7 +70,7 @@ public class StatusServiceImpl  implements  StatusService{
     }
 
     @Override
-    public ResponseEntity updateStatus(StatusDTO status) {
+    public ResponseEntity<?> updateStatus(StatusDTO status) {
         if(status == null)
             return ResponseEntity.badRequest().body(new StatusException("Informe um status"));
         try {

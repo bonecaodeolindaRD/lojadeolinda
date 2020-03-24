@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity createCategory(Category category) {
+    public ResponseEntity<?> createCategory(Category category) {
         if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao criar a categoria"));
         try {
@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity findCategoryById(Long id) {
+    public ResponseEntity<?> findCategoryById(Long id) {
         try {
             Category category = repository.findById(id).get();
             if (category == null)
@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity findAllCategories() {
+    public ResponseEntity<?> findAllCategories() {
         try {
             List<Category> categories = repository.findAll();
             if (categories == null || categories.size() <= 0)
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity findByCategoryByName(String name) {
+    public ResponseEntity<?> findByCategoryByName(String name) {
         if (name == null || name == "")
             return ResponseEntity.badRequest().body(new CategoryException("Informe uma descricao"));
         try {
@@ -84,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity update(Category category) {
+    public ResponseEntity<?> update(Category category) {
         if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao atualizar a categoria"));
         try {

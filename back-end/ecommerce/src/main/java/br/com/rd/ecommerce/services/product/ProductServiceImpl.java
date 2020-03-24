@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
     private EntityManager em;
 
     @Override
-    public ResponseEntity findAllProducts() {
+    public ResponseEntity<?> findAllProducts() {
         try {
             List<Product> products = repository.findAll();
             if (products == null || products.size() <= 0)
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity findProductById(Long id) {
+    public ResponseEntity<?> findProductById(Long id) {
         if (id == null || id <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Favor informe um id"));
         try {
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByName(String name) {
+    public ResponseEntity<?> findProductByName(String name) {
         if (name == null || name == "")
             return ResponseEntity.badRequest().body(new ProductException("Favor informe o nome de um produto"));
 
@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity findProductByDescription(String description) {
+    public ResponseEntity<?> findProductByDescription(String description) {
         if (description == null || description == "")
             return ResponseEntity.badRequest().body(new ProductException("Digite uma descricao para o produto"));
 
@@ -102,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByCategory(Long category) {
+    public ResponseEntity<?> findProductByCategory(Long category) {
         if (category == null || category <= 0)
             return ResponseEntity.badRequest().body(new ProductException("Favor informe uma categoria"));
         Category categ = new Category();
@@ -121,7 +121,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductByNameOrDescription(String str) {
+    public ResponseEntity<?> findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
         Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'", Product.class);
         Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'", Product.class);
@@ -140,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity findProductHome() {
+    public ResponseEntity<?> findProductHome() {
         Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
         try{
             List<Product> products = query.getResultList();
@@ -156,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity createProduct(ProductDTO productDTO) {
+    public ResponseEntity<?> createProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         if(productDTO.getPrice() <= 0)
@@ -188,7 +188,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity updateProduct(ProductDTO productDTO) {
+    public ResponseEntity<?> updateProduct(ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         if(productDTO.getPrice() <= 0)

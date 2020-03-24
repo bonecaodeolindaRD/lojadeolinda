@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
     ClientRepository clientRepository;
     private Converter converter = new Converter();
 
-    public ResponseEntity createClient(ClientDTO clientDTO){
+    public ResponseEntity<?> createClient(ClientDTO clientDTO){
         if(clientDTO == null)
             return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
         Client client = converter.convertTo(clientDTO);
@@ -55,12 +55,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity findAllClient() {
+    public ResponseEntity<?> findAllClient() {
         try {
             List<Client> clients = clientRepository.findAll();
 
             if (clients == null || clients.size() <= 0)
-                return ResponseEntity.badRequest().body(new ClientException("Nenhum cliente encontrado"));
+                return ResponseEntity.notFound().build();
             List<ClientDTO> clientDTO = new ArrayList<>();
             for (Client client : clients)
                 clientDTO.add(converter.convertTo(client));
@@ -72,9 +72,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity findClientById(Long id) {
+    public ResponseEntity<?> findClientById(Long id) {
         try {
-            Client client = clientRepository.findById(id).get();
+            Client client = clientRepository.findById(id).orElse(null);
             if (client == null)
                 return ResponseEntity.badRequest().body(new CategoryException("Nenhum dado encontrado"));
             ClientDTO clientDTO = converter.convertTo(client);
@@ -90,7 +90,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity findClientByEmail(String email) {
+    public ResponseEntity<?> findClientByEmail(String email) {
         if (email == null || email == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe uma descricao"));
         try {
@@ -106,7 +106,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity findClientLogin(String email, String password) {
+    public ResponseEntity<?> findClientLogin(String email, String password) {
         if (email == null || email == "" || password == null || password == "")
             return ResponseEntity.badRequest().body(new ClientException("Informe o login do usuario"));
         try {
@@ -126,7 +126,7 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    public ResponseEntity findClientOrders(String email){
+    public ResponseEntity<?> findClientOrders(String email){
         if(email == null || email =="")
             return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
         try{
@@ -149,7 +149,7 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    public ResponseEntity findClientAddress(String email){
+    public ResponseEntity<?> findClientAddress(String email){
         if(email == null || email == "")
             return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
         try{
