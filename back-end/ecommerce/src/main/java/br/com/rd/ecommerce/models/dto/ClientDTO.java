@@ -20,7 +20,6 @@ public class ClientDTO {
     private String cpf;
     private String email;
     private String phoneNumber;
-    private String password;
     private List<AddressDTO> addresses;
     private List<OrderDTO> orders;
 

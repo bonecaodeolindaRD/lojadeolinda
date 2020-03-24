@@ -23,11 +23,11 @@ public class AddressServiceImpl implements AddressService {
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity findAllAddress() {
+    public ResponseEntity<?> findAllAddress() {
         try {
             List<Address> addresses = repository.findAll();
             if (addresses == null || addresses.size() <= 0)
-                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+                return ResponseEntity.notFound().build();
             List<AddressDTO> addressDTOS = new ArrayList<>();
             for (Address a : addresses)
                 addressDTOS.add(converter.convertTo(a));
@@ -38,13 +38,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity findAddressById(Long id) {
+    public ResponseEntity<?> findAddressById(Long id) {
         if(id == null || id <= 0)
             return ResponseEntity.badRequest().body(new AddressException("Favor informe o id de um endereco"));
         try {
-            Address address = repository.findById(id).get();
+            Address address = repository.findById(id).orElse(null);
             if (address == null)
-                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+                return ResponseEntity.notFound().build();
             AddressDTO addressDTO = converter.convertTo(address);
 
             return ResponseEntity.ok().body(addressDTO);
@@ -55,14 +55,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity findAddressByClient(ClientDTO client) {
+    public ResponseEntity<?> findAddressByClient(ClientDTO client) {
         if(client == null)
             return ResponseEntity.badRequest().body(new AddressException("Favor informe um cliente"));
         Client c = converter.convertTo(client);
         try {
             List<Address> addresses = repository.findByClient(c);
             if (addresses == null || addresses.size() <= 0)
-                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+                return ResponseEntity.notFound().build();
             List<AddressDTO> aDTO = new ArrayList<>();
             for (Address a : addresses)
                 aDTO.add(converter.convertTo(a));
@@ -74,13 +74,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity findAddressByCEP(String CEP) {
+    public ResponseEntity<?> findAddressByCEP(String CEP) {
         if(CEP == null || CEP.length() <= 0 || CEP.length() > 8)
             return ResponseEntity.badRequest().body(new AddressException("CEP informado e invalido"));
         try {
             List<Address> addresses = repository.findByCep(CEP);
             if (addresses == null || addresses.size() <= 0)
-                return ResponseEntity.badRequest().body(new AddressException("Nenhum endereco encontrado"));
+                return ResponseEntity.notFound().build();
             List<AddressDTO> aDTO = new ArrayList<>();
             for (Address a : addresses)
                 aDTO.add(converter.convertTo(a));
@@ -93,13 +93,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity createAddress(AddressDTO addressDTO) {
+    public ResponseEntity<?> createAddress(AddressDTO addressDTO) {
         if(addressDTO == null)
             return ResponseEntity.badRequest().body(new AddressException("O endereco e invalido"));
         Address address = converter.convertTo(addressDTO);
         try {
             Address addressReturn = repository.save(address);
-            return ResponseEntity.ok().body(addressReturn);
+            return ResponseEntity.status(201).body(addressReturn);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
         }
@@ -111,7 +111,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity updateAddress(AddressDTO addressDTO) {
+    public ResponseEntity<?> updateAddress(AddressDTO addressDTO) {
         if(addressDTO == null)
             return ResponseEntity.badRequest().body(new AddressException("Endereco invalido"));
         try {
@@ -128,9 +128,14 @@ public class AddressServiceImpl implements AddressService {
         }
     }
 
-    @Override
-    public ResponseEntity createAddress2(Address address) {
-        Address addressReturn = repository.save(address);
-        return ResponseEntity.ok().body(addressReturn);
+    public ResponseEntity<?> createClientAddress(AddressDTO address) {
+        try {
+            Address addr = converter.convertTo(address);
+            addr.setClient(converter.convertTo(address.getClient()));
+            Address addressReturn = repository.save(addr);
+            return ResponseEntity.ok().body(addressReturn);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new AddressException("Erro" + e.getMessage()));
+        }
     }
 }

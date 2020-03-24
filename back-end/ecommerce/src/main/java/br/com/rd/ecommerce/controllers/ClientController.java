@@ -15,38 +15,38 @@ public class ClientController {
     private ClientService service;
     
     @PostMapping("/client/new")
-    public ResponseEntity createClient(@RequestBody ClientDTO clientDTO){
+    public ResponseEntity<?> createClient(@RequestBody Client clientDTO){
         return service.createClient(clientDTO);
     }
 
     @GetMapping("/client/list")
-    public ResponseEntity findAll(){
+    public ResponseEntity<?> findAll(){
             return service.findAllClient();
     }
 
     @GetMapping("/client/id/{id}")
-    public ResponseEntity<Client> findById(@PathVariable("id") Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findClientById(id);
     }
 
     @GetMapping("/client/email/{email}")
-    public ResponseEntity findByEmail(@PathVariable("email") String email){
+    public ResponseEntity<?> findByEmail(@PathVariable("email") String email){
         return service.findClientByEmail(email);
     }
 
     @GetMapping("/client/orders/{email}")
-    public ResponseEntity findClientOrders(@PathVariable("email") String email){
+    public ResponseEntity<?> findClientOrders(@PathVariable("email") String email){
          return service.findClientOrders(email);
     }
 
     @GetMapping("/client/addresses/{email}")
-    public ResponseEntity findClientAddress(@PathVariable("email") String email){
+    public ResponseEntity<?> findClientAddress(@PathVariable("email") String email){
         return service.findClientAddress(email);
     }
 
     @PostMapping("/client/login")
-    public ResponseEntity login(@RequestBody ClientDTO clientDTO){
-        return service.findClientLogin(clientDTO.getEmail(), clientDTO.getPassword());
+    public ResponseEntity login(@RequestBody Client client){
+        return service.findClientLogin(client.getEmail(), client.getPassword());
     }
 
     @DeleteMapping("/client/delete/{id}")
