@@ -22,41 +22,44 @@ export default class Success extends Component {
             return;
         }
 
-        this.clearLocal();
+        
         this.getProducts();
+        
+    }
+
+    getId = () => {
+        let { id } = JSON.parse(sessionStorage.getItem('order'));
+        this.id = id;
     }
 
     clearLocal = () => {
-        let { id } = JSON.parse(sessionStorage.getItem('order'));
-        this.id = id;
-        // sessionStorage.removeItem('cart');
-        // sessionStorage.removeItem('order');
+        sessionStorage.removeItem('cart');
+        sessionStorage.removeItem('order');
+        
     }
+
+
 
     getProducts = async () => {
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
     
 
-        
-
-        if (productsItem === null) {
-            //this.props.history.push("/");
-            return
-        }
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
             image: p.image,
             name: p.name,
             desc: p.description,
             value: p.value,
-            quantity: p.quantity
+            quantity: p.quantity,
+            totalItem: p.totalItem
             
         }));
 
         
         this.setState({ products: productsItem });
 
+		this.clearLocal();
 
 
     }
@@ -106,7 +109,7 @@ export default class Success extends Component {
                                 <Col xs="12" sm="2">
 
                                     <img src={item.image} alt={item.name} title={item.name}
-                                        className="img-responsive mb-3" width="100%" />
+                                        className="img-responsive mb-3" width="80%" />
                                 </Col>
 
                                 <Col className="mb-3" xs="12" sm="4" id="p">
@@ -116,10 +119,11 @@ export default class Success extends Component {
 
                                 <Col className="mb-3" xs="5" sm="2">
                                     <h5 className="h3-price">
-                                        R${(item.value).toFixed(2)}
+                                        {(item.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                                     </h5>
-                                    <small>Preço Unitário</small>
+                                    <small>Valor Unitário</small>
                                 </Col>
+
 
                                 <Col className="mb-3" xs="7" sm="2">
                                     <h5 className="h3-price">
@@ -129,9 +133,15 @@ export default class Success extends Component {
                                     <small>Quantidade</small>
 
                                 </Col>
+                                
+                                <Col className="mb-3" xs="5" sm="2" >
+                                    <h5 className="h3-price" >
+                                        {(item.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                    </h5>
+                                    <small>Valor total</small>
+                                </Col>
 
                             </Row>
-
 
 
                         ))}
