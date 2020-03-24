@@ -22,6 +22,7 @@ export default class Header extends Component {
       isOpen: false,
       username: this.getUsername()
     }
+    
   }
 
   getUsername = () => {
