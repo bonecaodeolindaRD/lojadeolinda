@@ -42,9 +42,8 @@ class OrderDetail extends Component {
                 status: order.status,
                 date: order.date
             }) 
-            console.log(this.state)
         } catch (error) {
-
+            return("Não há nenhum pedido!")
         }
     }
 
