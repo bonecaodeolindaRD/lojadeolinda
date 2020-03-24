@@ -19,6 +19,11 @@ public class AddressController {
     public ResponseEntity<?> save(@RequestBody Address address){
         return service.createAddress2(address);
     }
+  
+    @PostMapping("/address/client/new")
+    public ResponseEntity<?> saveClientAddress(@RequestBody AddressDTO address){
+        return service.createClientAddress(address);
+    }
 
     @GetMapping("/address/all")
     public ResponseEntity<?> findAll(){
