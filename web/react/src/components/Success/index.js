@@ -14,9 +14,9 @@ export default class Success extends Component {
             products: [
 
             ],
-            total: 0
+            total: 0,
+            id : 0
         }
-        this.id = 0;
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
@@ -28,7 +28,7 @@ export default class Success extends Component {
 
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
-        this.id = id;
+        this.setState({ id });
         sessionStorage.removeItem('cart');
         sessionStorage.removeItem('order');
     }
@@ -86,7 +86,7 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido: {this.id}
+                            Número do pedido: {this.state.id}
 
 
                         </CardText>
