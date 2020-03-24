@@ -70,7 +70,6 @@ public class  Converter {
         client.setName(clientDTO.getName());
         client.setBirthday(clientDTO.getBirthday());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
-        client.setPassword(clientDTO.getPassword());
         return client;
     }
 

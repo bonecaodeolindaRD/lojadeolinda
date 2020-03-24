@@ -16,27 +16,27 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping("/order/all")
-    public ResponseEntity findAll(){
+    public ResponseEntity<?> findAll(){
         return service.findAllOrders();
     }
 
     @GetMapping("/order/date/{date}")
-    public ResponseEntity findByDate(@PathVariable("date") String date){
+    public ResponseEntity<?> findByDate(@PathVariable("date") String date){
         return service.findByDate(date);
     }
 
     @GetMapping("/order/id/{id}")
-    public ResponseEntity findById(@PathVariable("id") Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
     @GetMapping("/sales")
-    public ResponseEntity findSales(){
+    public ResponseEntity<?> findSales(){
         return service.findSales();
     }
 
     @PostMapping("/order/new")
-    public ResponseEntity createOrder(@RequestBody OrderDTO order){
+    public ResponseEntity<?> createOrder(@RequestBody OrderDTO order){
         return service.createOrder(order);
     }
 

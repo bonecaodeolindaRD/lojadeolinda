@@ -15,42 +15,42 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/product/new")
-    public ResponseEntity save(@RequestBody ProductDTO product) {
+    public ResponseEntity<?> save(@RequestBody ProductDTO product) {
         return service.createProduct(product);
     }
 
     @GetMapping("/product/all")
-    public ResponseEntity findAll() {
+    public ResponseEntity<?> findAll() {
        return service.findAllProducts();
     }
 
     @GetMapping("/product/id/{id}")
-    public ResponseEntity findById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return service.findProductById(id);
     }
 
     @GetMapping("/product/name/{name}")
-    public ResponseEntity findByName(@PathVariable("name") String name) {
+    public ResponseEntity<?> findByName(@PathVariable("name") String name) {
         return service.findProductByName(name.toUpperCase());
     }
 
     @GetMapping("/product/category/{id}")
-    public ResponseEntity findByCategory(@PathVariable("id") Long id){
+    public ResponseEntity<?> findByCategory(@PathVariable("id") Long id){
         return service.findProductByCategory(id);
     }
 
     @GetMapping("/product/home")
-    public ResponseEntity findProductHome(){
+    public ResponseEntity<?> findProductHome(){
         return service.findProductHome();
     }
 
     @GetMapping("/product/description/{description}")
-    public ResponseEntity findByDescription(@PathVariable("description") String description){
+    public ResponseEntity<?> findByDescription(@PathVariable("description") String description){
         return service.findProductByDescription(description);
     }
 
     @GetMapping("/product/find/{str}")
-    public ResponseEntity findProduct(@PathVariable("str") String str){
+    public ResponseEntity<?> findProduct(@PathVariable("str") String str){
         return service.findProductByNameOrDescription(str);
     }
 
@@ -60,7 +60,7 @@ public class ProductController {
     }
 
     @PostMapping("/product/update")
-    public ResponseEntity updateProduct(@RequestBody ProductDTO product) {
+    public ResponseEntity<?> updateProduct(@RequestBody ProductDTO product) {
         return service.updateProduct(product);
     }
 

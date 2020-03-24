@@ -7,12 +7,13 @@ import br.com.rd.ecommerce.models.entities.Client;
 import org.springframework.http.ResponseEntity;
 
 public interface AddressService {
-    ResponseEntity findAllAddress();
-    ResponseEntity findAddressById(Long id);
-    ResponseEntity findAddressByClient(ClientDTO client);
-    ResponseEntity findAddressByCEP(String CEP);
+    ResponseEntity<?> findAllAddress();
+    ResponseEntity<?> findAddressById(Long id);
+    ResponseEntity<?> findAddressByClient(ClientDTO client);
+    ResponseEntity<?> findAddressByCEP(String CEP);
     ResponseEntity createAddress(AddressDTO addressDTO);
     void deleteAddress(Long id);
-    ResponseEntity updateAddress(AddressDTO addressDTO);
-    ResponseEntity createClientAddress(AddressDTO address);
+    ResponseEntity<?> updateAddress(AddressDTO addressDTO);
+    ResponseEntity<?> updateAddress(AddressDTO addressDTO);
+    ResponseEntity<?> createClientAddress(AddressDTO address);
 }
