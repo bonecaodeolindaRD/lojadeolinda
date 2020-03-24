@@ -1,13 +1,11 @@
 package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.dto.AddressDTO;
-import br.com.rd.ecommerce.models.entities.Address;
 import br.com.rd.ecommerce.services.address.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 public class AddressController {
