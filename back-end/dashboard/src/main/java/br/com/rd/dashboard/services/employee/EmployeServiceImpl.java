@@ -19,7 +19,7 @@ public class EmployeServiceImpl implements EmployeeService {
 
     private Converter converter = new Converter();
     @Override
-    public ResponseEntity registerEmployee(EmployeeDTO emp) {
+    public ResponseEntity<?> registerEmployee(EmployeeDTO emp) {
         if(emp == null)
             return ResponseEntity.badRequest().body(new EmployeeException("O funcionario não pode estar vazio"));
         if(emp.getEmail() != null)
@@ -46,7 +46,7 @@ public class EmployeServiceImpl implements EmployeeService {
 
 
     @Override
-    public ResponseEntity updateEmployee(EmployeeDTO emp) {
+    public ResponseEntity<?> updateEmployee(EmployeeDTO emp) {
         if(emp == null)
             return ResponseEntity.badRequest().body(new EmployeeException("O funcionario não pode estar vazio"));
         if(emp.getEmail() != null)
@@ -77,7 +77,7 @@ public class EmployeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResponseEntity deleteEmployee(Long id) {
+    public ResponseEntity<?> deleteEmployee(Long id) {
         if(id <= 0)
             return ResponseEntity.badRequest().body(new EmployeeException("Id do usuario é invalido"));
         try {
@@ -89,7 +89,7 @@ public class EmployeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResponseEntity login(EmployeeDTO emp) {
+    public ResponseEntity<?> login(EmployeeDTO emp) {
         if(emp == null)
             return ResponseEntity.badRequest().body(new EmployeeException("O usuario não pode estar vazio"));
         if(emp.getUsername() == null || emp.getUsername().length() <= 0)
@@ -108,6 +108,22 @@ public class EmployeServiceImpl implements EmployeeService {
 
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new EmployeeException("Erro" + e.getMessage()));
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> findUser(String username) {
+        if(username.equals(""))
+            return ResponseEntity.notFound().build();
+        try {
+            Employee employee = repository.findByUsername(username);
+            if(employee == null)
+                return ResponseEntity.badRequest().body(new Exception("Erro"));
+            EmployeeDTO returnDTO = converter.convertTo(employee);
+
+            return ResponseEntity.ok().body(returnDTO);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(new Exception("Erro " + e.getMessage()));
         }
     }
 }

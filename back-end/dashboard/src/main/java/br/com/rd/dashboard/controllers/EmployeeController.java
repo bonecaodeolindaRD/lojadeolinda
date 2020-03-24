@@ -14,18 +14,24 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping("/employee/new")
-    public ResponseEntity registerEmployee(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<?> registerEmployee(@RequestBody EmployeeDTO employeeDTO){
         return service.registerEmployee(employeeDTO);
     }
 
     @PutMapping("/employee/update")
-    public ResponseEntity updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
         return service.updateEmployee(employeeDTO);
     }
 
+
     @PostMapping("/employee/login")
-    public ResponseEntity login(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<?> login(@RequestBody EmployeeDTO employeeDTO){
         return service.login(employeeDTO);
+    }
+
+    @GetMapping("/employee/find/{username}")
+    public ResponseEntity<?> findEmployee(@PathVariable("username") String username){
+        return service.findUser(username);
     }
 
 }
