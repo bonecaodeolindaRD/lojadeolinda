@@ -29,8 +29,7 @@ export default class Success extends Component {
     clearLocal = () => {
         let { id } = JSON.parse(sessionStorage.getItem('order'));
         this.id = id;
-       // sessionStorage.removeItem('cart');
-       // sessionStorage.removeItem('order');
+      
     }
 
     getProducts = async () => {
