@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import axios from 'axios';
+
 import './styles.css';
 import {
     Col,
@@ -11,7 +14,6 @@ import {
     InputGroupAddon,
     Button,
     InputGroupText,
-    Container
 } from 'reactstrap';
 
 
@@ -22,12 +24,27 @@ export default class Login extends Component {
         super(props);
         this.state = {
             user: '',
-            password: ''
+            password: '',
+            error: ''
+        }
+        if(sessionStorage.getItem('user')){
+            this.props.history.push("/home");
         }
     }
 
-    handleSignIn = () => {
-
+    handleSignIn = async (evt) => {
+        evt.preventDefault();
+        try{
+            let obj = {
+                username: this.state.user,
+                password: this.state.password
+            }
+            let account = await axios.post("http://localhost:9090/employee/login", obj);
+            sessionStorage.setItem('user', JSON.stringify(account.data));
+            this.props.history.push("/home");
+        }catch{
+            this.setState({error: "Erro ao efetuar o login"});
+        }
     }
 
     render() {

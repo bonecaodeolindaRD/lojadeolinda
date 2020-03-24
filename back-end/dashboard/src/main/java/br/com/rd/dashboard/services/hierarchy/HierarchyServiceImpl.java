@@ -16,7 +16,7 @@ public class HierarchyServiceImpl implements HierarchyService{
     private HierarchyRepository repository;
     private Converter converter =  new Converter();
     @Override
-    public ResponseEntity createHierarchy(HierarchyDTO hierarchyDTO) {
+    public ResponseEntity<?> createHierarchy(HierarchyDTO hierarchyDTO) {
         if(hierarchyDTO == null)
             return ResponseEntity.badRequest().body(new HierarchyException("A hierarquia não pode estar vazia"));
         try{
@@ -29,7 +29,7 @@ public class HierarchyServiceImpl implements HierarchyService{
     }
 
     @Override
-    public ResponseEntity updateHierarchy(HierarchyDTO hierarchyDTO) {
+    public ResponseEntity<?> updateHierarchy(HierarchyDTO hierarchyDTO) {
         if(hierarchyDTO == null)
             return ResponseEntity.badRequest().body(new HierarchyException("A hierarquia não pode estar vazia"));
         try{
