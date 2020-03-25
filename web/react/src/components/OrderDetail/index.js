@@ -37,7 +37,7 @@ class OrderDetail extends Component {
         const { id } = this.props.match.params;
 
         try {
-            const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/id/" + id)
+            const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/" + id)
             this.setState({
                 id: order.id,
                 address: order.address,

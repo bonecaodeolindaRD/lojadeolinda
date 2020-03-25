@@ -129,7 +129,7 @@ export default class Checkout extends Component {
                 citie: this.state.address.aCitie,
                 complement: this.state.address.aComplement
             }
-            let { data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address/new", address);
+            let { data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address", address);
             if (!returnAddress) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
@@ -158,7 +158,7 @@ export default class Checkout extends Component {
                 quantity: p.quantity,
                 value: p.value
             }));
-            let { data: order } = await axios.post("http://localhost:8080/ecommerce/order/new", obj);
+            let { data: order } = await axios.post("http://localhost:8080/ecommerce/order", obj);
             if (!order) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
