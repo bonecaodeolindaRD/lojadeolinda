@@ -5,13 +5,13 @@ import Footer from '../Footer';
 import './styles.css';
 import InputMask from 'react-input-mask';
 
-import { Col, Form, FormGroup, Label, Input,Container } from 'reactstrap';
+import { Col, Form, FormGroup, Label, Input, Container, Card } from 'reactstrap';
 
 import { Link } from 'react-router-dom';
 
-class Account extends Component{
+class Account extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             name: "",
@@ -19,89 +19,92 @@ class Account extends Component{
             contact: "",
             cpf: "",
             error: "",
-            birth:""
+            birth: ""
         }
-        if(!sessionStorage.getItem('client')){
+        if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
         this.loadAcccount();
     }
-   
+
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data : account} = await axios("http://localhost:8080/ecommerce/client/email/" + email);
+        let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
         this.setState({
-            name : account.name,
-            email : account.email,
-            contact : account.phoneNumber,
+            name: account.name,
+            email: account.email,
+            contact: account.phoneNumber,
             cpf: account.cpf,
             birth: account.birthday
         })
     }
 
-    loadAcccount (e){
+    loadAcccount(e) {
         e.preventDefault();
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <Header history={this.props.history} location={this.props.location}/>
-            <Container className="tam"  justify-content="center">
-            <div className="text-align-center" align="center">
-                <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle"/>
-            </div>
-            <br></br>
-            <div className="text-align-center" align="center">
-                <h1>Detalhes da Conta</h1>
-            </div>
-            <br></br>
-                <Form text-align-center>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="nameUser">Nome: </Label>
-                        <Col sm={5}>
-                            <Input value={this.state.name} disabled onChange={e => this.setState({name: e.target.value})} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome"/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={2} for="nameUser">Data de Nascimento: </Label>
-                        <Col sm={4}>
-                            <Input value={this.state.birth} disabled onChange={e => this.setState({birth: e.target.value})} type="date" name="birth" id="birth" />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="Email">Email: </Label>
-                        <Col sm={5}>
-                            <Input value={this.state.email} disabled onChange={e => this.setState({name: e.target.value})} type="email" name="email" id="Email" placeholder="user@mail.com" />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="secNameUser">CPF: </Label>
-                        <Col sm={5}>
-                            <Input value={this.state.cpf} disabled onChange={e => this.setState({cpf: e.target.value})} mask="999.999.999-99" maskChar="" id="cpf" tag={InputMask} type="text" name="cpf"  placeholder=""/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col sm={3}></Col>
-                        <Label sm={1} for="secNameUser">Contato: </Label>
-                        <Col sm={5}>
-                            <Input value={this.state.contact} disabled onChange={e => this.setState({name: e.target.value})} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact"  placeholder="Ex (11) 99999-9999"/>
-                        </Col>
-                    </FormGroup>
-                    <br/>
-                    <FormGroup>
-                        <div className="text-align-center" align="center">
-                            <Link to="/"><button type="button" class="btn btn-danger">Voltar ao Início</button></Link>
-                        </div>
-                    </FormGroup>
-                </Form>
-            </Container>
-            <Footer/>
+                <Header history={this.props.history} location={this.props.location} />
+                <Container className="tam" justify-content="center">
+                    <div className="text-align-center" align="center">
+                        <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
+                    </div>
+                    <br></br>
+                    <Form>
+                        <Card>
+                            <div className="text-align-center" align="center">
+                                <h1>Detalhes da Conta</h1>
+                            </div>
+                            <br></br>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col xs={4} sm={4}>
+                                    <Label for="nameUser"><span className="text-danger">*</span>Nome Completo:</Label>
+                                    <Input value={this.state.name} disabled onChange={e => this.setState({ name: e.target.value })} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col xs={4} sm={4}>
+                                    <Label for="birth"><span className="text-danger">*</span>Data de Nascimento:</Label>
+                                    <Input value={this.state.birth} disabled onChange={e => this.setState({ birth: e.target.value })} type="date" name="birth" id="birth" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col xs={4} sm={4}>
+                                    <Label for="email"><span className="text-danger">*</span>Email:</Label>
+                                    <Input value={this.state.email} disabled onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col xs={4} sm={4}>
+                                    <Label for="cpf"><span className="text-danger">*</span>CPF:</Label>
+                                    <Input value={this.state.cpf} disabled onChange={e => this.setState({ cpf: e.target.value })} mask="999.999.999-99" maskChar="" id="cpf" tag={InputMask} type="text" name="cpf" placeholder="" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col xs={4} sm={4}>
+                                    <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
+                                    <Input value={this.state.contact} disabled onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <div className="text-align-center" align="center">
+                                    <Link to="/"><button type="button" class="btn btn-danger">Voltar ao Início</button></Link>
+                                </div>
+                            </FormGroup>
+                        </Card>
+                    </Form>
+                </Container>
+                <br/>
+                <br/>
+                <Footer />
             </>
         )
     }
