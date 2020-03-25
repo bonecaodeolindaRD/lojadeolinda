@@ -51,7 +51,7 @@ public class ProductController {
        service.deleteProduct(id);
     }
 
-    @PutMapping("/product/{id}")
+    @PostMapping("/product/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO product) {
         return service.updateProduct(id, product);
     }

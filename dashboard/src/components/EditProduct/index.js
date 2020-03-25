@@ -62,7 +62,7 @@ export default class EditProduct extends Component {
 
   loadProduct = async () => {
     try {
-      const { data: product } = await axios("http://localhost:8080/ecommerce/product/id/" + this.props.match.params.id);
+      const { data: product } = await axios("http://localhost:8080/ecommerce/product/" + this.props.match.params.id);
       console.log(product);
       if (!product) {
         this.setState({ errr: "Erro ao carregar o produto" });
@@ -88,7 +88,7 @@ export default class EditProduct extends Component {
 
   getCategories = async () => {
     try {
-      const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+      const { data: category } = await axios("http://localhost:8080/ecommerce/category");
       if (!category) {
         this.setState({ errr: "Erro ao carregar as categorias" });
         return;
@@ -178,7 +178,6 @@ export default class EditProduct extends Component {
   editProduct = async () => {
     try {
       let obj = {
-        id: this.state.id,
         name: this.state.name,
         description: this.state.description,
         image: this.state.image,
@@ -189,7 +188,7 @@ export default class EditProduct extends Component {
         weight: parseFloat(this.state.weight),
         off: parseFloat(this.state.off) / 100
     }
-      const { data: product } = await axios.post("http://localhost:8080/ecommerce/product/update", obj);
+      const { data: product } = await axios.post("http://localhost:8080/ecommerce/product/" + this.state.id, obj);
       if (!product) {
         this.setState({ errr: "Erro ao editar o produto" });
         return false;

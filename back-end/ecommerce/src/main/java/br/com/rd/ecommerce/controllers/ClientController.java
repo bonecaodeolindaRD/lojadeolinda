@@ -44,7 +44,7 @@ public class ClientController {
         return service.findClientAddress(email);
     }
 
-    @PutMapping("/client/login")
+    @PostMapping("/client/login")
     public ResponseEntity login(@RequestBody Client client){
         return service.findClientLogin(client);
     }
