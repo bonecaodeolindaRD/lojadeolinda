@@ -82,14 +82,12 @@ class OrderHistory extends Component {
                         <Container className="text-center">
                             <span className="h2">Nenhuma compra encontrada!</span>
                             <div className="mt-3">
-                             <Link to="/"><Button className="btn btn-success mr-3" > Comprar </Button></Link>
+                                <Link to="/"><Button className="btn btn-success mr-3" > Comprar </Button></Link>
                             </div>
                         </Container>
                     )}
 
-                <div className="fixed-bottom footer">
-                    <Footer />
-                </div>
+                <Footer />
             </>
         )
     }
