@@ -5,6 +5,7 @@ import axios from "axios";
 import InputMask from "react-input-mask";
 import AlertEvent from "./alerterror";
 import AlertPass from "./passerror";
+import AlertAge from "./ageerror";
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
@@ -25,6 +26,7 @@ class Register extends Component {
         this.state = {
             alert_message: '',
             alert_pass: '',
+            alert_age: '',
             error: null,
             CPF: '',
             EMAIL: '',
@@ -78,8 +80,17 @@ class Register extends Component {
         let cpf = this.state.CPF;
         cpf = cpf.replace(".","").replace("-","").replace(" ","").replace(".","").trim();
 
-        let phone = this.state.PHONENUMBER
+        let phone = this.state.PHONENUMBER;
         phone = phone.replace(")","").replace("(","").replace("-","").replace(" ","").trim();
+
+        let birthDay = this.state.BIRTH;
+
+        let age = this.calculateAge(birthDay);
+
+        if(age < 18){
+            this.setState({ alert_age: "error" })
+            return;
+        }
 
         const user = {
             cpf: cpf,
@@ -91,6 +102,7 @@ class Register extends Component {
             pass_conf: this.state.PASS_CONF,
         };
 
+      
         if (this.state.PASSWORD === this.state.PASS_CONF) {
             try {
                 await axios.post("http://localhost:8080/ecommerce/client/new", user);
@@ -110,6 +122,23 @@ class Register extends Component {
         } else {
             this.setState({ alert_pass: "error" })
         } 
+    }
+
+    calculateAge = (dtInput) => { 
+
+        
+        let fields = dtInput.split('-');
+        let year = parseInt(fields[0]);
+        let month = parseInt(fields[1]);
+        let day = parseInt(fields[2]);
+
+        let dt = new Date(year, month, day);
+        
+        let diffMs = Date.now() - dt.getTime();
+        let ageDt = new Date(diffMs); 
+        
+        return Math.abs(ageDt.getUTCFullYear() - 1970);
+
     }
 
     testCPF = (strCPF) => {
@@ -167,6 +196,7 @@ class Register extends Component {
                     <div className="text-align-center" align="center">
                         {this.state.alert_message === "error" ? <AlertEvent /> : null}
                         {this.state.alert_pass === "error" ? <AlertPass /> : null}
+                        {this.state.alert_age === "error" ? <AlertAge/> : null}
                     </div>
                     <br></br>
                     <Form onSubmit={this.handleSubmit} text-align-center >

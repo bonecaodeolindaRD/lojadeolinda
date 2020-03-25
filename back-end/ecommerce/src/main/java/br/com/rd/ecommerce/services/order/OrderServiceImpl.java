@@ -88,7 +88,9 @@ public class OrderServiceImpl implements OrderService {
             if (item == null || id <= 0)
                 return ResponseEntity.notFound().build();
             OrderDTO oDTO = converter.convertTo(item);
-
+            for(OrderItem oi: item.getOrderItem())
+                oDTO.addItem(converter.convertTo(oi));
+            oDTO.setValue(item.getValue());
             return ResponseEntity.ok().body(oDTO);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
@@ -154,9 +156,9 @@ public class OrderServiceImpl implements OrderService {
             Client c = clientRepository.findById(order.getClient().getId()).get();
             if(c.getEmail() != null)
                 mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
-            return ResponseEntity.status(201).body(returnOrderDTO);
+            return ResponseEntity.ok().body(returnOrderDTO);
         } catch(MailSendException e){
-            return ResponseEntity.status(201).body(returnOrderDTO);
+            return ResponseEntity.ok().body(returnOrderDTO);
         }  catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));

@@ -36,7 +36,6 @@ export default class ProductDetail extends Component {
             try {
 
                     const { data : product } = await axios("http://localhost:8080/ecommerce/product/id/" + id);
-                    console.log(product);
                     this.setState({
                         id: product.id,
                         image: product.image,
