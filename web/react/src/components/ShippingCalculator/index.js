@@ -26,18 +26,28 @@ export default class ShippingCalculator extends Component {
           this.setState({ message: 'Um CEP deve conter 8 digítos' });
           return;
         }
-           
-        const findAddress = await axios( `http://viacep.com.br/ws/${code}/json`);
+        
+        
+        try {
 
-        this.setState({dataApi: [findAddress.data]})
+              const findAddress = await axios( `http://viacep.com.br/wsw/${code}/json`);
 
-        if(!this.state.dataApi[0].erro){
+              this.setState({dataApi: [findAddress.data]});
 
-          this.setState({ message: 'Receba em até 10 dias úteis R$200.00' });
+              if(!this.state.dataApi[0].erro){
 
-        }else{
+                  this.setState({ message: 'Receba em até 10 dias úteis R$200.00' });
 
-          this.setState({ message: 'O CEP informado não foi localizado' });
+                }else{
+
+                  this.setState({ message: 'O CEP informado não foi localizado' });
+
+              }
+
+        
+          }catch(erro){
+
+            this.setState({ message: 'O CEP informado não foi localizado' });
 
         }
        
