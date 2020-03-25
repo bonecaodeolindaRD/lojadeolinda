@@ -14,17 +14,17 @@ public class ClientController {
     @Autowired
     private ClientService service;
     
-    @PostMapping("/client/new")
+    @PostMapping("/client")
     public ResponseEntity<?> createClient(@RequestBody Client clientDTO){
         return service.createClient(clientDTO);
     }
 
-    @GetMapping("/client/list")
+    @GetMapping("/client")
     public ResponseEntity<?> findAll(){
             return service.findAllClient();
     }
 
-    @GetMapping("/client/id/{id}")
+    @GetMapping("/client/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findClientById(id);
     }
@@ -44,12 +44,12 @@ public class ClientController {
         return service.findClientAddress(email);
     }
 
-    @PostMapping("/client/login")
+    @PutMapping("/client/login")
     public ResponseEntity login(@RequestBody Client client){
-        return service.findClientLogin(client.getEmail(), client.getPassword());
+        return service.findClientLogin(client);
     }
 
-    @DeleteMapping("/client/delete/{id}")
+    @DeleteMapping("/client/{id}")
     public void deleteClient(@PathVariable("id") Long id){
         service.deleteClient(id);
     }

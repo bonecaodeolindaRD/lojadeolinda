@@ -17,6 +17,7 @@ import Success from './components/Success';
 import Category from './components/Category';
 import NotFound from './components/NotFound';
 import RegisterAddress from './components/RegisterAddress';
+import EditAccount from './components/EditAccount';
 
 
   const Routes = () => (
@@ -38,7 +39,8 @@ import RegisterAddress from './components/RegisterAddress';
             <Route path="/order/detail/:id?" exact component={OrderDetails} />
             <Route path="/category" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
-            <Route path="/registeradress" exact component={RegisterAddress} />
+            <Route path="/registeraddress" exact component={RegisterAddress} />
+            <Route path="/editaccount" exact component={EditAccount} />
 
             <Route component={NotFound} />
         </Switch>

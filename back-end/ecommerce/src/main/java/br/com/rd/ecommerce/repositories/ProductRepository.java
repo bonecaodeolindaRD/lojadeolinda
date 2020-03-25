@@ -8,12 +8,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-        List<Product> findByCategory(Category category);
+        Optional<List<Product>> findByCategory(Category category);
 
-        List<Product> findByName(@Param("name") String name);
+        Optional<List<Product>> findByName(@Param("name") String name);
 }

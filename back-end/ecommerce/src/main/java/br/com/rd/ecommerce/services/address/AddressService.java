@@ -11,6 +11,5 @@ public interface AddressService {
     ResponseEntity<?> findAddressByCEP(String CEP);
     ResponseEntity<?> createAddress(AddressDTO addressDTO);
     void deleteAddress(Long id);
-    ResponseEntity<?> updateAddress(AddressDTO addressDTO);
-    ResponseEntity<?> createClientAddress(AddressDTO address);
+    ResponseEntity<?> updateAddress(Long id, AddressDTO addressDTO);
 }
