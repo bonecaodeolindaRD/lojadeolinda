@@ -141,7 +141,7 @@ public class StockServiceImpl implements StockService {
         for (Product p : products)
             returnProducts.add(p);
         return ResponseEntity.ok().body(returnProducts);
-    
+
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

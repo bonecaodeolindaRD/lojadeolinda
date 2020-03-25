@@ -80,6 +80,9 @@ public class AddressServiceImpl implements AddressService {
             return ResponseEntity.badRequest().body(new AddressException("O endereco e invalido"));
 
         Address address = converter.convertTo(addressDTO);
+        if(addressDTO.getClient() != null)
+            address.setClient(converter.convertTo(addressDTO.getClient()));
+
         AddressDTO addressReturn = converter.convertTo(repository.save(address));
         return ResponseEntity.status(201).body(addressReturn);
 
@@ -105,14 +108,6 @@ public class AddressServiceImpl implements AddressService {
         return ResponseEntity.status(HttpStatus.OK).body(addressReturn);
     }
 
-    public ResponseEntity<?> createClientAddress(AddressDTO address) {
-        if(address == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AddressException("Address is not be null"));
-        Address addr = converter.convertTo(address);
-        addr.setClient(converter.convertTo(address.getClient()));
-        Address addressReturn = repository.save(addr);
-        return ResponseEntity.ok().body(addressReturn);
-    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handlerEntityExceptionException(EntityNotFoundException ex) {

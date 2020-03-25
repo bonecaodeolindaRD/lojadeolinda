@@ -12,5 +12,4 @@ public interface AddressService {
     ResponseEntity<?> createAddress(AddressDTO addressDTO);
     void deleteAddress(Long id);
     ResponseEntity<?> updateAddress(Long id, AddressDTO addressDTO);
-    ResponseEntity<?> createClientAddress(AddressDTO address);
 }

@@ -27,10 +27,6 @@ public class StockController {
         return service.findAllStocks();
     }
 
-    @GetMapping("/stock/notregistered")
-    public ResponseEntity<?> findNotRegistered(){
-        return service.getNotRegisteredItems();
-    }
 
     @PostMapping("/stock/product/edit/{idstock}/{idProduct}/{quantity}")
     public ResponseEntity<?> editProsuct(@PathVariable("idstock") Long idStock, @PathVariable("idProduct") Long idProduct, @PathVariable("quantity") Integer quantity){

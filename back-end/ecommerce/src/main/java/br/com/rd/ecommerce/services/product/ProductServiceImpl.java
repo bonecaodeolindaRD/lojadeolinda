@@ -165,7 +165,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> updateProduct(ProductDTO productDTO) {
+    public ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO) {
         if (productDTO == null)
             return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
         if (productDTO.getPrice() <= 0)
@@ -179,7 +179,7 @@ public class ProductServiceImpl implements ProductService {
         if (productDTO.getOff() <= 0 || productDTO.getOff() >= 100)
             return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
 
-        Product product = repository.findById(productDTO.getId()).get();
+        Product product = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
         Category category = new Category();
         category.setId(productDTO.getCategory());
         product.setCategory(category);

@@ -12,12 +12,12 @@ public class StatusController {
     @Autowired
     public StatusService service;
 
-    @PostMapping("/status/new")
+    @PostMapping("/status")
     public ResponseEntity<?> save(@RequestBody StatusDTO status) {
         return service.createStatus(status);
     }
 
-    @GetMapping("/status/id/{id}")
+    @GetMapping("/status/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return service.findStatusById(id);
     }
@@ -27,9 +27,9 @@ public class StatusController {
         service.deleteStatus(id);
     }
 
-    @PutMapping("/status/update")
-    public ResponseEntity<?> update(@RequestBody StatusDTO status) {
-        return service.updateStatus(status);
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody StatusDTO status) {
+        return service.updateStatus(id, status);
     }
 
 

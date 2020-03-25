@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity<?> updateAddress(Long id, Category category) {
+    public ResponseEntity<?> updateCategory(Long id, Category category) {
         if (category == null)
             return ResponseEntity.badRequest().body(new CategoryException("Category is not be null"));
 
