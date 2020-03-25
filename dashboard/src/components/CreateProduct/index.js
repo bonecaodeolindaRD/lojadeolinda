@@ -67,7 +67,7 @@ export default class CreateProduct extends Component {
     }
 
     getCategories = async () => {
-        const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+        const { data: category } = await axios("http://localhost:8080/ecommerce/category");
         if (!category)
             return;
         this.setState({ categories: category });
@@ -164,7 +164,7 @@ export default class CreateProduct extends Component {
             off: parseFloat(this.state.off) / 100
         }
         try {
-            let { data: product } = await axios.post("http://localhost:8080/ecommerce/product/new", obj);
+            let { data: product } = await axios.post("http://localhost:8080/ecommerce/product", obj);
             if (!product) {
                 this.setState({ error: "Erro ao adicionar o produto" });
                 return false;
@@ -201,7 +201,7 @@ export default class CreateProduct extends Component {
             let obj = {
                 name: this.state.newCategory
             }
-            let { data: category } = await axios.post("http://localhost:8080/ecommerce/category/new", obj);
+            let { data: category } = await axios.post("http://localhost:8080/ecommerce/category", obj);
             if (!category)
                 this.setState({ categoryMessage: "Erro ao cadastrar a nova categoria" });
             this.setState({categoryMessage: "Categoria cadastrada com sucesso"});

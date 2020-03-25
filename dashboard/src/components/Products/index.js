@@ -35,7 +35,7 @@ export default class Products extends Component {
     }
 
     getProducts = async () => {
-        let { data: products } = await axios("http://localhost:8080/ecommerce/product/all");
+        let { data: products } = await axios("http://localhost:8080/ecommerce/product");
         console.log(products);
         if (!products)
             return;
