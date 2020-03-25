@@ -80,14 +80,29 @@ export default class ProductDetail extends Component {
             let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
             if(cart.length > 0) {
-                for (var i in cart) {
-                    if(cart[i].id === this.state.id){
-                        cart[i].quantity = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
 
+                for (var i in cart) {
+
+                    if(cart[i].id === this.state.id){
+
+                        let  total = parseInt(this.state.quantity) + parseInt(cart[i].quantity);
+ 
+                        if(total <= this.state.balance){
+
+                                cart[i].quantity = total;
+
+                            }else{
+
+                                cart[i].quantity = this.state.balance;
+
+                        }
+                                            
                         cart[i].totalItem =  (this.state.price - this.state.price * this.state.discount) *  cart[i].quantity;
                       
                         sessionStorage.cart = JSON.stringify(cart);
+
                         this.props.history.push("/cart");
+                        
                         return;
                     }
                 }
@@ -102,7 +117,6 @@ export default class ProductDetail extends Component {
                 price: this.state.price,
                 totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity,
                 value: this.state.price - this.state.price * this.state.discount
-
 
             });
 
