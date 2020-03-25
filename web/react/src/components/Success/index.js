@@ -15,28 +15,39 @@ export default class Success extends Component {
 
             ],
             total: 0,
-            id : 0
         }
+
+        this.id = 0;
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
         }
 
-        
+        this.getId();
         this.getProducts();
     }
 
-    clearLocal = () => {
+    
+    getId = () => {
+        try{
         let { id } = JSON.parse(sessionStorage.getItem('order'));
-        this.setState({ id });
-        sessionStorage.removeItem('cart');
-        sessionStorage.removeItem('order');
+        this.id = id ;}
+        catch(error){
+             this.props.history("/cart")
+        }
     }
 
+    clearLocal = () => {
+        sessionStorage.removeItem('cart');
+         sessionStorage.removeItem('order');
+    }
+
+
     getProducts = async () => {
+        try{
 
         let productsItem = await JSON.parse(sessionStorage.getItem('cart'));
-    
+
 
         this.state.products.forEach(p => productsItem.push({
             id: p.id,
@@ -46,13 +57,16 @@ export default class Success extends Component {
             value: p.value,
             quantity: p.quantity,
             totalItem: p.totalItem
-            
+
         }));
 
-        
+
         this.setState({ products: productsItem });
 
-		this.clearLocal();
+        this.clearLocal();
+    }catch(error){
+        this.props.history("/cart");
+    }
 
 
     }
@@ -72,6 +86,7 @@ export default class Success extends Component {
 
     }
 
+
     render() {
 
         return (
@@ -86,15 +101,16 @@ export default class Success extends Component {
                         <hr className="my-2" />
                         <CardText >
 
-                            Número do pedido: {this.state.id}
+                            Número do pedido: {this.id}
+                            
 
 
                         </CardText>
 
-                        <CardText >
+                        <CardText>
                             Resumo da compra :
 
-                    </CardText>
+                        </CardText>
                         {this.state.products.map(item => (
 
                             <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={item.id}>
@@ -126,7 +142,7 @@ export default class Success extends Component {
                                     <small>Quantidade</small>
 
                                 </Col>
-                                
+
                                 <Col className="mb-3" xs="5" sm="2" >
                                     <h5 className="h3-price" >
                                         {(item.totalItem).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
@@ -138,9 +154,9 @@ export default class Success extends Component {
 
 
                         ))}
-                        
-                            <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
-                       
+
+                        <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
+
 
 
 
