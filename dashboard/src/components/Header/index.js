@@ -67,6 +67,11 @@ export default class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink>
+                    <Link to="/manager">Gerenciar pedido</Link>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink>
                     <Link onClick={e => {
                       sessionStorage.removeItem('user');
                       window.location.reload();
