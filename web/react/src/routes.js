@@ -38,7 +38,7 @@ import RegisterAddress from './components/RegisterAddress';
             <Route path="/order/detail/:id?" exact component={OrderDetails} />
             <Route path="/category" exact component={Category} /> 
             <Route path="/address" exact component={Address} />
-            <Route path="/registeradress" exact component={RegisterAddress} />
+            <Route path="/registeraddress" exact component={RegisterAddress} />
 
             <Route component={NotFound} />
         </Switch>
