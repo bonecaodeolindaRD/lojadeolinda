@@ -30,7 +30,7 @@ export default class ShippingCalculator extends Component {
         
         try {
 
-              const findAddress = await axios( `http://viacep.com.br/wsw/${code}/json`);
+              const findAddress = await axios( `http://viacep.com.br/ws/${code}/json`);
 
               this.setState({dataApi: [findAddress.data]});
 
