@@ -110,7 +110,7 @@ public class ClientServiceImpl implements ClientService {
 
         String passHash = c.getPassword();
         if (BCrypt.checkpw(client.getPassword(), passHash)) {
-            ClientDTO clientDTO = converter.convertTo(client);
+            ClientDTO clientDTO = converter.convertTo(c);
             return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
         }
 
