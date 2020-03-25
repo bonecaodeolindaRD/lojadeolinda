@@ -185,7 +185,7 @@ public class ProductServiceImpl implements ProductService {
             if(products.size() > 0)
                 return ResponseEntity.badRequest().body(new ProductException("Pode ser que ja tenha um produto cadastrado com essa mesma descricao, verifique se o produto ja esta cadastrado"));
             Product returnEntity = repository.save(product);
-            return ResponseEntity.ok().body(returnEntity);
+            return ResponseEntity.status(201).body(returnEntity);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new ProductException("Erro " + e.getMessage()));
         }

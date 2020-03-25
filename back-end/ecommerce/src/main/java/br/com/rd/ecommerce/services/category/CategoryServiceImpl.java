@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
             return ResponseEntity.badRequest().body(new CategoryException("Erro ao criar a categoria"));
         try {
             Category cat = repository.save(category);
-            return ResponseEntity.ok().body(converter.convertTo(cat));
+            return ResponseEntity.status(201).body(converter.convertTo(cat));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new CategoryException("Erro") + e.getMessage());
         }

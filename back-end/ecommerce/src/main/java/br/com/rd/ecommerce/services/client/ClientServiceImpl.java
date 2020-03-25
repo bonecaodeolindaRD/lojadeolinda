@@ -47,7 +47,7 @@ public class ClientServiceImpl implements ClientService {
             String passwordHash = BCrypt.hashpw(password, salt);
             client.setPassword(passwordHash);
             Client clientReturn = clientRepository.save(client);
-            return ResponseEntity.ok().body(clientReturn);
+            return ResponseEntity.status(201).body(clientReturn);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
         }

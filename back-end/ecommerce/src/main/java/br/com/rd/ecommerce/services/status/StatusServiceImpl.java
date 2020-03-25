@@ -25,7 +25,7 @@ public class StatusServiceImpl  implements  StatusService{
         Status stat = converter.convertTo(status);
         try{
             StatusDTO returnStatus = converter.convertTo(statusRepository.save(stat));
-            return ResponseEntity.ok().body(returnStatus);
+            return ResponseEntity.status(201).body(returnStatus);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(new StatusException("Erro") + e.getMessage());
         }

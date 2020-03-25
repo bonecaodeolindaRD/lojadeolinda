@@ -154,9 +154,9 @@ public class OrderServiceImpl implements OrderService {
             Client c = clientRepository.findById(order.getClient().getId()).get();
             if(c.getEmail() != null)
                 mailSender.sendMail(c.getEmail(), "deolindabonecao@gmail.com", sb.toString(), "Informações importantes sobre seu pedido: " + returnOrderDTO.getId());
-            return ResponseEntity.ok().body(returnOrderDTO);
+            return ResponseEntity.status(201).body(returnOrderDTO);
         } catch(MailSendException e){
-            return ResponseEntity.ok().body(returnOrderDTO);
+            return ResponseEntity.status(201).body(returnOrderDTO);
         }  catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new OrderException("Erro" + e.getMessage()));
