@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Header from '../Header';
 import Footer from '../Footer';
-import './styles.css';
+import { Col, Form, FormGroup, Label, Input, Container, Card, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 
-import { Col, Form, FormGroup, Label, Input, Container, Card, Button } from 'reactstrap';
-
-import { Link } from 'react-router-dom';
-
-class Account extends Component {
-
+export default class EditAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,29 +20,11 @@ class Account extends Component {
             this.props.history.push('/');
             return;
         }
-        this.loadAcccount();
     }
-
-    loadAcccount = async () => {
-        let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
-        this.setState({
-            name: account.name,
-            email: account.email,
-            contact: account.phoneNumber,
-            cpf: account.cpf,
-            birth: account.birthday
-        })
-    }
-
-    loadAcccount(e) {
-        e.preventDefault();
-    }
-
     render() {
         return (
             <>
-                <Header history={this.props.history} location={this.props.location} />
+                <Header />
                 <Container className="tam" justify-content="center">
                     <div className="text-align-center" align="center">
                         <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
@@ -56,28 +33,28 @@ class Account extends Component {
                     <Form>
                         <Card>
                             <div className="text-align-center" align="center">
-                                <h1>Detalhes da Conta</h1>
+                                <h1>Editar Conta</h1>
                             </div>
                             <br></br>
                             <FormGroup row>
                                 <Col md="4"></Col>
                                 <Col xs={4} sm={4}>
                                     <Label for="nameUser"><span className="text-danger">*</span>Nome Completo:</Label>
-                                    <Input value={this.state.name} disabled onChange={e => this.setState({ name: e.target.value })} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome" />
+                                    <Input value={this.state.name} onChange={e => this.setState({ name: e.target.value })} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
                                 <Col xs={4} sm={4}>
                                     <Label for="birth"><span className="text-danger">*</span>Data de Nascimento:</Label>
-                                    <Input value={this.state.birth} disabled onChange={e => this.setState({ birth: e.target.value })} type="date" name="birth" id="birth" />
+                                    <Input value={this.state.birth} onChange={e => this.setState({ birth: e.target.value })} type="date" name="birth" id="birth" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
                                 <Col xs={4} sm={4}>
                                     <Label for="email"><span className="text-danger">*</span>Email:</Label>
-                                    <Input value={this.state.email} disabled onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                                    <Input value={this.state.email} onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -91,24 +68,22 @@ class Account extends Component {
                                 <Col md="4"></Col>
                                 <Col xs={4} sm={4}>
                                     <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
-                                    <Input value={this.state.contact} disabled onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
+                                    <Input value={this.state.contact} onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
                                 </Col>
                             </FormGroup>
                             <FormGroup>
                                 <div className="text-align-center m-2" align="center">
-                                    <Link to="/"><Button className="mr-3" color="danger">Voltar ao Início</Button></Link>
-                                    <Link to="/editaccount"><Button color="success">Editar Dados</Button></Link>  
+                                    <Link to="/account"><Button className="mr-3" color="danger">Cancelar</Button></Link>
+                                    <Link to="/editaccount"><Button type="submit" color="success">Salvar Dados</Button></Link>
                                 </div>
                             </FormGroup>
                         </Card>
                     </Form>
                 </Container>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <Footer />
             </>
         )
     }
 }
-
-export default Account;

@@ -204,8 +204,8 @@ export default class Checkout extends Component {
         if (cep.length === 9) {
             try {
                 const address = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
-                if (address.data.erro){
-                    this.setState({erro: "Erro ao buscar o CEP"});
+                if (address.data.erro) {
+                    this.setState({ erro: "Erro ao buscar o CEP" });
                     return;
                 }
                 this.setState({
@@ -218,11 +218,11 @@ export default class Checkout extends Component {
                         aDistrict: address.data.bairro
                     }
                 });
-                this.setState({erro: ""});
-                this.listCities(address.data.uf); 
-            } catch(erro){
+                this.setState({ erro: "" });
+                this.listCities(address.data.uf);
+            } catch (erro) {
                 console.log(erro);
-                this.setState({erro: "Erro ao buscar o CEP"});
+                this.setState({ erro: "Erro ao buscar o CEP" });
             }
         }
     }
@@ -565,7 +565,6 @@ export default class Checkout extends Component {
                         </Row>
                     </Form>
                 </Container >
-
             </>
         );
     }
