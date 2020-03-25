@@ -12,6 +12,11 @@ public class StatusController {
     @Autowired
     public StatusService service;
 
+    @GetMapping("/status")
+    public ResponseEntity<?> getAllStatus(){
+        return service.findAllStatus();
+    }
+
     @PostMapping("/status")
     public ResponseEntity<?> save(@RequestBody StatusDTO status) {
         return service.createStatus(status);

@@ -25,6 +25,8 @@ public class StatusServiceImpl implements StatusService {
     private StatusRepository statusRepository;
     private Converter converter = new Converter();
 
+
+
     @Override
     public ResponseEntity<?> createStatus(StatusDTO status) {
         if (status == null)
@@ -44,15 +46,13 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public ResponseEntity<?> findStatusByDesc(String status) {
-        List<Status> s = statusRepository.findByStatus(status).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Status not found"));
-
-        List<StatusDTO> sDTO = new ArrayList<>();
-        for (Status st : s)
-            sDTO.add(converter.convertTo(st));
-
-        return ResponseEntity.ok().body(sDTO);
+    public ResponseEntity<?> findAllStatus() {
+        List<Status> list = statusRepository.findAll();
+        if(list.size() <= 0)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
+
 
     @Override
     public void deleteStatus(Long id) {
