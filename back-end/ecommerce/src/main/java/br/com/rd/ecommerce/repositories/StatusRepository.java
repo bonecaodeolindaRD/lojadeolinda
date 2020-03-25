@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
-    Status findByIdStatus(Long id);
-    List<Status> findByStatus(String status);
+    Optional<Status> findByIdStatus(Long id);
+    Optional<List<Status>> findByStatus(String status);
 }

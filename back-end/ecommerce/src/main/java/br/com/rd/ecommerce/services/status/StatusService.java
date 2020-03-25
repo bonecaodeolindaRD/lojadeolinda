@@ -9,5 +9,5 @@ public interface StatusService {
     ResponseEntity<?> findStatusById(Long id);
     ResponseEntity<?> findStatusByDesc(String status);
     void deleteStatus(Long id);
-    ResponseEntity<?> updateStatus(StatusDTO status);
+    ResponseEntity<?> updateStatus(Long id, StatusDTO status);
 }

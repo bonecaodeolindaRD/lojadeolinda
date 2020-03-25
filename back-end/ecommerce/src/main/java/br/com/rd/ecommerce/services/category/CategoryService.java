@@ -11,5 +11,5 @@ public interface CategoryService {
     ResponseEntity<?> findAllCategories();
     ResponseEntity<?> findByCategoryByName(String name);
     void deleteById(Long id);
-    ResponseEntity<?>  update(Category category);
+    ResponseEntity<?>  updateAddress(Long id, Category category);
 }
