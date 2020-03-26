@@ -103,8 +103,6 @@ export default class Success extends Component {
 
                             Número do pedido: {this.id}
                             
-
-
                         </CardText>
 
                         <CardText>
@@ -156,9 +154,6 @@ export default class Success extends Component {
                         ))}
 
                         <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
-
-
-
 
 
                         <Link to='/home' className="d-flex justify-content-end mt-3 mb-5 mr-1">

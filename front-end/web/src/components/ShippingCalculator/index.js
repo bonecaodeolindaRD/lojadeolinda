@@ -36,7 +36,7 @@ export default class ShippingCalculator extends Component {
 
               if(!this.state.dataApi[0].erro){
 
-                  this.setState({ message: 'Receba em até 10 dias úteis R$200.00' });
+                  this.setState({ message: 'Receba em até 10 dias úteis R$200,00' });
 
                 }else{
 
