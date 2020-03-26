@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 
 import {
     Collapse,
@@ -35,12 +35,21 @@ export default class Header extends Component {
         this.getLogin();
         this.state = {
             isOpen: false,
+            categories: [],
+            category: 0,
             email: "",
             name: this.getLogin(),
             
             loading: false
         }
-      
+        this.getCategories();
+    }
+
+    getCategories = async () => {
+        const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+        if (!category)
+            return;
+        this.setState({ categories: category });
     }
 
 
@@ -86,9 +95,9 @@ export default class Header extends Component {
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container className="col-12">
-                        <Link to="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /> </Link>
+                        <Link to="/"><img src="https://i.imgur.com/Wpm8dF3.png" alt="logo do site" className="img-logo" /> </Link>
                        
-                        <Link to="/" style={{ textDecoration: 'none'}}> <h4 className="text-darkblue " > Bonecão de olinda</h4></Link>
+                        
                         <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">
@@ -96,24 +105,15 @@ export default class Header extends Component {
                                     <Link to="/components/"></Link>
                                 </NavItem>
                                 <Form onSubmit={this.search} className="search-input border">
-                                    <InputGroup>
+                                    <InputGroup className="rounded" >
                                         <UncontrolledDropdown nav inNavbar>
                                             <DropdownToggle nav caret>
                                                 Categorias
                                             </DropdownToggle>
-                                            <DropdownMenu right>
-                                                <DropdownItem>
-                                                    <Link to="/category/">Artistas</Link>
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Atletas</Link>
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Jornalistas</Link> 
-                                                </DropdownItem>
-                                                <DropdownItem>
-                                                <Link to="/category/">Politicos</Link> 
-                                                </DropdownItem>
+                                            <DropdownMenu right  value={this.state.category} onChange={e => this.setState({ category: e.target.value })}>
+                                            {this.state.categories.map(c => (
+                                           <Link  onClick={ e => this.props.history.push("/category/" + c.id)}> <DropdownItem >{c.name}</DropdownItem></Link>
+                                             ))}  
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                         <Input className="form-control border border-right-0" placeholder="Buscar..." />
