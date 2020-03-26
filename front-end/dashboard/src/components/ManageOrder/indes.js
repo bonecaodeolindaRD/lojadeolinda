@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 import Header from '../Header';
-import { Container, Form, InputGroup, Label, Input, FormGroup, Col, Row, Button, Card, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Container, Form, InputGroup, Label, Input, FormGroup, Col, Row, Button, Card, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 
 
 export default class ManageOrder extends Component {
@@ -58,15 +58,16 @@ export default class ManageOrder extends Component {
                 this.setState({ erro: "Erro ao achar o pedido" });
                 return;
             }
+            console.log(order);
             this.setState({ order: order.data });
         } catch{
             this.setState({ erro: "Erro ao achar o pedido" });
         }
     }
-    
+
     toggleModal = (evt) => {
         evt.preventDefault();
-        if(this.state.order.status.idStatus === 6){
+        if (this.state.order.status.idStatus === 6) {
             this.setState({ erro: "O pedido já se contra cancelado" });
             return;
         }
@@ -121,6 +122,81 @@ export default class ManageOrder extends Component {
                                 </Form>
                             </Col>
                         </Row>
+                        {this.state.order.id ? (
+                            <>
+                        <FormGroup className="bg-warning rounded text-center font-weight-bold p-2 ">
+                            <Label>Cliente</Label>
+                        </FormGroup>
+
+                        <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                            <thead>
+                                <th>CPF</th>
+                                <th>Nome</th>
+                                <th>Telefone</th>
+                                <th>Email</th>
+                            </thead>
+                            <tbody>
+                                {this.state.order.client ? (
+                                <tr>
+                                    <td>
+                                        {this.state.order.client.cpf}
+                                    </td>
+                                    <td>
+                                        {this.state.order.client.name}
+                                    </td>
+                                    <td>
+                                        {this.state.order.client.phoneNumber}
+                                    </td>
+                                    <td>
+                                        {this.state.order.client.email}
+                                    </td>
+                                </tr>) : (<> </>)
+                                }
+                            </tbody>
+                        </Table>
+                        <FormGroup className="bg-warning rounded text-center font-weight-bold p-2 ">
+                            <Label>Endereço</Label>
+                        </FormGroup>
+
+                        <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                            <thead>
+                                <th>CEP</th>
+                                <th>Rua</th>
+                                <th>N</th>
+                                <th>Comp</th>
+                                <th>Cidade</th>
+                                <th>Bairro</th>
+                                <th>UF</th>
+                            </thead>
+                            <tbody>
+                                {this.state.order.address ? (
+                                <tr>
+                                    <td>
+                                        {this.state.order.address.cep}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.street}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.number}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.complement}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.citie}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.district}
+                                    </td>
+                                    <td>
+                                        {this.state.order.address.uf}
+                                    </td>  
+                                </tr>) : (<> </>)
+                                }
+                            </tbody>
+                        </Table>
+
                         <FormGroup className="bg-warning rounded text-center font-weight-bold p-2 ">
                             <Label>Lista de produtos</Label>
                         </FormGroup>
@@ -138,6 +214,7 @@ export default class ManageOrder extends Component {
                                 </Col>
                             ))}
                         </Row>
+                        </>) : (<> </>)}
                     </div>
                 </Container>
 
@@ -147,7 +224,7 @@ export default class ManageOrder extends Component {
                         Você realmente deseja cancelar o pedido {this.state.order.id}?
                      </ModalBody>
                     <ModalFooter>
-                        <Button outline color="secondary" onClick={e => {this.cancelOrder(e); this.toggleModal(e);}}>Sim</Button>
+                        <Button outline color="secondary" onClick={e => { this.cancelOrder(e); this.toggleModal(e); }}>Sim</Button>
                         <Button outline color="secondary" onClick={this.toggleModal}>Não</Button>
                     </ModalFooter>
                 </Modal>
