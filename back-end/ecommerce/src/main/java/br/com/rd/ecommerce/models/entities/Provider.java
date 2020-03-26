@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
@@ -24,6 +25,7 @@ public class Provider implements Serializable {
     private String name;
     @Column(name = "nr_cpnj", nullable = false, length = 20)
     private String CNPJ;
+    @JsonManagedReference
     @OneToMany(mappedBy = "provider")
     private List<Address> addresses;
 }

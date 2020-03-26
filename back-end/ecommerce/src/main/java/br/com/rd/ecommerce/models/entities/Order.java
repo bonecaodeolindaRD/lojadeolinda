@@ -1,5 +1,7 @@
 package br.com.rd.ecommerce.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,12 +33,14 @@ public class Order {
     private Invoice invoice;
     @ManyToOne
     @JoinColumn(name = "id_client")
+    @JsonBackReference
     private Client client;
     @ManyToOne
     @JoinColumn(name = "id_status")
     private Status status;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_order")
+    @JsonManagedReference
     private List<OrderItem> orderItem;
     @ManyToOne
     @JoinColumn(name = "id_address")

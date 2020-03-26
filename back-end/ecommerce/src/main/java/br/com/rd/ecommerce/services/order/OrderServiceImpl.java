@@ -165,6 +165,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public ResponseEntity<?> cancelOrder(Long id) {
+
+        Order order = respository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+
+        if(order.getStatus().getIdStatus() == 6)
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+
+        for(OrderItem oi: order.getOrderItem())
+            stockService.addItemOnStock(1L, oi.getProduct().getId(), oi.getQuantity());
+
+        order.setStatus(new Status(6L, "CANCELADO"));
+        OrderDTO orderDTO = converter.convertTo(respository.save(order));
+
+        for(OrderItem oi: order.getOrderItem())
+            orderDTO.addItem(converter.convertTo(oi));
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+    }
+
+    @Override
     public void deleteOrder(Long id) {
         respository.deleteById(id);
     }

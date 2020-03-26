@@ -44,4 +44,9 @@ public class OrderController {
     public void deleteOrder(@PathVariable("id") Long id){
         service.deleteOrder(id);
     }
+
+    @PostMapping("/order/cancel/{id}")
+    public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id){
+        return service.cancelOrder(id);
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,8 +36,10 @@ public class Client implements Serializable {
     private String phoneNumber;
     @Column(name = "ds_password", nullable = false)
     private String password;
+    @JsonManagedReference
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Address> addresses;
+    @JsonManagedReference
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Order> orders;
 }
