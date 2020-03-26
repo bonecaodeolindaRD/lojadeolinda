@@ -4,6 +4,7 @@ import Footer from '../Footer';
 import { Col, Form, FormGroup, Label, Input, Container, Card, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
+import axios from 'axios';
 
 export default class EditAccount extends Component {
     constructor(props) {
@@ -20,7 +21,29 @@ export default class EditAccount extends Component {
             this.props.history.push('/');
             return;
         }
+        this.loadAcccount();
     }
+
+    loadAcccount(e) {
+        e.preventDefault();
+    }
+
+    loadAcccount = async () => {
+        let { email } = JSON.parse(sessionStorage.getItem('client'));
+        let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
+        this.setState({
+            name: account.name,
+            email: account.email,
+            contact: account.phoneNumber,
+            cpf: account.cpf,
+            birth: account.birthday
+        })
+    }
+
+    handlerSubmit(e){
+        e.preventDefault();
+    }
+
     render() {
         return (
             <>
@@ -30,7 +53,7 @@ export default class EditAccount extends Component {
                         <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
                     </div>
                     <br></br>
-                    <Form>
+                    <Form onSubmit={this.handlerSubmit}>
                         <Card className="p-2">
                             <div className="text-align-center" align="center">
                                 <h1>Editar Conta</h1>
@@ -74,7 +97,7 @@ export default class EditAccount extends Component {
                             <FormGroup>
                                 <div className="text-align-center m-2" align="center">
                                     <Link to="/account"><Button className="mr-3" color="danger">Cancelar</Button></Link>
-                                    <Link to="/editaccount"><Button type="submit" color="success">Salvar Dados</Button></Link>
+                                    <Button type="submit" color="success">Salvar Dados</Button>
                                 </div>
                             </FormGroup>
                         </Card>
