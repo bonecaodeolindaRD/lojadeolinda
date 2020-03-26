@@ -95,9 +95,9 @@ export default class Header extends Component {
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container className="col-12">
-                        <Link to="/"><img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" /> </Link>
+                        <Link to="/"><img src="https://i.imgur.com/Wpm8dF3.png" alt="logo do site" className="img-logo" /> </Link>
                        
-                        <Link to="/" style={{ textDecoration: 'none'}}> <h4 className="text-darkblue " > Bonecão de olinda</h4></Link>
+                        
                         <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">

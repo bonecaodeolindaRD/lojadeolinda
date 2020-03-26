@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container } from 'reactstrap';
+
+import {
+    Container,
+    Col,
+    Row,
+    Card
+} from 'reactstrap';
 
 import Header from '../Header';
 import Produtos from '../Products';
@@ -39,8 +45,14 @@ export default class Category extends Component {
         }
     }
 
-    
+    redirect = (evt) => {
+        let obj = evt.target;
+        while (obj.id !== "card")
+            obj = obj.parentNode;
+        this.props.history.push(`/detail/${obj.children[1].innerHTML.toString()}`);
 
+    }
+    
 
     render() {
 
@@ -49,6 +61,7 @@ export default class Category extends Component {
                 <Header history={this.props.history} location={this.props.location}/>
                 <Container>
                      <Produtos products={this.state.products}/>
+                     
                 </Container>
                 <Footer />
             </>

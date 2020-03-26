@@ -29,7 +29,7 @@ export default class Footer extends Component {
 
                         <NavItem className="space-footer">
 
-                            <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
+                            <img src="https://i.imgur.com/yUnaRMs.png" alt="logo do site" className="img-logo" />
                             
 
                         </NavItem>
