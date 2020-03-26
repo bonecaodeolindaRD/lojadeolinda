@@ -46,7 +46,7 @@ export default class Header extends Component {
     }
 
     getCategories = async () => {
-        const { data: category } = await axios("http://localhost:8080/ecommerce/category/all");
+        const { data: category } = await axios("http://localhost:8080/ecommerce/category/");
         if (!category)
             return;
         this.setState({ categories: category });
@@ -95,9 +95,7 @@ export default class Header extends Component {
             <header>
                 <Navbar color="warning" light expand="md" className="mb-5">
                     <Container className="col-12">
-                        <Link to="/"><img src="https://i.imgur.com/Wpm8dF3.png" alt="logo do site" className="img-logo" /> </Link>
-                       
-                        
+                        <Link to="/"><img src="https://i.imgur.com/5gjaQsy.png" alt="logo do site" className="img-logo" /> </Link>
                         <NavbarToggler className="mb-2" onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="align-items-center justify-content-around w-100 display-menu">

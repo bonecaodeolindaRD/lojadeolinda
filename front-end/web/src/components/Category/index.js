@@ -60,7 +60,7 @@ export default class Category extends Component {
             <>
                 <Header history={this.props.history} location={this.props.location}/>
                 <Container>
-                     <Produtos products={this.state.products}/>
+                     <Produtos history={this.props.history} products={this.state.products}/>
                      
                 </Container>
                 <Footer />
