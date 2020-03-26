@@ -24,14 +24,12 @@ export default class EditAccount extends Component {
         this.loadAcccount();
     }
 
-    loadAcccount(e) {
-        e.preventDefault();
-    }
-
     loadAcccount = async () => {
+        
         let { email } = JSON.parse(sessionStorage.getItem('client'));
         let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
         this.setState({
+            id: account.id,
             name: account.name,
             email: account.email,
             contact: account.phoneNumber,
@@ -42,6 +40,17 @@ export default class EditAccount extends Component {
 
     handlerSubmit(e){
         e.preventDefault();
+        console.log(this.state)
+
+        // let obj = {
+        //     email: this.state.email,
+        //     contact: this.state.contact,
+        //     birth: this.state.birth,
+        //     contact: this.state.contact
+        // }
+
+        // let id = this.props.match.params.id;
+        // axios.put("http://localhost:8080/ecommerce/client/" +id, obj).then(res => console.log(res.data))
     }
 
     render() {
