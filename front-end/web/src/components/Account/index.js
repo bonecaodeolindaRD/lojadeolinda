@@ -54,42 +54,42 @@ class Account extends Component {
                     </div>
                     <br></br>
                     <Form>
-                        <Card>
+                        <Card className="p-2">
                             <div className="text-align-center" align="center">
                                 <h1>Detalhes da Conta</h1>
                             </div>
                             <br></br>
                             <FormGroup row>
                                 <Col md="4"></Col>
-                                <Col xs={4} sm={4}>
+                                <Col md={4} sm={4}>
                                     <Label for="nameUser"><span className="text-danger">*</span>Nome Completo:</Label>
                                     <Input value={this.state.name} disabled onChange={e => this.setState({ name: e.target.value })} type="text" name="nameUser" id="nameUser" placeholder="Seu primeiro nome" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
-                                <Col xs={4} sm={4}>
+                                <Col md={4} sm={4}>
                                     <Label for="birth"><span className="text-danger">*</span>Data de Nascimento:</Label>
                                     <Input value={this.state.birth} disabled onChange={e => this.setState({ birth: e.target.value })} type="date" name="birth" id="birth" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
-                                <Col xs={4} sm={4}>
+                                <Col md={4} sm={4}>
                                     <Label for="email"><span className="text-danger">*</span>Email:</Label>
                                     <Input value={this.state.email} disabled onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
-                                <Col xs={4} sm={4}>
+                                <Col md={4} sm={4}>
                                     <Label for="cpf"><span className="text-danger">*</span>CPF:</Label>
                                     <Input value={this.state.cpf} disabled onChange={e => this.setState({ cpf: e.target.value })} mask="999.999.999-99" maskChar="" id="cpf" tag={InputMask} type="text" name="cpf" placeholder="" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col md="4"></Col>
-                                <Col xs={4} sm={4}>
+                                <Col md={4} sm={4}>
                                     <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
                                     <Input value={this.state.contact} disabled onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
                                 </Col>
@@ -105,7 +105,8 @@ class Account extends Component {
                 </Container>
                 <br/>
                 <br/>
-                <Footer />
+                <br/>
+                <Footer/>
             </>
         )
     }
