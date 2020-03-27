@@ -25,7 +25,6 @@ public class Provider implements Serializable {
     private String name;
     @Column(name = "nr_cpnj", nullable = false, length = 20)
     private String CNPJ;
-    @JsonManagedReference
     @OneToMany(mappedBy = "provider")
     private List<Address> addresses;
 }

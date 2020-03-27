@@ -22,6 +22,7 @@ public class ClientDTO {
     private String phoneNumber;
     private List<AddressDTO> addresses;
     private List<OrderDTO> orders;
+    private String access;
 
     public void addOrder(OrderDTO order){
         if(orders == null) orders = new ArrayList<>();
