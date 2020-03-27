@@ -105,7 +105,7 @@ class Register extends Component {
       
         if (this.state.PASSWORD === this.state.PASS_CONF) {
             try {
-                await axios.post("http://localhost:8080/ecommerce/client", user);
+                await axios.post("http://localhost:8080/ecommerce/client", user,);
                 this.setState({
                     cpf: "",
                     name: "",
@@ -258,7 +258,10 @@ class Register extends Component {
                         </FormGroup>
                     </Form>
                 </Container>
-                <Container><div className="mt-10"></div></Container>
+                <br/>
+                <br/>
+                <br/>
+
                 <Footer />
             </>
         )
