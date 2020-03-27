@@ -7,10 +7,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface StockService {
     ResponseEntity<?> findItemOnStock(Long stock, Long product);
-    ResponseEntity<?> findAllStocks();
-    ResponseEntity<?> findItemInAllStocks(Long product);
-    ResponseEntity<?> addItemOnStock(Long idStock, Long idproduct, Integer quantity);
     ResponseEntity<?> updateItemOnStockByOrder(Long stock, OrderItem productDTO) throws StockException;
-    ResponseEntity<?> registerProductOnStock(Long stock, ProductDTO productDTO);
-    ResponseEntity<?> getNotRegisteredItems();
 }

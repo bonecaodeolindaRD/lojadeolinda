@@ -15,11 +15,6 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
-    @GetMapping("/order")
-    public ResponseEntity<?> findAll(){
-        return service.findAllOrders();
-    }
-
     @GetMapping("/order/date/{date}")
     public ResponseEntity<?> findByDate(@PathVariable("date") String date){
         return service.findByDate(date);
@@ -28,11 +23,6 @@ public class OrderController {
     @GetMapping("/order/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findById(id);
-    }
-
-    @GetMapping("/sales")
-    public ResponseEntity<?> findSales(){
-        return service.findSales();
     }
 
     @PostMapping("/order")

@@ -50,21 +50,6 @@ public class OrderServiceImpl implements OrderService {
     private Converter converter = new Converter();
 
     @Override
-    public ResponseEntity<?> findAllOrders() {
-
-        List<Order> orders = respository.findAll();
-
-        if (orders.size() <= 0)
-            return ResponseEntity.notFound().build();
-        List<OrderDTO> ordersDTO = new ArrayList<>();
-        for (Order order : orders)
-            ordersDTO.add(converter.convertTo(order));
-
-        return ResponseEntity.ok().body(ordersDTO);
-
-    }
-
-    @Override
     public ResponseEntity<?> findByDate(String date) {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -93,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem oi : item.getOrderItem())
             oDTO.addItem(converter.convertTo(oi));
         oDTO.setValue(item.getValue());
+        oDTO.setClient(converter.convertTo(item.getClient()));
         return ResponseEntity.ok().body(oDTO);
     }
 
@@ -152,16 +138,6 @@ public class OrderServiceImpl implements OrderService {
         } catch (StockException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    public ResponseEntity<?> findSales() {
-        Query query = em.createQuery("select o.date as date, sum(o.value) as value from Order o group by o.date");
-
-        List<Order> orders = query.getResultList();
-        if (orders == null || orders.size() <= 0)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.status(HttpStatus.OK).body(orders);
-
     }
 
     @Override

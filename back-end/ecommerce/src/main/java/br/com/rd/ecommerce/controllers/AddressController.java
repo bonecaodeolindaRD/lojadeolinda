@@ -23,11 +23,6 @@ public class AddressController {
         return service.findAllAddress();
     }
 
-    @GetMapping("/address/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id")Long id){
-        return service.findAddressById(id);
-    }
-
     @DeleteMapping("/address/{id}")
     public void deleteById(@PathVariable("id")Long id){
         service.deleteAddress(id);

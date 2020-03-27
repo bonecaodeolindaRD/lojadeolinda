@@ -1,10 +1,10 @@
-package br.com.rd.ecommerce.services.status;
+package br.com.rd.dashboard.services.status;
 
-import br.com.rd.ecommerce.converters.Converter;
-import br.com.rd.ecommerce.models.dto.StatusDTO;
-import br.com.rd.ecommerce.models.entities.Status;
-import br.com.rd.ecommerce.repositories.StatusRepository;
-import br.com.rd.ecommerce.services.exceptions.StatusException;
+import br.com.rd.dashboard.converter.Converter;
+import br.com.rd.dashboard.models.dto.StatusDTO;
+import br.com.rd.dashboard.models.entities.Status;
+import br.com.rd.dashboard.repositories.StatusRepository;
+import br.com.rd.dashboard.services.exceptions.StatusException;
 import org.hibernate.JDBCException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;

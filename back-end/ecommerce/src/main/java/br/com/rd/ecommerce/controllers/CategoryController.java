@@ -24,19 +24,5 @@ public class CategoryController {
         return service.findCategoryById(id);
     }
 
-    @PostMapping("/category")
-    public ResponseEntity<?> createCategory(@RequestBody Category category){
-        return service.createCategory(category);
-    }
-
-    @PutMapping("/category/{id}")
-    public ResponseEntity<?> editCategory(@PathVariable("id") Long id, @RequestBody Category category){
-        return service.updateCategory(id, category);
-    }
-
-    @DeleteMapping("/category/delete/{id}")
-    public void deleteCategory(@PathVariable("id") Long id){
-        service.deleteById(id);
-    }
 
 }

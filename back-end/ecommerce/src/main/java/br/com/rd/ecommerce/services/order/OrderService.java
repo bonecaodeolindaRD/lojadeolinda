@@ -6,10 +6,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface OrderService {
-    ResponseEntity<?> findAllOrders();
     ResponseEntity<?> findByDate(String date);
     ResponseEntity<?> findById(Long id);
     ResponseEntity<?> createOrder(OrderDTO order);
-    ResponseEntity<?> findSales();
     void deleteOrder(Long id);
 }

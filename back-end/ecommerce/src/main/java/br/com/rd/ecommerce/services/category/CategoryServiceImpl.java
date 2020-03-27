@@ -26,15 +26,6 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository repository;
     private Converter converter = new Converter();
 
-    @Override
-    public ResponseEntity<?> createCategory(Category category) {
-
-        if (category == null)
-            return ResponseEntity.badRequest().body(new CategoryException("Category is not be null"));
-        Category cat = repository.save(category);
-        return ResponseEntity.status(201).body(converter.convertTo(cat));
-
-    }
 
     @Override
     public ResponseEntity<?> findCategoryById(Long id) {
@@ -55,35 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
             catDTO.add(converter.convertTo(cat));
 
         return ResponseEntity.status(HttpStatus.OK).body(catDTO);
-    }
-
-    @Override
-    public ResponseEntity<?> findByCategoryByName(String name) {
-
-        List<Category> categories = repository.findByName(name).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-
-        List<CategoryDTO> catDTO = new ArrayList<>();
-        for (Category cat : categories)
-            catDTO.add(converter.convertTo(cat));
-
-        return ResponseEntity.ok().body(catDTO);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public ResponseEntity<?> updateCategory(Long id, Category category) {
-        if (category == null)
-            return ResponseEntity.badRequest().body(new CategoryException("Category is not be null"));
-
-        Category cat = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-        cat.setName(category.getName());
-        cat = repository.save(cat);
-        CategoryDTO catDTO = converter.convertTo(cat);
-        return ResponseEntity.ok().body(catDTO);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

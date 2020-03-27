@@ -41,40 +41,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> findAddressById(Long id) {
-        Address address = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
-        if (address == null)
-            return ResponseEntity.notFound().build();
-        AddressDTO addressDTO = converter.convertTo(address);
-        return ResponseEntity.status(HttpStatus.OK).body(addressDTO);
-    }
-
-    @Override
-    public ResponseEntity<?> findAddressByClient(ClientDTO client) {
-        if (client == null)
-            return ResponseEntity.badRequest().body(new AddressException("Please inform a client"));
-        Client c = converter.convertTo(client);
-
-        List<Address> addresses = repository.findByClient(c).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
-
-        List<AddressDTO> aDTO = new ArrayList<>();
-        for (Address a : addresses)
-            aDTO.add(converter.convertTo(a));
-
-        return ResponseEntity.status(HttpStatus.OK).body(aDTO);
-    }
-
-    @Override
-    public ResponseEntity<?> findAddressByCEP(String CEP) {
-
-        List<Address> addresses = repository.findByCep(CEP).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
-        List<AddressDTO> aDTO = new ArrayList<>();
-        for (Address a : addresses)
-            aDTO.add(converter.convertTo(a));
-        return ResponseEntity.status(HttpStatus.OK).body(aDTO);
-    }
-
-    @Override
     public ResponseEntity<?> createAddress(AddressDTO addressDTO) {
         if (addressDTO == null)
             return ResponseEntity.badRequest().body(new AddressException("O endereco e invalido"));
