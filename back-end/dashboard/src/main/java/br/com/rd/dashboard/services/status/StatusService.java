@@ -1,7 +1,7 @@
-package br.com.rd.ecommerce.services.status;
+package br.com.rd.dashboard.services.status;
 
-import br.com.rd.ecommerce.models.dto.StatusDTO;
-import br.com.rd.ecommerce.models.entities.Status;
+import br.com.rd.dashboard.models.dto.StatusDTO;
+import br.com.rd.dashboard.models.entities.Status;
 import org.springframework.http.ResponseEntity;
 
 public interface StatusService {

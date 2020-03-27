@@ -36,20 +36,6 @@ public class ProductServiceImpl implements ProductService {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public ResponseEntity<?> findAllProducts() {
-
-        List<Product> products = repository.findAll();
-        if (products.size() <= 0)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        List<ProductDTO> productsDTO = new ArrayList<>();
-        for (Product p : products)
-            productsDTO.add(converter.convertTo(p));
-
-        return ResponseEntity.status(HttpStatus.OK).body(productsDTO);
-
-    }
-
 
     @Override
     public ResponseEntity<?> findProductById(Long id) {
@@ -132,70 +118,6 @@ public class ProductServiceImpl implements ProductService {
         for (Product p : products)
             pDTO.add(converter.convertTo(p));
         return ResponseEntity.status(HttpStatus.OK).body(pDTO);
-    }
-
-    @Override
-    public ResponseEntity<?> createProduct(ProductDTO productDTO) {
-        if (productDTO == null)
-            return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
-        if (productDTO.getPrice() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getHeight() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getWidth() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getWeight() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getOff() <= 0 || productDTO.getOff() >= 100)
-            return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
-
-        Product product = converter.convertTo(productDTO);
-        Query name = em.createQuery("select p from Product p where upper(name) like '%" + productDTO.getName().toUpperCase() + "%'", Product.class);
-        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + productDTO.getDescription().toUpperCase() + "%'", Product.class);
-        List<Product> products = name.getResultList();
-
-        if (products.size() > 0)
-            return ResponseEntity.badRequest().body(new ProductException("Já existe um produto com esse nome, verifique se o produto ja esta cadastrado"));
-        products = desc.getResultList();
-        if (products.size() > 0)
-            return ResponseEntity.badRequest().body(new ProductException("Pode ser que ja tenha um produto cadastrado com essa mesma descricao, verifique se o produto ja esta cadastrado"));
-        Product returnEntity = repository.save(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(returnEntity);
-
-    }
-
-    @Override
-    public ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO) {
-        if (productDTO == null)
-            return ResponseEntity.badRequest().body(new ProductException("O produto esta vazio"));
-        if (productDTO.getPrice() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("O preco do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getHeight() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("A altura do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getWidth() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("A largura do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getWeight() <= 0)
-            return ResponseEntity.badRequest().body(new ProductException("O peso do produto não pode ser menor ou igual a zero"));
-        if (productDTO.getOff() <= 0 || productDTO.getOff() >= 100)
-            return ResponseEntity.badRequest().body(new ProductException("Valor do desconto é invalido"));
-
-        Product product = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
-        Category category = new Category();
-        category.setId(productDTO.getCategory());
-        product.setCategory(category);
-        product.setImage(productDTO.getImage());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
-        product.setName(productDTO.getName());
-        Product productReturn = repository.save(product);
-        return ResponseEntity.status(HttpStatus.OK).body(productReturn);
-
-    }
-
-
-    @Override
-    public void deleteProduct(Long id) {
-        repository.deleteById(id);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

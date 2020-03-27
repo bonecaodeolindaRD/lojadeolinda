@@ -16,25 +16,4 @@ public class StockController {
     public ResponseEntity<?> findProductOnStock(@PathVariable("idproduct") Long product, @PathVariable("idstock") Long stock){
         return service.findItemOnStock(stock, product);
     }
-
-    @GetMapping("/stock/product/all/{id}")
-    public ResponseEntity<?> findProductInAllStock(@PathVariable("id") Long id){
-        return service.findItemInAllStocks(id);
-    }
-
-    @GetMapping("/stock/all")
-    public ResponseEntity<?> findAllStocks(){
-        return service.findAllStocks();
-    }
-
-
-    @PostMapping("/stock/product/edit/{idstock}/{idProduct}/{quantity}")
-    public ResponseEntity<?> editProsuct(@PathVariable("idstock") Long idStock, @PathVariable("idProduct") Long idProduct, @PathVariable("quantity") Integer quantity){
-        return service.addItemOnStock(idStock, idProduct, quantity);
-    }
-
-    @PostMapping("/stock/product/new/{idstock}")
-    public ResponseEntity<?> registerProduct(@PathVariable("idstock") Long idStock, @RequestBody ProductDTO productDTO){
-        return service.registerProductOnStock(idStock, productDTO);
-    }
 }

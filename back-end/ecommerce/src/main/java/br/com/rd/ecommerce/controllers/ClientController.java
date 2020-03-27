@@ -19,11 +19,6 @@ public class ClientController {
         return service.createClient(clientDTO);
     }
 
-    @GetMapping("/client")
-    public ResponseEntity<?> findAll(){
-            return service.findAllClient();
-    }
-
     @GetMapping("/client/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findClientById(id);
@@ -45,13 +40,8 @@ public class ClientController {
     }
 
     @PostMapping("/client/login")
-    public ResponseEntity login(@RequestBody Client client){
+    public ResponseEntity<?> login(@RequestBody Client client){
         return service.findClientLogin(client);
-    }
-
-    @DeleteMapping("/client/{id}")
-    public void deleteClient(@PathVariable("id") Long id){
-        service.deleteClient(id);
     }
 
 }

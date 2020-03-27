@@ -62,30 +62,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ResponseEntity<?> findAllClient() {
-        List<Client> clients = clientRepository.findAll();
-
-        if (clients.size() <= 0)
-            return ResponseEntity.notFound().build();
-        List<ClientDTO> clientDTO = new ArrayList<>();
-        for (Client client : clients)
-            clientDTO.add(converter.convertTo(client));
-
-        return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
-    }
-
-    @Override
     public ResponseEntity<?> findClientById(Long id) {
 
         Client client = clientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
 
         ClientDTO clientDTO = converter.convertTo(client);
         return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
-    }
-
-    @Override
-    public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
     }
 
     @Override

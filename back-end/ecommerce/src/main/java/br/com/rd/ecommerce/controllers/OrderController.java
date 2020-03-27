@@ -15,11 +15,6 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
-    @GetMapping("/order")
-    public ResponseEntity<?> findAll(){
-        return service.findAllOrders();
-    }
-
     @GetMapping("/order/date/{date}")
     public ResponseEntity<?> findByDate(@PathVariable("date") String date){
         return service.findByDate(date);
@@ -30,11 +25,6 @@ public class OrderController {
         return service.findById(id);
     }
 
-    @GetMapping("/sales")
-    public ResponseEntity<?> findSales(){
-        return service.findSales();
-    }
-
     @PostMapping("/order")
     public ResponseEntity<?> createOrder(@RequestBody OrderDTO order){
         return service.createOrder(order);
@@ -43,10 +33,5 @@ public class OrderController {
     @DeleteMapping("/order/{id}")
     public void deleteOrder(@PathVariable("id") Long id){
         service.deleteOrder(id);
-    }
-
-    @PostMapping("/order/cancel/{id}")
-    public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id){
-        return service.cancelOrder(id);
     }
 }

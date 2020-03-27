@@ -14,16 +14,6 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/product")
-    public ResponseEntity<?> save(@RequestBody ProductDTO product) {
-        return service.createProduct(product);
-    }
-
-    @GetMapping("/product")
-    public ResponseEntity<?> findAll() {
-       return service.findAllProducts();
-    }
-
     @GetMapping("/product/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return service.findProductById(id);
@@ -44,16 +34,6 @@ public class ProductController {
     @GetMapping("/product/find/{str}")
     public ResponseEntity<?> findProduct(@PathVariable("str") String str){
         return service.findProductByNameOrDescription(str);
-    }
-
-    @DeleteMapping("/product/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-       service.deleteProduct(id);
-    }
-
-    @PostMapping("/product/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO product) {
-        return service.updateProduct(id, product);
     }
 
 }

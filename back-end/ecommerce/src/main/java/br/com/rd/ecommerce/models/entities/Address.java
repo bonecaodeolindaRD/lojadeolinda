@@ -36,10 +36,8 @@ public class Address implements Serializable {
     private String uf;
     @ManyToOne
     @JoinColumn(name = "id_provider")
-    @JsonBackReference
     private Provider provider;
     @ManyToOne
     @JoinColumn(name = "id_client")
-    @JsonBackReference
     private Client client;
 }

@@ -5,9 +5,7 @@ import br.com.rd.ecommerce.models.entities.Client;
 import org.springframework.http.ResponseEntity;
 
 public interface ClientService {
-    ResponseEntity<?> findAllClient();
     ResponseEntity<?> findClientById(Long id);
-    void deleteClient(Long id);
     ResponseEntity<?> findClientByEmail(String email);
     ResponseEntity<?> findClientLogin(Client client);
     ResponseEntity<?> findClientOrders(String email);

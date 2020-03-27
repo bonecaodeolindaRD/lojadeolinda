@@ -1,7 +1,7 @@
-package br.com.rd.ecommerce.controllers;
+package br.com.rd.dashboard.controllers;
 
-import br.com.rd.ecommerce.models.dto.StatusDTO;
-import br.com.rd.ecommerce.services.status.StatusService;
+import br.com.rd.dashboard.models.dto.StatusDTO;
+import br.com.rd.dashboard.services.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
