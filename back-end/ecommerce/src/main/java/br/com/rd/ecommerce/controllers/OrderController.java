@@ -1,7 +1,8 @@
 package br.com.rd.ecommerce.controllers;
 
 import br.com.rd.ecommerce.models.dto.OrderDTO;
-import br.com.rd.ecommerce.services.order.OrderService;
+import br.com.rd.ecommerce.models.entities.Order;
+import br.com.rd.ecommerce.services.order.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +14,29 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderService service;
+    private OrderServiceImpl service;
+
+    @GetMapping("/order/all")
+    public ResponseEntity<List<Order>> findAll(){
+        return service.findAllOrders();
+    }
 
     @GetMapping("/order/date/{date}")
-    public ResponseEntity<?> findByDate(@PathVariable("date") String date){
+    public ResponseEntity<List<Order>> findByDate(@PathVariable("date") String date){
         return service.findByDate(date);
     }
 
-    @GetMapping("/order/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Long id){
+    @GetMapping("/order/id/{id}")
+    public ResponseEntity<Order> findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
-    @PostMapping("/order")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO order){
+    @PostMapping("/order/new")
+    public ResponseEntity createOrder(@RequestBody OrderDTO order){
         return service.createOrder(order);
     }
 
-    @DeleteMapping("/order/{id}")
+    @DeleteMapping("/order/delete/{id}")
     public void deleteOrder(@PathVariable("id") Long id){
         service.deleteOrder(id);
     }
