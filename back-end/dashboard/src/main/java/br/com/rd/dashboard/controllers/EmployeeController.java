@@ -13,12 +13,12 @@ public class EmployeeController {
     @Autowired
     private EmployeeService service;
 
-    @PostMapping("/employee/new")
+    @PostMapping("/employee")
     public ResponseEntity<?> registerEmployee(@RequestBody EmployeeDTO employeeDTO){
         return service.registerEmployee(employeeDTO);
     }
 
-    @PutMapping("/employee/update")
+    @PutMapping("/employee")
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
         return service.updateEmployee(employeeDTO);
     }
@@ -29,7 +29,7 @@ public class EmployeeController {
         return service.login(employeeDTO);
     }
 
-    @GetMapping("/employee/find/{username}")
+    @GetMapping("/employee/{username}")
     public ResponseEntity<?> findEmployee(@PathVariable("username") String username){
         return service.findUser(username);
     }

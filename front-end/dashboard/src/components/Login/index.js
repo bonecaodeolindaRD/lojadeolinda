@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import axios from 'axios';
+import api from '../../services/api';
 
 import './styles.css';
 import {
@@ -38,9 +38,18 @@ export default class Login extends Component {
             let obj = {
                 username: this.state.user,
                 password: this.state.password
+
+                //{ headers: { : AuthStr } }
             }
-            let account = await axios.post("http://localhost:9090/employee/login", obj);
+            // let account = await axios.post("http://localhost:9090/employee/login", obj, {
+            //     headers: {
+            //         Authorization: "Basic cGdiZXplcnJhOmphYnV0aWNhYmE="
+            //     }
+            // }
+            // );
+            let account = await api.post("/employee/login", obj);
             sessionStorage.setItem('user', JSON.stringify(account.data));
+            sessionStorage.setItem('dG9rZW4=', btoa(`${obj.username}:${obj.password}`));
             this.props.history.push("/home");
         }catch{
             this.setState({error: "Erro ao efetuar o login"});

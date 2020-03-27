@@ -22,8 +22,7 @@ public class Hierarchy {
     @Column(name = "ds_name")
     private String name;
     @OneToMany
-    @JoinColumn(name = "id_employee")
-    @JsonManagedReference
+    @JoinColumn(name = "id_hierarchy")
     private List<Employee> employees;
 
     public Hierarchy(Long hierarchy, String name) {
