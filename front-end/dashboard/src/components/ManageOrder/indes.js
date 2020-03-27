@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 
 import Header from '../Header';
@@ -20,13 +20,29 @@ export default class ManageOrder extends Component {
             erro: "",
             statusList: []
         }
+        this.existentUser();
         this.findStatus();
+    }
+
+    existentUser = async () => {
+        try {
+            let { username } = JSON.parse(sessionStorage.getItem('user'));
+            let user = await api.get("/employee/" + username);
+            if (!user) {
+                sessionStorage.removeItem('user');
+                sessionStorage.removeItem('dG9rZW4=');
+                this.props.history.push("/");
+            }
+        } catch{
+            this.props.history.push("/");
+            sessionStorage.removeItem('user');
+        }
     }
 
     cancelOrder = async (evt) => {
         evt.preventDefault();
         try {
-            let order = await axios.post("http://localhost:8080/ecommerce/order/cancel/" + this.state.orderId);
+            let order = await api.post("/order/cancel/" + this.state.orderId);
             if (!order.data) {
                 this.setState({ erro: "Erro ao editar o pedido" });
                 return;
@@ -40,7 +56,7 @@ export default class ManageOrder extends Component {
 
     findStatus = async (evt) => {
         try {
-            let statusList = await axios("http://localhost:8080/ecommerce/status");
+            let statusList = await api.get("/status");
             if (!statusList.data) {
                 return;
             }
@@ -53,12 +69,11 @@ export default class ManageOrder extends Component {
     findOrder = async (evt) => {
         evt.preventDefault();
         try {
-            let order = await axios("http://localhost:8080/ecommerce/order/" + this.state.orderId);
+            let order = await api.get("/order/" + this.state.orderId);
             if (!order.data) {
                 this.setState({ erro: "Erro ao achar o pedido" });
                 return;
             }
-            console.log(order);
             this.setState({ order: order.data });
         } catch{
             this.setState({ erro: "Erro ao achar o pedido" });

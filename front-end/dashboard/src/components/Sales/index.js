@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import './styles.css';
 
 import Header from '../Header';
@@ -47,12 +47,13 @@ export default class Sales extends Component {
   }
 
   existentUser = async () => {
-    try{
-        let { username }  = JSON.parse(sessionStorage.getItem('user'));
-        let user = await axios("http://localhost:9090/employee/find/" +  username).catch(e => undefined);
-        if(!user){
+    try {
+        let { username } = JSON.parse(sessionStorage.getItem('user'));
+        let user = await api.get("/employee/" + username);
+        if (!user) {
             sessionStorage.removeItem('user');
-            this.props.history.push("/"); 
+            sessionStorage.removeItem('dG9rZW4=');
+            this.props.history.push("/");
         }
     } catch{
         this.props.history.push("/");
@@ -71,7 +72,7 @@ export default class Sales extends Component {
 
   getSales = async () => {
     try {
-      let { data } = await axios("http://localhost:8080/ecommerce/sales");
+      let { data } = await api.get("/sales");
       if (!data)
         return;
       let orders = [];

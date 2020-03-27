@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 import Header from '../Header';
 
@@ -53,12 +53,13 @@ export default class CreateProduct extends Component {
     }
 
     existentUser = async () => {
-        try{
-            let { username }  = JSON.parse(sessionStorage.getItem('user'));
-            let user = await axios("http://localhost:9090/employee/find/" +  username).catch(e => undefined);
-            if(!user){
+        try {
+            let { username } = JSON.parse(sessionStorage.getItem('user'));
+            let user = await api.get("/employee/" + username);
+            if (!user) {
                 sessionStorage.removeItem('user');
-                this.props.history.push("/"); 
+                sessionStorage.removeItem('dG9rZW4=');
+                this.props.history.push("/");
             }
         } catch{
             this.props.history.push("/");
@@ -67,7 +68,7 @@ export default class CreateProduct extends Component {
     }
 
     getCategories = async () => {
-        const { data: category } = await axios("http://localhost:8080/ecommerce/category");
+        const { data: category } = await api.get("/category");
         if (!category)
             return;
         this.setState({ categories: category });
@@ -164,7 +165,7 @@ export default class CreateProduct extends Component {
             off: parseFloat(this.state.off) / 100
         }
         try {
-            let { data: product } = await axios.post("http://localhost:8080/ecommerce/product", obj);
+            let { data: product } = await api.post("/product", obj);
             if (!product) {
                 this.setState({ error: "Erro ao adicionar o produto" });
                 return false;
@@ -201,7 +202,7 @@ export default class CreateProduct extends Component {
             let obj = {
                 name: this.state.newCategory
             }
-            let { data: category } = await axios.post("http://localhost:8080/ecommerce/category", obj);
+            let { data: category } = await api.post("/category", obj);
             if (!category)
                 this.setState({ categoryMessage: "Erro ao cadastrar a nova categoria" });
             this.setState({categoryMessage: "Categoria cadastrada com sucesso"});
