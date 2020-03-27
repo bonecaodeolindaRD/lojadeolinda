@@ -105,7 +105,7 @@ export default class Cart extends Component {
                         <Row className="row cart-row mt-5 mb-5" id="cart-row-prod" key={item.id}>
 
                             <Col xs="12" sm="2">
-                                <div className="float-left">
+                                <div className="float-left ">
                                     <p id="removeItem" onClick={() => this.remove(item.id)} title="Remover item do carrinho!">
                                         <FaTimesCircle />
                                     </p>
