@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -17,6 +16,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category")
     private Long id;
-    @Column(name = "ds_name", nullable = false, length = 45)
+    @Column(name = "ds_name", nullable = false, length = 45, unique = true)
     private String name;
 }
