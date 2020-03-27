@@ -15,12 +15,15 @@ import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
 
+import './Style.css';
+
 export default class About extends Component {
     render() {
         return (
             <>
+                <div style={{ backgroundColor: '#f0f0f0' }}>
                 <Header history={this.props.history} location={this.props.location}/>
-                <Container>
+                <Container >
 
                     <Card inverse>
                         <CardImg width="100%" src="img/bonecos2ok.jpg" alt="Card image cap" />
@@ -44,12 +47,11 @@ export default class About extends Component {
                         <Col xs={10} md={4} >
                             <Link to="/about">
                                 <Media right top fluid="true">
-                                    <Media className="rounded" object src="img/bonecos1.jpg" alt="..." />
+                                    <Media className="rounded" object src="img/bonecos1.jpg" alt="desfile de bonecos" />
                                 </Media>
                             </Link>
                         </Col>
                         <Col xs={10} md={8}>
-
                             <p className="p-4 mt-5" >
                                 Os bonecos surgiram da vontade de um jovem sonhador que ouvia atento as narrativas de um padre
                                belga
@@ -69,7 +71,7 @@ export default class About extends Component {
                         <Col xs={10} md={4}>
                             <Link to="/about">
                                 <Media left top fluid="true">
-                                    <Media className="rounded" object src="img/boneco3.jpg" alt="..." />
+                                    <Media className="rounded" object src="img/boneco3.jpg" alt="desfile de bonecos" />
                                 </Media>
                             </Link>
                         </Col>
@@ -93,6 +95,7 @@ export default class About extends Component {
                     <hr />
                 </Container>
                 <Footer />
+                </div>
             </>
         );
     }

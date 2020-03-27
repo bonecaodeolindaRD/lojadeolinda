@@ -102,8 +102,8 @@ export default class Header extends Component {
                                 <NavItem>
                                     <Link to="/components/"></Link>
                                 </NavItem>
-                                <Form onSubmit={this.search} className="search-input border">
-                                    <InputGroup className="rounded" >
+                                <Form onSubmit={this.search} className="search-input border rounded p-1">
+                                    <InputGroup >
                                         <UncontrolledDropdown nav inNavbar>
                                             <DropdownToggle nav caret>
                                                 Categorias
@@ -114,7 +114,7 @@ export default class Header extends Component {
                                              ))}  
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
-                                        <Input className="form-control border border-right-0" placeholder="Buscar..." />
+                                        <Input className="form-control border border-right-0 rounded" placeholder="O que deseja encontrar?" />
                                         <InputGroupAddon addonType="append">
                                             <Button color="blue">
                                                 <MdSearch size="20" color="blue" />

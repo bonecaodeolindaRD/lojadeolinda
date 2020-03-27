@@ -3,9 +3,6 @@ import axios from 'axios';
 
 import {
     Container,
-    Col,
-    Row,
-    Card
 } from 'reactstrap';
 
 import Header from '../Header';
