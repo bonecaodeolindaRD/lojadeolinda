@@ -70,6 +70,7 @@ public class  Converter {
         client.setName(clientDTO.getName());
         client.setBirthday(clientDTO.getBirthday());
         client.setPhoneNumber(clientDTO.getPhoneNumber());
+        client.setPassword(clientDTO.getPassword());
         return client;
     }
 
@@ -96,7 +97,6 @@ public class  Converter {
         address.setStreet(addressDTO.getStreet());
         address.setCitie(addressDTO.getCitie());
         address.setComplement(addressDTO.getComplement());
-        //address.setClient(convertTo(addressDTO.getClient()));
         return address;
     }
 
@@ -111,7 +111,6 @@ public class  Converter {
         aDTO.setUf(address.getUf());
         aDTO.setCitie(address.getCitie());
         aDTO.setComplement(address.getComplement());
-        //aDTO.setClient(convertTo(address.getClient()));
         return aDTO;
     }
 

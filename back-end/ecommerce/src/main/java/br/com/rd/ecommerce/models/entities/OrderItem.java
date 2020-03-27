@@ -1,6 +1,5 @@
 package br.com.rd.ecommerce.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,6 @@ public class OrderItem{
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_product")
-    @JsonBackReference
     private Product product;
     @Column(name = "nr_quantity", nullable = false)
     private Integer quantity;
