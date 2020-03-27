@@ -3,8 +3,7 @@ import {
     Navbar,
     Nav,
     NavItem,
-    Col,
-    Row
+    Col    
 } from 'reactstrap';
 
 import {
@@ -20,114 +19,122 @@ import './footer.css';
 export default class Footer extends Component {
     render() {
         return (
-           
-            <Navbar color="dark" className=" mt-5 footer ">
+            <>
+                <Navbar color="dark" className=" mt-5 footer ">
 
-                <Nav>
+                    <Nav>
 
-                    <Col className="col-md-2 col-sm-1">
+                        <Col className="col-md-2 col-sm-1">
 
-                        <NavItem className="space-footer">
+                            <NavItem className="space-footer">
 
-                            <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
-                            
-
-                        </NavItem>
-
-                    </Col>
-
-                    <Col className="col-md-3 col-sm-2 mr-2">
-                        <NavItem className="space-footer">
-                            <Nav vertical>
-                                <NavItem className="text-white">
-                                    <Link to="/" className="text-white" disabled>Pagamento</Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/">Cartão de credito</Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/">Cartão de débito</Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/"><img src="https://i.imgur.com/8NDSjxL.png" width="120px" height="40px" alt="cartoes" /></Link>
-                                </NavItem>
-                            </Nav>
-                        </NavItem>
-                    </Col>
-
-                    <Col className="col-md-3 col-sm-2 mr-2">
-                        <NavItem className="space-footer">
-                            <Nav vertical>
-                                <NavItem className="text-white">
-                                    <Link to="/" className="text-white" disabled>Redes sociais</Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/"><FaFacebook /> <h6>Bonecão de Olinda</h6></Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/"><FaInstagram /> <h6>@Bonecão_de_Olinda</h6></Link>
-                                </NavItem>
-                                <NavItem>
-                                    <Link className="text-muted" to="/"><FaTwitter /> <h6>@Bonecão_de_Olinda</h6></Link>
-                                </NavItem>
-                            </Nav>
-
-                        </NavItem>
-                    </Col>
-
-                    <Col className="col-md-2 col-sm-1">
-
-                        <NavItem className="space-footer">
-                            <Nav vertical>
-                                <NavItem>
-
-                                    <Link to="/" className="text-white" disabled>Contato</Link>
-                                </NavItem>
-                            </Nav>
-                        </NavItem>
+                                <img src="https://i.imgur.com/5RAN6zL.png" alt="logo do site" className="img-logo" />
 
 
-                        <NavItem>
-                            <Nav vertical>
-                                <NavItem>
-                                    <Link className="text-muted" to="/contact">
-                                        Entrar em contato
+                            </NavItem>
+
+                        </Col>
+
+                        <Col className="col-md-3 col-sm-2 mr-2">
+                            <NavItem className="space-footer">
+                                <Nav vertical>
+                                    <NavItem className="text-white">
+                                        <Link to="/" className="text-white" disabled>Pagamento</Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/">Cartão de credito</Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/">Cartão de débito</Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/"><img src="https://i.imgur.com/8NDSjxL.png" width="120px" height="40px" alt="cartoes" /></Link>
+                                    </NavItem>
+                                </Nav>
+                            </NavItem>
+                        </Col>
+
+                        <Col className="col-md-3 col-sm-2 mr-2">
+                            <NavItem className="space-footer">
+                                <Nav vertical>
+                                    <NavItem className="text-white">
+                                        <Link to="/" className="text-white" disabled>Redes sociais</Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/"><FaFacebook /> <h6>Bonecão de Olinda</h6></Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/"><FaInstagram /> <h6>@Bonecão_de_Olinda</h6></Link>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/"><FaTwitter /> <h6>@Bonecão_de_Olinda</h6></Link>
+                                    </NavItem>
+                                </Nav>
+
+                            </NavItem>
+                        </Col>
+
+                        <Col className="col-md-2 col-sm-1">
+
+                            <NavItem className="space-footer">
+                                <Nav vertical>
+                                    <NavItem>
+
+                                        <Link to="/" className="text-white" disabled>Contato</Link>
+                                    </NavItem>
+                                </Nav>
+                            </NavItem>
+
+
+                            <NavItem>
+                                <Nav vertical>
+                                    <NavItem>
+                                        <Link className="text-muted" to="/contact">
+                                            Entrar em contato
                                    </Link>
 
-                                </NavItem>
+                                    </NavItem>
 
-                                <NavItem>
-                                    <Link className="text-muted" to="/contact">
-                                        Ligue (11) 93537-4847
+                                    <NavItem>
+                                        <Link className="text-muted" to="/contact">
+                                            Ligue (11) 93537-4847
                                    </Link>
 
-                                </NavItem>
-                            </Nav>
-                        </NavItem>
-                    </Col>
+                                    </NavItem>
+                                </Nav>
+                            </NavItem>
+                        </Col>
 
-                    <Col>
+                        <Col  className="col-ms-2 col-sm-1">
 
-                        <NavItem className="col-ms-2 col-sm-1">
-                            <Row>
-                                <div>
-                                    <Link to="/" className="text-white" disabled>Sobre</Link>
-                                </div>
+                            <NavItem className="space-footer">
+                                <Nav vertical>
+                                    <NavItem >                                       
+                                            <Link to="/" className="text-white" disabled>Sobre</Link>
+                                    </NavItem>
 
-                                <div>
-                                    <Link className="text-muted" to="/about">
-                                        Nossa História
-                        </Link>
-                                </div>
-                            </Row>
-                        </NavItem>
-                    </Col>
-                </Nav>
-             
-                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small>
-              
-            </Navbar >
-          
+                                    <NavItem>
+                                            <Link className="text-muted" to="/about">
+                                                Nossa História
+                                            </Link>
+                                    </NavItem>
+                                </Nav>
+                            </NavItem>
+                        </Col>
+                    </Nav>
+
+
+
+                </Navbar >
+
+                <Navbar color="dark" className="d-flex justify-content-center" >
+                    <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados  CNPJ: 12.432.123/0007-70 /
+                     Inscrição Estadual: 283.382.938.635
+                     / Av. Corifeu de Azevedo Marques, 3097 - Vila Butantã- São Paulo - SP, 05360-070
+             / bonecaodeolinda@gmail.com.br</small>
+
+                </Navbar>
+            </>
         )
     }
 }
