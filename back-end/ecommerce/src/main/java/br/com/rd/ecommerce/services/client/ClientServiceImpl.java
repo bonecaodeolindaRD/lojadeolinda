@@ -3,15 +3,9 @@ package br.com.rd.ecommerce.services.client;
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
-import br.com.rd.ecommerce.models.entities.Address;
-import br.com.rd.ecommerce.models.entities.Client;
-
-import br.com.rd.ecommerce.models.entities.Order;
-
-import br.com.rd.ecommerce.models.entities.OrderItem;
+import br.com.rd.ecommerce.models.entities.*;
 
 import br.com.rd.ecommerce.repositories.ClientRepository;
-import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
 import org.hibernate.JDBCException;
 import org.hibernate.exception.SQLGrammarException;
@@ -25,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,6 +121,20 @@ public class ClientServiceImpl implements ClientService {
 
         return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
 
+    }
+
+    @Override
+    public ResponseEntity<?> updateClient(Long id, ClientDTO client) {
+        if (client == null)
+            return ResponseEntity.badRequest().body(new ClientException("Informe um Cliente"));
+
+        Client c = clientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        c.setName(client.getName());
+        c.setEmail(client.getEmail());
+        c.setBirthday(client.getBirthday());
+        c.setPhoneNumber(client.getPhoneNumber());
+        ClientDTO returnClient = converter.convertTo(clientRepository.save(c));
+        return ResponseEntity.ok().body(returnClient);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

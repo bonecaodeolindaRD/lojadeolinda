@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.controllers;
 
+import br.com.rd.ecommerce.models.dto.StatusDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.services.client.ClientService;
@@ -44,4 +45,9 @@ public class ClientController {
         return service.findClientLogin(client);
     }
 
+
+    @PutMapping("/client/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ClientDTO client) {
+        return service.updateClient(id, client);
+    }
 }
