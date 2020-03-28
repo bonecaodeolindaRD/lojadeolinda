@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Table, Button, Form, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios';
-
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -115,7 +114,9 @@ export default class ProductDetail extends Component {
                 quantity: parseInt(this.state.quantity),
                 price: this.state.price,
                 totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity,
-                value: this.state.price - this.state.price * this.state.discount
+                value: this.state.price - this.state.price * this.state.discount,
+                discount: this.state.discount,
+                balance: this.state.balance
 
             });
 
