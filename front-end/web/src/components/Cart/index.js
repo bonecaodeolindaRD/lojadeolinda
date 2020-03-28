@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
 import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
-
 import './index.css';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-
 
 export default class Cart extends Component {
 
@@ -31,6 +29,47 @@ export default class Cart extends Component {
 
     }
 
+    changeQuantity = (event, id) => {
+
+        let quantityChange =  parseInt(event.target.value);
+        let idChange = parseInt(id);
+
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+
+        for (var i in cart) {
+
+            if(cart[i].id === idChange){
+                
+                if(quantityChange <= cart[i].balance){
+
+                    cart[i].quantity = quantityChange;
+                    
+                }else{
+
+                    cart[i].quantity = cart[i].balance;
+
+                }
+
+                cart[i].totalItem =  cart[i].value *  cart[i].quantity;
+                      
+                sessionStorage.cart = JSON.stringify(cart);
+                    
+            }
+           
+         }
+         
+         let totalCart = 0;
+
+         cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+ 
+         for (var j in cart) {
+             totalCart += cart[j].totalItem;
+         }
+ 
+         this.setState({ total: totalCart, products: cart });
+        
+    }
+
 
     remove = (id) => {
 
@@ -51,11 +90,13 @@ export default class Cart extends Component {
         }
 
         this.setState({ total: totalCart, products: products });
+        
         sessionStorage.removeItem(item);
 
     };
 
     finish = () => {
+
         if (sessionStorage.getItem('client'))
             this.props.history.push("/checkout");
         else
@@ -124,7 +165,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} min="1"  className="cart-qty-input" readOnly />
+                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} onChange={(e) => this.changeQuantity(e, item.id)} min="1"  className="cart-qty-input"  />
                                     
                                     <small>Quantidade</small>
                                 </div>
