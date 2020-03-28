@@ -25,13 +25,14 @@ export default class Products extends Component {
             let { username } = JSON.parse(sessionStorage.getItem('user'));
             let user = await api.get("/employee/" + username);
             if (!user) {
-                sessionStorage.removeItem('user');
                 sessionStorage.removeItem('dG9rZW4=');
+                sessionStorage.removeItem('user');
                 this.props.history.push("/");
             }
         } catch{
             this.props.history.push("/");
             sessionStorage.removeItem('user');
+            sessionStorage.removeItem('dG9rZW4=');
         }
     }
 
