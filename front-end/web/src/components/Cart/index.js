@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Col, Row, Container, Input, Button, Alert } from 'reactstrap';
 import { FaTimesCircle, FaShoppingBasket, FaSadTear, FaWpforms } from 'react-icons/fa';
-
 import './index.css';
 import Header from '../Header';
 import { Link } from 'react-router-dom';
-
 
 export default class Cart extends Component {
 
@@ -51,11 +49,13 @@ export default class Cart extends Component {
         }
 
         this.setState({ total: totalCart, products: products });
+        
         sessionStorage.removeItem(item);
 
     };
 
     finish = () => {
+
         if (sessionStorage.getItem('client'))
             this.props.history.push("/checkout");
         else

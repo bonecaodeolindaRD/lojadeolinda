@@ -60,7 +60,6 @@ export default class ProductDetail extends Component {
 
         }
 
-
         replaceComma = (valor) => {
 
             return valor.toString().replace(".", ",");
