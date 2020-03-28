@@ -10,7 +10,7 @@ public class Converter {
         emp.setId(employeeDTO.getId());
         if(employeeDTO.getEmail() != null)
             emp.setEmail(employeeDTO.getEmail());
-        emp.setHierarchy(new Hierarchy(employeeDTO.getHierarchy(), null));
+        emp.setHierarchy(convertTo(employeeDTO.getHierarchy()));
         emp.setName(employeeDTO.getName());
         emp.setPassword(employeeDTO.getPassword());
         emp.setUsername(employeeDTO.getUsername());
@@ -22,7 +22,7 @@ public class Converter {
         emp.setId(employee.getId());
         if(employee.getEmail() != null)
             emp.setEmail(employee.getEmail());
-        emp.setHierarchy(employee.getHierarchy().getId());
+        emp.setHierarchy(convertTo(employee.getHierarchy()));
         emp.setName(employee.getName());
         emp.setUsername(employee.getUsername());
         return emp;

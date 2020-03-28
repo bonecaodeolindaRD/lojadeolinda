@@ -14,5 +14,5 @@ public class EmployeeDTO {
     private String email;
     private String password;
     private String username;
-    private Long hierarchy;
+    private HierarchyDTO hierarchy;
 }

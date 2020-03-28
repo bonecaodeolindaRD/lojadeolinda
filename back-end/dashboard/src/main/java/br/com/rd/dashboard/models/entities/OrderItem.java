@@ -21,7 +21,6 @@ public class OrderItem{
     private Order order;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_product")
-    @JsonBackReference
     private Product product;
     @Column(name = "nr_quantity", nullable = false)
     private Integer quantity;

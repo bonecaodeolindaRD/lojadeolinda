@@ -29,6 +29,5 @@ public class Employee {
     private String username;
     @ManyToOne
     @JoinColumn(name = "id_hierarchy")
-    @JsonBackReference
     private Hierarchy hierarchy;
 }

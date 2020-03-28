@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 import {
   Container,
@@ -26,20 +26,36 @@ export default class AddItemToStock extends Component {
       product: 0,
       quantity: 0
     }
+    this.existentUser();
     this.getStocks();
     this.getItemsNotRegistered();
   }
 
+  existentUser = async () => {
+    try {
+      let { username } = JSON.parse(sessionStorage.getItem('user'));
+      let user = await api.get("/employee/" + username);
+      if (!user) {
+        sessionStorage.removeItem('dG9rZW4=');
+        sessionStorage.removeItem('user');
+        this.props.history.push("/");
+      }
+    } catch{
+      this.props.history.push("/");
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('dG9rZW4=');
+    }
+  }
 
   getStocks = async () => {
-    const { data: stocks } = await axios("http://localhost:8080/ecommerce/stock/all");
+    const { data: stocks } = await api.get("/stock/all");
     if (!stocks)
       return;
     this.setState({ stocks });
   }
 
   getItemsNotRegistered = async () => {
-    const { data: products } = await axios("http://localhost:8080/ecommerce/product/all");
+    const { data: products } = await api.get("/product");
     this.setState({ products });
   }
 
@@ -49,7 +65,7 @@ export default class AddItemToStock extends Component {
       id: this.state.product
     }
     try {
-      const { data: product } = await axios.post("http://localhost:8080/ecommerce/stock/product/new/" + this.state.stock, obj);
+      const { data: product } = await api.post("/stock/product/new/" + this.state.stock, obj);
       if (!product)
         return false;
 
@@ -61,25 +77,24 @@ export default class AddItemToStock extends Component {
 
   addItem = async () => {
 
-    try{
-      let url = `http://localhost:8080/ecommerce/stock/product/edit/${this.state.stock}/${this.state.product}/${this.state.quantity}`;
-      const { data: product} = await axios.post(url);
-      if(!product){
-        this.setState({message: "Erro ao adicionar unidades do produto"});
+    try {
+      const { data: product } = await api.post(`stock/product/edit/${this.state.stock}/${this.state.product}/${this.state.quantity}`);
+      if (!product) {
+        this.setState({ message: "Erro ao adicionar unidades do produto" });
         return false;
       }
       return true;
-    } catch(eee){
-      this.setState({message: "Erro ao adicionar unidades do produto"});
+    } catch (eee) {
+      this.setState({ message: "Erro ao adicionar unidades do produto" });
       return false;
     }
-    
+
   }
 
   finish = async evt => {
     evt.preventDefault();
     if (await this.registerProduct())
-      this.setState({message: "Item cadastrado com sucesso"});
+      this.setState({ message: "Item cadastrado com sucesso" });
     if (await this.addItem())
       this.setState({
         stock: 0,
@@ -87,7 +102,7 @@ export default class AddItemToStock extends Component {
         quantity: 0,
         message: "Item adicionado ao estoque com sucesso"
       });
-    
+
   }
 
   render() {

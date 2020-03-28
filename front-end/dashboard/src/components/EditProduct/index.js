@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 import Header from '../Header';
 
@@ -47,22 +47,24 @@ export default class EditProduct extends Component {
   }
 
   existentUser = async () => {
-    try{
-        let { username }  = JSON.parse(sessionStorage.getItem('user'));
-        let user = await axios("http://localhost:9090/employee/find/" +  username).catch(e => undefined);
-        if(!user){
+    try {
+        let { username } = JSON.parse(sessionStorage.getItem('user'));
+        let user = await api.get("/employee/" + username);
+        if (!user) {
+            sessionStorage.removeItem('dG9rZW4=');
             sessionStorage.removeItem('user');
-            this.props.history.push("/"); 
+            this.props.history.push("/");
         }
     } catch{
         this.props.history.push("/");
         sessionStorage.removeItem('user');
+        sessionStorage.removeItem('dG9rZW4=');
     }
 }
 
   loadProduct = async () => {
     try {
-      const { data: product } = await axios("http://localhost:8080/ecommerce/product/" + this.props.match.params.id);
+      const { data: product } = await api.get("/product/" + this.props.match.params.id);
       console.log(product);
       if (!product) {
         this.setState({ errr: "Erro ao carregar o produto" });
@@ -88,7 +90,7 @@ export default class EditProduct extends Component {
 
   getCategories = async () => {
     try {
-      const { data: category } = await axios("http://localhost:8080/ecommerce/category");
+      const { data: category } = await api.get("/category");
       if (!category) {
         this.setState({ errr: "Erro ao carregar as categorias" });
         return;
@@ -188,7 +190,7 @@ export default class EditProduct extends Component {
         weight: parseFloat(this.state.weight),
         off: parseFloat(this.state.off) / 100
     }
-      const { data: product } = await axios.post("http://localhost:8080/ecommerce/product/" + this.state.id, obj);
+      const { data: product } = await api.post("/product/" + this.state.id, obj);
       if (!product) {
         this.setState({ errr: "Erro ao editar o produto" });
         return false;

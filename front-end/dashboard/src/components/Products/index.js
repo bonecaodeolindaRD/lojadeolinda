@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 import Header from '../Header';
 import { Container, Button, Table, FormGroup, Input } from 'reactstrap';
@@ -23,20 +23,22 @@ export default class Products extends Component {
     existentUser = async () => {
         try {
             let { username } = JSON.parse(sessionStorage.getItem('user'));
-            let user = await axios("http://localhost:9090/employee/find/" + username).catch(e => undefined);
+            let user = await api.get("/employee/" + username);
             if (!user) {
+                sessionStorage.removeItem('dG9rZW4=');
                 sessionStorage.removeItem('user');
                 this.props.history.push("/");
             }
         } catch{
             this.props.history.push("/");
             sessionStorage.removeItem('user');
+            sessionStorage.removeItem('dG9rZW4=');
         }
     }
 
     getProducts = async () => {
-        let { data: products } = await axios("http://localhost:8080/ecommerce/product");
-        console.log(products);
+        let { data : products} = await api.get("/product");
+
         if (!products)
             return;
         this.setState({
