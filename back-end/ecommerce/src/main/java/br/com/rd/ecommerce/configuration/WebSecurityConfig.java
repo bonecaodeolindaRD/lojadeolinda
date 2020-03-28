@@ -20,12 +20,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/ecommerce/client").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/order/*","/client")
+                .permitAll()
+                .antMatchers("/h2/**")
+                .hasRole("ADMIN")
+                .and()
+                .headers().frameOptions().disable()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .httpBasic()
                 .and()
-                .csrf().disable().cors();
+                .csrf().disable()
+                .cors();
     }
 }
