@@ -29,6 +29,17 @@ export default class Cart extends Component {
 
     }
 
+    change = (event, id) => {
+
+        let quantityChange =  parseInt(event.target.value);
+        let idChange = parseInt(id);
+
+        alert(quantityChange);
+        alert(idChange);
+
+
+    }
+
 
     remove = (id) => {
 
