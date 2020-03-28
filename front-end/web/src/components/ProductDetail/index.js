@@ -115,7 +115,6 @@ export default class ProductDetail extends Component {
                 price: this.state.price,
                 totalItem: (this.state.price - this.state.price * this.state.discount) * this.state.quantity,
                 value: this.state.price - this.state.price * this.state.discount,
-                discount: this.state.discount,
                 balance: this.state.balance
 
             });

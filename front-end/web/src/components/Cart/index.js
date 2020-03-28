@@ -29,15 +29,45 @@ export default class Cart extends Component {
 
     }
 
-    change = (event, id) => {
+    changeQuantity = (event, id) => {
 
         let quantityChange =  parseInt(event.target.value);
         let idChange = parseInt(id);
 
-        alert(quantityChange);
-        alert(idChange);
+        let cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
 
+        for (var i in cart) {
 
+            if(cart[i].id === idChange){
+                
+                if(quantityChange <= cart[i].balance){
+
+                    cart[i].quantity = quantityChange;
+                    
+                }else{
+
+                    cart[i].quantity = cart[i].balance;
+
+                }
+
+                cart[i].totalItem =  cart[i].value *  cart[i].quantity;
+                      
+                sessionStorage.cart = JSON.stringify(cart);
+                    
+            }
+           
+         }
+         
+         let totalCart = 0;
+
+         cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+ 
+         for (var j in cart) {
+             totalCart += cart[j].totalItem;
+         }
+ 
+         this.setState({ total: totalCart, products: cart });
+        
     }
 
 
@@ -135,7 +165,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} onChange={(e) => this.change(e, item.id)} min="1"  className="cart-qty-input"  />
+                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} onChange={(e) => this.changeQuantity(e, item.id)} min="1"  className="cart-qty-input"  />
                                     
                                     <small>Quantidade</small>
                                 </div>
