@@ -33,18 +33,19 @@ export default class AddItemToStock extends Component {
 
   existentUser = async () => {
     try {
-        let { username } = JSON.parse(sessionStorage.getItem('user'));
-        let user = await api.get("/employee/" + username);
-        if (!user) {
-            sessionStorage.removeItem('user');
-            sessionStorage.removeItem('dG9rZW4=');
-            this.props.history.push("/");
-        }
-    } catch{
-        this.props.history.push("/");
+      let { username } = JSON.parse(sessionStorage.getItem('user'));
+      let user = await api.get("/employee/" + username);
+      if (!user) {
+        sessionStorage.removeItem('dG9rZW4=');
         sessionStorage.removeItem('user');
+        this.props.history.push("/");
+      }
+    } catch{
+      this.props.history.push("/");
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('dG9rZW4=');
     }
-}
+  }
 
   getStocks = async () => {
     const { data: stocks } = await api.get("/stock/all");
@@ -76,24 +77,24 @@ export default class AddItemToStock extends Component {
 
   addItem = async () => {
 
-    try{
-      const { data: product} = await api.post(`stock/product/edit/${this.state.stock}/${this.state.product}/${this.state.quantity}`);
-      if(!product){
-        this.setState({message: "Erro ao adicionar unidades do produto"});
+    try {
+      const { data: product } = await api.post(`stock/product/edit/${this.state.stock}/${this.state.product}/${this.state.quantity}`);
+      if (!product) {
+        this.setState({ message: "Erro ao adicionar unidades do produto" });
         return false;
       }
       return true;
-    } catch(eee){
-      this.setState({message: "Erro ao adicionar unidades do produto"});
+    } catch (eee) {
+      this.setState({ message: "Erro ao adicionar unidades do produto" });
       return false;
     }
-    
+
   }
 
   finish = async evt => {
     evt.preventDefault();
     if (await this.registerProduct())
-      this.setState({message: "Item cadastrado com sucesso"});
+      this.setState({ message: "Item cadastrado com sucesso" });
     if (await this.addItem())
       this.setState({
         stock: 0,
@@ -101,7 +102,7 @@ export default class AddItemToStock extends Component {
         quantity: 0,
         message: "Item adicionado ao estoque com sucesso"
       });
-    
+
   }
 
   render() {
