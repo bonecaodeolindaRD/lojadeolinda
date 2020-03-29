@@ -74,6 +74,7 @@ export default class Header extends Component {
                   <NavLink>
                     <Link onClick={e => {
                       sessionStorage.removeItem('user');
+                      sessionStorage.removeItem('dG9rZW4=');
                       window.location.reload();
                     }}>Sair</Link>
                   </NavLink>
