@@ -80,7 +80,6 @@ public class Converter {
         Order order = new Order();
         order.setStatus(orderDTO.getStatus());
         order.setDate(orderDTO.getDate());
-        //order.setClient(convertTo(orderDTO.getClient()));
         order.setAddress(convertTo(orderDTO.getAddress()));
         order.setShipping(orderDTO.getShipping());
         return order;
@@ -93,8 +92,8 @@ public class Converter {
         orderDTO.setId(order.getId());
         orderDTO.setDate(order.getDate());
         orderDTO.setStatus(order.getStatus());
-        //orderDTO.setClient(convertTo(order.getClient()));
         orderDTO.setShipping(order.getShipping());
+        orderDTO.setValue(order.getValue());
         return orderDTO;
     }
 
