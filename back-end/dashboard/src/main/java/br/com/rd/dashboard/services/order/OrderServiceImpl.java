@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public ResponseEntity<?> findSales() {
-        Query query = em.createQuery("select o.date as date, sum(o.value) as value from Order o group by o.date");
+        Query query = em.createQuery("select o.date as date, sum(o.value) as value from Order o where not o.status = 6 group by o.date");
 
         List<Order> orders = query.getResultList();
         if (orders == null || orders.size() <= 0)
