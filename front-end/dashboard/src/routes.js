@@ -7,7 +7,7 @@ import EditProduct from './components/EditProduct';
 import Sales from './components/Sales';
 import Products from './components/Products';
 import Login from './components/Login';
-import ManageOrder from './components/ManageOrder/indes';
+import ManageOrder from './components/ManageOrder';
 import ListOrders from './components/ListOrders';
 
 export default class Routes extends Component {

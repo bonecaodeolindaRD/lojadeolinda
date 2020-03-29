@@ -104,13 +104,19 @@ export default class ManageOrder extends Component {
                                     <p className="text-danger">{this.state.erro}</p>
                                 </FormGroup>
                                 <Row>
-                                    <Col xs={3}>
+                                    <Col xs={2}>
                                         <Label for="ordernumber">Numero do pedido:</Label>
                                         <InputGroup>
                                             <h4>{this.state.order.id}</h4>
                                         </InputGroup>
                                     </Col>
-                                    <Col xs={3}>
+                                    <Col xs={2}>
+                                        <Label for="value">
+                                            Valor do pedido:
+                                        </Label>
+                                        <h4>{this.state.order.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
+                                    </Col>
+                                    <Col xs={2}>
                                         <FormGroup>
                                             <Label for="orderstatus">Status</Label>
                                             <Input disabled type="select" id="orderstatus" name="orderstatus" value={this.state.order.status.status} onChange={e => this.setState({ order: { ...this.state.order, status: { idStatus: e.target.value } } })}>
