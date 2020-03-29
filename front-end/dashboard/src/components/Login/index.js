@@ -69,7 +69,7 @@ export default class Login extends Component {
                                         <InputGroupAddon addonType="prepend">
                                             <InputGroupText><img src="img/person.svg" alt="logo do site" width="20px" /> Usuario: </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input id="email" onChange={e => this.setState({ user: e.target.value })} placeholder="user@mail.com" />
+                                        <Input id="email" onChange={e => this.setState({ user: e.target.value })} placeholder="usuario" />
                                     </InputGroup>
                                     <br />
                                     <InputGroup>
