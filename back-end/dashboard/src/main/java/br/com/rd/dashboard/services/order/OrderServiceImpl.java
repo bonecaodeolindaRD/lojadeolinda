@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<?> findByDate(String date) {
         Date now = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date dt = sdf.parse(date);
             if (!dt.before(now) || date == null)
@@ -71,8 +71,10 @@ public class OrderServiceImpl implements OrderService {
             List<Order> orders = respository.findByDate(dt).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
             List<OrderDTO> ordersDTO = new ArrayList<>();
-            for (Order order : orders)
+            for (Order order : orders) {
+                order.setValue(order.total());
                 ordersDTO.add(converter.convertTo(order));
+            }
 
             return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
         } catch (ParseException e) {

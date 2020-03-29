@@ -8,6 +8,7 @@ import Sales from './components/Sales';
 import Products from './components/Products';
 import Login from './components/Login';
 import ManageOrder from './components/ManageOrder/indes';
+import ListOrders from './components/ListOrders';
 
 export default class Routes extends Component {
   render() {
@@ -20,7 +21,8 @@ export default class Routes extends Component {
                 <Route path="/add" exact component={AddItemToStock}/>
                 <Route path="/edit/:id?" exact component={EditProduct}/>
                 <Route path="/sales" exact component={Sales}/>
-                <Route path="/manager" exact component={ManageOrder}/>
+                <Route path="/orders" exact component={ListOrders}/>
+                <Route path="/manager/:id?" exact component={ManageOrder}/>
                 <Route component={Products}/>
             </Switch>
         </BrowserRouter>

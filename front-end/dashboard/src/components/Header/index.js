@@ -67,7 +67,7 @@ export default class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink>
-                    <Link to="/manager">Gerenciar pedido</Link>
+                    <Link to="/orders">Pedidos</Link>
                   </NavLink>
                 </NavItem>
                 <NavItem>
