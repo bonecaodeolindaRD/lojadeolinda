@@ -66,7 +66,7 @@ class OrderDetail extends Component {
                 <Header />
                 <Container >
                     <div align="center">
-                        <h2 className="bg-warning p-2 text-center">Detalhes do Pedido: <span className="text-danger">{this.state.id}</span></h2>
+                        <h2 className="bg-warning p-2 text-center">Detalhes do Pedido: <span className="text-danger"><h2>{this.state.id}</h2></span></h2>
                     </div>
                     <br></br>
                     <Card className="mb-2">

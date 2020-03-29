@@ -12,7 +12,7 @@ import Footer from '../Footer';
 
 export default class Home extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             products: [],
@@ -47,12 +47,14 @@ export default class Home extends Component {
 
         return (
             <>
-                <Header history={this.props.history} location={this.props.location}/>
-                <Container>
-                    <Carrossel />
-                    <Produtos history={this.props.history} products={this.state.products}/>
-                </Container>
-                <Footer />
+                <div style={{ backgroundColor: '#f0f0f0' }}>
+                    <Header history={this.props.history} location={this.props.location} />
+                    <Container   >
+                        <Carrossel />
+                        <Produtos history={this.props.history} products={this.state.products} />
+                    </Container>
+                    <Footer />
+                </div>
             </>
         );
     }

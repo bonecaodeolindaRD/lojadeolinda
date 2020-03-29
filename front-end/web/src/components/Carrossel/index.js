@@ -74,7 +74,7 @@ export default class Carrossel extends Component {
 					onExited={this.onExited}
 					key={item.src}
 				>
-					<img src={item.src} alt={item.altText} className="imagem" />
+					<img src={item.src} alt={item.altText} className="imagem rounded"  />
 					<CarouselCaption captionText={item.caption} captionHeader={item.caption} />
 				</CarouselItem>
 			);

@@ -50,8 +50,8 @@ export default class Products extends Component {
                                         <CardText  >{item.desc.substring(0, 20) + "..."}</CardText>
                                         <Row>
                                             <Col xs="9"  >
-                                                <p><del>De: R$ {item.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></p>
-                                                <p className="h6">Por: R$ {(item.preco - item.preco * item.desconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                                                <p><del>De: {item.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</del></p>
+                                                <p className="h6">Por: {(item.preco - item.preco * item.desconto).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                             </Col>
                                             <Col xs="3" className="text-center"  >
                                                 <IoMdCart size="30" />

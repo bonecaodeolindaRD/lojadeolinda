@@ -100,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
                 OrderItem orderItem = converter.convertTo(p);
                 Product product = productRepository.findById(p.getProduct().getId()).get();
                 orderItem.setProduct(product);
+                orderItem.setValue(orderItem.getProduct().value());
                 orderItems.add(orderItem);
             }
 

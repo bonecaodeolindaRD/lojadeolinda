@@ -39,4 +39,6 @@ public class Client implements Serializable {
     private List<Address> addresses;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Order> orders;
+    @Column(name="ds_nivel_acesso")
+    private String access;
 }
