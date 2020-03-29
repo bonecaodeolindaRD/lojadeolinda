@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class EmployeeController {
 
@@ -14,12 +16,12 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping("/employee")
-    public ResponseEntity<?> registerEmployee(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<?> registerEmployee(@Valid @RequestBody EmployeeDTO employeeDTO){
         return service.registerEmployee(employeeDTO);
     }
 
     @PutMapping("/employee")
-    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDTO employeeDTO){
+    public ResponseEntity<?> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO){
         return service.updateEmployee(employeeDTO);
     }
 
