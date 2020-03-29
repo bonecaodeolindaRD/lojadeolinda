@@ -1,7 +1,5 @@
 package br.com.rd.dashboard.models.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,9 +32,6 @@ public class Address implements Serializable {
     private Integer number;
     @Column(name = "ds_uf", nullable = false, length = 5)
     private String uf;
-    @ManyToOne
-    @JoinColumn(name = "id_provider")
-    private Provider provider;
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
