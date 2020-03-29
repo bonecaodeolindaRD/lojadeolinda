@@ -33,9 +33,6 @@ public class Address implements Serializable {
     @Column(name = "ds_uf", nullable = false, length = 5)
     private String uf;
     @ManyToOne
-    @JoinColumn(name = "id_provider")
-    private Provider provider;
-    @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
 }
