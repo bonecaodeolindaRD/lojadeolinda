@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 import Header from '../Header';
-import { Container, Button, Table, FormGroup, Input } from 'reactstrap';
+import { Container, Button, Table, FormGroup, Input, InputGroup } from 'reactstrap';
 
 export default class Products extends Component {
 
@@ -10,14 +11,15 @@ export default class Products extends Component {
         super(props);
         this.state = {
             products: [],
-            displayProducts: []
+            displayProducts: [],
+            page: 0
         }
         if (!sessionStorage.getItem('user')) {
             this.props.history.push("/");
             return;
         }
         this.existentUser();
-        this.getProducts();
+        this.getProducts(0);
     }
 
     existentUser = async () => {
@@ -36,19 +38,47 @@ export default class Products extends Component {
         }
     }
 
-    getProducts = async () => {
-        let { data : products} = await api.get("/product");
+    nextPage = async () => {
+        let page = this.state.page + 1;
+        await this.setState({ page });
+        await this.getProducts(this.state.page);
+        while (this.state.products <= 0) {
+            await this.setState({ page: this.state.page - 1 });
+            await this.getProducts(this.state.page);
+        }
+    }
 
-        if (!products)
+    previousPage = async () => {
+        if (this.state.page <= 0)
             return;
-        this.setState({
-            products,
-            displayProducts: products
-        });
+        let page = this.state.page - 1;
+        await this.setState({ page });
+        await this.getProducts(this.state.page);
+        while (this.state.products <= 0) {
+            this.setState({ page: this.state.page + 1 });
+            await this.getProducts(this.state.page);
+        }
+    }
+
+    getProducts = async (page) => {
+        try {
+            let { data: products } = await api.get("/product/pages/" + page);
+            if (!products){
+                return;
+            }
+            this.setState({
+                products,
+                displayProducts: products
+            });
+        } catch{
+            this.setState({products: []});
+        }
     }
 
     filter = str => {
         let displayProducts = this.state.products.filter(x => x.name.toUpperCase().includes(str.toUpperCase()));
+        if(displayProducts <= 0)
+            return;
         this.setState({ displayProducts });
     }
 
@@ -89,6 +119,12 @@ export default class Products extends Component {
                                     ))}
                                 </tbody>
                             </Table>
+                                <InputGroup className="text-center">
+                                    <Button type="button" onClick={this.previousPage}><MdNavigateBefore /></Button>
+                                    <h4>Pagina: {this.state.page}</h4>
+                                    <Button type="button" onClick={this.nextPage}><MdNavigateNext /></Button>
+                                </InputGroup>
+             
                         </Container>
 
                     )}
