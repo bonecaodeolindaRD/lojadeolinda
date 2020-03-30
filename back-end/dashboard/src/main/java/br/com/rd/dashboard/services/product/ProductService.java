@@ -9,6 +9,7 @@ public interface ProductService {
     ResponseEntity<?> findAllProducts();
     ResponseEntity<?> findProductById(Long id);
     ResponseEntity<?> findProductByName(String name);
+    ResponseEntity<?> findAllPages(Integer page);
     ResponseEntity<?> findProductByCategory(Long category);
     ResponseEntity<?> createProduct(ProductDTO productDTO);
     ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO);

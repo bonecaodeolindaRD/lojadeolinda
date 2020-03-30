@@ -24,6 +24,11 @@ public class ProductController {
        return service.findAllProducts();
     }
 
+    @GetMapping("/product/pages/{page}")
+    public ResponseEntity<?> findAllByPage(@PathVariable("page") Integer page){
+        return service.findAllPages(page);
+    }
+
     @GetMapping("/product/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return service.findProductById(id);
