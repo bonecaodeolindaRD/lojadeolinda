@@ -41,7 +41,7 @@ class Address extends Component {
                         <div className="text-align-center" align="center">
                             <Link to="/registeraddress"><Button className="btn btn-success mr-3" > Cadastrar </Button></Link>
                         </div>
-                        <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                        <Table bordered responsive className="table table-striped" style={{ marginTop: 20 }} >
                             <thead>
                                 <tr align="center">
                                     <th>CEP</th>
