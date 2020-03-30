@@ -42,8 +42,9 @@ export default class Products extends Component {
                 {!this.props.loading ?
                     this.props.products.length > 0 ?
                         (this.props.products.map(item => (
+
                             <Col md="3" className="mb-4">
-                                <Card className="p-1 cursor-pointer" id="card" onClick={this.redirect}>
+                                <Card className="p-1 cursor-pointer colum" id="card" onClick={this.redirect}>
                                     <CardImg top width="100%" src={item.img} alt="Imagem do produto" />
                                     <CardBody>
                                         <CardTitle className="h5">{item.nome}</CardTitle>

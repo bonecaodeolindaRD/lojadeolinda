@@ -84,7 +84,7 @@ class OrderDetail extends Component {
                                 <h5>Valor Total: {(this.state.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
                                 <Label>Data do Pedido: {(new Date(this.state.date).toLocaleDateString('pt-Br'))}</Label>
                                 <Label>Status do Pedido: <p className="text-danger">{this.state.status.status}</p></Label>
-                                <Label>Entrega: Prevista para 10 dias utéis.</Label>
+                                <Label>Entrega: Prevista para 10 dias úteis.</Label>
                             </Card>
                         </Row>
                     </Card>
