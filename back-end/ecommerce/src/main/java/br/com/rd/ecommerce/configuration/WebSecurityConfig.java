@@ -1,7 +1,7 @@
 package br.com.rd.ecommerce.configuration;
 
-import br.com.rd.ecommerce.services.client.ClientService;
-import br.com.rd.ecommerce.services.client.CustomUserDetailsService;
+import br.com.rd.ecommerce.services.user.UserService;
+import br.com.rd.ecommerce.services.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserService service;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -34,5 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .cors();
+    }
+
+    @Autowired
+    protected void createUser(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());
     }
 }
