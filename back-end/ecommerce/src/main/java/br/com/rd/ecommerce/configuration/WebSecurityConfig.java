@@ -21,10 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/order/*","/client")
+                .antMatchers("/product/home", "/client/**")
                 .permitAll()
-                .antMatchers("/h2/**")
-                .hasRole("ADMIN")
+                .antMatchers("/order", "/address")
+                .hasRole("USER")
                 .and()
                 .headers().frameOptions().disable()
                 .and()

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import './styles.css';
 import { FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 import {
     Container,
@@ -119,7 +120,7 @@ export default class Checkout extends Component {
         try {
             this.submeted = true;
             const email = JSON.parse(sessionStorage.getItem('client'));
-            const { data: client } = await api.get("http://localhost:8080/ecommerce/client/email/" + email.email);
+            const { data: client } = await api.get("/client/email/" + email.email);
             const address = {
                 street: this.state.address.aStreet,
                 cep: this.state.address.aCep,
@@ -129,7 +130,7 @@ export default class Checkout extends Component {
                 citie: this.state.address.aCitie,
                 complement: this.state.address.aComplement
             }
-            let { data: returnAddress } = await api.post("http://localhost:8080/ecommerce/address", address);
+            let { data: returnAddress } = await api.post("/address", address);
             if (!returnAddress) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
@@ -158,7 +159,7 @@ export default class Checkout extends Component {
                 quantity: p.quantity,
                 value: p.value
             }));
-            let { data: order } = await api.post("http://localhost:8080/ecommerce/order", obj);
+            let { data: order } = await api.post("/ecommerce/order", obj);
             if (!order) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
@@ -203,7 +204,7 @@ export default class Checkout extends Component {
         let cep = evt.target.value;
         if (cep.length === 9) {
             try {
-                const address = await api.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+                const address = await axios.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
                 if (address.data.erro) {
                     this.setState({ erro: "Erro ao buscar o CEP" });
                     return;

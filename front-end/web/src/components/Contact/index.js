@@ -35,7 +35,7 @@ export default class Contact extends Component {
 
   loadAcccount = async () => {
     let { email } = JSON.parse(sessionStorage.getItem('client'));
-    let { data: account } = await api.get("http://localhost:8080/ecommerce/client/email/" + email);
+    let { data: account } = await api.get("/client/email/" + email);
     this.setState({
       name: account.name,
       email: account.email,
