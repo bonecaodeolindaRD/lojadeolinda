@@ -44,12 +44,12 @@ export default class ManageOrder extends Component {
     cancelOrder = async (evt) => {
         evt.preventDefault();
         try {
-            let order = await api.post("/order/cancel/" + this.state.orderId);
+            let order = await api.post("/order/cancel/" + this.props.match.params.id);
             if (!order.data) {
                 this.setState({ erro: "Erro ao editar o pedido" });
                 return;
             }
-            this.findOrder(evt);
+            this.findOrder(this.props.match.params.id);
             this.setState({ erro: "Pedico cancelado com sucesso" });
         } catch{
             this.setState({ erro: "Erro ao editar o pedido" });
