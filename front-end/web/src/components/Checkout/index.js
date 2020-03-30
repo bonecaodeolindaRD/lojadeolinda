@@ -159,7 +159,7 @@ export default class Checkout extends Component {
                 quantity: p.quantity,
                 value: p.value
             }));
-            let { data: order } = await api.post("/ecommerce/order", obj);
+            let { data: order } = await api.post("/order", obj);
             if (!order) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
