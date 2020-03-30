@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, Label, Input, FormGroup } from 'reactstrap';
 import { FaCheckCircle } from 'react-icons/fa';
 import InputMask from 'react-input-mask';
-import axios from 'axios';
+import api from '../../services/api';
 
 export default class ShippingCalculator extends Component {
     
@@ -30,7 +30,7 @@ export default class ShippingCalculator extends Component {
         
         try {
 
-              const findAddress = await axios( `http://viacep.com.br/ws/${code}/json`);
+              const findAddress = await api.get( `http://viacep.com.br/ws/${code}/json`);
 
               this.setState({dataApi: [findAddress.data]});
 

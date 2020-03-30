@@ -3,7 +3,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import InputMask from 'react-input-mask';
 import { Container, Form, Row, Col, FormGroup, Input, Label, Button, Card } from 'reactstrap';
-import axios from 'axios';
+import api from '../../services/api';
 
 class RegisterAddress extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class RegisterAddress extends Component {
 
     listStates = async () => {
         try {
-            const { data: states } = await axios(this.LINK_ESTADO_CIDADE);
+            const { data: states } = await api.get(this.LINK_ESTADO_CIDADE);
             this.setState({ states });
         }
         catch{
@@ -51,7 +51,7 @@ class RegisterAddress extends Component {
 
     listCities = async (state) => {
         try {
-            const { data: cities } = await axios(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
+            const { data: cities } = await api.get(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
             this.setState({
                 cities
             });
@@ -69,7 +69,7 @@ class RegisterAddress extends Component {
         let cep = evt.target.value;
         if (cep.length === 9) {
             try {
-                const address = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+                const address = await api.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
                 if (address.data.erro) {
                     this.setState({ erro: "Erro ao buscar o CEP" });
                     return;

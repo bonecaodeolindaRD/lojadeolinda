@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 public class ProductController {
 
@@ -25,8 +27,13 @@ public class ProductController {
     }
 
     @GetMapping("/product/pages/{page}")
-    public ResponseEntity<?> findAllByPage(@PathVariable("page") Integer page){
-        return service.findAllPages(page);
+    public ResponseEntity<?> findAllByPage(@PathVariable("page") Integer page, @PathParam("items")Integer items){
+        return service.findAllPages(page, items);
+    }
+
+    @GetMapping("/product/pages")
+    public ResponseEntity<?> getTotalPages(@PathParam("quantity") Integer quantity){
+        return service.totalPages(quantity);
     }
 
     @GetMapping("/product/{id}")

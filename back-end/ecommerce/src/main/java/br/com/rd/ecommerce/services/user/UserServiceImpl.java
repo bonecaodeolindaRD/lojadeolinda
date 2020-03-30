@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
 
         Client user = userRepository.findByEmail(email);
 
-        List<GrantedAuthority> authorityList = AuthorityUtils.createAuthorityList(user.getAccess());
+        List<GrantedAuthority> authorityList = AuthorityUtils.createAuthorityList("ROLE_USER");
         return new User(
                 user.getEmail(),
                 user.getPassword(),

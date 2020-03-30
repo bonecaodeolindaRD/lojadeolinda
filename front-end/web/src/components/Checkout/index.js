@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import './styles.css';
 import { FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 import {
     Container,
@@ -85,7 +86,7 @@ export default class Checkout extends Component {
 
         cart.forEach(async p => {
             try {
-                let { data: response } = await axios("http://localhost:8080/ecommerce/stock/product/" + p.id + "/1");
+                let { data: response } = await api.get("/stock/product/" + p.id + "/1");
                 if (response.balance < p.quantity)
                     this.noStock = true;
             } catch (erro) {
@@ -100,7 +101,7 @@ export default class Checkout extends Component {
     getAddresses = async () => {
         const { email } = JSON.parse(sessionStorage.getItem('client'));
         try {
-            let add = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+            let add = await api.get("/client/addresses/" + email);
             if (!add.data.addresses)
                 return;
             this.setState({
@@ -119,7 +120,7 @@ export default class Checkout extends Component {
         try {
             this.submeted = true;
             const email = JSON.parse(sessionStorage.getItem('client'));
-            const { data: client } = await axios("http://localhost:8080/ecommerce/client/email/" + email.email);
+            const { data: client } = await api.get("/client/email/" + email.email);
             const address = {
                 street: this.state.address.aStreet,
                 cep: this.state.address.aCep,
@@ -129,7 +130,7 @@ export default class Checkout extends Component {
                 citie: this.state.address.aCitie,
                 complement: this.state.address.aComplement
             }
-            let { data: returnAddress } = await axios.post("http://localhost:8080/ecommerce/address", address);
+            let { data: returnAddress } = await api.post("/address", address);
             if (!returnAddress) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
@@ -158,7 +159,7 @@ export default class Checkout extends Component {
                 quantity: p.quantity,
                 value: p.value
             }));
-            let { data: order } = await axios.post("http://localhost:8080/ecommerce/order", obj);
+            let { data: order } = await api.post("/ecommerce/order", obj);
             if (!order) {
                 this.setState({ erro: "Erro ao gerar o pedido" });
                 this.setState({ loading: false });
@@ -175,7 +176,7 @@ export default class Checkout extends Component {
 
     listStates = async () => {
         try {
-            const { data: states } = await axios(this.LINK_ESTADO_CIDADE);
+            const { data: states } = await api.get(this.LINK_ESTADO_CIDADE);
             this.setState({ states });
         }
         catch{
@@ -185,7 +186,7 @@ export default class Checkout extends Component {
 
     listCities = async (state) => {
         try {
-            const { data: cities } = await axios(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
+            const { data: cities } = await api.get(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
             this.setState({
                 cities
             });
@@ -203,7 +204,7 @@ export default class Checkout extends Component {
         let cep = evt.target.value;
         if (cep.length === 9) {
             try {
-                const address = await axios(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+                const address = await axios.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
                 if (address.data.erro) {
                     this.setState({ erro: "Erro ao buscar o CEP" });
                     return;

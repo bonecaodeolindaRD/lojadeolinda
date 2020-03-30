@@ -74,6 +74,7 @@ export default class Header extends Component {
     logout = () => {
         sessionStorage.removeItem('client');
         sessionStorage.removeItem('cart');
+        sessionStorage.removeItem("dG9rZW4=");
         window.location.reload();
     }
 

@@ -4,7 +4,7 @@ import { Card, Form, Button, CardTitle, CardText, Row, Col, Container, InputGrou
 
 import { withRouter, Link } from "react-router-dom";
 
-import axios from "axios";
+import api from '../../services/api';
 
 import './styles.css';
 import Footer from '../Footer';
@@ -40,7 +40,7 @@ class Login extends Component {
           email,
           password
         }
-        const { data: response } = await axios.post("http://localhost:8080/ecommerce/client/login/", obj);
+        const { data: response } = await api.post("/client/login/", obj);
 
         let client = {
           id: response.id,
@@ -51,6 +51,7 @@ class Login extends Component {
         if (response) {
           this.props.history.push("/");
           sessionStorage.setItem("client", JSON.stringify(client));
+          sessionStorage.setItem("dG9rZW4=", btoa(obj.email + ":" + obj.password));
           window.location.reload();
         }
         else

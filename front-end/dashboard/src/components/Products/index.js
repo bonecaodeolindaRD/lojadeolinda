@@ -12,7 +12,9 @@ export default class Products extends Component {
         this.state = {
             products: [],
             displayProducts: [],
-            page: 0
+            page: 0,
+            itemsPerPage: 10,
+            totalPages: 1
         }
         if (!sessionStorage.getItem('user')) {
             this.props.history.push("/");
@@ -20,6 +22,17 @@ export default class Products extends Component {
         }
         this.existentUser();
         this.getProducts(0);
+        this.getTotalPages();
+    }
+
+    getTotalPages = async () => {
+        try{
+            let quantity = await api.get("/product/pages");
+            let totalPages = Math.ceil(quantity.data / this.state.itemsPerPage) - 1;
+            await this.setState({totalPages});
+        }catch{
+            this.setState({totalPages: 0});
+        }
     }
 
     existentUser = async () => {
@@ -39,6 +52,8 @@ export default class Products extends Component {
     }
 
     nextPage = async () => {
+        if(this.state.page >= this.state.totalPages)
+            return;
         let page = this.state.page + 1;
         await this.setState({ page });
         await this.getProducts(this.state.page);
@@ -62,7 +77,7 @@ export default class Products extends Component {
 
     getProducts = async (page) => {
         try {
-            let { data: products } = await api.get("/product/pages/" + page);
+            let { data: products } = await api.get("/product/pages/" + page + "?items=" + this.state.itemsPerPage);
             if (!products){
                 return;
             }
@@ -121,10 +136,9 @@ export default class Products extends Component {
                             </Table>
                                 <InputGroup className="text-center">
                                     <Button type="button" onClick={this.previousPage}><MdNavigateBefore /></Button>
-                                    <h4>Pagina: {this.state.page}</h4>
+                                    <h4>Pagina: {this.state.page + 1}</h4>
                                     <Button type="button" onClick={this.nextPage}><MdNavigateNext /></Button>
                                 </InputGroup>
-             
                         </Container>
 
                     )}

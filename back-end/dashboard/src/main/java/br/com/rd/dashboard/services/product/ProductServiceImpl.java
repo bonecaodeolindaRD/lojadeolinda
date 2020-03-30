@@ -79,9 +79,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> findAllPages(Integer page) {
+    public ResponseEntity<?> findAllPages(Integer page, Integer itemsPerPage) {
 
-        List<Product> list = repository.findAll(PageRequest.of(page, 10)).toList();
+        List<Product> list = repository.findAll(PageRequest.of(page, itemsPerPage)).toList();
         if(list.size() <= 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductException("Products not found"));
 
@@ -90,6 +90,15 @@ public class ProductServiceImpl implements ProductService {
             producsDTO.add(converter.convertTo(p));
 
         return ResponseEntity.status(HttpStatus.OK).body(producsDTO);
+    }
+
+    @Override
+    public ResponseEntity<?> totalPages(Integer quantityPerPage) {
+        Query query = em.createQuery("select count(*) from Product");
+
+        Long quantity = (Long)query.getResultList().get(0);
+
+        return ResponseEntity.status(HttpStatus.OK).body(quantity);
     }
 
 

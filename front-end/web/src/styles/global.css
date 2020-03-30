@@ -8,16 +8,14 @@
     width: 70%;
 }
 
+.tam{
+    height: 100vh;
+}
+
+
 @media (max-width: 767px){
     .search-input{
         width: 100%;
     }
-}
-.space-footer{
-    margin-right: 200px;
-}
-
-.tam{
-    height: 100vh;
 }
 
