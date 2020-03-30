@@ -133,7 +133,7 @@ export default class Footer extends Component {
                 <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados  CNPJ: 12.432.123/0007-70 /
                  Inscrição Estadual: 283.382.938.635
                  / Av. Corifeu de Azevedo Marques, 3097 - Vila Butantã- São Paulo - SP, 05360-070
-                  /bonecaodeolinda@gmail.com.br</small>
+                  /deolindabonecao@gmail.com</small>
 
             </Navbar>
           </>
