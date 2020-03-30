@@ -1,5 +1,6 @@
 package br.com.rd.ecommerce.controllers;
 
+import br.com.rd.ecommerce.models.dto.StatusDTO;
 import br.com.rd.ecommerce.models.entities.Client;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.services.client.ClientService;
@@ -14,17 +15,12 @@ public class ClientController {
     @Autowired
     private ClientService service;
     
-    @PostMapping("/client/new")
+    @PostMapping("/client")
     public ResponseEntity<?> createClient(@RequestBody Client clientDTO){
         return service.createClient(clientDTO);
     }
 
-    @GetMapping("/client/list")
-    public ResponseEntity<?> findAll(){
-            return service.findAllClient();
-    }
-
-    @GetMapping("/client/id/{id}")
+    @GetMapping("/client/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id){
         return service.findClientById(id);
     }
@@ -45,13 +41,13 @@ public class ClientController {
     }
 
     @PostMapping("/client/login")
-    public ResponseEntity login(@RequestBody Client client){
-        return service.findClientLogin(client.getEmail(), client.getPassword());
+    public ResponseEntity<?> login(@RequestBody Client client){
+        return service.findClientLogin(client);
     }
 
-    @DeleteMapping("/client/delete/{id}")
-    public void deleteClient(@PathVariable("id") Long id){
-        service.deleteClient(id);
-    }
 
+    @PutMapping("/client/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ClientDTO client) {
+        return service.updateClient(id, client);
+    }
 }

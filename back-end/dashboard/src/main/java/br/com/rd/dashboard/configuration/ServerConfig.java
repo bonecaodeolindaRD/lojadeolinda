@@ -1,4 +1,4 @@
-package br.com.rd.ecommerce.configuration;
+package br.com.rd.dashboard.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

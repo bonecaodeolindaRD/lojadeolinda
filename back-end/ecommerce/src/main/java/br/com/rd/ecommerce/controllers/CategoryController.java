@@ -14,33 +14,15 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    @GetMapping("/category/all")
+    @GetMapping("/category")
     public ResponseEntity<?> findAllCategory(){
         return service.findAllCategories();
     }
 
-    @GetMapping("/category/id/{id}")
+    @GetMapping("/category/{id}")
     public ResponseEntity<?> findCategoryById(@PathVariable("id") Long id){
         return service.findCategoryById(id);
     }
 
-    @GetMapping("/category/name/{name}")
-    public ResponseEntity<?> findByCategoryName(@PathVariable("name") String name){
-        return service.findByCategoryByName(name);
-    }
 
-    @PostMapping("/category/new")
-    public ResponseEntity<?> createCategory(@RequestBody Category category){
-        return service.createCategory(category);
-    }
-
-    @PutMapping("/category/edit")
-    public ResponseEntity<?> editCategory(@RequestBody Category category){
-        return service.update(category);
-    }
-
-    @DeleteMapping("/category/delete/{id}")
-    public void deleteCategory(@PathVariable("id") Long id){
-        service.deleteById(id);
-    }
 }

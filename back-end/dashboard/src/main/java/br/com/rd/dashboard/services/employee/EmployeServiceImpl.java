@@ -7,8 +7,10 @@ import br.com.rd.dashboard.models.entities.Hierarchy;
 import br.com.rd.dashboard.repositories.EmployeeRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
@@ -29,7 +31,7 @@ public class EmployeServiceImpl implements EmployeeService {
             return ResponseEntity.badRequest().body(new EmployeeException("O nome do usuario esta muito curto"));
         if(emp.getPassword() == null || emp.getPassword().length() <= 6)
             return ResponseEntity.badRequest().body(new EmployeeException("A senha do usuario esta muito curta"));
-        if(emp.getHierarchy() == null || emp.getHierarchy() <= 0)
+        if(emp.getHierarchy() == null)
             return ResponseEntity.badRequest().body(new EmployeeException("A hierarquia do funcionario é invalida"));
         try{
             Employee employee = converter.convertTo(emp);
@@ -56,7 +58,7 @@ public class EmployeServiceImpl implements EmployeeService {
             return ResponseEntity.badRequest().body(new EmployeeException("O nome do usuario esta muito curto"));
         if(emp.getPassword() == null || emp.getPassword().length() <= 6)
             return ResponseEntity.badRequest().body(new EmployeeException("A senha do usuario esta muito curta"));
-        if(emp.getHierarchy() == null || emp.getHierarchy() <= 0)
+        if(emp.getHierarchy() == null)
             return ResponseEntity.badRequest().body(new EmployeeException("A hierarquia do funcionario é invalida"));
         try{
             Employee employee = repository.findById(emp.getId()).get();
@@ -64,7 +66,7 @@ public class EmployeServiceImpl implements EmployeeService {
             employee.setName(emp.getName());
             employee.setEmail(emp.getEmail());
             employee.setId(emp.getId());
-            employee.setHierarchy(new Hierarchy(emp.getHierarchy(), null));
+            employee.setHierarchy(converter.convertTo(emp.getHierarchy()));
             String pass = emp.getPassword();
             String salt = BCrypt.gensalt();
             String passHash = BCrypt.hashpw(pass, salt);
@@ -97,9 +99,7 @@ public class EmployeServiceImpl implements EmployeeService {
         if(emp.getPassword() == null || emp.getPassword().length() <= 0)
             return ResponseEntity.badRequest().body(new EmployeeException("A senha esta vazia"));
         try{
-            Employee employee = repository.findByUsername(emp.getUsername());
-            if(employee == null)
-                return ResponseEntity.badRequest().body(new EmployeeException("Nenhum usuario encontrado"));
+            Employee employee = repository.findByUsername(emp.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
             if(BCrypt.checkpw(emp.getPassword(), employee.getPassword())){
                 EmployeeDTO returnEntity = converter.convertTo(employee);
                 return ResponseEntity.ok().body(returnEntity);
@@ -116,9 +116,7 @@ public class EmployeServiceImpl implements EmployeeService {
         if(username.equals(""))
             return ResponseEntity.notFound().build();
         try {
-            Employee employee = repository.findByUsername(username);
-            if(employee == null)
-                return ResponseEntity.badRequest().body(new Exception("Erro"));
+            Employee employee = repository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
             EmployeeDTO returnDTO = converter.convertTo(employee);
 
             return ResponseEntity.ok().body(returnDTO);

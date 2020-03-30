@@ -13,38 +13,23 @@ public class AddressController {
     @Autowired
     private AddressService service;
 
-    @PostMapping("/address/new")
+    @PostMapping("/address")
     public ResponseEntity<?> save(@RequestBody AddressDTO address){
         return service.createAddress(address);
     }
-  
-    @PostMapping("/address/client/new")
-    public ResponseEntity<?> saveClientAddress(@RequestBody AddressDTO address){
-        return service.createClientAddress(address);
-    }
 
-    @GetMapping("/address/all")
+    @GetMapping("/address")
     public ResponseEntity<?> findAll(){
         return service.findAllAddress();
     }
 
-    @GetMapping("/address/id/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id")Long id){
-        return service.findAddressById(id);
-    }
-
-    @GetMapping("/address/cep/{cep}")
-    public ResponseEntity<?> findByCEP(@PathVariable("cep") String cep){
-        return service.findAddressByCEP(cep);
-    }
-
-    @DeleteMapping("/address/delete/{id}")
+    @DeleteMapping("/address/{id}")
     public void deleteById(@PathVariable("id")Long id){
         service.deleteAddress(id);
     }
 
-    @PutMapping("/address/update")
-    public ResponseEntity<?> edit(@RequestBody AddressDTO address){
-        return service.updateAddress(address);
+    @PutMapping("/address/{id}")
+    public ResponseEntity<?> edit(@PathVariable("id") Long id, @RequestBody AddressDTO address){
+        return service.updateAddress(id, address);
     }
 }

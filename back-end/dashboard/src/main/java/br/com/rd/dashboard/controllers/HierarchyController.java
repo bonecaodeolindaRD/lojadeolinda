@@ -12,12 +12,12 @@ public class HierarchyController {
     @Autowired
     private HierarchyService service;
 
-    @PostMapping("/hierarchy/new")
+    @PostMapping("/hierarchy")
     public ResponseEntity createHierarchy(@RequestBody HierarchyDTO hierarchyDTO){
         return service.createHierarchy(hierarchyDTO);
     }
 
-    @PutMapping("/hierarchy/update")
+    @PutMapping("/hierarchy")
     public ResponseEntity updateHierarchy(@RequestBody HierarchyDTO hierarchyDTO){
         return service.updateHierarchy(hierarchyDTO);
     }

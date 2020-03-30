@@ -3,22 +3,23 @@ package br.com.rd.ecommerce.services.client;
 import br.com.rd.ecommerce.converters.Converter;
 import br.com.rd.ecommerce.models.dto.ClientDTO;
 import br.com.rd.ecommerce.models.dto.OrderDTO;
-import br.com.rd.ecommerce.models.entities.Address;
-import br.com.rd.ecommerce.models.entities.Client;
-
-import br.com.rd.ecommerce.models.entities.Order;
-
-import br.com.rd.ecommerce.models.entities.OrderItem;
+import br.com.rd.ecommerce.models.entities.*;
 
 import br.com.rd.ecommerce.repositories.ClientRepository;
-import br.com.rd.ecommerce.services.exceptions.CategoryException;
 import br.com.rd.ecommerce.services.exceptions.ClientException;
+import org.hibernate.JDBCException;
+import org.hibernate.exception.SQLGrammarException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Time;
+import javax.persistence.EntityNotFoundException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,9 +32,9 @@ public class ClientServiceImpl implements ClientService {
     ClientRepository clientRepository;
     private Converter converter = new Converter();
 
-    public ResponseEntity<?> createClient(Client client){
-        if(client == null)
-            return ResponseEntity.badRequest().body(new ClientException("Usuario Invalido!"));
+    public ResponseEntity<?> createClient(Client client) {
+        if (client == null)
+            return ResponseEntity.badRequest().body(new ClientException("Client is not be null"));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:MM:ss");
             sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -47,124 +48,118 @@ public class ClientServiceImpl implements ClientService {
             String passwordHash = BCrypt.hashpw(password, salt);
             client.setPassword(passwordHash);
             Client clientReturn = clientRepository.save(client);
-            return ResponseEntity.ok().body(clientReturn);
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
-        }
-    }
-
-    @Override
-    public ResponseEntity<?> findAllClient() {
-        try {
-            List<Client> clients = clientRepository.findAll();
-
-            if (clients == null || clients.size() <= 0)
-                return ResponseEntity.notFound().build();
-            List<ClientDTO> clientDTO = new ArrayList<>();
-            for (Client client : clients)
-                clientDTO.add(converter.convertTo(client));
-
-            return ResponseEntity.ok().body(clientDTO);
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.OK).body(clientReturn);
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().body(new ClientException("Error, date format is invalid"));
         }
     }
 
     @Override
     public ResponseEntity<?> findClientById(Long id) {
-        try {
-            Client client = clientRepository.findById(id).orElse(null);
-            if (client == null)
-                return ResponseEntity.notFound().build();
-            ClientDTO clientDTO = converter.convertTo(client);
-            return ResponseEntity.ok().body(clientDTO);
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
-        }
-    }
 
-    @Override
-    public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+
+        ClientDTO clientDTO = converter.convertTo(client);
+        return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
     }
 
     @Override
     public ResponseEntity<?> findClientByEmail(String email) {
-        if (email == null || email.equals(""))
-            return ResponseEntity.badRequest().body(new ClientException("Informe um email"));
-        try {
-            Client clients = clientRepository.findByEmail(email);
-            if (clients == null)
-                return ResponseEntity.notFound().build();
+        Client clients = clientRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));;
+        if (clients == null)
+            return ResponseEntity.notFound().build();
 
-            ClientDTO clientDTO = converter.convertTo(clients);
-            return ResponseEntity.ok().body(clientDTO);
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
-        }
+        ClientDTO clientDTO = converter.convertTo(clients);
+        return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
     }
 
     @Override
-    public ResponseEntity<?> findClientLogin(String email, String password) {
-        if (email == null || email == "" || password == null || password == "")
-            return ResponseEntity.badRequest().body(new ClientException("Informe o login do usuario"));
-        try {
-            Client client = clientRepository.findByEmail(email);
+    public ResponseEntity<?> findClientLogin(Client client) {
+        if (client == null)
+            return ResponseEntity.badRequest().body(new ClientException("Client is not be null"));
 
-            if (client == null)
-                return ResponseEntity.notFound().build();
+        Client c = clientRepository.findByEmail(client.getEmail()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
 
-            String passHash = client.getPassword();
-            if(BCrypt.checkpw(password, passHash)) {
-                ClientDTO clientDTO = converter.convertTo(client);
-                return ResponseEntity.ok().body(clientDTO);
-            }
-            return ResponseEntity.badRequest().body(new ClientException("Erro ao logar"));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        if (c == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        String passHash = c.getPassword();
+        if (BCrypt.checkpw(client.getPassword(), passHash)) {
+            ClientDTO clientDTO = converter.convertTo(c);
+            return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
         }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ClientException("Error"));
+
     }
 
-    public ResponseEntity<?> findClientOrders(String email){
-        if(email == null || email.equals(""))
-            return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
-        try{
-            Client client = clientRepository.findByEmail(email);
-            if(client == null)
-                return ResponseEntity.notFound().build();
+    public ResponseEntity<?> findClientOrders(String email) {
 
-            ClientDTO clientDTO = converter.convertTo(client);
+        Client client = clientRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        if (client == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-            for(Order o: client.getOrders()){
-                OrderDTO orderDTO = converter.convertTo(o);
-                for(OrderItem oi: o.getOrderItem())
-                    orderDTO.addItem(converter.convertTo(oi));
-                orderDTO.setValue(o.total());
-                clientDTO.addOrder(orderDTO);
-            }
-            return ResponseEntity.ok().body(clientDTO);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro" + e.getMessage()));
+        ClientDTO clientDTO = converter.convertTo(client);
+
+        for (Order o : client.getOrders()) {
+            OrderDTO orderDTO = converter.convertTo(o);
+            for (OrderItem oi : o.getOrderItem())
+                orderDTO.addItem(converter.convertTo(oi));
+            orderDTO.setValue(o.total());
+            clientDTO.addOrder(orderDTO);
         }
+        return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
     }
 
-    public ResponseEntity<?> findClientAddress(String email){
-        if(email == null || email.equals(""))
-            return ResponseEntity.badRequest().body(new ClientException("Erro informe um email"));
-        try{
-            Client client = clientRepository.findByEmail(email);
-            if(client == null )
-                return ResponseEntity.notFound().build();
-            ClientDTO clientDTO = converter.convertTo(client);
+    public ResponseEntity<?> findClientAddress(String email) {
 
-            for(Address a: client.getAddresses())
-                clientDTO.addAddress(converter.convertTo(a));
+        Client client = clientRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        ClientDTO clientDTO = converter.convertTo(client);
 
-            return ResponseEntity.ok().body(clientDTO);
+        for (Address a : client.getAddresses())
+            clientDTO.addAddress(converter.convertTo(a));
 
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body(new ClientException("Erro " + e.getMessage()));
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(clientDTO);
+
+    }
+
+    @Override
+    public ResponseEntity<?> updateClient(Long id, ClientDTO client) {
+        if (client == null)
+            return ResponseEntity.badRequest().body(new ClientException("Informe um Cliente"));
+
+        Client c = clientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+        c.setName(client.getName());
+        c.setEmail(client.getEmail());
+        c.setBirthday(client.getBirthday());
+        c.setPhoneNumber(client.getPhoneNumber());
+        ClientDTO returnClient = converter.convertTo(clientRepository.save(c));
+        return ResponseEntity.ok().body(returnClient);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<?> handlerEntityExceptionException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<?> handlerSQLException(SQLException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
+    }
+
+    @ExceptionHandler(JDBCException.class)
+    public ResponseEntity<?> handlerJDBCException(JDBCException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
+    }
+
+    @ExceptionHandler(SQLGrammarException.class)
+    public ResponseEntity<?> handlerSQLGrammarException(SQLGrammarException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
     }
 }
 

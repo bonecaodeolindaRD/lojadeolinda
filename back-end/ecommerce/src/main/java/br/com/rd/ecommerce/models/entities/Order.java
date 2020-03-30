@@ -26,9 +26,6 @@ public class Order {
     private Date date;
     @Column(name = "vl_shipping")
     private Double shipping;
-    @OneToOne(targetEntity = Order.class)
-    @JoinColumn(name = "id_invoice")
-    private Invoice invoice;
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
