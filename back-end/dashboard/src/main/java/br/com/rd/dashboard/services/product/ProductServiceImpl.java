@@ -7,10 +7,12 @@ import br.com.rd.dashboard.models.entities.Address;
 import br.com.rd.dashboard.models.entities.Category;
 import br.com.rd.dashboard.models.entities.Product;
 import br.com.rd.dashboard.repositories.ProductRepository;
+import br.com.rd.dashboard.services.exceptions.OrderException;
 import br.com.rd.dashboard.services.exceptions.ProductException;
 import org.hibernate.JDBCException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -76,6 +78,20 @@ public class ProductServiceImpl implements ProductService {
         return ResponseEntity.status(HttpStatus.OK).body(productDTOS);
     }
 
+    @Override
+    public ResponseEntity<?> findAllPages(Integer page) {
+
+        List<Product> list = repository.findAll(PageRequest.of(page, 10)).toList();
+        if(list.size() <= 0)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductException("Products not found"));
+
+        List<ProductDTO> producsDTO = new ArrayList<>();
+        for(Product p: list)
+            producsDTO.add(converter.convertTo(p));
+
+        return ResponseEntity.status(HttpStatus.OK).body(producsDTO);
+    }
+
 
     @Override
     public ResponseEntity<?> findProductByDescription(String description) {
@@ -108,9 +124,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<?> findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
-        Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'", Product.class);
-        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'", Product.class);
-        Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category where upper(c.name) like '%" + str.toUpperCase() + "%'", Product.class);
+        Query name = em.createQuery("select p from Product p where upper(name) like '%"
+                + str.toUpperCase() + "%'", Product.class);
+        Query desc = em.createQuery("select p from Product p where upper(description) like '%"
+                + str.toUpperCase() + "%'", Product.class);
+        Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category " +
+                "where upper(c.name) like '%" + str.toUpperCase() + "%'", Product.class);
         List<Product> prods = name.getResultList();
         products.addAll(prods);
         prods = desc.getResultList();
@@ -124,7 +143,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<?> findProductHome() {
-        Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
+        Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id " +
+                "where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
         List<Product> products = query.getResultList();
         if (products == null || products.size() <= 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
