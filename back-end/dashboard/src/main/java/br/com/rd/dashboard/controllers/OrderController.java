@@ -21,6 +21,11 @@ public class OrderController {
         return service.findAllOrders();
     }
 
+    @GetMapping("/order/page/{page}")
+    public ResponseEntity<?> findByPage(@PathVariable("page") Integer page){
+        return service.findAll(page);
+    }
+
     @GetMapping("/order/status/{id}")
     public ResponseEntity<?> findByStatus(@PathVariable("id") Long id){
         return service.findByStatus(id);

@@ -3,9 +3,11 @@ package br.com.rd.dashboard.services.order;
 import br.com.rd.dashboard.models.dto.OrderDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public interface OrderService {
+    ResponseEntity<?> findAll(Integer page);
     ResponseEntity<?> findAllOrders();
     ResponseEntity<?> findByDate(String date);
     ResponseEntity<?> findById(Long id);
