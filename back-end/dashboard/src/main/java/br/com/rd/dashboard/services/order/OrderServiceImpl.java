@@ -11,6 +11,7 @@ import br.com.rd.dashboard.services.exceptions.OrderException;
 import br.com.rd.dashboard.services.exceptions.StockException;
 import br.com.rd.dashboard.services.stock.StockService;
 import org.hibernate.JDBCException;
+import org.hibernate.exception.DataException;
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,6 +83,44 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    public ResponseEntity<?> findByDateAndStatus(String date, Long status) {
+        try {
+            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date dt = sdf.parse(date);
+            if (!dt.before(now) || date == null)
+                return ResponseEntity.badRequest().body(new OrderException("Date is invalid"));
+            List<Order> orders = respository.findByStatusAndDate(new Status(status, null), dt).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orders not fould")
+            );
+
+            List<OrderDTO> ordersDTO = new ArrayList<>();
+            for (Order order : orders) {
+                order.setValue(order.total());
+                ordersDTO.add(converter.convertTo(order));
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().body(new OrderException("Date format is invalid"));
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> findByStatus(Long id) {
+
+        List<Order> orders = respository.findByStatus(new Status(id, null)).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orders not found")
+        );
+
+        List<OrderDTO> ordersDTO = new ArrayList<>();
+        for(Order order: orders)
+            ordersDTO.add(converter.convertTo(order));
+
+        return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+
+    }
+
     @Override
     public ResponseEntity<?> findById(Long id) {
 
@@ -110,16 +149,16 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = respository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
-        if(order.getStatus().getIdStatus() == 6)
+        if (order.getStatus().getIdStatus() == 6)
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 
-        for(OrderItem oi: order.getOrderItem())
+        for (OrderItem oi : order.getOrderItem())
             stockService.addItemOnStock(1L, oi.getProduct().getId(), oi.getQuantity());
 
         order.setStatus(new Status(6L, "CANCELADO"));
         OrderDTO orderDTO = converter.convertTo(respository.save(order));
 
-        for(OrderItem oi: order.getOrderItem())
+        for (OrderItem oi : order.getOrderItem())
             orderDTO.addItem(converter.convertTo(oi));
 
         return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
@@ -128,6 +167,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrder(Long id) {
         respository.deleteById(id);
+    }
+
+    @ExceptionHandler(DataException.class)
+    public ResponseEntity<?> handlerDataException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

@@ -11,7 +11,23 @@ export default class ListOrders extends Component {
         super(props);
         this.state = {
             date: "",
+            status: 0,
+            listStatus: [],
             orders: []
+        }
+        this.findStatusList();
+    }
+
+    findStatusList = async () => {
+        try {
+            let statusList = await api.get("/status");
+            if (!statusList.data) {
+                this.setState({ listStatus: [] });
+                return;
+            }
+            this.setState({ listStatus: statusList.data });
+        } catch{
+            this.setState({ listStatus: [] });
         }
     }
 
@@ -19,14 +35,20 @@ export default class ListOrders extends Component {
         evt.preventDefault();
         let orders = {};
         try {
-            if (this.state.date)
-                orders = await api.get("/order/date/" + this.state.date);
+            if (this.state.status <= 0)
+                if (this.state.date)
+                    orders = await api.get("/order/date/" + this.state.date);
+                else
+                    orders = await api.get("/order");
             else
-                orders = await api.get("/order");
+                if (this.state.date)
+                    orders = await api.get("/order/" + this.state.date + "/" + this.state.status);
+                else
+                    orders = await api.get("/order/status/" + this.state.status);
 
             this.setState({ orders: orders.data });
         } catch{
-            return;
+            this.setState({ orders: [] })
         }
     }
 
@@ -40,41 +62,59 @@ export default class ListOrders extends Component {
                             <Col xs={4}>
                                 <FormGroup>
                                     <Label for="date">Data:</Label>
+                                    <Input value={this.state.date} onChange={e => this.setState({ date: e.target.value })} type="date" id="date" name="order-date" />
+                                </FormGroup>
+                            </Col>
+                            <Col xs={3}>
+                                <FormGroup>
+                                    <Label for="status">Status:</Label>
                                     <InputGroup>
-                                        <Input value={this.state.date} onChange={e => this.setState({ date: e.target.value })} type="date" id="date" name="date" />
+                                        <Input type="select" id="status" name="order-status" value={this.state.status} onChange={e => this.setState({ status: e.target.value })}>
+                                            <option value={0}>Todos</option>
+                                            {this.state.listStatus.length > 0 &&
+                                                this.state.listStatus.map(s =>
+                                                    (
+                                                        <option value={s.idStatus}>{s.status}</option>
+                                                    )
+                                                )
+                                            }
+                                        </Input>
                                         <Button type="subtmit">Buscar</Button>
                                     </InputGroup>
                                 </FormGroup>
-
                             </Col>
                         </Row>
                     </Form>
                     {this.state.orders && (
                         <>
                             <FormGroup className="bg-warning rounded text-center font-weight-bold p-2 ">
-                                <Label>Cliente</Label>
+                                <Label>Pedidos:</Label>
                             </FormGroup>
-
-                            <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
-                                <thead>
-                                    <th>Numero</th>
-                                    <th>Data</th>
-                                    <th>Status</th>
-                                    <th>Valor</th>
-                                    <th>Ação</th>
-                                </thead>
-                                <tbody>
-                                    {this.state.orders.map(o => (
-                                        <tr>
-                                            <td>{o.id}</td>
-                                            <td>{new Date(o.date).toLocaleDateString("pt-br")}</td>
-                                            <td>{o.status.status}</td>
-                                            <td>{o.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                                            <td><Button type="button" onClick={e => this.props.history.push("/manager/" + o.id)}>Ver</Button></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                            {this.state.orders.length > 0 ? (
+                                <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                                    <thead>
+                                        <th>Numero</th>
+                                        <th>Data</th>
+                                        <th>Status</th>
+                                        <th>Valor</th>
+                                        <th>Ação</th>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.orders.map(o => (
+                                            <tr>
+                                                <td>{o.id}</td>
+                                                <td>{new Date(o.date).toLocaleDateString("pt-br")}</td>
+                                                <td>{o.status.status}</td>
+                                                <td>{o.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                                                <td><Button type="button" onClick={e => this.props.history.push("/manager/" + o.id)}>Ver</Button></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>)
+                                
+                                :
+                                (<h5 className="text-center">Nenhum pedido encontrado</h5>)
+                            }
                         </>)
                     }
                 </Container>

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -16,32 +17,42 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping("/order")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         return service.findAllOrders();
     }
 
+    @GetMapping("/order/status/{id}")
+    public ResponseEntity<?> findByStatus(@PathVariable("id") Long id){
+        return service.findByStatus(id);
+    }
+
+    @GetMapping("/order/{date}/{status}")
+    public ResponseEntity<?> findByDateAndStatus(@PathVariable("date") String date, @PathVariable("status") Long status){
+        return service.findByDateAndStatus(date, status);
+    }
+
     @GetMapping("/order/date/{date}")
-    public ResponseEntity<?> findByDate(@PathVariable("date") String date){
+    public ResponseEntity<?> findByDate(@PathVariable("date") String date, @PathParam("status") Long status) {
         return service.findByDate(date);
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") Long id){
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
     @GetMapping("/sales")
-    public ResponseEntity<?> findSales(){
+    public ResponseEntity<?> findSales() {
         return service.findSales();
     }
 
     @DeleteMapping("/order/{id}")
-    public void deleteOrder(@PathVariable("id") Long id){
+    public void deleteOrder(@PathVariable("id") Long id) {
         service.deleteOrder(id);
     }
 
     @PostMapping("/order/cancel/{id}")
-    public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id){
+    public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id) {
         return service.cancelOrder(id);
     }
 }

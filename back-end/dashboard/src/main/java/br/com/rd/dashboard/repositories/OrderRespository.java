@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface OrderRespository extends JpaRepository<Order, Long> {
     Optional<List<Order>> findByDate(Date date);
-    Optional<List<Order>> findByClient(Client client);
+    Optional<List<Order>> findByStatusAndDate(Status status, Date date);
     Optional<List<Order>> findByStatus(Status status);
 }
