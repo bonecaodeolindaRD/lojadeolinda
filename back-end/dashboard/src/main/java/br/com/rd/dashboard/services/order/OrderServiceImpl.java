@@ -105,7 +105,8 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<?> findByDatePage(String date, Integer page) {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Query query = em.createQuery("select o from Order o where o.date = '" + date + "'").setFirstResult(page * 10)
+        Query query = em.createQuery("select o from Order o where o.date = '" + date + "'")
+                .setFirstResult(page * 10)
                 .setMaxResults(10);
         try {
             Date dt = sdf.parse(date);
@@ -213,33 +214,4 @@ public class OrderServiceImpl implements OrderService {
         repository.deleteById(id);
     }
 
-    @ExceptionHandler(DataException.class)
-    public ResponseEntity<?> handlerDataException(EntityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<?> handlerEntityExceptionException(EntityNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
-    }
-
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<?> handlerSQLException(SQLException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
-    }
-
-    @ExceptionHandler(JDBCException.class)
-    public ResponseEntity<?> handlerJDBCException(JDBCException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
-    }
-
-    @ExceptionHandler(SQLGrammarException.class)
-    public ResponseEntity<?> handlerSQLGrammarException(SQLGrammarException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
-    }
 }
