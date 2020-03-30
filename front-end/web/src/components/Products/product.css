@@ -1,8 +1,6 @@
 .cursor-pointer{
     cursor: pointer;
 }
-
-
 .colum:hover{
     border-color: rgb(246, 255, 70);
     border-width: 3px;
