@@ -21,7 +21,8 @@ import './footer.css';
 export default class Footer extends Component {
     render() {
         return (
-           
+           <> 
+
             <Navbar color="dark" className=" mt-5 footer">
 
                 <Nav>
@@ -29,10 +30,10 @@ export default class Footer extends Component {
                     <Col className="col-md-2 col-sm-1">
 
                         <NavItem className="space-footer">
-                            
+
 
                             <img src="https://i.imgur.com/yUnaRMs.png" alt="logo do site" className="img-logo" />
-                            
+
 
                         </NavItem>
 
@@ -100,7 +101,7 @@ export default class Footer extends Component {
 
                                 <NavItem>
                                     <Link className="text-muted" to="/contact">
-                                        <FaPhone/> (11) 93537-4847
+                                        <FaPhone /> (11) 93537-4847
                                    </Link>
 
                                 </NavItem>
@@ -125,11 +126,17 @@ export default class Footer extends Component {
                         </NavItem>
                     </Col>
                 </Nav>
-             
-                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados</small>
-              
+
             </Navbar >
-          
+
+            <Navbar color="dark" className="d-flex justify-content-center" >
+                <small className="d-block mb-3 text-muted d-flex justify-content-center">&copy; Direitos reservados  CNPJ: 12.432.123/0007-70 /
+                 Inscrição Estadual: 283.382.938.635
+                 / Av. Corifeu de Azevedo Marques, 3097 - Vila Butantã- São Paulo - SP, 05360-070
+                  /bonecaodeolinda@gmail.com.br</small>
+
+            </Navbar>
+          </>
         )
     }
 }
