@@ -1,4 +1,4 @@
-package br.com.rd.ecommerce.services.client;
+package br.com.rd.ecommerce.services.user;
 
 import br.com.rd.ecommerce.models.entities.Client;
 import br.com.rd.ecommerce.repositories.ClientRepository;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
