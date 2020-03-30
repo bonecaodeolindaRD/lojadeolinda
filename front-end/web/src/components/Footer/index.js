@@ -3,8 +3,7 @@ import {
     Navbar,
     Nav,
     NavItem,
-    Col,
-    Row
+    Col
 } from 'reactstrap';
 
 import {
