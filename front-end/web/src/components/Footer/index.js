@@ -22,7 +22,7 @@ export default class Footer extends Component {
     render() {
         return (
            
-            <Navbar color="dark" className=" mt-5 footer ">
+            <Navbar color="dark" className=" mt-5 footer">
 
                 <Nav>
 
