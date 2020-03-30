@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
@@ -30,7 +30,7 @@ class Account extends Component {
 
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
+        let { data: account } = await api.get("/client/email/" + email);
         this.setState({
             name: account.name,
             email: account.email,

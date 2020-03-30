@@ -22,13 +22,13 @@ export default class Footer extends Component {
         return (
             <>
 
-                <Navbar color="dark" className=" mt-5 footer">
+                <Navbar color="dark" className=" mt-5 d-flex">
 
-                    <Nav>
+                    <Nav className="w-100 justify-content-around">
 
                         <Col className="col-md-2 col-sm-1">
 
-                            <NavItem className="space-footer">
+                            <NavItem>
 
 
                                 <img src="https://i.imgur.com/yUnaRMs.png" alt="logo do site" className="img-logo" />
@@ -38,8 +38,8 @@ export default class Footer extends Component {
 
                         </Col>
 
-                        <Col className="col-md-3 col-sm-2 mr-2">
-                            <NavItem className="space-footer">
+                        <Col md="2">
+                            <NavItem>
                                 <Nav vertical>
                                     <NavItem className="text-white">
                                         <Link to="/" className="text-white" disabled>Pagamento</Link>
@@ -57,7 +57,7 @@ export default class Footer extends Component {
                             </NavItem>
                         </Col>
 
-                        <Col className="col-md-3 col-sm-2 mr-2">
+                        <Col md="2">
                             <Nav vertical>
                                 <NavItem className="text-white">
                                     <Link to="/" className="text-white" disabled>Redes sociais</Link>
@@ -74,9 +74,9 @@ export default class Footer extends Component {
                             </Nav>
                         </Col>
 
-                        <Col className="col-md-2 col-sm-1">
+                        <Col md="2">
 
-                            <NavItem className="space-footer">
+                            <NavItem>
                                 <Nav vertical>
                                     <NavItem>
 
@@ -106,9 +106,9 @@ export default class Footer extends Component {
                         </Col>
 
 
-                        <Col className="col-ms-2 col-sm-1">
+                        <Col md="2">
 
-                            <NavItem className="space-footer">
+                            <NavItem>
                                 <Nav vertical>
                                     <NavItem >
                                         <Link to="/" className="text-white" disabled>Sobre</Link>

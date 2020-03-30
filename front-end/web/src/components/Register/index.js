@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import axios from "axios";
+import api from "../../services/api";
 import InputMask from "react-input-mask";
 import AlertEvent from "./alerterror";
 import AlertPass from "./passerror";
@@ -105,7 +105,7 @@ class Register extends Component {
       
         if (this.state.PASSWORD === this.state.PASS_CONF) {
             try {
-                await axios.post("http://localhost:8080/ecommerce/client", user,);
+                await api.post("/client", user,);
                 this.setState({
                     cpf: "",
                     name: "",

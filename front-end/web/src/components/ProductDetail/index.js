@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Table, Button, Form, FormGroup, Input } from 'reactstrap';
 import { FaShoppingCart } from 'react-icons/fa';
-import axios from 'axios';
+import api from '../../services/api';
 import ShippingCalculator from '../ShippingCalculator';
 import Header from '../Header';
 import Footer from '../Footer';
@@ -34,7 +34,7 @@ export default class ProductDetail extends Component {
 
             try {
 
-                    const { data : product } = await axios("http://localhost:8080/ecommerce/product/" + id);
+                    const { data : product } = await api.get("/product/" + id);
                     this.setState({
                         id: product.id,
                         image: product.image,
@@ -46,7 +46,7 @@ export default class ProductDetail extends Component {
                         weight: product.weight,
                         discount: product.off,       
                     });
-                    const {data: stock } = await axios("http://localhost:8080/ecommerce/stock/product/" + id + "/1");
+                    const {data: stock } = await api.get("/stock/product/" + id + "/1");
                     this.setState({
                         balance: stock ? stock.balance : 0
                     });

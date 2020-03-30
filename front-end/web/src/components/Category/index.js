@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 
 import {
     Container,
@@ -24,7 +24,7 @@ export default class Category extends Component {
     findProducts = async () => {
         this.setState({ loading: true });
         try {
-            const { data: productss } = await axios("http://localhost:8080/ecommerce/product/category/" + this.props.match.params.id);
+            const { data: productss } = await api.get("/product/category/" + this.props.match.params.id);
             let products = [];
             productss.forEach(p => products.push({
                 id: p.id,

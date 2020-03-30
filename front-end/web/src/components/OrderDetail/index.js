@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import './styles.css';
-import Axios from 'axios';
+import api from '../../services/api';
 import { Container, Row, Card, CardTitle, Label, Col } from 'reactstrap';
 
 class OrderDetail extends Component {
@@ -37,7 +37,7 @@ class OrderDetail extends Component {
         const { id } = this.props.match.params;
 
         try {
-            const { data: order } = await Axios.get("http://localhost:8080/ecommerce/order/" + id)
+            const { data: order } = await api.get("/ecommerce/order/" + id)
             this.setState({
                 id: order.id,
                 address: order.address,
@@ -49,7 +49,6 @@ class OrderDetail extends Component {
         } catch (error) {
             return ("Não há nenhum pedido!")
         }
-        console.log(this.state)
     }
 
     loadAcccount = async () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import Header from '../Header';
 
 import {
@@ -22,7 +22,7 @@ export default class SearchResult extends Component {
 
     getResult = async () => {
         try {
-            const { data: products } = await axios("http://localhost:8080/ecommerce/product/find/" + this.props.match.params.product);
+            const { data: products } = await api.get("/product/find/" + this.props.match.params.product);
             if (!products)
                 return;
             this.setState({ products });

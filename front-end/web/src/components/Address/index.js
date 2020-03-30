@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import axios from 'axios';
+import api from '../../services/api';
 import { Container, Table, Button } from 'reactstrap';
 import './styles.css'
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ class Address extends Component {
 
     getAddresses = async () => {
         const { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: add } = await axios("http://localhost:8080/ecommerce/client/addresses/" + email);
+        let { data: add } = await api.get("/client/addresses/" + email);
         this.setState({
             addresses: add.addresses
         })
@@ -34,7 +34,7 @@ class Address extends Component {
     render() {
         return (
             <>
-                <Header />
+                <Header history={this.props.history} location={this.props.location}/>
                 {this.state.addresses ? (
                     <Container className="align-center">
                         <h3 align="center">Meus Endereços</h3>

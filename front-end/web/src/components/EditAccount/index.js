@@ -4,7 +4,7 @@ import Footer from '../Footer';
 import { Col, Form, FormGroup, Label, Input, Container, Card, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import InputMask from 'react-input-mask';
-import axios from 'axios';
+import api from '../../services/api';
 
 export default class EditAccount extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ export default class EditAccount extends Component {
     loadAcccount = async () => {
         
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: account } = await axios("http://localhost:8080/ecommerce/client/email/" + email);
+        let { data: account } = await api.get("http://localhost:8080/ecommerce/client/email/" + email);
         this.setState({
             id: account.id,
             name: account.name,

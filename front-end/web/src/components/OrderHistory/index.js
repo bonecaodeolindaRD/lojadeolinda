@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import { Container } from 'reactstrap';
-import axios from 'axios';
+import api from '../../services/api';
 import { Button, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './styles.css'
@@ -11,7 +11,8 @@ class OrderHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders: []
+            orders: [],
+            margin: 580
         }
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
@@ -22,10 +23,20 @@ class OrderHistory extends Component {
 
     loadAcccount = async () => {
         let { email } = JSON.parse(sessionStorage.getItem('client'));
-        let { data: response } = await axios("http://localhost:8080/ecommerce/client/orders/" + email);
-        this.setState({
-            orders: response.orders
-        })
+        try {
+            let response = await api.get("/client/orders/" + email);
+            if (response)
+                await this.setState({
+                    orders: response.data.orders
+                })
+            let margin = this.state.margin - this.state.orders.length * 80;
+            if (margin <= 40)
+                this.setState({margin: 40});
+            else
+                this.setState({ margin });
+        } catch{
+            this.setState({ margin: 580 });
+        }
     }
 
     loadAcccount(e) {
@@ -36,10 +47,14 @@ class OrderHistory extends Component {
         return (
             <>
                 <Header />
-                {this.state.orders ? (
-                    <Container className="align-center">
+                <Container className="text-center" style={{ marginBottom: this.state.margin }}>
+                    
+                    {this.state.orders ? (
+                        <>
+                        
+                        <div className="h-100">
                         <h3 align="center">Meus Pedidos</h3>
-                        <Table bordered className="table table-striped" style={{ marginTop: 20 }} >
+                        <Table bordered className="table table-striped" responsive style={{ marginTop: 20 }} >
                             <thead>
                                 <tr align="center">
                                     <th>Pedido</th>
@@ -76,17 +91,20 @@ class OrderHistory extends Component {
                                     </tr>)}
                             </tbody>
                         </Table>
-                    </Container>
+                        </div>
+                        </>
+                        
                 ) :
-                    (
-                        <Container className="text-center">
-                            <span className="h2">Nenhuma compra encontrada!</span>
-                            <div className="mt-3">
-                                <Link to="/"><Button className="btn btn-success mr-3" > Comprar </Button></Link>
-                            </div>
-                        </Container>
-                    )}
-
+                        (
+                            <>
+                                <span className="h2">Nenhuma compra encontrada!</span>
+                                <div className="mt-3">
+                                    <Link to="/"><Button className="btn btn-success mr-3" > Comprar </Button></Link>
+                                </div>
+                            </>
+                        )}
+                        
+                </Container>
                 <Footer />
             </>
         )

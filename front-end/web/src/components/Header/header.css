@@ -6,6 +6,11 @@
     width: 40%;
 }
 
+.name{
+    display: inline;
+    text-decoration: none;
+}
+
 @media (max-width: 767px){
     .search-input{
         width: 100%;
@@ -17,7 +22,3 @@
     }
 }
 
-.name{
-    display: inline;
-    text-decoration: none;
-}
