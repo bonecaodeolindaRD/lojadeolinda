@@ -10,6 +10,7 @@ public interface OrderService {
     ResponseEntity<?> findAll(Integer page);
     ResponseEntity<?> findAllOrders();
     ResponseEntity<?> findByDate(String date);
+    ResponseEntity<?> findByDatePage(String date, Integer page);
     ResponseEntity<?> findById(Long id);
     ResponseEntity<?> findSales();
     ResponseEntity<?> cancelOrder(Long id);

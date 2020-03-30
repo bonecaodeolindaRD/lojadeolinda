@@ -37,8 +37,13 @@ public class OrderController {
     }
 
     @GetMapping("/order/date/{date}")
-    public ResponseEntity<?> findByDate(@PathVariable("date") String date, @PathParam("status") Long status) {
+    public ResponseEntity<?> findByDate(@PathVariable("date") String date) {
         return service.findByDate(date);
+    }
+
+    @GetMapping("/order/date/{date}/{page}")
+    public ResponseEntity<?> findByDatePage(@PathVariable("date") String date, @PathVariable("page") Integer page) {
+        return service.findByDatePage(date, page);
     }
 
     @GetMapping("/order/{id}")

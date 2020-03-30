@@ -101,6 +101,32 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public ResponseEntity<?> findByDatePage(String date, Integer page) {
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Query query = em.createQuery("select o from Order o where o.date = '" + date + "'").setFirstResult(page * 10)
+                .setMaxResults(10);
+        try {
+            Date dt = sdf.parse(date);
+            if (!dt.before(now) || date == null)
+                return ResponseEntity.badRequest().body(new OrderException("Date is invalid"));
+            List<Order> orders = query.getResultList();
+            if(orders == null || orders.size() <= 0)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new OrderException("Orders not found"));
+
+            List<OrderDTO> ordersDTO = new ArrayList<>();
+            for(Order o: orders)
+                ordersDTO.add(converter.convertTo(o));
+
+            return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+
+        }catch(ParseException e){
+            return ResponseEntity.badRequest().body(new OrderException("Date format is invalid"));
+        }
+
+    }
+
     public ResponseEntity<?> findByDateAndStatus(String date, Long status) {
         try {
             Date now = new Date();
