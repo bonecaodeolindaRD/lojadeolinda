@@ -86,7 +86,7 @@ class Address extends Component {
                             <span className="h2">Nenhum endereço cadastrado!</span>
                             <div className="text-align-center" align="center">
                                 <br />
-                                <Link to="/registeradress"><Button className="btn btn-success mr-3" > Cadastrar </Button></Link>
+                                <Link to="/registeraddress"><Button className="btn btn-success mr-3" > Cadastrar </Button></Link>
                             </div>
                         </Container >
                     )
