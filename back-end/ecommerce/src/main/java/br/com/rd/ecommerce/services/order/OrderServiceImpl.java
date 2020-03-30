@@ -36,7 +36,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private OrderRespository respository;
+    private OrderRespository repository;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
             Date dt = sdf.parse(date);
             if (!dt.before(now) || date == null)
                 return ResponseEntity.badRequest().body(new OrderException("Date is invalid"));
-            List<Order> orders = respository.findByDate(dt).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+            List<Order> orders = repository.findByDate(dt).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
             List<OrderDTO> ordersDTO = new ArrayList<>();
             for (Order order : orders)
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<?> findById(Long id) {
 
-        Order item = respository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        Order item = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
         OrderDTO oDTO = converter.convertTo(item);
         for (OrderItem oi : item.getOrderItem())
@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
             orderEntity.setOrderItem(orderItems);
             orderEntity.setValue(orderEntity.total());
             orderEntity.setClient(converter.convertTo(order.getClient()));
-            Order returnOrder = respository.save(orderEntity);
+            Order returnOrder = repository.save(orderEntity);
             returnOrderDTO = converter.convertTo(returnOrder);
             returnOrderDTO.setClient(converter.convertTo(returnOrder.getClient()));
             for (OrderItem oi : returnOrder.getOrderItem()) {
@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Long id) {
-        respository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

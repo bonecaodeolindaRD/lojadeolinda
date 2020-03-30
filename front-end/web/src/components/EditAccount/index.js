@@ -10,6 +10,7 @@ export default class EditAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: "",
             name: "",
             email: "",
             contact: "",
@@ -42,15 +43,15 @@ export default class EditAccount extends Component {
         e.preventDefault();
         console.log(this.state)
 
-        // let obj = {
-        //     email: this.state.email,
-        //     contact: this.state.contact,
-        //     birth: this.state.birth,
-        //     contact: this.state.contact
-        // }
+        let obj = {
+            name: this.state.name,
+            email: this.state.email,
+            contact: this.state.contact,
+            birth: this.state.birth,
+        }
 
-        // let id = this.props.match.params.id;
-        // axios.put("http://localhost:8080/ecommerce/client/" +id, obj).then(res => console.log(res.data))
+        let id = this.props.match.params.id;
+        axios.put("http://localhost:8080/ecommerce/client/" +id, obj).then(res => console.log(res.data))
     }
 
     render() {
@@ -85,8 +86,15 @@ export default class EditAccount extends Component {
                             <FormGroup row>
                                 <Col md="4"></Col>
                                 <Col md={4} sm={4}>
+                                    <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
+                                    <Input value={this.state.contact} onChange={e => this.setState({ contact: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Col md="4"></Col>
+                                <Col md={4} sm={4}>
                                     <Label for="email"><span className="text-danger">*</span>Email:</Label>
-                                    <Input value={this.state.email} onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                                    <Input value={this.state.email} onChange={e => this.setState({ email: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -94,13 +102,6 @@ export default class EditAccount extends Component {
                                 <Col md={4} sm={4}>
                                     <Label for="cpf"><span className="text-danger">*</span>CPF:</Label>
                                     <Input value={this.state.cpf} disabled onChange={e => this.setState({ cpf: e.target.value })} mask="999.999.999-99" maskChar="" id="cpf" tag={InputMask} type="text" name="cpf" placeholder="" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col md="4"></Col>
-                                <Col md={4} sm={4}>
-                                    <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
-                                    <Input value={this.state.contact} onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
                                 </Col>
                             </FormGroup>
                             <FormGroup>
