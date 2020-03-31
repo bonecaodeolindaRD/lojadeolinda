@@ -95,6 +95,10 @@ export default class Cart extends Component {
 
     };
 
+    redirectDetail = (id) => {
+        this.props.history.push(`/detail/${id}`);
+    }
+
     finish = () => {
 
         if (sessionStorage.getItem('client'))
@@ -147,7 +151,7 @@ export default class Cart extends Component {
                                         <FaTimesCircle />
                                     </p>
                                 </div>
-                                <img src={item.image} alt={item.name} title={item.name}
+                                <img src={item.image} alt={item.name} title={item.name} onClick={() => this.redirectDetail(item.id)}
                                     className="img-responsive mb-3" width="100%" />
                             </Col>
 

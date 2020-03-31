@@ -103,7 +103,7 @@ export default class Header extends Component {
                                 <NavItem>
                                     <Link to="/components/"></Link>
                                 </NavItem>
-                                <Form onSubmit={this.search} className="search-input border rounded p-1">
+                                <Form onSubmit={this.search} className="search-input border rounded p-1 mb-3 mt-3">
                                     <InputGroup >
                                         <UncontrolledDropdown nav inNavbar>
                                             <DropdownToggle nav caret>

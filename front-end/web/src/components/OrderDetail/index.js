@@ -37,7 +37,7 @@ class OrderDetail extends Component {
         const { id } = this.props.match.params;
 
         try {
-            const { data: order } = await api.get("/ecommerce/order/" + id)
+            const { data: order } = await api.get("/order/" + id)
             this.setState({
                 id: order.id,
                 address: order.address,
