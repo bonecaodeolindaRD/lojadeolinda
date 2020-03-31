@@ -1,29 +1,21 @@
 package br.com.rd.dashboard.services.product;
 
 import br.com.rd.dashboard.converter.Converter;
-import br.com.rd.dashboard.models.dto.AddressDTO;
 import br.com.rd.dashboard.models.dto.ProductDTO;
-import br.com.rd.dashboard.models.entities.Address;
 import br.com.rd.dashboard.models.entities.Category;
 import br.com.rd.dashboard.models.entities.Product;
 import br.com.rd.dashboard.repositories.ProductRepository;
-import br.com.rd.dashboard.services.exceptions.OrderException;
 import br.com.rd.dashboard.services.exceptions.ProductException;
-import org.hibernate.JDBCException;
-import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

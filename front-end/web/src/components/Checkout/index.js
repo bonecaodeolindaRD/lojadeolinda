@@ -123,7 +123,7 @@ export default class Checkout extends Component {
             const { data: client } = await api.get("/client/email/" + email.email);
             const address = {
                 street: this.state.address.aStreet,
-                cep: this.state.address.aCep,
+                cep: this.state.address.aCep.replace("-", ""),
                 district: this.state.address.aDistrict,
                 number: this.state.address.aNumber,
                 uf: this.state.address.aState,
