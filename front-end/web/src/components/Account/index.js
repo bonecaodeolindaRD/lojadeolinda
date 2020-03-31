@@ -97,7 +97,7 @@ class Account extends Component {
                             <FormGroup>
                                 <div className="text-align-center m-2" align="center">
                                     <Link to="/"><Button className="mr-3" color="danger">Voltar ao Início</Button></Link>
-                                    
+                                    <Link to="/editaccount"><Button color="success">Editar Dados</Button></Link>  
                                 </div>
                             </FormGroup>
                         </Card>
