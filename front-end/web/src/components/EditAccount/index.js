@@ -86,7 +86,7 @@ export default class EditAccount extends Component {
                                 <Col md="4"></Col>
                                 <Col md={4} sm={4}>
                                     <Label for="email"><span className="text-danger">*</span>Email:</Label>
-                                    <Input value={this.state.email} onChange={e => this.setState({ name: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
+                                    <Input value={this.state.email} onChange={e => this.setState({ email: e.target.value })} type="email" name="email" id="Email" placeholder="user@mail.com" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -100,7 +100,7 @@ export default class EditAccount extends Component {
                                 <Col md="4"></Col>
                                 <Col md={4} sm={4}>
                                     <Label for="contact"><span className="text-danger">*</span>Contato:</Label>
-                                    <Input value={this.state.contact} onChange={e => this.setState({ name: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
+                                    <Input value={this.state.contact} onChange={e => this.setState({ contact: e.target.value })} mask="(99) 99999-9999" maskChar="" id="contact" tag={InputMask} type="text" name="contact" placeholder="Ex (11) 99999-9999" />
                                 </Col>
                             </FormGroup>
                             <FormGroup>
