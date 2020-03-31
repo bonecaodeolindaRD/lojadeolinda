@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 public class AddressController {
@@ -14,7 +16,7 @@ public class AddressController {
     private AddressService service;
 
     @PostMapping("/address")
-    public ResponseEntity<?> save(@RequestBody AddressDTO address){
+    public ResponseEntity<?> save(@Valid  @RequestBody AddressDTO address){
         return service.createAddress(address);
     }
 
@@ -29,7 +31,7 @@ public class AddressController {
     }
 
     @PutMapping("/address/{id}")
-    public ResponseEntity<?> edit(@PathVariable("id") Long id, @RequestBody AddressDTO address){
+    public ResponseEntity<?> edit(@PathVariable("id") Long id, @Valid @RequestBody AddressDTO address){
         return service.updateAddress(id, address);
     }
 }

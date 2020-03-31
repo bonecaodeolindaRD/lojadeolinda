@@ -111,6 +111,8 @@ public class OrderServiceImpl implements OrderService {
             returnOrderDTO = converter.convertTo(returnOrder);
             returnOrderDTO.setClient(converter.convertTo(returnOrder.getClient()));
             for (OrderItem oi : returnOrder.getOrderItem()) {
+                if(oi.getQuantity() <= 0)
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new OrderException("Quantity invalid"));
                 returnOrderDTO.addItem(converter.convertTo(oi));
                 stockService.updateItemOnStockByOrder(1L, oi);
             }

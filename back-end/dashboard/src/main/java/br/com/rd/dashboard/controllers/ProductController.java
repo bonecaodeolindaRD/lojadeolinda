@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 @RestController
@@ -17,7 +18,7 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/product")
-    public ResponseEntity<?> save(@RequestBody ProductDTO product) {
+    public ResponseEntity<?> save(@Valid @RequestBody ProductDTO product) {
         return service.createProduct(product);
     }
 
@@ -64,7 +65,7 @@ public class ProductController {
     }
 
     @PostMapping("/product/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO product) {
+    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody ProductDTO product) {
         return service.updateProduct(id, product);
     }
 
