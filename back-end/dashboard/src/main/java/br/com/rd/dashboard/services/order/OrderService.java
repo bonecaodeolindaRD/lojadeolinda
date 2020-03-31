@@ -14,6 +14,7 @@ public interface OrderService {
     ResponseEntity<?> findById(Long id);
     ResponseEntity<?> findSales();
     ResponseEntity<?> cancelOrder(Long id);
+    ResponseEntity<?> aproveOrder(Long id);
     ResponseEntity<?> findByDateAndStatus(String date, Long status);
     ResponseEntity<?> findByStatus(Long id);
     void deleteOrder(Long id);

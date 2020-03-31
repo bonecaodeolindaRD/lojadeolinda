@@ -2,32 +2,24 @@ package br.com.rd.dashboard.services.order;
 
 import br.com.rd.dashboard.converter.Converter;
 import br.com.rd.dashboard.models.dto.OrderDTO;
-import br.com.rd.dashboard.models.dto.OrderItemDTO;
 import br.com.rd.dashboard.models.entities.*;
 import br.com.rd.dashboard.repositories.ClientRepository;
 import br.com.rd.dashboard.repositories.OrderRespository;
 import br.com.rd.dashboard.repositories.ProductRepository;
 import br.com.rd.dashboard.services.exceptions.OrderException;
-import br.com.rd.dashboard.services.exceptions.StockException;
+import br.com.rd.dashboard.services.mailsender.MailSenderService;
 import br.com.rd.dashboard.services.stock.StockService;
-import org.hibernate.JDBCException;
-import org.hibernate.exception.DataException;
-import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private StockService stockService;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private MailSenderService mailSender;
     @PersistenceContext
     private EntityManager em;
     private Converter converter = new Converter();
@@ -205,8 +199,38 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderItem oi : order.getOrderItem())
             orderDTO.addItem(converter.convertTo(oi));
+        try {
+            mailSender.sendMail(order.getClient().getEmail(), "deolindabonecao@gmail.com", "Seu pedido " +
+                    order.getId() + " foi cancelado", "Informacões importantes sobre seu pedido " + order.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+        }catch (MailSendException e){
+            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+    }
+
+    @Override
+    public ResponseEntity<?> aproveOrder(Long id) {
+
+        Order order = repository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+
+        if(order.getStatus().getIdStatus() == 3 || order.getStatus().getIdStatus() == 6)
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+
+        order.setStatus(new Status(3L, null));
+        OrderDTO orderDTO = converter.convertTo(repository.save(order));
+        for(OrderItem oi: order.getOrderItem())
+            orderDTO.addItem(converter.convertTo(oi));
+
+        try{
+            mailSender.sendMail(order.getClient().getEmail(), "deolindabonecao@gmail.com", "Seu pedido " +
+                    order.getId() + " foi aprovado", "Informações importantes sobre seu pedido " + order.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+        }catch (MailSendException e){
+            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+        }
+
     }
 
     @Override
