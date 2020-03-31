@@ -121,6 +121,21 @@ export default class ManageOrder extends Component {
         this.setState({ isOpenAprove: !this.state.isOpenAprove });
     }
 
+    phoneFormat = (phone) => {
+        let part0 = phone.substring(0, 2);
+        let part1 = phone.substring(2, 7);
+        let part2 = phone.substring(7, 11);
+        return `(${part0}) ${part1}-${part2}`;
+    }
+
+    cpfFormat = (cpf) => {
+        let part0 = cpf.substring(0, 3);
+        let part1 = cpf.substring(3, 6);
+        let part2 = cpf.substring(6, 9);
+        let part3 = cpf.substring(9, 11);
+        return `${part0}.${part1}.${part2}-${part3}`;
+    }
+
     render() {
         return (
             <>
@@ -197,13 +212,13 @@ export default class ManageOrder extends Component {
                                                 {this.state.order.client ? (
                                                     <tr>
                                                         <td>
-                                                            {this.state.order.client.cpf}
+                                                            {this.cpfFormat(this.state.order.client.cpf)}
                                                         </td>
                                                         <td>
                                                             {this.state.order.client.name}
                                                         </td>
                                                         <td>
-                                                            {this.state.order.client.phoneNumber}
+                                                            {this.phoneFormat(this.state.order.client.phoneNumber)}
                                                         </td>
                                                         <td>
                                                             {this.state.order.client.email}
