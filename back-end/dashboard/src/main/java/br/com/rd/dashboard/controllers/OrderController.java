@@ -65,4 +65,9 @@ public class OrderController {
     public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id) {
         return service.cancelOrder(id);
     }
+
+    @PostMapping("/order/aprove/{id}")
+    public ResponseEntity<?> proveOrder(@PathVariable("id") Long id) {
+        return service.aproveOrder(id);
+    }
 }

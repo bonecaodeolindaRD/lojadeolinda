@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 
 import Header from '../Header';
-import { Container, Form, InputGroup, Label, Input, FormGroup, Col, Row, Button, Card, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import { Container, InputGroup, Label, Input, FormGroup, Col, Row, Button, Card, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 
 
 export default class ManageOrder extends Component {
@@ -17,7 +17,9 @@ export default class ManageOrder extends Component {
                 }
             },
             erro: "",
-            statusList: []
+            statusList: [],
+            isOpen: false,
+            isOpenAprove: false
         }
         if (this.props.match.params.id > 0)
             this.findOrder(this.props.match.params.id);
@@ -56,6 +58,21 @@ export default class ManageOrder extends Component {
         }
     }
 
+    aproveOrder = async (evt) => {
+        evt.preventDefault();
+        try {
+            let order = await api.post("/order/aprove/" + this.props.match.params.id);
+            if (!order.data) {
+                this.setState({ erro: "Erro ao editar o pedido" });
+                return;
+            }
+            this.findOrder(this.props.match.params.id);
+            this.setState({ erro: "Pedico aproado com sucesso" });
+        } catch{
+            this.setState({ erro: "Erro ao editar o pedido" });
+        }
+    }
+
     findStatus = async (evt) => {
         try {
             let statusList = await api.get("/status");
@@ -82,7 +99,7 @@ export default class ManageOrder extends Component {
         }
     }
 
-    toggleModal = (evt) => {
+    toggleModalCancel = (evt) => {
         evt.preventDefault();
         if (this.state.order.status.idStatus === 6) {
             this.setState({ erro: "O pedido já se contra cancelado" });
@@ -91,13 +108,26 @@ export default class ManageOrder extends Component {
         this.setState({ isOpen: !this.state.isOpen });
     }
 
+    toggleModalAprove = (evt) => {
+        evt.preventDefault();
+        if (this.state.order.status.idStatus === 3) {
+            this.setState({ erro: "O pedido já se contra aprovado" });
+            return;
+        }
+        if (this.state.order.status.idStatus === 6) {
+            this.setState({ erro: "O pedido se contra cancelado, não é possivel aprova-lo" });
+            return;
+        }
+        this.setState({ isOpenAprove: !this.state.isOpenAprove });
+    }
+
     render() {
         return (
             <>
                 <Header />
                 <Container className="mt-5">
-                {this.state.order.id > 0 ? (
-                    <>
+                    {this.state.order.id > 0 ? (
+                        <>
                             <div className="border p-2">
                                 <FormGroup className="bg-warning rounded font-weight-bold text-center p-2">
                                     <Label>Pedido</Label>
@@ -134,12 +164,20 @@ export default class ManageOrder extends Component {
                                         </FormGroup>
                                     </Col>
                                     <Col xs={3}>
-                                        <Form onSubmit={this.toggleModal}>
-                                            <FormGroup>
-                                                <Label for="orderdate"> </Label>
-                                                <Button color="danger" type="submit" id="orderdate" className="form-control">Cancelar</Button>
-                                            </FormGroup>
-                                        </Form>
+                                        <Row>
+                                            <Col xs={6}>
+                                                <FormGroup>
+                                                    <Label for="order-aprove"> </Label>
+                                                    <Button color="success" onClick={this.toggleModalAprove} type="button" id="order-aprove" className="form-control">Aprovar</Button>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col xs={6}>
+                                                <FormGroup>
+                                                    <Label for="orderdate"> </Label>
+                                                    <Button color="danger" onClick={this.toggleModalCancel} type="button" id="ordercancel" className="form-control">Cancelar</Button>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
                                     </Col>
                                 </Row>
                                 {this.state.order.id ? (
@@ -236,24 +274,37 @@ export default class ManageOrder extends Component {
                                         </Row>
                                     </>) : (<> </>)}
                             </div>
-                        
 
-                        <Modal isOpen={this.state.isOpen} >
-                            <ModalHeader toggle={this.toggleModal}>Pronto!</ModalHeader>
-                            <ModalBody>
-                                Você realmente deseja cancelar o pedido {this.state.order.id}?
-                     </ModalBody>
-                            <ModalFooter>
-                                <Button outline color="secondary" onClick={e => { this.cancelOrder(e); this.toggleModal(e); }}>Sim</Button>
-                                <Button outline color="secondary" onClick={this.toggleModal}>Não</Button>
-                            </ModalFooter>
-                        </Modal>
-                    </>) : (
-                        
+
+                            <Modal isOpen={this.state.isOpenAprove} >
+                                <ModalHeader toggle={this.toggleModalAprove}>Pronto!</ModalHeader>
+                                <ModalBody>
+                                    Você realmente deseja aprovar o pedido {this.state.order.id}?
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button outline color="secondary" onClick={e => { this.aproveOrder(e); this.toggleModalAprove(e); }}>Sim</Button>
+                                    <Button outline color="secondary" onClick={this.toggleModalAprove}>Não</Button>
+                                </ModalFooter>
+                            </Modal>
+
+                            <Modal isOpen={this.state.isOpen} >
+                                <ModalHeader toggle={this.toggleModalCancel}>Pronto!</ModalHeader>
+                                <ModalBody>
+                                    Você realmente deseja cancelar o pedido {this.state.order.id}?
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button outline color="secondary" onClick={e => { this.cancelOrder(e); this.toggleModalCancel(e); }}>Sim</Button>
+                                    <Button outline color="secondary" onClick={this.toggleModalCancel}>Não</Button>
+                                </ModalFooter>
+                            </Modal>
+
+                           
+                        </>) : (
+
                             <h2 className="text-center">Erro ao encontrar o pedido</h2>
-                      
-                    )}
-                    </Container>
+
+                        )}
+                </Container>
             </>
         );
     }
