@@ -4,6 +4,7 @@ import Footer from '../Footer';
 import InputMask from 'react-input-mask';
 import { Container, Form, Row, Col, FormGroup, Input, Label, Button, Card } from 'reactstrap';
 import api from '../../services/api';
+import axios from 'axios';
 
 class RegisterAddress extends Component {
     constructor(props) {
@@ -15,7 +16,6 @@ class RegisterAddress extends Component {
             erro: "",
             states: [],
             cities: [],
-            products: [],
             address: {
                 aCep: "",
                 aStreet: "",
@@ -24,8 +24,12 @@ class RegisterAddress extends Component {
                 aDistrict: "",
                 aCitie: "",
                 aState: "",
+                client: {
+                    id: ""
+                }
             },
         }
+        console.log(this.state)
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
@@ -51,7 +55,7 @@ class RegisterAddress extends Component {
 
     listCities = async (state) => {
         try {
-            const { data: cities } = await api.get(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
+            const { data: cities } = await axios.get(`${this.LINK_ESTADO_CIDADE}/${state}/cidades`);
             this.setState({
                 cities
             });
@@ -62,14 +66,13 @@ class RegisterAddress extends Component {
 
     showCities = (evt) => {
         this.listCities(evt.target.value);
-        this.editAddress(evt);
     }
 
     findAddress = async (evt) => {
         let cep = evt.target.value;
         if (cep.length === 9) {
             try {
-                const address = await api.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
+                const address = await axios.get(`${this.API_VIA_CEP}${cep.replace("-", "")}/json`);
                 if (address.data.erro) {
                     this.setState({ erro: "Erro ao buscar o CEP" });
                     return;
@@ -78,12 +81,14 @@ class RegisterAddress extends Component {
                     ...this.state,
                     address: {
                         ...this.state.address,
+                        aCep: address.data.cep,
                         aStreet: address.data.logradouro,
                         aCitie: typeof (address.data.localidade) == "string" ? address.data.localidade.replace(" ", "") : "",
                         aState: address.data.uf,
                         aDistrict: address.data.bairro
                     }
                 });
+                console.log(this.state)
                 this.setState({ erro: "" });
                 this.listCities(address.data.uf);
             } catch (erro) {
@@ -124,9 +129,25 @@ class RegisterAddress extends Component {
 
     }
 
-
-    finish = async (evt) => {
-        evt.preventDefault();
+    generateAddress = async (e) => {
+        e.preventDefault();
+        
+        let address = {
+            street: this.state.aStreet,
+            cep: this.state.aCep,
+            district: this.state.aDistrict,
+            number: this.state.aNumber,
+            uf: this.state.aState,
+            citie: this.state.aCitie,
+            complement: this.state.aComplement,
+            client: {
+               id: this.state.client
+            }
+            
+        } 
+        console.log(this.state)
+        console.log(address)
+        await api.post("/address", address);
     }
 
 
@@ -135,7 +156,7 @@ class RegisterAddress extends Component {
             <>
                 <Header />
                 <Container >
-                    <Form onSubmit={this.finish}>
+                    <Form onSubmit={this.generateAddress}>
                         <Row>
                             <Col md="4"></Col>
                             <Col md="4">
