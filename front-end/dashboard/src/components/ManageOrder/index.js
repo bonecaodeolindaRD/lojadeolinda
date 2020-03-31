@@ -128,14 +128,6 @@ export default class ManageOrder extends Component {
         return `(${part0}) ${part1}-${part2}`;
     }
 
-    cpfFormat = (cpf) => {
-        let part0 = cpf.substring(0, 3);
-        let part1 = cpf.substring(3, 6);
-        let part2 = cpf.substring(6, 9);
-        let part3 = cpf.substring(9, 11);
-        return `${part0}.${part1}.${part2}-${part3}`;
-    }
-
     render() {
         return (
             <>
@@ -212,13 +204,13 @@ export default class ManageOrder extends Component {
                                                 {this.state.order.client ? (
                                                     <tr>
                                                         <td>
-                                                            {this.cpfFormat(this.state.order.client.cpf)}
+                                                            {this.state.order.client.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2}).*/, '$1.$2.$3-$4')}
                                                         </td>
                                                         <td>
                                                             {this.state.order.client.name}
                                                         </td>
                                                         <td>
-                                                            {this.phoneFormat(this.state.order.client.phoneNumber)}
+                                                            {this.state.order.client.phoneNumber.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3')}
                                                         </td>
                                                         <td>
                                                             {this.state.order.client.email}
