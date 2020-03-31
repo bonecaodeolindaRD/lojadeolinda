@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class ClientController {
     private ClientService service;
     
     @PostMapping("/client")
-    public ResponseEntity<?> createClient(@RequestBody Client clientDTO){
+    public ResponseEntity<?> createClient(@Valid @RequestBody Client clientDTO){
         return service.createClient(clientDTO);
     }
 
