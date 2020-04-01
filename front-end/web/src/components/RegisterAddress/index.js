@@ -72,6 +72,9 @@ class RegisterAddress extends Component {
                 if (address.data.erro) {
                     this.setState({ erro: "Erro ao buscar o CEP" });
                     return;
+                } if (address === null) {
+                    this.setState({ erro: "CEP Inválido"});
+                    return;
                 }
                 this.setState({
                     address: {
@@ -131,6 +134,8 @@ class RegisterAddress extends Component {
                                 <Card className="p-2">
                                     <h5 className="bg-warning p-2 text-center">Cadastrar Endereço</h5>
                                     <FormGroup>
+                                        <span className="text-danger">{this.state.erro}</span>
+                                        <br></br>
                                         <Label for="cep"><span className="text-danger">*</span>Cep:</Label>
                                         <Input value={this.state.address.aCep} ref={this.cep} type="text" name="aCep" mask="99999-999" maskChar="" id="aCep" tag={InputMask} onChange={e => this.setState({ address: { ...this.state.address, aCep: e.target.value } })} onKeyUp={this.findAddress} />
                                     </FormGroup>
