@@ -17,6 +17,9 @@ export default class SearchResult extends Component {
         this.state = {
             products: []
         }
+    }
+
+    componentDidMount(){
         this.getResult();
     }
 

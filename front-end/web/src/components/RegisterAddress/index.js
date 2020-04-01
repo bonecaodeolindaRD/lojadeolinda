@@ -26,14 +26,16 @@ class RegisterAddress extends Component {
                 aState: ""
             },
         }
+       
+    }
+
+    componentDidMount() {
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
         this.listStates();
-    }
-
-    componentDidMount() {
+        
         this.listStates();
         this.listCities("AC");
     }

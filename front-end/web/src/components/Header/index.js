@@ -26,13 +26,13 @@ import { Link } from 'react-router-dom';
 import { MdPerson, MdSearch } from "react-icons/md";
 import { IoMdCart } from 'react-icons/io';
 
+
 import './header.css';
 
 export default class Header extends Component {
 
     constructor(props) {
         super(props);
-        this.getLogin();
         this.state = {
             isOpen: false,
             categories: [],
@@ -42,7 +42,11 @@ export default class Header extends Component {
             
             loading: false
         }
+    }
+
+    componentDidMount(){
         this.getCategories();
+        this.getLogin();
     }
 
     getCategories = async () => {

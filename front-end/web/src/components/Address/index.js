@@ -13,6 +13,10 @@ class Address extends Component {
             addresses: [],
             margin: 580
         }
+ 
+    }
+    
+    componentDidMount(){
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;

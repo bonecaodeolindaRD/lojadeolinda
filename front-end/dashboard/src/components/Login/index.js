@@ -27,9 +27,11 @@ export default class Login extends Component {
             password: '',
             error: ''
         }
-        if(sessionStorage.getItem('user')){
+    }
+
+    componentDidMount(){
+        if(sessionStorage.getItem('user'))
             this.props.history.push("/home");
-        }
     }
 
     handleSignIn = async (evt) => {

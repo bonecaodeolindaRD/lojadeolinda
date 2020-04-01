@@ -37,6 +37,9 @@ export default class Sales extends Component {
       years: [],
       total: 0
     }
+  }
+
+  componentDidMount(){
     if(!sessionStorage.getItem('user')){
       this.props.history.push("/");
       return;

@@ -17,6 +17,9 @@ export default class Category extends Component {
             products: [],
             loading: true
         }
+    }
+
+    componentDidMount(){
         this.findProducts();
     }
 
