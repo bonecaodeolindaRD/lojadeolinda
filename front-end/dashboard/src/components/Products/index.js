@@ -17,6 +17,9 @@ export default class Products extends Component {
             itemsPerPage: 10,
             totalPages: 1
         }
+    }
+
+    componentDidMount(){
         if (!sessionStorage.getItem('user')) {
             this.props.history.push("/");
             return;

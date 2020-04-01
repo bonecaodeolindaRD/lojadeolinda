@@ -15,6 +15,10 @@ export default class ListOrders extends Component {
             listStatus: [],
             orders: []
         }
+        
+    }
+
+    componentDidMount(){
         this.findStatusList();
     }
 

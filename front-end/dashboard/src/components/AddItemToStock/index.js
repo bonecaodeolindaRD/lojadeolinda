@@ -26,6 +26,13 @@ export default class AddItemToStock extends Component {
       product: 0,
       quantity: 0
     }
+  }
+
+  componentDidMount() {
+    if (!sessionStorage.getItem('user')) {
+      this.props.history.push("/");
+      return;
+    }
     this.existentUser();
     this.getStocks();
     this.getItemsNotRegistered();

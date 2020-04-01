@@ -14,9 +14,6 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    if (sessionStorage.getItem('client'))
-      this.props.history.push('/');
-
     this.state = {
       alert_message: '',
       email: "",
@@ -25,6 +22,11 @@ class Login extends Component {
       orders: "",
       error: ""
     };
+  }
+
+  componentDidMount(){
+    if (sessionStorage.getItem('client'))
+      this.props.history.push('/');
   }
 
 

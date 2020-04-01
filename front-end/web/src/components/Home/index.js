@@ -18,9 +18,12 @@ export default class Home extends Component {
             products: [],
             loading: true
         }
-        this.findProducts();
+        
     }
 
+    componentDidMount(){
+        this.findProducts();
+    }
 
     findProducts = async () => {
         this.setState({ loading: true });

@@ -26,14 +26,16 @@ class OrderDetail extends Component {
             },
             orderItem: []
         }
+    }
+
+    async componentDidMount() {
+
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
         }
         this.loadAcccount();
-    }
-
-    async componentDidMount() {
+        
         const { id } = this.props.match.params;
 
         try {

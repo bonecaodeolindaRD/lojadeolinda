@@ -61,6 +61,11 @@ export default class Checkout extends Component {
             }
 
         }
+    }
+
+
+    componentDidMount() {
+
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
@@ -68,10 +73,6 @@ export default class Checkout extends Component {
 
         this.listStates();
         this.getAddresses();
-    }
-
-
-    componentDidMount() {
 
         let totalCart = 0;
 
