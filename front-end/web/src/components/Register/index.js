@@ -6,6 +6,7 @@ import InputMask from "react-input-mask";
 import AlertEvent from "./alerterror";
 import AlertPass from "./passerror";
 import AlertAge from "./ageerror";
+import './styles.css'
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
@@ -185,7 +186,7 @@ class Register extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location} />
-                <Container className="tam" justify-content="center">
+                <Container className="tam" justify-content="center" id="espaco">
                     <div className="text-align-center" align="center">
                         <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
                     </div>
@@ -200,68 +201,71 @@ class Register extends Component {
                     </div>
                     <br></br>
                     <Form onSubmit={this.handleSubmit} text-align-center >
+
+                    <Col>
+
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="NAME">Nome: </Label>
-                            <Col sm={5}>
-                                <Input type="text" required name="NAME" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} pattern="[A-Za-z\s]+$" placeholder="Seu nome completo" />
+                            <Col md={3} sm={2}></Col>
+                            <Label md={1} for="NAME">Nome: </Label>
+                            <Col md={4}>
+                                <Input type="text" required name="NAME" className="ml-3" onChange={this.onChangeName} id="NAME" defaultValue={this.state.name} pattern="[A-Za-z\s]+$" placeholder="Seu nome completo" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={2} for="BIRTH">Data de Nascimento: </Label>
-                            <Col sm={4}>
-                                <Input type="date" name="BIRTH" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
+                            <Col md={3}></Col>
+                            <Label md={2} for="BIRTH">Data de Nascimento: </Label>
+                            <Col md={3}>
+                                <Input type="date" name="BIRTH" className="ml-3" onChange={this.onChangeBirth} id="BIRTH" defaultValue={this.state.BIRTH} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="CPF">CPF: </Label>
-                            <Col sm={5}>
-                                <Input mask="999.999.999-99" tag={InputMask} type="text" required name="CPF" onChange={this.onChangeCPF} defaultValue={this.state.cpf} id="CPF" placeholder="Ex 999.999.999-99" />
+                            <Col md={3}></Col>
+                            <Label md={1} for="CPF">CPF: </Label>
+                            <Col md={4}>
+                                <Input mask="999.999.999-99" className="ml-3" tag={InputMask} type="text" required name="CPF" onChange={this.onChangeCPF} defaultValue={this.state.cpf} id="CPF" placeholder="Ex 999.999.999-99" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="EMAIL">Email: </Label>
-                            <Col sm={5}>
-                                <Input type="email" required name="EMAIL" onChange={this.onChangeEmail} id="EMAIL" placeholder="Ex user@mail.com" />
+                            <Col md={3}></Col>
+                            <Label md={1} for="EMAIL">Email: </Label>
+                            <Col md={4}>
+                                <Input type="email" className="ml-3" required name="EMAIL" onChange={this.onChangeEmail} id="EMAIL" placeholder="Ex user@mail.com" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="CONTACT">Contato: </Label>
-                            <Col sm={5}>
-                                <Input mask="(99) 99999-9999" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" placeholder="Ex (11) 99999-9999" />
+                            <Col md={3}></Col>
+                            <Label md={1} for="CONTACT">Contato: </Label>
+                            <Col md={4}>
+                                <Input mask="(99) 99999-9999" className="ml-3" required maskChar="" onChange={this.onChangeContact} tag={InputMask} type="text" name="CONTACT" id="CONTACT" pattern="(\([0-9]{2}\))\s([9]{1})?([0-9]{4})-([0-9]{4})" placeholder="Ex (11) 99999-9999" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="pass_conf">Senha: </Label>
-                            <Col sm={5}>
-                                <Input id="pass_conf" onChange={this.onChangeConfPass} required type="password" name="pass_conf" />
+                            <Col md={3}></Col>
+                            <Label md={1} for="pass_conf">Senha: </Label>
+                            <Col md={4}>
+                                <Input id="pass_conf" className="ml-3" onChange={this.onChangeConfPass} required type="password" name="pass_conf" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Col sm={3}></Col>
-                            <Label sm={1} for="PASSWORD">Confirmação: </Label>
-                            <Col sm={5}>
-                                <Input id="PASSWORD" onChange={this.onChangePassword} required type="password" name="PASSWORD" />
+                            <Col md={3}></Col>
+                            <Label md={1} for="PASSWORD">Confirmação: </Label>
+                            <Col md={4}>
+                                <Input id="PASSWORD" className="ml-3" onChange={this.onChangePassword} required type="password" name="PASSWORD" />
                             </Col>
                         </FormGroup>
-                        <br />
+                      
                         <FormGroup>
                             <div className="text-align-center" align="center">
                                 <button type="submit" className="btn btn-success mr-3" > Salvar </button>
                                 <button type="button" className="btn btn-danger" onClick={this.redirectHome}>Cancelar</button>
                             </div>
                         </FormGroup>
-                    </Form>
-                </Container>
-                <br/>
-                <br/>
-                <br/>
 
+                        </Col>
+                    </Form>
+                    
+                </Container>
+                
                 <Footer />
             </>
         )
