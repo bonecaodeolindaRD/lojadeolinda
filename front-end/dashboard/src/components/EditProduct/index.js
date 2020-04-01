@@ -37,6 +37,10 @@ export default class EditProduct extends Component {
       image: '',
       error: ''
     };
+
+  }
+
+  componentDidMount(){
     if(!sessionStorage.getItem('user')){
       this.props.history.push("/");
       return;
