@@ -82,6 +82,7 @@ export default class Header extends Component {
         window.location.reload();
     }
 
+   
 
     search = (event) => {
         event.preventDefault();
@@ -113,9 +114,9 @@ export default class Header extends Component {
                                             <DropdownToggle nav caret>
                                                 Categorias
                                             </DropdownToggle>
-                                            <DropdownMenu right  value={this.state.category} onChange={e => this.setState({ category: e.target.value })}>
+                                            <DropdownMenu right  value={this.state.category} onChange={e => this.setState({ category: e.target.value }) } >
                                             {this.state.categories.map(c => (
-                                           <Link  onClick={ e => this.props.history.push("/category/" + c.id)}> <DropdownItem >{c.name}</DropdownItem></Link>
+                                           <Link  onClick={ e => this.props.history.push("/category/" + c.id) + window.location.reload()} > <DropdownItem >{c.name}</DropdownItem></Link>
                                              ))}  
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
@@ -127,7 +128,7 @@ export default class Header extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                 </Form>
-                                <Label><h6>Bem-Vindo(a) <br />{this.state.name} </h6></Label>
+                                <Label><h6>Bem-Vindo(a) <br />{this.state.name}</h6></Label>
                                 <UncontrolledDropdown nav inNavbar>
                                     <DropdownToggle nav caret>
                                         <MdPerson size="30" />
