@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { Container, Table, Button } from 'reactstrap';
 import './styles.css'
 import { Link } from 'react-router-dom';
+import { IoMdAddCircleOutline } from 'react-icons/io';
 
 class Address extends Component {
     constructor(props) {
@@ -54,7 +55,7 @@ class Address extends Component {
                         <>
                             <h3 align="center">Meus Endereços</h3>
                             <div className="text-align-center" align="center">
-                                <Link to="/registeraddress"><Button className="btn btn-success mr-3" > Cadastrar </Button></Link>
+                                <Link to="/registeraddress"><Button className="btn btn-success mr-3" ><IoMdAddCircleOutline size="25px" color="black"></IoMdAddCircleOutline> Cadastrar </Button></Link>
                             </div>
                             <Table bordered responsive className="table table-striped" style={{ marginTop: 20 }} >
                                 <thead>
@@ -101,7 +102,7 @@ class Address extends Component {
                                 <span className="h2">Nenhum endereço cadastrado!</span>
                                 <div className="text-align-center" align="center">
                                     <br />
-                                    <Link to="/registeraddress"><Button className="btn btn-success mr-3" > Cadastrar </Button></Link>
+                                    <Link to="/registeraddress"><Button className="btn btn-success mr-3" ><IoMdAddCircleOutline size="25px" color="black"></IoMdAddCircleOutline> Cadastrar </Button></Link>
                                 </div>
                             </Container >
                         )

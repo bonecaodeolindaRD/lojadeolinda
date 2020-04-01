@@ -104,7 +104,8 @@ class Account extends Component {
                                 </div>
                             </FormGroup>
                             <div className="text-center">
-                                <Label>Dados inconsistentes ? entre em contato agora mesmo com o suporte! </Label>
+                                <Label>Dados inconsistentes ? Entre em contato agora mesmo com o suporte! </Label>
+                                <br/>
                                 <Label> Clique <Link to="/contact">aqui</Link> para se rediecionar ao suporte.</Label>
                             </div>
                         </Card>
