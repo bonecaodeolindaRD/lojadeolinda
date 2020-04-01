@@ -23,7 +23,7 @@ class Account extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;
@@ -56,7 +56,7 @@ class Account extends Component {
                         <img src="img/user.png" width="100px" alt="logo do site" className="rounded-circle" />
                     </div>
                     <br></br>
-                    <Form>
+                    <Form className="mb-3">
                         <Card className="p-2">
                             <div className="text-align-center" align="center">
                                 <h1>Detalhes da Conta</h1>
@@ -100,16 +100,17 @@ class Account extends Component {
                             <FormGroup>
                                 <div className="text-align-center m-2" align="center">
                                     <Link to="/"><Button className="mr-3" color="danger">Voltar ao Início</Button></Link>
-                                    <Link to="/editaccount"><Button color="success">Editar Dados</Button></Link>  
+
                                 </div>
                             </FormGroup>
+                            <div className="text-center">
+                                <Label>Dados inconsistentes ? entre em contato agora mesmo com o suporte! </Label>
+                                <Label> Clique <Link to="/contact">aqui</Link> para se rediecionar ao suporte.</Label>
+                            </div>
                         </Card>
                     </Form>
                 </Container>
-                <br/>
-                <br/>
-                <br/>
-                <Footer/>
+                <Footer />
             </>
         )
     }
