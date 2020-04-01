@@ -17,6 +17,10 @@ export default class EditAccount extends Component {
             error: "",
             birth: ""
         }
+   
+    }
+
+    componentDidMount(){
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;

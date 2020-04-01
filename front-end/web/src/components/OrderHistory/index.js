@@ -14,6 +14,10 @@ class OrderHistory extends Component {
             orders: [],
             margin: 580
         }
+      
+    }
+
+    componentDidMount(){
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;

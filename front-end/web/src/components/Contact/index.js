@@ -26,6 +26,10 @@ export default class Contact extends Component {
       isOpen: false
     };
 
+ 
+  }
+
+  componentDidMount(){
     if (!sessionStorage.getItem('client')) {
       return;
     }

@@ -22,11 +22,12 @@ export default class ProductDetail extends Component {
                 weight: 0,
                 discount: 0,
                 balance: 0         
-            }
-
-                this.getProduct();
-                                        
+            }                        
         } 
+
+        componentDidMount(){
+            this.getProduct();
+        }
 
         getProduct = async() => {
 

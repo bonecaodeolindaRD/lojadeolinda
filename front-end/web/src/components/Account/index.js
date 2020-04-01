@@ -21,6 +21,9 @@ class Account extends Component {
             error: "",
             birth: ""
         }
+    }
+
+    componentDidMount(){
         if (!sessionStorage.getItem('client')) {
             this.props.history.push('/');
             return;

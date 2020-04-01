@@ -18,6 +18,7 @@ export default class Success extends Component {
         }
 
         this.id = 0;
+
         if (!sessionStorage.getItem('order')) {
             this.props.history.push('/');
             return;
@@ -26,7 +27,6 @@ export default class Success extends Component {
         this.getId();
         this.getProducts();
     }
-
     
     getId = () => {
         try{
