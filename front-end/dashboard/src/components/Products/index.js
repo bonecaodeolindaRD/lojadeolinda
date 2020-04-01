@@ -19,7 +19,7 @@ export default class Products extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount() {
         if (!sessionStorage.getItem('user')) {
             this.props.history.push("/");
             return;
@@ -29,13 +29,14 @@ export default class Products extends Component {
         this.getTotalPages();
     }
 
+
     getTotalPages = async () => {
-        try{
+        try {
             let quantity = await api.get("/product/pages");
             let totalPages = Math.ceil(quantity.data / this.state.itemsPerPage) - 1;
-            await this.setState({totalPages});
-        }catch{
-            this.setState({totalPages: 0});
+            await this.setState({ totalPages });
+        } catch{
+            this.setState({ totalPages: 0 });
         }
     }
 
@@ -56,7 +57,7 @@ export default class Products extends Component {
     }
 
     nextPage = async () => {
-        if(this.state.page >= this.state.totalPages)
+        if (this.state.page >= this.state.totalPages)
             return;
         let page = this.state.page + 1;
         await this.setState({ page });
@@ -82,22 +83,32 @@ export default class Products extends Component {
     getProducts = async (page) => {
         try {
             let { data: products } = await api.get("/product/pages/" + page + "?items=" + this.state.itemsPerPage);
-            if (!products){
+            if (!products) {
                 return;
             }
-            this.setState({
-                products,
-                displayProducts: products
+
+
+            products.forEach(async p => {
+                let { data } = await api.get("/stock/product/" + p.id + "/1");
+                let {balance } = data;
+                let item = products.find(i => i.id === p.id);
+                item.balance = balance;
+            })
+
+            await this.setState({
+                products
             });
+
+            setTimeout(e => this.setState({ displayProducts: this.state.products}), 350);
+
+
         } catch{
-            this.setState({products: []});
+            this.setState({ products: [] });
         }
     }
 
     filter = str => {
         let displayProducts = this.state.products.filter(x => x.name.toUpperCase().includes(str.toUpperCase()));
-        if(displayProducts <= 0)
-            return;
         this.setState({ displayProducts });
     }
 
@@ -105,7 +116,7 @@ export default class Products extends Component {
         return (
             <>
                 <Header />
-                {this.state.displayProducts.length <= 0 ? (<Container className="text-center mt-5">
+                {this.state.products.length <= 0 ? (<Container className="text-center mt-5">
                     <h2>Nenhum produto encontrado</h2>
                 </Container>) : (
 
@@ -119,6 +130,7 @@ export default class Products extends Component {
                                     <tr>
                                         <th>Id</th>
                                         <th>Nome</th>
+                                        <th>Em estoque</th>
                                         <th>Ação</th>
                                     </tr>
                                 </thead>
@@ -132,17 +144,20 @@ export default class Products extends Component {
                                                 {p.name}
                                             </td>
                                             <td>
+                                                {p.balance}
+                                            </td>
+                                            <td>
                                                 <Button type="button" onClick={e => this.props.history.push('/edit/' + p.id)}>Editar</Button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Table>
-                                <InputGroup className="text-center">
-                                    <Button type="button" onClick={this.previousPage}><MdNavigateBefore /></Button>
-                                    <h4>Pagina: {this.state.page + 1}</h4>
-                                    <Button type="button" onClick={this.nextPage}><MdNavigateNext /></Button>
-                                </InputGroup>
+                            <InputGroup className="text-center">
+                                <Button type="button" onClick={this.previousPage}><MdNavigateBefore /></Button>
+                                <h4>Pagina: {this.state.page + 1}</h4>
+                                <Button type="button" onClick={this.nextPage}><MdNavigateNext /></Button>
+                            </InputGroup>
                         </Container>
 
                     )}
