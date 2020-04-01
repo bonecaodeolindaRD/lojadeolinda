@@ -18,6 +18,7 @@ export default class Category extends Component {
             loading: true
         }
         this.findProducts();
+       
     }
 
 
@@ -33,13 +34,14 @@ export default class Category extends Component {
                 desc: p.description,
                 preco: p.price,
                 desconto: p.off
-
+                
             }));
             this.setState({ products });
             this.setState({ loading: false });
         } catch {
             this.setState({ products: [] });
         }
+        
     }
 
     redirect = (evt) => {
@@ -47,7 +49,7 @@ export default class Category extends Component {
         while (obj.id !== "card")
             obj = obj.parentNode;
         this.props.history.push(`/detail/${obj.children[1].innerHTML.toString()}`);
-
+        window.location.reload();
     }
     
 
@@ -56,12 +58,12 @@ export default class Category extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location}/>
-                <Container>
-                     <Produtos history={this.props.history} products={this.state.products}/>
+                <Container className="mb-5">
+                     <Produtos history={this.props.history} products={this.state.products} />
                      
                 </Container>
                 <Footer />
             </>
         );
-    }
+    } 
 }
