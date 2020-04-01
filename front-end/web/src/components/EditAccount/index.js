@@ -40,21 +40,22 @@ export default class EditAccount extends Component {
             cpf: account.cpf,
             birth: account.birthday
         })
+        console.log(account.name)
     }
 
     handlerSubmit(e){
         e.preventDefault();
         console.log(this.state)
 
-        // let obj = {
-        //     email: this.state.email,
-        //     contact: this.state.contact,
-        //     birth: this.state.birth,
-        //     contact: this.state.contact
-        // }
+        let obj = {
+            name: this.state.name,
+            email: this.state.email,
+            contact: this.state.contact,
+            birth: this.state.birth,
+        }
 
-        // let id = this.props.match.params.id;
-        // api.put("/client/" +id, obj).then(res => console.log(res.data))
+        let id = this.props.match.params.id;
+        api.put("/client/" +id, obj).then(res => console.log(res.data))
     }
 
     render() {

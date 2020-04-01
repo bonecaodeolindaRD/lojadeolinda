@@ -83,7 +83,7 @@ class OrderDetail extends Component {
                             <Card body align="center">
                                 <CardTitle><h5 className="bg-warning p-2 text-center">OUTROS</h5></CardTitle>
                                 <h5>Valor Total: {(this.state.value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h5>
-                                <Label>Data do Pedido: {(new Date(this.state.date).toLocaleDateString('pt-Br'))}</Label>
+                                <Label>Data do Pedido: {this.state.date.split("-").reverse().join("/")}</Label>
                                 <Label>Status do Pedido: <p className="text-danger">{this.state.status.status}</p></Label>
                                 <Label>Entrega: Prevista para 10 dias úteis.</Label>
                             </Card>
