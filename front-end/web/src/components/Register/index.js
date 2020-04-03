@@ -6,6 +6,7 @@ import InputMask from "react-input-mask";
 import AlertEvent from "./alerterror";
 import AlertPass from "./passerror";
 import AlertAge from "./ageerror";
+import AlertCpf from "./cpferror";
 import './styles.css'
 
 import { Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
@@ -28,6 +29,7 @@ class Register extends Component {
             alert_message: '',
             alert_pass: '',
             alert_age: '',
+            alert_cpf: '',
             error: null,
             CPF: '',
             EMAIL: '',
@@ -90,6 +92,11 @@ class Register extends Component {
 
         if(age < 18){
             this.setState({ alert_age: "error" })
+            return;
+        }
+    
+        if(!this.testCPF(cpf)){
+            this.setState({ alert_cpf: "error" })
             return;
         }
 
@@ -198,6 +205,7 @@ class Register extends Component {
                         {this.state.alert_message === "error" ? <AlertEvent /> : null}
                         {this.state.alert_pass === "error" ? <AlertPass /> : null}
                         {this.state.alert_age === "error" ? <AlertAge/> : null}
+                        {this.state.alert_cpf === "error" ? <AlertCpf/> : null}
                     </div>
                     <br></br>
                     <Form onSubmit={this.handleSubmit} text-align-center >
