@@ -62,7 +62,7 @@ export default class Category extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location}/>
-                <Container className="mb-6">
+                <Container className="mb-6 ">
                      <Produtos history={this.props.history} products={this.state.products} />
                      
                 </Container>
