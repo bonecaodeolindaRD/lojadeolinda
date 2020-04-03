@@ -51,7 +51,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<?> findProductByName(String name) {
 
-        Query query = em.createQuery("select p from Product p where upper(p.name) like '%" + name.toUpperCase() + "%'", Product.class);
+        Query query = em.createQuery("select p from Product p where upper(p.name) like concat('%', :name, '%'", Product.class);
+        query.setParameter("name", name.toUpperCase());
 
         List<Product> products = query.getResultList();
         if (products == null || products.size() <= 0)
@@ -66,7 +67,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<?> findProductByDescription(String description) {
 
-        Query query = em.createQuery("select p from Product p where upper(description) like '%" + description.toUpperCase() + "%'", Product.class);
+        Query query = em.createQuery("select p from Product p where upper(description) like concat('%', :desc, '%'", Product.class);
+        query.setParameter("desc", description.toUpperCase());
 
         List<Product> products = query.getResultList();
         if (products == null || products.size() <= 0)
@@ -94,14 +96,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<?> findProductByNameOrDescription(String str) {
         Set<Product> products = new HashSet<>();
-        Query name = em.createQuery("select p from Product p where upper(name) like '%" + str.toUpperCase() + "%'", Product.class);
-        Query desc = em.createQuery("select p from Product p where upper(description) like '%" + str.toUpperCase() + "%'", Product.class);
-        Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category where upper(c.name) like '%" + str.toUpperCase() + "%'", Product.class);
+        Query name = em.createQuery("select p from Product p where upper(name) like concat('%', :name, '%')" , Product.class);
+        name.setParameter("name", str.toUpperCase());
+        Query desc = em.createQuery("select p from Product p where upper(description) like concat('%', :desc, '%')", Product.class);
+        desc.setParameter("desc", str.toUpperCase());
+        //Query categ = em.createQuery("select p from Product p inner join Category c on c.id = p.category where upper(c.name) like concat('%', :categ, '%'", Product.class);
+        //categ.setParameter("categ",str.toUpperCase());
         List<Product> prods = name.getResultList();
         products.addAll(prods);
         prods = desc.getResultList();
         products.addAll(prods);
-        prods = categ.getResultList();
+        //prods = categ.getResultList();
         products.addAll(prods);
         if (products.size() <= 0)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
