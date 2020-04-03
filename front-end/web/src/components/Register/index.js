@@ -133,7 +133,6 @@ class Register extends Component {
     }
 
     calculateAge = (dtInput) => { 
-
         
         let fields = dtInput.split('-');
         let year = parseInt(fields[0]);
