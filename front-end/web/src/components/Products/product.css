@@ -6,3 +6,7 @@
     border-width: 3px;
     box-shadow: 10px 15px #888888;
  }
+
+ .fullbottom{
+     margin-bottom: 500px!important;
+ }

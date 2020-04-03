@@ -63,16 +63,10 @@ export default class Products extends Component {
                                 </Card>
                             </Col>
                         ))) : (<Container className="text-center">
-                            <pre className="h2">
+                            <pre className="h2 fullbottom">
                                 Erro ao carregar os produtos
                         <br />
                             Tente novamente mais tarde
-                            <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
                             </pre>
                         </Container>) : (
                         <Container className="text-center">

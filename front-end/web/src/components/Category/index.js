@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import './styles.css';
 
 import {
     Container,
@@ -61,7 +62,7 @@ export default class Category extends Component {
         return (
             <>
                 <Header history={this.props.history} location={this.props.location}/>
-                <Container className="mb-5">
+                <Container className="mb-6">
                      <Produtos history={this.props.history} products={this.state.products} />
                      
                 </Container>
