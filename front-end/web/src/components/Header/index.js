@@ -39,12 +39,12 @@ export default class Header extends Component {
             category: 0,
             email: "",
             name: this.getLogin(),
-            
+
             loading: false
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getCategories();
         this.getLogin();
     }
@@ -82,18 +82,22 @@ export default class Header extends Component {
         window.location.reload();
     }
 
-   
+
 
     search = (event) => {
         event.preventDefault();
         const form = event.target;
         const inputGroup = form.children[0];
         const inputText = inputGroup.children[1];
-        this.props.history.push('/search/' + inputText.value);
-        let local = this.props.location.pathname.split('/');
-        console.log(local);
-        if (local[1] === 'search')
-            window.location.reload();
+        try {
+            this.props.history.push('/search/' + inputText.value);
+            let local = this.props.location.pathname.split('/');
+            console.log(local);
+            if (local[1] === 'search')
+                window.location.reload();
+        } catch{
+            inputText.value = "Parametros de busca invalidos";
+        }
     }
 
     render() {
@@ -114,10 +118,10 @@ export default class Header extends Component {
                                             <DropdownToggle nav caret>
                                                 Categorias
                                             </DropdownToggle>
-                                            <DropdownMenu right  value={this.state.category} onChange={e => this.setState({ category: e.target.value }) } >
-                                            {this.state.categories.map(c => (
-                                           <Link  onClick={ e => this.props.history.push("/category/" + c.id) + window.location.reload()} > <DropdownItem >{c.name}</DropdownItem></Link>
-                                             ))}  
+                                            <DropdownMenu right value={this.state.category} onChange={e => this.setState({ category: e.target.value })} >
+                                                {this.state.categories.map(c => (
+                                                    <Link onClick={e => this.props.history.push("/category/" + c.id) + window.location.reload()} > <DropdownItem >{c.name}</DropdownItem></Link>
+                                                ))}
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                         <Input className="form-control border border-right-0 rounded" placeholder="O que deseja encontrar?" />
