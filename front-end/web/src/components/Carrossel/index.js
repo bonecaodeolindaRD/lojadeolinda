@@ -16,7 +16,7 @@ export default class Carrossel extends Component {
         this.state = { activeIndex: 0,
             items : [
                 {
-                    src: 'https://i.imgur.com/CNqS0j6.jpg',
+                    src: 'https://i.imgur.com/3VCsat4.jpg',
                     altText: 'Políticos',
                     caption: 'Políticos'
                 },
