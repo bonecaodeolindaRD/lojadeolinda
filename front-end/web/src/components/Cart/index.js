@@ -152,12 +152,12 @@ export default class Cart extends Component {
                                     </p>
                                 </div>
                                 <img src={item.image} alt={item.name} title={item.name} onClick={() => this.redirectDetail(item.id)}
-                                    className="img-responsive mb-3" width="100%" />
+                                    className="img-responsive mb-3 mouse-cursor" width="100%" />
                             </Col>
 
                             <Col className="mb-3" xs="12" sm="4" id="p">
-                                <h5>{item.name}</h5>
-                                <small>Nome do Produto</small>
+                                <h5 className="mouse-cursor" onClick={() => this.redirectDetail(item.id)}>{item.name}</h5>
+                                <small>Nome do Produto </small>
                             </Col>
 
                             <Col className="mb-3" xs="5" sm="2">
@@ -169,7 +169,7 @@ export default class Cart extends Component {
 
                             <Col className="mb-3" xs="7" sm="2">
                                 <div className="form-group">
-                                    <Input type="number" name="quantidade" value={item.quantity} id={item.id} onChange={(e) => this.changeQuantity(e, item.id)} min="1"  className="cart-qty-input"  />
+                                    <Input  type="number" name="quantidade" value={item.quantity} id={item.id} onChange={(e) => this.changeQuantity(e, item.id)} min="1"  className="cart-qty-input"  />
                                     
                                     <small>Quantidade</small>
                                 </div>
