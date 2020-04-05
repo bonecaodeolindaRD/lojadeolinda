@@ -152,11 +152,11 @@ export default class Cart extends Component {
                                     </p>
                                 </div>
                                 <img src={item.image} alt={item.name} title={item.name} onClick={() => this.redirectDetail(item.id)}
-                                    className="img-responsive mb-3" width="100%" />
+                                    className="img-responsive mb-3 mouse-cursor" width="100%" />
                             </Col>
 
                             <Col className="mb-3" xs="12" sm="4" id="p">
-                                <h5 onClick={() => this.redirectDetail(item.id)}>{item.name}</h5>
+                                <h5 className="mouse-cursor" onClick={() => this.redirectDetail(item.id)}>{item.name}</h5>
                                 <small>Nome do Produto </small>
                             </Col>
 
