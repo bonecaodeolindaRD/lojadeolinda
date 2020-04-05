@@ -80,6 +80,8 @@ class Register extends Component {
 
         event.preventDefault();
 
+        this.clearInputError();
+
         let cpf = this.state.CPF;
         cpf = cpf.replace(".","").replace("-","").replace(" ","").replace(".","").trim();
 
@@ -145,6 +147,12 @@ class Register extends Component {
         let ageDt = new Date(diffMs); 
         
         return Math.abs(ageDt.getUTCFullYear() - 1970);
+
+    }
+
+    clearInputError = () => {
+
+        this.setState({ alert_message: '', alert_pass: '', alert_age: '', alert_cpf: '' });
 
     }
 
