@@ -156,8 +156,8 @@ export default class Cart extends Component {
                             </Col>
 
                             <Col className="mb-3" xs="12" sm="4" id="p">
-                                <h5>{item.name}</h5>
-                                <small>Nome do Produto</small>
+                                <h5 onClick={() => this.redirectDetail(item.id)}>{item.name}</h5>
+                                <small>Nome do Produto </small>
                             </Col>
 
                             <Col className="mb-3" xs="5" sm="2">
