@@ -114,6 +114,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ResponseEntity<?> orderByName(Integer asdesc, Integer itensPerPage, Integer page) {
+
+        Query query = em.createQuery("select p from Product p order by p.name " + (asdesc == 0 ? "" : "desc"), Product.class)
+                .setFirstResult(page * itensPerPage)
+                .setMaxResults(itensPerPage);
+
+        List<Product> products = query.getResultList();
+
+        if(products == null || products.size() <= 0)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductException(""));
+
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+
+    }
+
+    @Override
     public ResponseEntity<?> findProductHome() {
         Query query = em.createQuery("select p from Product p inner join StockProduct s on s.product = p.id where s.balance > 0 order by p.off desc", Product.class).setMaxResults(8);
         List<Product> products = query.getResultList();

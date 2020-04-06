@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 public class ProductController {
 
@@ -30,6 +32,11 @@ public class ProductController {
         return service.findProductHome();
     }
 
+    @GetMapping("/product/order/name")
+    public ResponseEntity<?> orderByName(@PathParam("desc") Integer desc, @PathParam("qtd") Integer qtd,
+                                         @PathParam("page") Integer page){
+        return service.orderByName(desc, qtd, page);
+    }
 
     @GetMapping("/product/find/{str}")
     public ResponseEntity<?> findProduct(@PathVariable("str") String str){
