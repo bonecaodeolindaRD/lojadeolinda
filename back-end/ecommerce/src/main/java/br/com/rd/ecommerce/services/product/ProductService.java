@@ -14,5 +14,6 @@ public interface ProductService {
     ResponseEntity<?> totalItems();
     ResponseEntity<?> orderByName(Integer desc, Integer itensPerPage, Integer page);
     ResponseEntity<?> orderByPrice(Integer desc, Integer itensPerPage, Integer page);
+    ResponseEntity<?> orderByOcurrence(Integer desc, Integer itensPerPage, Integer page);
     ResponseEntity<?> findProductHome();
 }

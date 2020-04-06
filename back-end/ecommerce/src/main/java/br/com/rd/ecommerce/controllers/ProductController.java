@@ -48,6 +48,12 @@ public class ProductController {
         return service.orderByPrice(desc, qtd, page);
     }
 
+    @GetMapping("/product/order/ocurrence")
+    public ResponseEntity<?> orderByOcurrence(@PathParam("desc") Integer desc, @PathParam("qtd") Integer qtd,
+                                          @PathParam("page") Integer page){
+        return service.orderByOcurrence(desc, qtd, page);
+    }
+
     @GetMapping("/product/find/{str}")
     public ResponseEntity<?> findProduct(@PathVariable("str") String str){
         return service.findProductByNameOrDescription(str);
