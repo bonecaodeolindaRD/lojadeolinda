@@ -15,11 +15,28 @@ export default class ListOrders extends Component {
             listStatus: [],
             orders: []
         }
-        
+
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.findStatusList();
+        this.existentUser();
+    }
+
+    existentUser = async () => {
+        try {
+            let { username } = JSON.parse(sessionStorage.getItem('user'));
+            let user = await api.get("/employee/" + username);
+            if (!user) {
+                sessionStorage.removeItem('dG9rZW4=');
+                sessionStorage.removeItem('user');
+                this.props.history.push("/");
+            }
+        } catch{
+            this.props.history.push("/");
+            sessionStorage.removeItem('user');
+            sessionStorage.removeItem('dG9rZW4=');
+        }
     }
 
     findStatusList = async () => {
@@ -105,7 +122,7 @@ export default class ListOrders extends Component {
                                     </thead>
                                     <tbody>
                                         {this.state.orders.map(o => (
-                                            <tr>
+                                            <tr key={o.id}>
                                                 <td>{o.id}</td>
                                                 <td>{new Date(o.date + " 03:00:00").toLocaleDateString("pt-br")}</td>
                                                 <td>{o.status.status}</td>
@@ -115,7 +132,7 @@ export default class ListOrders extends Component {
                                         ))}
                                     </tbody>
                                 </Table>)
-                                
+
                                 :
                                 (<h5 className="text-center">Nenhum pedido encontrado</h5>)
                             }

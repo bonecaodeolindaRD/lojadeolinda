@@ -72,7 +72,7 @@ export default class Header extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink>
-                    <Link onClick={e => {
+                    <Link to="" onClick={e => {
                       sessionStorage.removeItem('user');
                       sessionStorage.removeItem('dG9rZW4=');
                       window.location.reload();

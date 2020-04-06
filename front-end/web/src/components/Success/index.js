@@ -153,7 +153,7 @@ export default class Success extends Component {
 
                         ))}
 
-                        <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
+                        <h4 className="d-flex justify-content-end mt-3 mb-5  mr-1">Total: {(this.state.total + 200.0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</h4>
 
 
                         <Link to='/home' className="d-flex justify-content-end mt-3 mb-5 mr-1">
