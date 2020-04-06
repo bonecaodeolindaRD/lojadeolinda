@@ -52,7 +52,7 @@ export default class ManageOrder extends Component {
                 return;
             }
             this.findOrder(this.props.match.params.id);
-            this.setState({ erro: "Pedico cancelado com sucesso" });
+            this.setState({ erro: "Pedido cancelado com sucesso" });
         } catch{
             this.setState({ erro: "Erro ao editar o pedido" });
         }
@@ -67,7 +67,7 @@ export default class ManageOrder extends Component {
                 return;
             }
             this.findOrder(this.props.match.params.id);
-            this.setState({ erro: "Pedico aproado com sucesso" });
+            this.setState({ erro: "Pedido aprovado com sucesso" });
         } catch{
             this.setState({ erro: "Erro ao editar o pedido" });
         }

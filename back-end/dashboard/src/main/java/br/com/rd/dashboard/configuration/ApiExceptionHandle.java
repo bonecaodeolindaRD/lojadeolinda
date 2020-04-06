@@ -1,6 +1,5 @@
 package br.com.rd.dashboard.configuration;
 
-
 import org.hibernate.JDBCException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.SQLGrammarException;
@@ -13,8 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import java.sql.SQLException;
 
 @RestControllerAdvice
-public class ApiExceptionHandler {
-
+public class ApiExceptionHandle {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handlerEntityExceptionException(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex);
@@ -44,5 +42,4 @@ public class ApiExceptionHandler {
     public ResponseEntity<?> handleException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
     }
-
 }
