@@ -218,7 +218,7 @@ export default class EditProduct extends Component {
   render() {
     return (
       <>
-        <Header />}
+        <Header />
         <Container className="border border-primary rounded mt-5 p-4">
           {this.state.id ? (
           <Form className="App" onSubmit={this.finish}>

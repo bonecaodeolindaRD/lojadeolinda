@@ -107,7 +107,7 @@ export default class ListOrders extends Component {
                                         {this.state.orders.map(o => (
                                             <tr>
                                                 <td>{o.id}</td>
-                                                <td>{new Date(o.date).toLocaleDateString("pt-br")}</td>
+                                                <td>{new Date(o.date + " 03:00:00").toLocaleDateString("pt-br")}</td>
                                                 <td>{o.status.status}</td>
                                                 <td>{o.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                                                 <td><Button type="button" onClick={e => this.props.history.push("/manager/" + o.id)}>Ver</Button></td>

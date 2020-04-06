@@ -99,7 +99,7 @@ export default class Products extends Component {
                 products
             });
 
-            setTimeout(e => this.setState({ displayProducts: this.state.products}), 350);
+            setTimeout(e => this.setState({ displayProducts: this.state.products}), 500);
 
 
         } catch{
