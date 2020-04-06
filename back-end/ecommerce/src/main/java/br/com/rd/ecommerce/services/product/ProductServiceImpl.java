@@ -114,6 +114,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ResponseEntity<?> totalItems() {
+        Query query = em.createQuery("select count(*) from Product");
+
+        Long quantity = (Long)query.getResultList().get(0);
+
+        return ResponseEntity.status(HttpStatus.OK).body(quantity);
+    }
+
+    @Override
     public ResponseEntity<?> orderByName(Integer asdesc, Integer itensPerPage, Integer page) {
 
         Query query = em.createQuery("select p from Product p order by p.name " + (asdesc == 0 ? "" : "desc"), Product.class)

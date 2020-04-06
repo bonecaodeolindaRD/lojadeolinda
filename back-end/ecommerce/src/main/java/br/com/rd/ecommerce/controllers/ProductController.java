@@ -21,6 +21,10 @@ public class ProductController {
         return service.findProductById(id);
     }
 
+    @GetMapping("/product/total")
+    public ResponseEntity<?> totalProducts(){
+        return service.totalItems();
+    }
 
     @GetMapping("/product/category/{id}")
     public ResponseEntity<?> findByCategory(@PathVariable("id") Long id){
