@@ -15,7 +15,6 @@ public interface ProductService {
     ResponseEntity<?> createProduct(ProductDTO productDTO);
     ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO);
     ResponseEntity<?> findProductByDescription(String description);
-    ResponseEntity<?> orderByName(Integer asdesc, Integer itemsPerPage, Integer page);
     ResponseEntity<?> findProductByNameOrDescription(String str);
     ResponseEntity<?> findProductHome();
     void deleteProduct(Long id);

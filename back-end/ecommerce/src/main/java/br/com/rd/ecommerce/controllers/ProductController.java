@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 public class ProductController {
 
@@ -19,6 +21,10 @@ public class ProductController {
         return service.findProductById(id);
     }
 
+    @GetMapping("/product/total")
+    public ResponseEntity<?> totalProducts(){
+        return service.totalItems();
+    }
 
     @GetMapping("/product/category/{id}")
     public ResponseEntity<?> findByCategory(@PathVariable("id") Long id){
@@ -30,6 +36,23 @@ public class ProductController {
         return service.findProductHome();
     }
 
+    @GetMapping("/product/order/name")
+    public ResponseEntity<?> orderByName(@PathParam("desc") Integer desc, @PathParam("qtd") Integer qtd,
+                                         @PathParam("page") Integer page){
+        return service.orderByName(desc, qtd, page);
+    }
+
+    @GetMapping("/product/order/price")
+    public ResponseEntity<?> orderByPrice(@PathParam("desc") Integer desc, @PathParam("qtd") Integer qtd,
+                                         @PathParam("page") Integer page){
+        return service.orderByPrice(desc, qtd, page);
+    }
+
+    @GetMapping("/product/order/ocurrence")
+    public ResponseEntity<?> orderByOcurrence(@PathParam("desc") Integer desc, @PathParam("qtd") Integer qtd,
+                                          @PathParam("page") Integer page){
+        return service.orderByOcurrence(desc, qtd, page);
+    }
 
     @GetMapping("/product/find/{str}")
     public ResponseEntity<?> findProduct(@PathVariable("str") String str){

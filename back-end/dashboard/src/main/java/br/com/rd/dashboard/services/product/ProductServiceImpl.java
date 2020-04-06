@@ -108,21 +108,7 @@ public class ProductServiceImpl implements ProductService {
         return ResponseEntity.status(HttpStatus.OK).body(productDTOS);
     }
 
-    @Override
-    public ResponseEntity<?> orderByName(Integer asdesc, Integer itensPerPage, Integer page) {
 
-        Query query = em.createQuery("select p from Product order by p.name " + (asdesc == 0 ? "" : "desc"), Product.class)
-                .setFirstResult(page * itensPerPage)
-                .setMaxResults(itensPerPage);
-
-        List<Product> products = query.getResultList();
-
-        if(products == null || products.size() <= 0)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ProductException(""));
-
-        return ResponseEntity.status(HttpStatus.OK).body(products);
-
-    }
 
     @Override
     public ResponseEntity<?> findProductByCategory(Long category) {

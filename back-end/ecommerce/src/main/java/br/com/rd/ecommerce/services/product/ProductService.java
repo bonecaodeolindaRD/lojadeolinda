@@ -11,5 +11,9 @@ public interface ProductService {
     ResponseEntity<?> findProductByCategory(Long category);
     ResponseEntity<?> findProductByDescription(String description);
     ResponseEntity<?> findProductByNameOrDescription(String str);
+    ResponseEntity<?> totalItems();
+    ResponseEntity<?> orderByName(Integer desc, Integer itensPerPage, Integer page);
+    ResponseEntity<?> orderByPrice(Integer desc, Integer itensPerPage, Integer page);
+    ResponseEntity<?> orderByOcurrence(Integer desc, Integer itensPerPage, Integer page);
     ResponseEntity<?> findProductHome();
 }
