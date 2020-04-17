@@ -1,0 +1,21 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.search-input{
+    width: 70%;
+}
+
+.tam{
+    height: 100vh;
+}
+
+
+@media (max-width: 767px){
+    .search-input{
+        width: 100%;
+    }
+}
+

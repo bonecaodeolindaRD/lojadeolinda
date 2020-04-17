@@ -1,0 +1,13 @@
+#espaco{
+    margin-bottom: 300px;
+}
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+
+    #espaco{
+        margin-bottom: 500px;
+    }
+}

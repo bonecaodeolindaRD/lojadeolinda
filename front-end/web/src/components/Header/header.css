@@ -1,0 +1,24 @@
+.img-logo{
+    width: 180px;
+}
+
+.search-input{
+    width: 40%;
+}
+
+.name{
+    display: inline;
+    text-decoration: none;
+}
+
+@media (max-width: 767px){
+    .search-input{
+        width: 100%;
+    }
+    .display-menu{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
